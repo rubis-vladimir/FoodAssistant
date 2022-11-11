@@ -9,7 +9,10 @@ import Foundation
 
 /// Протокол передачи UI-ивентов слою презентации
 protocol Presentation {
+    func testTranslate()
     
+    func testGetRandom()
+    func testGetRecipe()
 }
 
 /// Протокол делегата бизнес логики
@@ -32,7 +35,21 @@ final class Presenter {
 
 // MARK: - Presentation
 extension Presenter: Presentation {
+    func testTranslate() {
+        interactor.translate(texts: ["Hello", "World"])
+    }
     
+    func testGetRandom() {
+        interactor.fetchRandomRecipe(number: 2, tags: ["meal"])
+    }
+    
+    func testGetRecipe() {
+        
+        var parameters = RecipeFilterParameters()
+        parameters.includeIngredients.append(contentsOf: ["onion", "cod"])
+        parameters.sort = "random"
+        interactor.fetchRecipe(with: parameters, number: 3, query: nil)
+    }
 }
 
 // MARK: - BusinessLogicDelegate

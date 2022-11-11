@@ -22,7 +22,7 @@ protocol RequestBuilding {
     /// Дополнительный путь
     var path: String { get }
     /// URL параметры
-    var queryItems: [URLQueryItem] { get }
+    var queryItems: [URLQueryItem]? { get }
     /// Метод HTTP
     var method: HTTPMethod { get }
     /// Заголовки запроса
@@ -37,8 +37,8 @@ protocol RequestBuilding {
 /// Дефолтная реализация метода
 extension RequestBuilding {
     func asURLRequest() throws -> URLRequest {
-        let urlString = baseUrl + path
-        let url = try urlString.asURL()
+        guard let url = url else { throw DataFetcherError.wrongUrl }
+        print(url)
         var request = URLRequest (url: url)
         request.httpMethod = method.rawValue
         
@@ -64,7 +64,6 @@ extension RequestBuilding {
         components.host = baseUrl
         components.path = path
         components.queryItems = queryItems
-        
         return components.url
     }
 }

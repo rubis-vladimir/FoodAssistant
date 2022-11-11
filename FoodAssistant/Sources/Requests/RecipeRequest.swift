@@ -7,10 +7,10 @@
 
 import Foundation
 
-enum RecipeRequest<T:Codable> {
-    case complexSearch(_ parameters: FilterParameters, _ number: Int, _ query: String?)
-    case findByNutrients(parameters: T)
-    case findByIngredients(parameters: T)
+enum RecipeRequest {
+    case complexSearch(_ parameters: RecipeFilterParameters, _ number: Int, _ query: String?)
+    case findByIngredients(_ ingridients: [String], _ number: Int)
+    case random(_ number: Int, tags: [String])
 }
 
 
@@ -21,16 +21,15 @@ extension RecipeRequest: RequestBuilding {
         switch self {
         case .complexSearch:
             return "/recipes/complexSearch"
-        case .findByNutrients:
-            return "/recipes/findByNutrients"
         case .findByIngredients:
             return "/recipes/findByIngredients"
+        case .random:
+            return "/recipes/random"
         }
     }
     
-    var queryItems: [URLQueryItem] {
+    var queryItems: [URLQueryItem]? {
         switch self {
-            
         case let .complexSearch(parameters, number, query):
             let maxCalories = parameters.maxCalories == nil ? "10000" : String(parameters.maxCalories!)
             return [
@@ -43,15 +42,23 @@ extension RecipeRequest: RequestBuilding {
             URLQueryItem(name: "cuisine", value: parameters.cuisine),
             URLQueryItem(name: "diet", value: parameters.diet),
             URLQueryItem(name: "intolerances", value: parameters.intolerances.convertStringArrayToString()),
+            URLQueryItem(name: "includeIngredients", value: parameters.includeIngredients.convertStringArrayToString()),
+            URLQueryItem(name: "excludeIngredients", value: parameters.excludeIngredients.convertStringArrayToString()),
             URLQueryItem(name: "maxCalories", value: maxCalories),
             URLQueryItem(name: "sort", value: parameters.sort)
             ]
-        case .findByNutrients(parameters: let parameters):
-            return []
-        case .findByIngredients(parameters: let parameters):
+        case let .findByIngredients(ingredients, number):
         return [
-            URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue)
+            URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
+            URLQueryItem(name: "number", value: String(number)),
+            URLQueryItem(name: "ingredients", value: ingredients.convertStringArrayToString())
         ]
+        case let .random(number, tags):
+            return [
+                URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
+                URLQueryItem(name: "number", value: String(number)),
+                URLQueryItem(name: "tags", value: tags.convertStringArrayToString())
+            ]
         }
     }
     

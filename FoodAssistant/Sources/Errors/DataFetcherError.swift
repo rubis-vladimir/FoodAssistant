@@ -15,6 +15,7 @@ enum DataFetcherError: Error {
     case failedToTranslate
     case wrongUrl
     case wrongStatusCode
+    case notInternet
 }
 
 // MARK: - LocalizedError
