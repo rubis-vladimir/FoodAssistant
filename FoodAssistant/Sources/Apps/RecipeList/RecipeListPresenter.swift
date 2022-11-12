@@ -7,34 +7,34 @@
 
 import Foundation
 
-/// Протокол передачи UI-ивентов слою презентации
-protocol Presentation {
+/// Протокол передачи UI-ивентов слою презентации модуля RecipeList
+protocol RecipeListPresentation {
     func testTranslate()
     
     func testGetRandom()
     func testGetRecipe()
 }
 
-/// Протокол делегата бизнес логики
+/// Протокол делегата бизнес логики модуля RecipeList
 protocol BusinessLogicDelegate: AnyObject {
     
 }
 
-/// Слой презентации модуля
-final class Presenter {
-    weak var delegate: Viewable?
-    private let interactor: BusinessLogic
-    private let router: Routing
+/// Слой презентации модуля RecipeList
+final class RecipeListPresenter {
+    weak var delegate: RecipeListViewable?
+    private let interactor: RecipeListBusinessLogic
+    private let router: RecipeListRouting
     
-    init(interactor: BusinessLogic,
-         router: Routing) {
+    init(interactor: RecipeListBusinessLogic,
+         router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
     }
 }
 
 // MARK: - Presentation
-extension Presenter: Presentation {
+extension RecipeListPresenter: RecipeListPresentation {
     func testTranslate() {
         interactor.translate(texts: ["Hello", "World"])
     }
@@ -53,6 +53,6 @@ extension Presenter: Presentation {
 }
 
 // MARK: - BusinessLogicDelegate
-extension Presenter: BusinessLogicDelegate {
+extension RecipeListPresenter: BusinessLogicDelegate {
     
 }

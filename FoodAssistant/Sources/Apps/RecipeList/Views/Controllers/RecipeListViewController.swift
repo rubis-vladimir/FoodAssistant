@@ -7,20 +7,20 @@
 
 import UIKit
 
-/// Протокол управления View-слоем
-protocol Viewable: AnyObject {
+/// Протокол управления View-слоем модуля RecipeList
+protocol RecipeListViewable: AnyObject {
     /// Обновление UI
     func updateUI()
     /// Показать ошибку
     func showError()
 }
 
-/// Контроллер представления
-final class ViewController: UIViewController {
+/// Контроллер представления списка рецептов
+final class RecipeListViewController: UIViewController {
 
-    private let presenter: Presentation
+    private let presenter: RecipeListPresentation
     
-    init(presenter: Presentation) {
+    init(presenter: RecipeListPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,8 +39,8 @@ final class ViewController: UIViewController {
     }
 }
 
-// MARK: - Viewable
-extension ViewController: Viewable {
+// MARK: - RecipeListViewable
+extension RecipeListViewController: RecipeListViewable {
     func updateUI() {
     
     }

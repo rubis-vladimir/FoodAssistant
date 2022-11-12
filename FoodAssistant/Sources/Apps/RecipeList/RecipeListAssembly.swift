@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Компоновщик модуля
-final class Assembly {
+/// Компоновщик модуля RecipeList
+final class RecipeListAssembly {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -17,17 +17,17 @@ final class Assembly {
 }
 
 // MARK: - Assemblying
-extension Assembly: Assemblying {
+extension RecipeListAssembly: Assemblying {
     func assembly() -> UIViewController {
         
         let networkDF = NetworkDataFetcher()
         let dataFetcher = DataFetcherService(dataFetcher: networkDF)
         
-        let router = Router(navigationController: navigationController)
-        let interactor = Interactor(dataFetcher: dataFetcher)
-        let presenter = Presenter(interactor: interactor,
+        let router = RecipeListRouter(navigationController: navigationController)
+        let interactor = RecipeListInteractor(dataFetcher: dataFetcher)
+        let presenter = RecipeListPresenter(interactor: interactor,
                                   router: router)
-        let viewController = ViewController(presenter: presenter)
+        let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.delegate = viewController
         interactor.presenter = presenter

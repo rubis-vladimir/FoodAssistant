@@ -8,7 +8,7 @@
 import UIKit
 
 /// Навигация в модуле
-enum Target {
+enum RecipeListTarget {
     /// Добавление элемента
     case addElement
     /// Детальная информация
@@ -16,14 +16,14 @@ enum Target {
 }
 
 /// Протокол управления слоем навигации модуля
-protocol Routing {
+protocol RecipeListRouting {
     /// Переход к следующему экрану
     ///  - Parameter to: вариант перехода
-    func route(to: Target)
+    func route(to: RecipeListTarget)
 }
 
 /// Слой навигации модуля
-final class Router {
+final class RecipeListRouter {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -32,8 +32,8 @@ final class Router {
 }
 
 // MARK: - Routing
-extension Router: Routing {
-    func route(to: Target) {
+extension RecipeListRouter: RecipeListRouting {
+    func route(to: RecipeListTarget) {
         switch to {
         case .addElement:
             /// Настройка модуля

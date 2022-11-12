@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         window = UIWindow()
         let navigationController = UINavigationController()
-        let viewController = Assembly(navigationController: navigationController).assembly()
+        let viewController = RecipeListAssembly(navigationController: navigationController).assembly()
         navigationController.viewControllers = [viewController]
         window?.rootViewController = viewController
         window?.makeKeyAndVisible()

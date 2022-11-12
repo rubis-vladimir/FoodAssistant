@@ -5,6 +5,8 @@
 //  Created by Владимир Рубис on 09.11.2022.
 //
 
+typealias DFM = DataFetcherTranslateManagement & DataFetcherRecipeManagement
+
 import Foundation
 
 /// Протокол работы с запросами Рецептами
