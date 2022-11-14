@@ -19,18 +19,14 @@ final class Assembly {
 // MARK: - Assemblying
 extension Assembly: Assemblying {
     func assembly() -> UIViewController {
-        
-        let networkDF = NetworkDataFetcher()
-        let dataFetcher = DataFetcherService(dataFetcher: networkDF)
-        
         let router = Router(navigationController: navigationController)
-        let interactor = Interactor(dataFetcher: dataFetcher)
+        let interactor = Interactor()
         let presenter = Presenter(interactor: interactor,
                                   router: router)
         let viewController = ViewController(presenter: presenter)
-        
         presenter.delegate = viewController
         interactor.presenter = presenter
+    
         return viewController
     }
 }

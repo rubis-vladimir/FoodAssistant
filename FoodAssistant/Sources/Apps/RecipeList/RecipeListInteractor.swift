@@ -5,20 +5,19 @@
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
-typealias DFM = DataFetcherTranslateManagement & DataFetcherRecipeManagement
 
 import Foundation
 
-/// Протокол управления бизнес логикой модуля
-protocol BusinessLogic {
+/// Протокол управления бизнес логикой модуля RecipeList
+protocol RecipeListBusinessLogic {
     func translate(texts: [String])
     
     func fetchRandomRecipe(number: Int, tags: [String])
     func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?)
 }
 
-/// Слой бизнес логике модуля
-final class Interactor {
+/// Слой бизнес логике модуля RecipeList
+final class RecipeListInteractor {
     weak var presenter: BusinessLogicDelegate?
     private let dataFetcher: DFM
     
@@ -30,7 +29,7 @@ final class Interactor {
 }
 
 // MARK: - BusinessLogic
-extension Interactor: BusinessLogic {
+extension RecipeListInteractor: RecipeListBusinessLogic {
     func translate(texts: [String]) {
         
         let trPar = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
