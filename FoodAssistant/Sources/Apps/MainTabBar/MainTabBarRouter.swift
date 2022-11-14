@@ -16,7 +16,11 @@ protocol MainTabBarRoutable {
 
 /// Слой навигации модуля MainTabBar
 final class MainTabBarRouter {
-    var navigationController: UINavigationController?
+    private let navigationController: UINavigationController
+    
+    init(navigationController: UINavigationController) {
+        self.navigationController = navigationController
+    }
 }
 
 // MARK: - MainTabBarRoutable

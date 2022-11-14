@@ -8,19 +8,19 @@
 import UIKit
 
 /// Протокол управления View-слоем
-protocol Viewable: AnyObject {
+protocol BasketViewable: AnyObject {
     /// Обновление UI
     func updateUI()
     /// Показать ошибку
     func showError()
 }
 
-/// Контроллер представления
-final class ViewController: UIViewController {
+/// Контроллер представления корзины 
+final class BasketViewController: UIViewController {
 
-    private let presenter: Presentation
+    private let presenter: BasketPresentation
     
-    init(presenter: Presentation) {
+    init(presenter: BasketPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
     }
@@ -36,8 +36,8 @@ final class ViewController: UIViewController {
     }
 }
 
-// MARK: - Viewable
-extension ViewController: Viewable {
+// MARK: - BasketViewable
+extension BasketViewController: BasketViewable {
     func updateUI() {
     
     }

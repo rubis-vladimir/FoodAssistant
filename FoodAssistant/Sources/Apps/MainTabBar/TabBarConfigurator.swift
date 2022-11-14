@@ -27,18 +27,9 @@ final class TabBarConfigurator {
     private func setupChildVC(_ viewController: UIViewController,
                               image: UIImage? = nil,
                               selectedImage: UIImage? = nil) -> UIViewController {
+        
         viewController.tabBarItem.image = image
         viewController.tabBarItem.selectedImage = selectedImage
-        
-        /// Конфигурируем VIPER-модуль для Child-VC
-        switch viewController {
-        case viewController as? RecipeListViewController:
-           return RecipeListAssembly(navigationController: navigationController).assembly()
-        case viewController as? ProfileListViewController:
-            ProfileListAssembly(navigationController: navigationController).assembly(viewController: viewController)
-        default: break
-        }
-        
         return viewController
     }
 }
@@ -47,18 +38,25 @@ extension TabBarConfigurator: TabBarConfiguration {
     
     func generate(tabBar: UITabBarController) {
         
-        let c = UIImage.SymbolConfiguration(pointSize: 19, weight: .light)
+        
+        let houseImage = UIImage(named: "house")
+        let selectedHouseImage = UIImage(named: "house.fill")
+        let personImage = UIImage(named: "person")
+        let selectedPersonImage = UIImage(named: "person.fill")
+        
+        let recipeListVC = RecipeListAssembly(navigationController: navigationController).assembly()
+        let basketVC = BasketAssembly(navigationController: navigationController).assembly()
         
         tabBar.viewControllers = [
-            setupChildVC(RecipeListViewController(),
-                         image: UIImage(systemName: "person")?.withConfiguration(c),
-                         selectedImage: UIImage(systemName: "person.fill")?.withConfiguration(c)),
+            setupChildVC(recipeListVC,
+                         image: houseImage,
+                         selectedImage: selectedHouseImage),
             
             UIViewController(),
             
-            setupChildVC(LifeScreenViewController(),
-                         image: UIImage(systemName: "square.split.2x2")?.withConfiguration(c),
-                         selectedImage: UIImage(systemName: "square.split.2x2.fill")?.withConfiguration(c))
+            setupChildVC(basketVC,
+                         image: personImage,
+                         selectedImage: selectedPersonImage)
         ]
         
         tabBar.setViewControllers(tabBar.viewControllers, animated: false)

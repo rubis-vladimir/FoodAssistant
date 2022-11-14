@@ -23,20 +23,13 @@ final class MainTabBarAssembly {
 // MARK: - Assemblying
 extension MainTabBarAssembly: Assemblying {
     func assembly() -> UIViewController {
-        let tb = MainTabBarController()
-        let router = MainTabBarRouter()
-        let presenter = MainTabBarPresenter(tabBarController: tb,
-                                            router: router)
         
-        tb.presenter = presenter
-        router.navigationController = navigationController
+        let router = MainTabBarRouter(navigationController: navigationController)
+        let presenter = MainTabBarPresenter(router: router)
+        let tb = MainTabBarController(presenter: presenter)
+        presenter.tabBarController = tb
         tabBarConfigurator.generate(tabBar: tb)
         return tb
-    }
-    
-    
-    func assembly(viewController: UIViewController) {
-        
     }
 }
 

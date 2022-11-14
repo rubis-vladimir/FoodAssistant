@@ -17,11 +17,10 @@ protocol MainTabBarPresentation {
 /// Слой презентации модуля MainTabBar
 final class MainTabBarPresenter {
     
-    private weak var tabBarController: MainTabBarViewable?
+    weak var tabBarController: MainTabBarViewable?
     private let router: MainTabBarRouter
     
-    init(tabBarController: MainTabBarViewable, router: MainTabBarRouter) {
-        self.tabBarController = tabBarController
+    init(router: MainTabBarRouter) {
         self.router = router
     }
 }

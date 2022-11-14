@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Компоновщик модуля
-final class Assembly {
+/// Компоновщик модуля Basket
+final class BasketAssembly {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -17,13 +17,13 @@ final class Assembly {
 }
 
 // MARK: - Assemblying
-extension Assembly: Assemblying {
+extension BasketAssembly: Assemblying {
     func assembly() -> UIViewController {
-        let router = Router(navigationController: navigationController)
-        let interactor = Interactor()
-        let presenter = Presenter(interactor: interactor,
+        let router = BasketRouter(navigationController: navigationController)
+        let interactor = BasketInteractor()
+        let presenter = BasketPresenter(interactor: interactor,
                                   router: router)
-        let viewController = ViewController(presenter: presenter)
+        let viewController = BasketViewController(presenter: presenter)
         presenter.delegate = viewController
         interactor.presenter = presenter
     
