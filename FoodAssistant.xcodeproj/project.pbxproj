@@ -27,11 +27,11 @@
 		7D2F774B291B9E48009D3444 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774A291B9E48009D3444 /* APIKeys.swift */; };
 		7D2F774D291B9FA8009D3444 /* RecipeFilterParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */; };
 		7D2F774F291BA0E8009D3444 /* [String] + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774E291BA0E8009D3444 /* [String] + String.swift */; };
-		7D4BA4262922AD2100A4393B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4212922AD2000A4393B /* ViewController.swift */; };
-		7D4BA4272922AD2100A4393B /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4222922AD2100A4393B /* Router.swift */; };
-		7D4BA4282922AD2100A4393B /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4232922AD2100A4393B /* Interactor.swift */; };
-		7D4BA4292922AD2100A4393B /* Presenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4242922AD2100A4393B /* Presenter.swift */; };
-		7D4BA42A2922AD2100A4393B /* Assembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4252922AD2100A4393B /* Assembly.swift */; };
+		7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */; };
+		7D4BA4272922AD2100A4393B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */; };
+		7D4BA4282922AD2100A4393B /* UserProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */; };
+		7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4242922AD2100A4393B /* UserProfilePresenter.swift */; };
+		7D4BA42A2922AD2100A4393B /* UserProfileAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4252922AD2100A4393B /* UserProfileAssembly.swift */; };
 		7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FD8B291FBFAD0085D7FF /* MainTabBarPresenter.swift */; };
 		7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FD8C291FBFAD0085D7FF /* MainTabbarController.swift */; };
 		7D77FD92291FBFAD0085D7FF /* MainTabBarAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FD8D291FBFAD0085D7FF /* MainTabBarAssembly.swift */; };
@@ -42,6 +42,26 @@
 		7D77FDAB291FC56C0085D7FF /* BasketViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FDA6291FC56C0085D7FF /* BasketViewController.swift */; };
 		7D77FDAC291FC56C0085D7FF /* BasketAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FDA7291FC56C0085D7FF /* BasketAssembly.swift */; };
 		7D77FDAD291FC56C0085D7FF /* BasketRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D77FDA8291FC56C0085D7FF /* BasketRouter.swift */; };
+		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
+		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
+		7DEF8E132922CB390016A207 /* UIView + Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow.swift */; };
+		7DEF8E152923B03E0016A207 /* Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E142923B03E0016A207 /* Palette.swift */; };
+		7DEF8E182923C4F10016A207 /* TVCBuilderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E172923C4F10016A207 /* TVCBuilderProtocol.swift */; };
+		7DEF8E1A2923C4FE0016A207 /* TVFactoryProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E192923C4FE0016A207 /* TVFactoryProtocol.swift */; };
+		7DEF8E212923C6580016A207 /* UPFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E202923C6580016A207 /* UPFactory.swift */; };
+		7DEF8E232923CFA70016A207 /* UPAvatarCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E222923CFA70016A207 /* UPAvatarCellBuilder.swift */; };
+		7DEF8E252923D05C0016A207 /* UPAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E242923D05C0016A207 /* UPAvatarCell.swift */; };
+		7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */; };
+		7DEF8E292923D3F70016A207 /* UITableView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */; };
+		7DEF8E2B2923DD250016A207 /* UPShortAvatarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E2A2923DD250016A207 /* UPShortAvatarCell.swift */; };
+		7DEF8E2D2923DD610016A207 /* UPShortAvatarCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E2C2923DD610016A207 /* UPShortAvatarCellBuilder.swift */; };
+		7DEF8E2F2923E0C40016A207 /* UPTabSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E2E2923E0C40016A207 /* UPTabSetCell.swift */; };
+		7DEF8E312923E0D10016A207 /* UPTabSetCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E302923E0D10016A207 /* UPTabSetCellBuilder.swift */; };
+		7DEF8E332923F40A0016A207 /* UPFridgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */; };
+		7DEF8E352923F4400016A207 /* UPFavoriteRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */; };
+		7DEF8E372923F6540016A207 /* UPCustomTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E362923F6540016A207 /* UPCustomTagView.swift */; };
+		7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */; };
+		7DEF8E3B2925934E0016A207 /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */; };
 		7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */; };
 		7DFEB5E0291C2FAA008C28FC /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */; };
 		7DFEB5E2291C32F0008C28FC /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E1291C32F0008C28FC /* Recipe.swift */; };
@@ -92,11 +112,11 @@
 		7D2F774A291B9E48009D3444 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFilterParameters.swift; sourceTree = "<group>"; };
 		7D2F774E291BA0E8009D3444 /* [String] + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "[String] + String.swift"; sourceTree = "<group>"; };
-		7D4BA4212922AD2000A4393B /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7D4BA4222922AD2100A4393B /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
-		7D4BA4232922AD2100A4393B /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		7D4BA4242922AD2100A4393B /* Presenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Presenter.swift; sourceTree = "<group>"; };
-		7D4BA4252922AD2100A4393B /* Assembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assembly.swift; sourceTree = "<group>"; };
+		7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
+		7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileInteractor.swift; sourceTree = "<group>"; };
+		7D4BA4242922AD2100A4393B /* UserProfilePresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfilePresenter.swift; sourceTree = "<group>"; };
+		7D4BA4252922AD2100A4393B /* UserProfileAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileAssembly.swift; sourceTree = "<group>"; };
 		7D77FD8B291FBFAD0085D7FF /* MainTabBarPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarPresenter.swift; sourceTree = "<group>"; };
 		7D77FD8C291FBFAD0085D7FF /* MainTabbarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabbarController.swift; sourceTree = "<group>"; };
 		7D77FD8D291FBFAD0085D7FF /* MainTabBarAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarAssembly.swift; sourceTree = "<group>"; };
@@ -107,6 +127,26 @@
 		7D77FDA6291FC56C0085D7FF /* BasketViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketViewController.swift; sourceTree = "<group>"; };
 		7D77FDA7291FC56C0085D7FF /* BasketAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketAssembly.swift; sourceTree = "<group>"; };
 		7D77FDA8291FC56C0085D7FF /* BasketRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasketRouter.swift; sourceTree = "<group>"; };
+		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
+		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
+		7DEF8E122922CB390016A207 /* UIView + Shadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow.swift"; sourceTree = "<group>"; };
+		7DEF8E142923B03E0016A207 /* Palette.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Palette.swift; sourceTree = "<group>"; };
+		7DEF8E172923C4F10016A207 /* TVCBuilderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVCBuilderProtocol.swift; sourceTree = "<group>"; };
+		7DEF8E192923C4FE0016A207 /* TVFactoryProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVFactoryProtocol.swift; sourceTree = "<group>"; };
+		7DEF8E202923C6580016A207 /* UPFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFactory.swift; sourceTree = "<group>"; };
+		7DEF8E222923CFA70016A207 /* UPAvatarCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPAvatarCellBuilder.swift; sourceTree = "<group>"; };
+		7DEF8E242923D05C0016A207 /* UPAvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPAvatarCell.swift; sourceTree = "<group>"; };
+		7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView + Extensions.swift"; sourceTree = "<group>"; };
+		7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView + Extensions.swift"; sourceTree = "<group>"; };
+		7DEF8E2A2923DD250016A207 /* UPShortAvatarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPShortAvatarCell.swift; sourceTree = "<group>"; };
+		7DEF8E2C2923DD610016A207 /* UPShortAvatarCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPShortAvatarCellBuilder.swift; sourceTree = "<group>"; };
+		7DEF8E2E2923E0C40016A207 /* UPTabSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPTabSetCell.swift; sourceTree = "<group>"; };
+		7DEF8E302923E0D10016A207 /* UPTabSetCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPTabSetCellBuilder.swift; sourceTree = "<group>"; };
+		7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFridgeCell.swift; sourceTree = "<group>"; };
+		7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFavoriteRecipeCell.swift; sourceTree = "<group>"; };
+		7DEF8E362923F6540016A207 /* UPCustomTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCustomTagView.swift; sourceTree = "<group>"; };
+		7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCustomSegmentedControl.swift; sourceTree = "<group>"; };
+		7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
 		7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
 		7DFEB5E1291C32F0008C28FC /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
@@ -216,6 +256,12 @@
 			isa = PBXGroup;
 			children = (
 				7D2F774E291BA0E8009D3444 /* [String] + String.swift */,
+				7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */,
+				7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */,
+				7DEF8E122922CB390016A207 /* UIView + Shadow.swift */,
+				7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */,
+				7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */,
+				7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -223,10 +269,10 @@
 		7D2F7729291A95BD009D3444 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
-				7D4BA4202922A85000A4393B /* Profile */,
-				7D77FDA3291FC5360085D7FF /* Basket */,
 				7D77FD8A291FBF250085D7FF /* MainTabBar */,
 				7D2F772A291A969E009D3444 /* RecipeList */,
+				7D77FDA3291FC5360085D7FF /* Basket */,
+				7D4BA4202922A85000A4393B /* UserProfile */,
 			);
 			path = Apps;
 			sourceTree = "<group>";
@@ -265,6 +311,8 @@
 				7D2F772D291A9717009D3444 /* Assemblying.swift */,
 				7D2F7740291A9A44009D3444 /* RequestBuilding.swift */,
 				7D2F7747291A9DE2009D3444 /* LocalizedError.swift */,
+				7DEF8E172923C4F10016A207 /* TVCBuilderProtocol.swift */,
+				7DEF8E192923C4FE0016A207 /* TVFactoryProtocol.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -290,22 +338,23 @@
 			isa = PBXGroup;
 			children = (
 				7D2F774A291B9E48009D3444 /* APIKeys.swift */,
+				7DEF8E142923B03E0016A207 /* Palette.swift */,
 				7DFEB5EC291C3DA1008C28FC /* Recipe */,
 				7DFEB5EB291C3D85008C28FC /* Translate */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
 		};
-		7D4BA4202922A85000A4393B /* Profile */ = {
+		7D4BA4202922A85000A4393B /* UserProfile */ = {
 			isa = PBXGroup;
 			children = (
-				7D4BA4252922AD2100A4393B /* Assembly.swift */,
-				7D4BA4232922AD2100A4393B /* Interactor.swift */,
-				7D4BA4242922AD2100A4393B /* Presenter.swift */,
-				7D4BA4222922AD2100A4393B /* Router.swift */,
-				7D4BA4212922AD2000A4393B /* ViewController.swift */,
+				7DEF8E162923C4CC0016A207 /* Views */,
+				7D4BA4252922AD2100A4393B /* UserProfileAssembly.swift */,
+				7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */,
+				7D4BA4242922AD2100A4393B /* UserProfilePresenter.swift */,
+				7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */,
 			);
-			path = Profile;
+			path = UserProfile;
 			sourceTree = "<group>";
 		};
 		7D77FD8A291FBF250085D7FF /* MainTabBar */ = {
@@ -323,13 +372,72 @@
 		7D77FDA3291FC5360085D7FF /* Basket */ = {
 			isa = PBXGroup;
 			children = (
-				7D77FDA7291FC56C0085D7FF /* BasketAssembly.swift */,
+				7D77FDA6291FC56C0085D7FF /* BasketViewController.swift */,
 				7D77FDA4291FC56C0085D7FF /* BasketInteractor.swift */,
 				7D77FDA5291FC56C0085D7FF /* BasketPresenter.swift */,
 				7D77FDA8291FC56C0085D7FF /* BasketRouter.swift */,
-				7D77FDA6291FC56C0085D7FF /* BasketViewController.swift */,
+				7D77FDA7291FC56C0085D7FF /* BasketAssembly.swift */,
 			);
 			path = Basket;
+			sourceTree = "<group>";
+		};
+		7DEF8E162923C4CC0016A207 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E1B2923C5F00016A207 /* Controllers */,
+				7DEF8E1C2923C5FE0016A207 /* Cells */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7DEF8E1B2923C5F00016A207 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		7DEF8E1C2923C5FE0016A207 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E1E2923C61E0016A207 /* Views */,
+				7DEF8E1D2923C6030016A207 /* Builders */,
+				7DEF8E1F2923C6270016A207 /* Factory */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7DEF8E1D2923C6030016A207 /* Builders */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E222923CFA70016A207 /* UPAvatarCellBuilder.swift */,
+				7DEF8E2C2923DD610016A207 /* UPShortAvatarCellBuilder.swift */,
+				7DEF8E302923E0D10016A207 /* UPTabSetCellBuilder.swift */,
+			);
+			path = Builders;
+			sourceTree = "<group>";
+		};
+		7DEF8E1E2923C61E0016A207 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E242923D05C0016A207 /* UPAvatarCell.swift */,
+				7DEF8E2A2923DD250016A207 /* UPShortAvatarCell.swift */,
+				7DEF8E2E2923E0C40016A207 /* UPTabSetCell.swift */,
+				7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */,
+				7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */,
+				7DEF8E362923F6540016A207 /* UPCustomTagView.swift */,
+				7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7DEF8E1F2923C6270016A207 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E202923C6580016A207 /* UPFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		7DFEB5DC291C2F14008C28FC /* Workers */ = {
@@ -492,37 +600,57 @@
 				7D2F7733291A9717009D3444 /* RecipeListInteractor.swift in Sources */,
 				7D77FDAC291FC56C0085D7FF /* BasketAssembly.swift in Sources */,
 				7D2F7741291A9A44009D3444 /* RequestBuilding.swift in Sources */,
+				7DEF8E2D2923DD610016A207 /* UPShortAvatarCellBuilder.swift in Sources */,
+				7DEF8E292923D3F70016A207 /* UITableView + Extensions.swift in Sources */,
+				7DEF8E182923C4F10016A207 /* TVCBuilderProtocol.swift in Sources */,
 				7D2F774B291B9E48009D3444 /* APIKeys.swift in Sources */,
 				7D2F774D291B9FA8009D3444 /* RecipeFilterParameters.swift in Sources */,
 				7D77FDAD291FC56C0085D7FF /* BasketRouter.swift in Sources */,
 				7D2F76FC291A94D4009D3444 /* FoodAssistant.xcdatamodeld in Sources */,
+				7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */,
+				7DEF8E152923B03E0016A207 /* Palette.swift in Sources */,
+				7DEF8E332923F40A0016A207 /* UPFridgeCell.swift in Sources */,
+				7DEF8E312923E0D10016A207 /* UPTabSetCellBuilder.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
+				7DEF8E1A2923C4FE0016A207 /* TVFactoryProtocol.swift in Sources */,
 				7DFEB5E0291C2FAA008C28FC /* DataFetcherService.swift in Sources */,
 				7DFEB5EA291C3D36008C28FC /* Translate.swift in Sources */,
 				7D2F7732291A9717009D3444 /* Assemblying.swift in Sources */,
 				7D2F7734291A9717009D3444 /* RecipeListRouter.swift in Sources */,
-				7D4BA4282922AD2100A4393B /* Interactor.swift in Sources */,
-				7D4BA42A2922AD2100A4393B /* Assembly.swift in Sources */,
+				7D4BA4282922AD2100A4393B /* UserProfileInteractor.swift in Sources */,
+				7DEF8E252923D05C0016A207 /* UPAvatarCell.swift in Sources */,
+				7DEF8E2B2923DD250016A207 /* UPShortAvatarCell.swift in Sources */,
+				7D4BA42A2922AD2100A4393B /* UserProfileAssembly.swift in Sources */,
 				7D2F7748291A9DE2009D3444 /* LocalizedError.swift in Sources */,
 				7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */,
-				7D4BA4262922AD2100A4393B /* ViewController.swift in Sources */,
+				7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */,
 				7D77FDA9291FC56C0085D7FF /* BasketInteractor.swift in Sources */,
+				7DEF8E132922CB390016A207 /* UIView + Shadow.swift in Sources */,
+				7DEF8E372923F6540016A207 /* UPCustomTagView.swift in Sources */,
 				7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */,
+				7DEF8E2F2923E0C40016A207 /* UPTabSetCell.swift in Sources */,
+				7DEF8E212923C6580016A207 /* UPFactory.swift in Sources */,
 				7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */,
 				7D2F7746291A9C47009D3444 /* DataFetcherError.swift in Sources */,
 				7D2F774F291BA0E8009D3444 /* [String] + String.swift in Sources */,
 				7D2F7730291A9717009D3444 /* RecipeListAssembly.swift in Sources */,
 				7D2F7731291A9717009D3444 /* RecipeListPresenter.swift in Sources */,
-				7D4BA4272922AD2100A4393B /* Router.swift in Sources */,
+				7DEF8E352923F4400016A207 /* UPFavoriteRecipeCell.swift in Sources */,
+				7D4BA4272922AD2100A4393B /* UserProfileRouter.swift in Sources */,
 				7D2F773F291A99B6009D3444 /* RecipeRequest.swift in Sources */,
+				7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */,
 				7D77FDAB291FC56C0085D7FF /* BasketViewController.swift in Sources */,
 				7DFEB5E2291C32F0008C28FC /* Recipe.swift in Sources */,
 				7D77FD92291FBFAD0085D7FF /* MainTabBarAssembly.swift in Sources */,
 				7D77FDAA291FC56C0085D7FF /* BasketPresenter.swift in Sources */,
-				7D4BA4292922AD2100A4393B /* Presenter.swift in Sources */,
+				7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
+				7DEF8E3B2925934E0016A207 /* UIView + Constraints.swift in Sources */,
+				7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */,
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,
+				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,
+				7DEF8E232923CFA70016A207 /* UPAvatarCellBuilder.swift in Sources */,
 				7D77FD94291FBFAD0085D7FF /* TabBarConfigurator.swift in Sources */,
 				7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */,
 			);

@@ -17,6 +17,7 @@ final class MainTabBarAssembly {
          tabBarConfigurator: TabBarConfiguration) {
         self.navigationController = navigationController
         self.tabBarConfigurator = tabBarConfigurator
+        navigationController.navigationBar.isHidden = true
     }
 }
 

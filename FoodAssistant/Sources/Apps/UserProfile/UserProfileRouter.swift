@@ -1,5 +1,5 @@
 //
-//  Router.swift
+//  UserProfileRouter.swift
 //  ModuleVIPER
 //
 //  Created by Владимир Рубис on 30.10.2022.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// Навигация в модуле
-enum Target {
+enum UserProfileTarget {
     /// Добавление элемента
     case addElement
     /// Детальная информация
@@ -16,14 +16,14 @@ enum Target {
 }
 
 /// Протокол управления слоем навигации модуля
-protocol Routing {
+protocol UserProfileRouting {
     /// Переход к следующему экрану
     ///  - Parameter to: вариант перехода
-    func route(to: Target)
+    func route(to: UserProfileTarget)
 }
 
 /// Слой навигации модуля
-final class Router {
+final class UserProfileRouter {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -32,8 +32,8 @@ final class Router {
 }
 
 // MARK: - Routing
-extension Router: Routing {
-    func route(to: Target) {
+extension UserProfileRouter: UserProfileRouting {
+    func route(to: UserProfileTarget) {
         switch to {
         case .addElement:
             /// Настройка модуля

@@ -43,6 +43,9 @@ final class MainTabBarController: UITabBarController {
         super.viewDidLoad()
         
         setUpTabBar()
+        setupNavigationBar()
+        guard let navC = navigationController else { return }
+        navC.navigationBar.isHidden = true
     }
     
     func setUpTabBar() {
@@ -53,7 +56,7 @@ final class MainTabBarController: UITabBarController {
         let width = self.tabBar.bounds.width - x * 2
         let height = self.tabBar.bounds.height + y * 1.5
         layerHeight = height
-        layer.fillColor = #colorLiteral(red: 0.8609796166, green: 0.8864883184, blue: 0.791760385, alpha: 1).cgColor
+        layer.fillColor = Palette.bgColor.color.cgColor
         layer.path = UIBezierPath(roundedRect: CGRect(x: x,
                                                       y: self.tabBar.bounds.minY - y,
                                                       width: width,
@@ -61,7 +64,7 @@ final class MainTabBarController: UITabBarController {
                                   cornerRadius: height / 2).cgPath
         
         // tab bar shadow
-        layer.shadowColor = #colorLiteral(red: 0.01498480421, green: 0.1761765778, blue: 0.04584238678, alpha: 1).cgColor
+        layer.shadowColor = Palette.shadowColor.color.cgColor
         layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
         layer.shadowRadius = 5.0
         layer.shadowOpacity = 0.5
@@ -72,8 +75,8 @@ final class MainTabBarController: UITabBarController {
         // fix items positioning
         self.tabBar.itemWidth = width / 6
         self.tabBar.itemPositioning = .centered
-        self.tabBar.tintColor = #colorLiteral(red: 0.6, green: 0.1921568627, blue: 0.07843137255, alpha: 1)
-        self.tabBar.unselectedItemTintColor = #colorLiteral(red: 0.650909543, green: 0.4934213161, blue: 0.4851912856, alpha: 1)
+        self.tabBar.tintColor = Palette.darkColor.color
+        self.tabBar.unselectedItemTintColor = Palette.lightColor.color
         
         // add middle button
         addMiddleButton()
@@ -96,7 +99,7 @@ final class MainTabBarController: UITabBarController {
         let size = CGFloat(50)
         let constant: CGFloat = -20 + ( layerHeight / 2 )
         middleButton.layer.cornerRadius = size / 2
-        middleButton.backgroundColor = #colorLiteral(red: 0.6, green: 0.1921568627, blue: 0.07843137255, alpha: 1)
+        middleButton.backgroundColor = Palette.darkColor.color
         
         // set constraints
         let constraints = [
@@ -111,7 +114,7 @@ final class MainTabBarController: UITabBarController {
         }
         
         // shadow
-        middleButton.layer.shadowColor = #colorLiteral(red: 0.01498480421, green: 0.1761765778, blue: 0.04584238678, alpha: 1).cgColor
+        middleButton.layer.shadowColor = Palette.shadowColor.color.cgColor
         middleButton.layer.shadowOffset = CGSize(width: 0, height: 4)
         middleButton.layer.shadowOpacity = 0.65
         middleButton.layer.shadowRadius = 8
@@ -128,6 +131,30 @@ final class MainTabBarController: UITabBarController {
     @objc func routeToCreateEvent(sender: UIButton) {
         print("XXX")
         presenter.readyForRoute()
+    }
+    
+    func setupNavigationBar() {
+        let saveRightButton = createCustomBarButton(
+            imageName: "xmark",
+            selector: #selector(saveAndExitRightButtonTapped)
+        )
+        let cancelLeftButton = createCustomBarButton(
+            imageName: "xmark",
+            selector: #selector(cancelLeftButtonTapped)
+        )
+        
+        navigationItem.rightBarButtonItems = [saveRightButton]
+        navigationItem.leftBarButtonItems = [cancelLeftButton]
+    }
+    
+    /// Сохраняет событие и скрывает экран
+    @objc private func saveAndExitRightButtonTapped() {
+        
+    }
+    
+    /// Скрывает экран
+    @objc private func cancelLeftButtonTapped() {
+        
     }
 }
 

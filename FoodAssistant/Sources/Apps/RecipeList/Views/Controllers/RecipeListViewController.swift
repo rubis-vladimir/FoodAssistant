@@ -33,6 +33,7 @@ final class RecipeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        tabBarController?.navigationController?.navigationBar.isHidden = false
 //        presenter.testTranslate()
 //        presenter.testGetRandom()
 //        presenter.testGetRecipe()

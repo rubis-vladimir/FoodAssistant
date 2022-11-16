@@ -1,5 +1,5 @@
 //
-//  Assembly.swift
+//  UserProfileAssembly.swift
 //  ModuleVIPER
 //
 //  Created by Владимир Рубис on 30.10.2022.
@@ -7,8 +7,8 @@
 
 import UIKit
 
-/// Компоновщик модуля
-final class Assembly {
+/// Компоновщик модуля UserProfile
+final class UserProfileAssembly {
     private let navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {
@@ -17,13 +17,13 @@ final class Assembly {
 }
 
 // MARK: - Assemblying
-extension Assembly: Assemblying {
+extension UserProfileAssembly: Assemblying {
     func assembly() -> UIViewController {
-        let router = Router(navigationController: navigationController)
-        let interactor = Interactor()
-        let presenter = Presenter(interactor: interactor,
+        let router = UserProfileRouter(navigationController: navigationController)
+        let interactor = UserProfileInteractor()
+        let presenter = UserProfilePresenter(interactor: interactor,
                                   router: router)
-        let viewController = ViewController(presenter: presenter)
+        let viewController = UserProfileViewController(presenter: presenter)
         presenter.delegate = viewController
         interactor.presenter = presenter
     

@@ -27,14 +27,10 @@ final class MainTabBarRouter {
 extension MainTabBarRouter: MainTabBarRoutable {
     
     func routeToAddEvent() {
-//        guard let nc = navigationController else { return }
-//        let vc = AddEventViewController()
-//        
-//        AddEventAssembly(navigationController: nc).assembly(viewController: vc,
-//                                                            editModel: nil)
-//        
-//        nc.createCustomTransition(with: .moveIn)
-//        
-//        nc.pushViewController(vc, animated: false)
+        let vc = BasketAssembly(navigationController: navigationController).assembly()
+        
+        navigationController.createCustomTransition(with: .moveIn)
+        
+        navigationController.pushViewController(vc, animated: false)
     }
 }

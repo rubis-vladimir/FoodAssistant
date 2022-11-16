@@ -38,14 +38,17 @@ extension TabBarConfigurator: TabBarConfiguration {
     
     func generate(tabBar: UITabBarController) {
         
-        
         let houseImage = UIImage(named: "house")
         let selectedHouseImage = UIImage(named: "house.fill")
         let personImage = UIImage(named: "person")
         let selectedPersonImage = UIImage(named: "person.fill")
         
+        
         let recipeListVC = RecipeListAssembly(navigationController: navigationController).assembly()
-        let basketVC = BasketAssembly(navigationController: navigationController).assembly()
+//        let navigationController1 = UINavigationController(rootViewController: recipeListVC)
+        
+        let userProfileVC = UserProfileAssembly(navigationController: navigationController).assembly()
+        let navigationController2 = UINavigationController(rootViewController: userProfileVC)
         
         tabBar.viewControllers = [
             setupChildVC(recipeListVC,
@@ -54,12 +57,11 @@ extension TabBarConfigurator: TabBarConfiguration {
             
             UIViewController(),
             
-            setupChildVC(basketVC,
+            setupChildVC(navigationController2,
                          image: personImage,
                          selectedImage: selectedPersonImage)
         ]
         
         tabBar.setViewControllers(tabBar.viewControllers, animated: false)
-        
     }
 }
