@@ -18,22 +18,12 @@ protocol UserProfileViewable: AnyObject {
 }
 
 /// Контроллер представления
-final class UserProfileViewController: UITableViewController {
+final class UserProfileViewController: UIViewController {
     
     /// Фабрика настройки табличного представления
     private var factory: TVFactoryProtocol?
     
-//    lazy var userContainer: UIView = {
-//        var view = UIView()
-//        view.backgroundColor = Palette.darkColor.color
-//        view.layer.addShadow()
-//        view.layer.cornerRadius = 25
-//        view.translatesAutoresizingMaskIntoConstraints = false
-//        return view
-//    }()
-    
-    
-
+    private var tableView = UITableView()
     private let presenter: UserProfilePresentation
     
     init(presenter: UserProfilePresentation) {
@@ -45,13 +35,13 @@ final class UserProfileViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        setupNavigationBar()
+        setupNavigationBar()
         
-//        setupElements()
+        
+        
         factory = UPFactory(tableView: tableView,
                                      delegate: presenter,
                                      buildType: .start)
@@ -64,42 +54,41 @@ final class UserProfileViewController: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        
+        setupElements()
     }
     
     func setupElements() {
-//        
-//        view.addSubview(userContainer)
-//        
-//        NSLayoutConstraint.activate([
-//            userContainer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            userContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: 80),
-//            userContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-//            userContainer.heightAnchor.constraint(equalToConstant: 250)
-//        ])
+        let titleView = UPCustomSegmentedControl()
+        view.addSubview(titleView)
+        view.addSubview(tableView)
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            titleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor),
+            titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleView.heightAnchor.constraint(equalToConstant: 42),
+            
+            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 5),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
     
     func setupNavigationBar() {
-//        let saveRightButton = createCustomBarButton(
-//            imageName: "xmark",
-//            selector: #selector(saveAndExitRightButtonTapped)
-//        )
-        let cancelLeftButton = createCustomBarButton(
-            imageName: "xmark",
-            selector: #selector(cancelLeftButtonTapped)
+        let saveRightButton = createCustomBarButton(
+            imageName: "gearshape.fill",
+            selector: #selector(saveAndExitRightButtonTapped)
         )
         
-//        navigationItem.rightBarButtonItems = [saveRightButton]
-        navigationItem.leftBarButtonItems = [cancelLeftButton]
+        navigationItem.title = "Мой помощник"
+        navigationItem.rightBarButtonItems = [saveRightButton]
     }
     
     /// Сохраняет событие и скрывает экран
     @objc private func saveAndExitRightButtonTapped() {
-        
-    }
-    
-    /// Скрывает экран
-    @objc private func cancelLeftButtonTapped() {
         
     }
 }

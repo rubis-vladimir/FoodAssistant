@@ -28,7 +28,7 @@ final class UPFridgeCell: UITableViewCell {
     }
     
     func setupConstraints() {
-        
+         
         addSubview(checkButton)
         
         NSLayoutConstraint.activate([

@@ -27,6 +27,8 @@
 		7D2F774B291B9E48009D3444 /* APIKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774A291B9E48009D3444 /* APIKeys.swift */; };
 		7D2F774D291B9FA8009D3444 /* RecipeFilterParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */; };
 		7D2F774F291BA0E8009D3444 /* [String] + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774E291BA0E8009D3444 /* [String] + String.swift */; };
+		7D3EDE352926AD6B002BC96A /* RecipeListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE342926AD6B002BC96A /* RecipeListSection.swift */; };
+		7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE372926C4A7002BC96A /* Icons.swift */; };
 		7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */; };
 		7D4BA4272922AD2100A4393B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */; };
 		7D4BA4282922AD2100A4393B /* UserProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */; };
@@ -59,7 +61,6 @@
 		7DEF8E312923E0D10016A207 /* UPTabSetCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E302923E0D10016A207 /* UPTabSetCellBuilder.swift */; };
 		7DEF8E332923F40A0016A207 /* UPFridgeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */; };
 		7DEF8E352923F4400016A207 /* UPFavoriteRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */; };
-		7DEF8E372923F6540016A207 /* UPCustomTagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E362923F6540016A207 /* UPCustomTagView.swift */; };
 		7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */; };
 		7DEF8E3B2925934E0016A207 /* UIView + Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */; };
 		7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */; };
@@ -112,6 +113,8 @@
 		7D2F774A291B9E48009D3444 /* APIKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKeys.swift; sourceTree = "<group>"; };
 		7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFilterParameters.swift; sourceTree = "<group>"; };
 		7D2F774E291BA0E8009D3444 /* [String] + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "[String] + String.swift"; sourceTree = "<group>"; };
+		7D3EDE342926AD6B002BC96A /* RecipeListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListSection.swift; sourceTree = "<group>"; };
+		7D3EDE372926C4A7002BC96A /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileInteractor.swift; sourceTree = "<group>"; };
@@ -144,7 +147,6 @@
 		7DEF8E302923E0D10016A207 /* UPTabSetCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPTabSetCellBuilder.swift; sourceTree = "<group>"; };
 		7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFridgeCell.swift; sourceTree = "<group>"; };
 		7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFavoriteRecipeCell.swift; sourceTree = "<group>"; };
-		7DEF8E362923F6540016A207 /* UPCustomTagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCustomTagView.swift; sourceTree = "<group>"; };
 		7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCustomSegmentedControl.swift; sourceTree = "<group>"; };
 		7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Constraints.swift"; sourceTree = "<group>"; };
 		7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 		7D2F7726291A9598009D3444 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				7D3EDE362926C495002BC96A /* Constants */,
 				7D2F76F1291A94D4009D3444 /* AppDelegate.swift */,
 				7DFEB5DC291C2F14008C28FC /* Workers */,
 				7D2F7749291B9E2F009D3444 /* DataModels */,
@@ -338,11 +341,19 @@
 			isa = PBXGroup;
 			children = (
 				7D2F774A291B9E48009D3444 /* APIKeys.swift */,
-				7DEF8E142923B03E0016A207 /* Palette.swift */,
 				7DFEB5EC291C3DA1008C28FC /* Recipe */,
 				7DFEB5EB291C3D85008C28FC /* Translate */,
 			);
 			path = DataModels;
+			sourceTree = "<group>";
+		};
+		7D3EDE362926C495002BC96A /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				7DEF8E142923B03E0016A207 /* Palette.swift */,
+				7D3EDE372926C4A7002BC96A /* Icons.swift */,
+			);
+			path = Constants;
 			sourceTree = "<group>";
 		};
 		7D4BA4202922A85000A4393B /* UserProfile */ = {
@@ -426,7 +437,6 @@
 				7DEF8E2E2923E0C40016A207 /* UPTabSetCell.swift */,
 				7DEF8E322923F40A0016A207 /* UPFridgeCell.swift */,
 				7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */,
-				7DEF8E362923F6540016A207 /* UPCustomTagView.swift */,
 				7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */,
 			);
 			path = Views;
@@ -463,6 +473,7 @@
 			children = (
 				7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */,
 				7DFEB5E1291C32F0008C28FC /* Recipe.swift */,
+				7D3EDE342926AD6B002BC96A /* RecipeListSection.swift */,
 			);
 			path = Recipe;
 			sourceTree = "<group>";
@@ -608,6 +619,7 @@
 				7D77FDAD291FC56C0085D7FF /* BasketRouter.swift in Sources */,
 				7D2F76FC291A94D4009D3444 /* FoodAssistant.xcdatamodeld in Sources */,
 				7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */,
+				7D3EDE352926AD6B002BC96A /* RecipeListSection.swift in Sources */,
 				7DEF8E152923B03E0016A207 /* Palette.swift in Sources */,
 				7DEF8E332923F40A0016A207 /* UPFridgeCell.swift in Sources */,
 				7DEF8E312923E0D10016A207 /* UPTabSetCellBuilder.swift in Sources */,
@@ -626,7 +638,6 @@
 				7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */,
 				7D77FDA9291FC56C0085D7FF /* BasketInteractor.swift in Sources */,
 				7DEF8E132922CB390016A207 /* UIView + Shadow.swift in Sources */,
-				7DEF8E372923F6540016A207 /* UPCustomTagView.swift in Sources */,
 				7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */,
 				7DEF8E2F2923E0C40016A207 /* UPTabSetCell.swift in Sources */,
 				7DEF8E212923C6580016A207 /* UPFactory.swift in Sources */,
@@ -646,6 +657,7 @@
 				7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
+				7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */,
 				7DEF8E3B2925934E0016A207 /* UIView + Constraints.swift in Sources */,
 				7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */,
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,

@@ -27,22 +27,6 @@ final class UPTabSetCell: UITableViewCell {
         return button
     }()
     
-    private lazy var customTagButton1: UPCustomTagButtonView = {
-        var button = UPCustomTagButtonView()
-        
-        button.setup(selector: #selector(testMethod), image: UIImage(named: "house")!, text: "TEST1")
-        
-        return button
-    }()
-    
-    private lazy var customTagButton2: UPCustomTagButtonView = {
-        var button = UPCustomTagButtonView()
-        
-        button.setup(selector: #selector(testMethod), image: UIImage(named: "basket")!, text: "TEST2")
-        
-        return button
-    }()
-    
     private var stack = UIStackView()
     
     private var customView = UPCustomSegmentedControl()
@@ -57,35 +41,26 @@ final class UPTabSetCell: UITableViewCell {
     
     func setupTest() {
     
-//        let customView = UPCustomSegmentedControl(buttonTitles: buttonTitles)
-//        customView.buttonTitles = buttonTitles
         customView.translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(customView)
         customView.layer.cornerRadius = customView.frame.height / 2
         
-        NSLayoutConstraint.activate([
-            customView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            customView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            customView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
-            customView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        ])
+        
+        customView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        customView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
+        customView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        customView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
+        
         
     }
     
     func setupConstraints() {
         
         stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.addArrangedSubview(customTagButton1)
-        stack.addArrangedSubview(customTagButton2)
         addSubview(stack)
         
-        NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            stack.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            stack.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
-            stack.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20)
-        ])
+        stack.pinEdges(to: self, constant: 20)
     }
     
     @objc func testMethod() {

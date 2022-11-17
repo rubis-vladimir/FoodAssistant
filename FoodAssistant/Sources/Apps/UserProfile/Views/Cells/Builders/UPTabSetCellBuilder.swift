@@ -10,7 +10,7 @@ import UIKit
 /// Строитель ячейки UserProfileCell
 final class UPTabSetCellBuilder {
     /// Высота ячейки
-    private let height = CGFloat(100)
+    private let height = CGFloat(50)
     /// Делегат для обработки нажатия на кнопку
     private weak var delegate: UserProfilePresentation?
     

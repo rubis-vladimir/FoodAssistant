@@ -97,7 +97,7 @@ extension UPFactory: TVFactoryProtocol {
         switch buildType {
         case .start:
             builders.append(contentsOf: [createBuilder(type: .avatarCell),
-                                         createBuilder(type: .tabSetCell)])
+                                         createBuilder(type: .shortAvatarCell)])
         case .tagFridge:
             builders.append(contentsOf: [createBuilder(type: .shortAvatarCell),
                                          createBuilder(type: .tabSetCell),

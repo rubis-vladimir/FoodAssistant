@@ -38,20 +38,20 @@ extension TabBarConfigurator: TabBarConfiguration {
     
     func generate(tabBar: UITabBarController) {
         
-        let houseImage = UIImage(named: "house")
-        let selectedHouseImage = UIImage(named: "house.fill")
+        let houseImage = Icons.house.image
+        let selectedHouseImage = Icons.houseFill.image
         let personImage = UIImage(named: "person")
         let selectedPersonImage = UIImage(named: "person.fill")
         
         
         let recipeListVC = RecipeListAssembly(navigationController: navigationController).assembly()
-//        let navigationController1 = UINavigationController(rootViewController: recipeListVC)
+        let navigationController1 = UINavigationController(rootViewController: recipeListVC)
         
         let userProfileVC = UserProfileAssembly(navigationController: navigationController).assembly()
         let navigationController2 = UINavigationController(rootViewController: userProfileVC)
         
         tabBar.viewControllers = [
-            setupChildVC(recipeListVC,
+            setupChildVC(navigationController1,
                          image: houseImage,
                          selectedImage: selectedHouseImage),
             

@@ -12,8 +12,8 @@ extension UIView {
     func pinEdges(to other: UIView, constant: CGFloat = 0) {
         leadingAnchor.constraint(equalTo: other.leadingAnchor, constant: constant).isActive = true
         trailingAnchor.constraint(equalTo: other.trailingAnchor, constant: -constant).isActive = true
-        topAnchor.constraint(equalTo: other.topAnchor, constant: constant).isActive = true
-        bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -constant).isActive = true
+        topAnchor.constraint(equalTo: other.topAnchor, constant: constant / 2).isActive = true
+        bottomAnchor.constraint(equalTo: other.bottomAnchor, constant: -constant / 2).isActive = true
     }
 }
 

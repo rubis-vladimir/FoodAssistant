@@ -11,12 +11,8 @@ class UPCustomSegmentedControl: UIView {
     
     var delegate: UPSegmentedViewDelegate?
     
-    private lazy var buttonImages:[UIImage?] = ["card", "fridge", "heart"].map {
-        UIImage(named: $0)?.withRenderingMode(.alwaysTemplate)
-    }
-    private lazy var buttonSelectImages:[UIImage?] = ["card.fill", "fridge.fill", "heart.fill"].map {
-        UIImage(named: $0)?.withRenderingMode(.alwaysTemplate)
-    }
+    private lazy var buttonImages: [UIImage?] = [Icons.card.image, Icons.fridge.image, Icons.heart.image]
+    private lazy var buttonSelectImages: [UIImage?] = [Icons.cardFill.image, Icons.fridgeFill.image, Icons.heartFill.image]
     
     struct Constants {
         static let bgColor = Palette.bgColor.color
@@ -26,14 +22,8 @@ class UPCustomSegmentedControl: UIView {
     }
     
     var buttons = [UIButton]()
-    var buttonTitles: [String] = ["Main", "Fridge", "Favourite"]{
-        didSet {
-            updateView()
-        }
-    }
-    
-    var buttonImageNames: [String] = ["house", "basket", "house.fill"]
-    
+    var buttonTitles: [String] = ["Профиль", "Холодильник", "Рецепты"]
+
     var sv = UIStackView()
     
     private var currentIndex: Int = 0
@@ -105,7 +95,7 @@ class UPCustomSegmentedControl: UIView {
         let newButton = buttons[index]
         newButton.setTitle(buttonTitles[index], for: .normal)
 
-        self.slideView.frame = newButton.frame
+        self.slideView.frame = newButton.frame.insetBy(dx: 3, dy: 3)
         self.slideView.layer.cornerRadius = self.slideView.frame.height / 2
         slideView.sizeToFit()
     }
@@ -115,14 +105,10 @@ class UPCustomSegmentedControl: UIView {
     }
     
     func didSelectButton(at index: Int) {
-        //if self.currentIndex == index { return }
         self.delegate?.didSelectPage(index: index)
         
         let oldButton = buttons[currentIndex]
-        //oldButton.backgroundColor = UIColor.clear
-        
         let newButton = buttons[index]
-        //newButton.backgroundColor = self.selectedBackgroundColor
         
         newButton.alpha = 0.0
         
@@ -145,10 +131,6 @@ class UPCustomSegmentedControl: UIView {
             self.slideView.frame = newButton.frame
             self.layoutIfNeeded()
         }, completion: nil)
-        
-        
-        
-        
     }
 }
 

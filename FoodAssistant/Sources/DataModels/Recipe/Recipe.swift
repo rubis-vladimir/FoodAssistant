@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct RecipeModel: Codable {
+struct RecipeModel: Codable, Hashable {
     var recipes: [Recipe]?
     var results: [Recipe]?
 }
 
-struct Recipe: Codable, Equatable {
+struct Recipe: Codable, Equatable, Hashable {
     let vegetarian: Bool
     let vegan: Bool
     let glutenFree: Bool
@@ -59,7 +59,7 @@ struct Recipe: Codable, Equatable {
     
 }
 
-struct Ingredient: Codable {
+struct Ingredient: Codable, Hashable {
     let id: Int?
     let aisle: String?
     let image: String?
@@ -74,7 +74,7 @@ struct Ingredient: Codable {
     let measures: Measure?
 }
 
-struct Measure: Codable {
+struct Measure: Codable, Hashable {
     let us: MeasureInfo
     let metric: MeasureInfo
 }
@@ -85,12 +85,12 @@ struct MeasureInfo: Codable, Hashable {
     let unitLong: String
 }
 
-struct Instruction: Codable {
+struct Instruction: Codable, Hashable {
     let name: String
     let steps: [InstuctionStep]
 }
 
-struct InstuctionStep: Codable {
+struct InstuctionStep: Codable, Hashable {
     let number: Int
     let step: String
     let ingredients: [Ingredient]
@@ -98,19 +98,19 @@ struct InstuctionStep: Codable {
     let length: Length?
 }
 
-struct Equipment: Codable {
+struct Equipment: Codable, Hashable {
     let id: Int
     let name: String
     let localizedName: String
     let image: String
 }
 
-struct Length: Codable {
+struct Length: Codable, Hashable {
     let number: Int
     let unit: String
 }
 
-struct Nutrition: Codable {
+struct Nutrition: Codable, Hashable {
     let nutrients: [Nutrient]
     let properties: [Nutrient]
     let flavonoids: [Nutrient]
@@ -143,14 +143,14 @@ struct Nutrition: Codable {
     }
 }
 
-struct Nutrient: Codable {
+struct Nutrient: Codable, Hashable {
     let name: String
     let amount: Float
     let unit: String
     let percentOfDailyNeeds: Float?
 }
 
-struct NutritionIngredient: Codable {
+struct NutritionIngredient: Codable, Hashable {
     let id: Int
     let name: String
     let amount: Float
@@ -158,13 +158,13 @@ struct NutritionIngredient: Codable {
     let nutrients: [Nutrient]
 }
 
-struct CaloricBreakdown: Codable {
+struct CaloricBreakdown: Codable, Hashable {
     let percentProtein: Float
     let percentFat: Float
     let percentCarbs: Float
 }
 
-struct Weight: Codable {
+struct Weight: Codable, Hashable {
     let amount: Int
     let unit: String
 }

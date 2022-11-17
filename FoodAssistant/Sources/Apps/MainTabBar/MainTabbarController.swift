@@ -32,8 +32,8 @@ final class MainTabBarController: UITabBarController {
     
     var middleButton: UIButton = {
         let b = UIButton()
-        let image = UIImage(named: "basket")?.withRenderingMode(.alwaysTemplate)
-        b.setImage(image, for: .normal)
+        b.setImage(Icons.basket.image,
+                   for: .normal)
         b.imageView?.tintColor = .white
         return b
     }()
@@ -54,7 +54,7 @@ final class MainTabBarController: UITabBarController {
         let x: CGFloat = 20
         let y: CGFloat = 20
         let width = self.tabBar.bounds.width - x * 2
-        let height = self.tabBar.bounds.height + y * 1.5
+        let height = self.tabBar.bounds.height + y * 1.3
         layerHeight = height
         layer.fillColor = Palette.bgColor.color.cgColor
         layer.path = UIBezierPath(roundedRect: CGRect(x: x,
@@ -70,13 +70,13 @@ final class MainTabBarController: UITabBarController {
         layer.shadowOpacity = 0.5
         
         // add tab bar layer
-        self.tabBar.layer.insertSublayer(layer, at: 0)
+        tabBar.layer.insertSublayer(layer, at: 0)
         
         // fix items positioning
-        self.tabBar.itemWidth = width / 6
-        self.tabBar.itemPositioning = .centered
-        self.tabBar.tintColor = Palette.darkColor.color
-        self.tabBar.unselectedItemTintColor = Palette.lightColor.color
+        tabBar.itemWidth = width / 6
+        tabBar.itemPositioning = .centered
+        tabBar.tintColor = Palette.darkColor.color
+        tabBar.unselectedItemTintColor = Palette.lightColor.color
         
         // add middle button
         addMiddleButton()
