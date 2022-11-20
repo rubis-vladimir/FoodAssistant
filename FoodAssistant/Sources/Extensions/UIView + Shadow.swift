@@ -9,11 +9,14 @@ import UIKit
 
 extension CALayer {
     
-    func addShadow() {
-        
-        self.shadowColor = #colorLiteral(red: 0.01498480421, green: 0.1761765778, blue: 0.04584238678, alpha: 1).cgColor
-        self.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        self.shadowRadius = 5.0
-        self.shadowOpacity = 0.5
+    func addShadow(color: UIColor = Palette.shadowColor.color,
+                   radius: CGFloat = 3.0,
+                   opacity: Float = 0.65,
+                   offsetHeight: CGFloat = 1.0) {
+        self.shadowColor = color.cgColor
+        self.shadowOffset = CGSize(width: 0.0,
+                                   height: offsetHeight)
+        self.shadowRadius = radius
+        self.shadowOpacity = opacity
     }
 }

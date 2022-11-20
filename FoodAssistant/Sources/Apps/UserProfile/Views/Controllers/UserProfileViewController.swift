@@ -41,7 +41,6 @@ final class UserProfileViewController: UIViewController {
         setupNavigationBar()
         
         
-        
         factory = UPFactory(tableView: tableView,
                                      delegate: presenter,
                                      buildType: .start)
@@ -66,7 +65,7 @@ final class UserProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             titleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            titleView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor),
+            titleView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
             titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleView.heightAnchor.constraint(equalToConstant: 42),
             
@@ -79,7 +78,7 @@ final class UserProfileViewController: UIViewController {
     
     func setupNavigationBar() {
         let saveRightButton = createCustomBarButton(
-            imageName: "gearshape.fill",
+            imageName: Icons.gearshape.rawValue,
             selector: #selector(saveAndExitRightButtonTapped)
         )
         
@@ -104,11 +103,11 @@ extension UserProfileViewController: UserProfileViewable {
     }
     
     func showTag() {
-        factory = UPFactory(tableView: tableView,
-                                     delegate: presenter,
-                                     buildType: .tagFridge)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+//        factory = UPFactory(tableView: tableView,
+//                                     delegate: presenter,
+//                                     buildType: .tagFridge)
+//        DispatchQueue.main.async {
+//            self.tableView.reloadData()
+//        }
     }
 }

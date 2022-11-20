@@ -60,8 +60,8 @@ final class UPFactory: NSObject {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.separatorInset = .zero
-        
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .clear
     }
     
     /// Создает строителя ячеек

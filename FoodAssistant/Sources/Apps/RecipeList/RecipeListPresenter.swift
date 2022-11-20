@@ -40,7 +40,17 @@ extension RecipeListPresenter: RecipeListPresentation {
     }
     
     func testGetRandom() {
-        interactor.fetchRandomRecipe(number: 2, tags: ["meal"])
+        interactor.fetchRandomRecipe(number: 4, tags: ["soup"]) { [weak self] result in
+            
+            switch result {
+                
+            case .success(let recipeCellModels):
+                self?.delegate?.updateUI(with: recipeCellModels)
+            case .failure(_):
+                break
+            }
+            
+        }
     }
     
     func testGetRecipe() {

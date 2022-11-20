@@ -29,6 +29,12 @@
 		7D2F774F291BA0E8009D3444 /* [String] + String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F774E291BA0E8009D3444 /* [String] + String.swift */; };
 		7D3EDE352926AD6B002BC96A /* RecipeListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE342926AD6B002BC96A /* RecipeListSection.swift */; };
 		7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE372926C4A7002BC96A /* Icons.swift */; };
+		7D48A9AA2927B5FF009EF273 /* RecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9A92927B5FF009EF273 /* RecipeCell.swift */; };
+		7D48A9AE2928EE89009EF273 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9AD2928EE89009EF273 /* Constants.swift */; };
+		7D48A9B02928F3D7009EF273 /* UIButton + AttributesTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9AF2928F3D7009EF273 /* UIButton + AttributesTitle.swift */; };
+		7D48A9B229291137009EF273 /* UIImage + Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9B129291137009EF273 /* UIImage + Alpha.swift */; };
+		7D48A9B4292915FD009EF273 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9B3292915FD009EF273 /* Fonts.swift */; };
+		7D48A9B7292A154A009EF273 /* RecipeCellModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9B6292A154A009EF273 /* RecipeCellModel.swift */; };
 		7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */; };
 		7D4BA4272922AD2100A4393B /* UserProfileRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */; };
 		7D4BA4282922AD2100A4393B /* UserProfileInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */; };
@@ -115,6 +121,12 @@
 		7D2F774E291BA0E8009D3444 /* [String] + String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "[String] + String.swift"; sourceTree = "<group>"; };
 		7D3EDE342926AD6B002BC96A /* RecipeListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListSection.swift; sourceTree = "<group>"; };
 		7D3EDE372926C4A7002BC96A /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		7D48A9A92927B5FF009EF273 /* RecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCell.swift; sourceTree = "<group>"; };
+		7D48A9AD2928EE89009EF273 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7D48A9AF2928F3D7009EF273 /* UIButton + AttributesTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton + AttributesTitle.swift"; sourceTree = "<group>"; };
+		7D48A9B129291137009EF273 /* UIImage + Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Alpha.swift"; sourceTree = "<group>"; };
+		7D48A9B3292915FD009EF273 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
+		7D48A9B6292A154A009EF273 /* RecipeCellModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeCellModel.swift; sourceTree = "<group>"; };
 		7D4BA4212922AD2000A4393B /* UserProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
 		7D4BA4222922AD2100A4393B /* UserProfileRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileRouter.swift; sourceTree = "<group>"; };
 		7D4BA4232922AD2100A4393B /* UserProfileInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileInteractor.swift; sourceTree = "<group>"; };
@@ -263,6 +275,8 @@
 				7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */,
 				7DEF8E122922CB390016A207 /* UIView + Shadow.swift */,
 				7DEF8E3A2925934E0016A207 /* UIView + Constraints.swift */,
+				7D48A9B129291137009EF273 /* UIImage + Alpha.swift */,
+				7D48A9AF2928F3D7009EF273 /* UIButton + AttributesTitle.swift */,
 				7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */,
 				7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */,
 			);
@@ -283,6 +297,7 @@
 		7D2F772A291A969E009D3444 /* RecipeList */ = {
 			isa = PBXGroup;
 			children = (
+				7D48A9B5292A14E2009EF273 /* Model */,
 				7D2F7738291A9752009D3444 /* Views */,
 				7D2F772B291A9717009D3444 /* RecipeListAssembly.swift */,
 				7D2F772E291A9717009D3444 /* RecipeListInteractor.swift */,
@@ -295,6 +310,7 @@
 		7D2F7738291A9752009D3444 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7D48A9A82927B5F2009EF273 /* Cells */,
 				7D2F773B291A9763009D3444 /* Controllers */,
 			);
 			path = Views;
@@ -350,10 +366,28 @@
 		7D3EDE362926C495002BC96A /* Constants */ = {
 			isa = PBXGroup;
 			children = (
+				7D48A9AD2928EE89009EF273 /* Constants.swift */,
+				7D48A9B3292915FD009EF273 /* Fonts.swift */,
 				7DEF8E142923B03E0016A207 /* Palette.swift */,
 				7D3EDE372926C4A7002BC96A /* Icons.swift */,
 			);
 			path = Constants;
+			sourceTree = "<group>";
+		};
+		7D48A9A82927B5F2009EF273 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				7D48A9A92927B5FF009EF273 /* RecipeCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		7D48A9B5292A14E2009EF273 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7D48A9B6292A154A009EF273 /* RecipeCellModel.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		7D4BA4202922A85000A4393B /* UserProfile */ = {
@@ -614,6 +648,7 @@
 				7DEF8E2D2923DD610016A207 /* UPShortAvatarCellBuilder.swift in Sources */,
 				7DEF8E292923D3F70016A207 /* UITableView + Extensions.swift in Sources */,
 				7DEF8E182923C4F10016A207 /* TVCBuilderProtocol.swift in Sources */,
+				7D48A9B7292A154A009EF273 /* RecipeCellModel.swift in Sources */,
 				7D2F774B291B9E48009D3444 /* APIKeys.swift in Sources */,
 				7D2F774D291B9FA8009D3444 /* RecipeFilterParameters.swift in Sources */,
 				7D77FDAD291FC56C0085D7FF /* BasketRouter.swift in Sources */,
@@ -621,15 +656,18 @@
 				7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */,
 				7D3EDE352926AD6B002BC96A /* RecipeListSection.swift in Sources */,
 				7DEF8E152923B03E0016A207 /* Palette.swift in Sources */,
+				7D48A9B229291137009EF273 /* UIImage + Alpha.swift in Sources */,
 				7DEF8E332923F40A0016A207 /* UPFridgeCell.swift in Sources */,
 				7DEF8E312923E0D10016A207 /* UPTabSetCellBuilder.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7DEF8E1A2923C4FE0016A207 /* TVFactoryProtocol.swift in Sources */,
 				7DFEB5E0291C2FAA008C28FC /* DataFetcherService.swift in Sources */,
+				7D48A9AE2928EE89009EF273 /* Constants.swift in Sources */,
 				7DFEB5EA291C3D36008C28FC /* Translate.swift in Sources */,
 				7D2F7732291A9717009D3444 /* Assemblying.swift in Sources */,
 				7D2F7734291A9717009D3444 /* RecipeListRouter.swift in Sources */,
 				7D4BA4282922AD2100A4393B /* UserProfileInteractor.swift in Sources */,
+				7D48A9B4292915FD009EF273 /* Fonts.swift in Sources */,
 				7DEF8E252923D05C0016A207 /* UPAvatarCell.swift in Sources */,
 				7DEF8E2B2923DD250016A207 /* UPShortAvatarCell.swift in Sources */,
 				7D4BA42A2922AD2100A4393B /* UserProfileAssembly.swift in Sources */,
@@ -655,6 +693,7 @@
 				7D77FD92291FBFAD0085D7FF /* MainTabBarAssembly.swift in Sources */,
 				7D77FDAA291FC56C0085D7FF /* BasketPresenter.swift in Sources */,
 				7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */,
+				7D48A9AA2927B5FF009EF273 /* RecipeCell.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
 				7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */,
@@ -664,6 +703,7 @@
 				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,
 				7DEF8E232923CFA70016A207 /* UPAvatarCellBuilder.swift in Sources */,
 				7D77FD94291FBFAD0085D7FF /* TabBarConfigurator.swift in Sources */,
+				7D48A9B02928F3D7009EF273 /* UIButton + AttributesTitle.swift in Sources */,
 				7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

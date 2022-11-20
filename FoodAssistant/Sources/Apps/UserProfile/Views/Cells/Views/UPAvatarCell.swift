@@ -14,7 +14,7 @@ final class UPAvatarCell: UITableViewCell {
     lazy var userContainer: UIView = {
         var view = UIView()
         view.backgroundColor = Palette.bgColor.color
-        view.layer.addShadow()
+        view.layer.addShadow(color: Palette.shadowColor.color)
         view.layer.cornerRadius = 25
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -42,7 +42,7 @@ final class UPAvatarCell: UITableViewCell {
     lazy var avatarView: UIImageView = {
         var view = UIImageView()
         view.backgroundColor = .white
-        view.layer.addShadow()
+        view.layer.addShadow(color: Palette.shadowColor.color)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -51,6 +51,7 @@ final class UPAvatarCell: UITableViewCell {
     override func draw(_ rect: CGRect) {
         super.draw(rect)
         
+//        backgroundColor = .clear
         setupConstraints()
         setup()
     }

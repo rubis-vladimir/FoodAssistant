@@ -14,7 +14,7 @@ class UPCustomSegmentedControl: UIView {
     private lazy var buttonImages: [UIImage?] = [Icons.card.image, Icons.fridge.image, Icons.heart.image]
     private lazy var buttonSelectImages: [UIImage?] = [Icons.cardFill.image, Icons.fridgeFill.image, Icons.heartFill.image]
     
-    struct Constants {
+    struct SelfConstants {
         static let bgColor = Palette.bgColor.color
         static let selectorColor = Palette.darkColor.color
         static let textColor = UIColor.black
@@ -30,7 +30,7 @@ class UPCustomSegmentedControl: UIView {
     
     lazy var slideView: UIView = {
         var view = UIView(frame: CGRect.zero)
-        view.backgroundColor = Constants.selectorColor
+        view.backgroundColor = SelfConstants.selectorColor
         return view
     }()
     
@@ -51,8 +51,8 @@ class UPCustomSegmentedControl: UIView {
     }
     
     func setupView() {
-        self.layer.addShadow()
-        backgroundColor = Constants.bgColor
+        self.layer.addShadow(color: Palette.shadowColor.color)
+        backgroundColor = SelfConstants.bgColor
         updateView()
     }
     
@@ -72,7 +72,7 @@ class UPCustomSegmentedControl: UIView {
             button.addTarget(self,
                              action: #selector(buttonTapped),
                              for: .touchUpInside)
-            button.imageEdgeInsets = index == currentIndex ? UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0) : button.imageEdgeInsets
+            button.imageEdgeInsets = index == currentIndex ? Constants.edgeInsert : button.imageEdgeInsets
             button.tag = index
             
             buttons.append(button)

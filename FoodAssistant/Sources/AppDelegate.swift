@@ -16,10 +16,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow()
-//        let navigationController = UINavigationController()
-//        let viewController = RecipeListAssembly(navigationController: navigationController).assembly()
-//        navigationController.viewControllers = [viewController]
-//        window?.rootViewController = viewController
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().tintColor = .black
+        UINavigationBar.appearance().barTintColor = .white
+        UIButton.appearance().tintColor = .white
+//        UIButton.appearance().setTitleColor(.black, for: .normal)
         
         /// Создаем NavigationController для TabBarController
         let navigationVC = UINavigationController()

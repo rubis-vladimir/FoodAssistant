@@ -12,7 +12,8 @@ import Foundation
 protocol RecipeListBusinessLogic {
     func translate(texts: [String])
     
-    func fetchRandomRecipe(number: Int, tags: [String])
+    func fetchRandomRecipe(number: Int, tags: [String],
+                           completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void)
     func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?)
 }
 
@@ -30,6 +31,7 @@ final class RecipeListInteractor {
 
 // MARK: - BusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
+    
     func translate(texts: [String]) {
         
         let trPar = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
@@ -47,12 +49,23 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
     }
     
-    func fetchRandomRecipe(number: Int, tags: [String]) {
+    func fetchRandomRecipe(number: Int, tags: [String],
+                           completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void) {
         dataFetcher.fetchRandomRecipe(number: number, tags: tags) { result in
             switch result {
                 
             case .success(let recipe):
-                print(recipe)
+                let recipes = recipe.recipes
+                
+                var arrayModels = [RecipeCellModel]()
+                recipes?.forEach {
+                    
+                    let cookingTime = "\($0.readyInMinutes) мин"
+                    
+                    let recipeCellModel = RecipeCellModel(id: 1234, titleRecipe: $0.title, cookingTime: cookingTime, isFavorite: false, ingredientsCount: $0.extendedIngredients?.count ?? 0)
+                    arrayModels.append(recipeCellModel)
+                }
+                completion(.success(arrayModels))
             case .failure(let error):
                 switch error {
                     

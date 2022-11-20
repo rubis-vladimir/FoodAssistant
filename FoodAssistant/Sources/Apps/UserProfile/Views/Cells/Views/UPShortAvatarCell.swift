@@ -14,7 +14,6 @@ final class UPShortAvatarCell: UITableViewCell {
     lazy var userContainer: UIView = {
         var view = UIView()
         view.backgroundColor = Palette.darkColor.color
-        view.layer.addShadow()
         view.layer.cornerRadius = 25
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -22,7 +21,7 @@ final class UPShortAvatarCell: UITableViewCell {
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
-        
+        backgroundColor = .clear
         setupConstraints()
     }
     

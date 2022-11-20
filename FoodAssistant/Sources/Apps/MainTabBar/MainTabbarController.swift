@@ -44,14 +44,15 @@ final class MainTabBarController: UITabBarController {
         
         setUpTabBar()
         setupNavigationBar()
-        guard let navC = navigationController else { return }
-        navC.navigationBar.isHidden = true
     }
     
     func setUpTabBar() {
         
+        tabBar.backgroundImage = UIImage()
+        tabBar.shadowImage = UIImage()
+        
         // tab bar layer
-        let x: CGFloat = 20
+        let x: CGFloat = 16
         let y: CGFloat = 20
         let width = self.tabBar.bounds.width - x * 2
         let height = self.tabBar.bounds.height + y * 1.3
@@ -114,10 +115,9 @@ final class MainTabBarController: UITabBarController {
         }
         
         // shadow
-        middleButton.layer.shadowColor = Palette.shadowColor.color.cgColor
-        middleButton.layer.shadowOffset = CGSize(width: 0, height: 4)
-        middleButton.layer.shadowOpacity = 0.65
-        middleButton.layer.shadowRadius = 8
+        middleButton.layer.addShadow(color: Palette.shadowColor2.color,
+                                     radius: 6,
+                                     offsetHeight: 3)
         
         // other
         middleButton.layer.masksToBounds = false
