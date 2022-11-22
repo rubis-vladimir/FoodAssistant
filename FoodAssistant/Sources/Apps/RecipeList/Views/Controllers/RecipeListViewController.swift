@@ -10,28 +10,16 @@ import UIKit
 /// Протокол управления View-слоем модуля RecipeList
 protocol RecipeListViewable: AnyObject {
     /// Обновление UI
-    func updateUI(with models: [RecipeCellModel])
+    func updateUI()
     /// Показать ошибку
     func showError()
 }
 
 /// Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {
-    
-    //    typealias DataSource = UICollectionViewDiffableDataSource<RecipeListSection, Recipe>
-    //    typealias Snapshot = NSDiffableDataSourceSnapshot<RecipeListSection, Recipe>
-    
-    private var models: [RecipeCellModel] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.collectionView.reloadData()
-            }
-        }
-    }
+
     private let presenter: RecipeListPresentation
     private var collectionView: UICollectionView!
-//    private var dataSource: DataSource?
-    private var networkDataFetcher = NetworkDataFetcher()
     private var timer: Timer?
     
     init(presenter: RecipeListPresentation) {
@@ -43,27 +31,20 @@ final class RecipeListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
-//        presenter.testTranslate()
-        presenter.testGetRandom()
-//        presenter.testGetRecipe()
         setupElements()
     }
     
     private func setupElements() {
         /// `Navigation Bar` Setup
         navigationItem.title = "Food Assistant"
-//        navigationController?.navigationBar.tintColor = .black
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: Icons.split2x2.image,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(clickChangeViewButton))
-        
-        
         
         /// `seacrhController` settings
         let seacrhController = UISearchController(searchResultsController: nil)
@@ -76,13 +57,13 @@ final class RecipeListViewController: UIViewController {
         let newFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - (tabBarController?.tabBar.bounds.height ?? 0) + 13)
         collectionView = UICollectionView(frame: newFrame,
                                           collectionViewLayout: getFlowLayout())
-//        collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.showsHorizontalScrollIndicator = false
         
         /// Registration of cells
-        collectionView.register(RecipeCell.self)
+        collectionView.register(RecommendedRecipeCell.self)
         
         /// Adding elements to the screen
         view.addSubview(collectionView)
@@ -114,11 +95,6 @@ final class RecipeListViewController: UIViewController {
         return layout
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print(view.bounds.width)
-    }
-    
     /// Рассчитывает размер Item
     private func calculateItemSize() -> CGSize {
 //        let padding: CGFloat = 16
@@ -146,15 +122,25 @@ final class RecipeListViewController: UIViewController {
 extension RecipeListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
-        return models.count
+        presenter.recipeCellModels.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(RecipeCell.self, indexPath: indexPath)
-        
-        let model = models[indexPath.row]
+        let cell = collectionView.dequeueReusableCell(RecommendedRecipeCell.self, indexPath: indexPath)
+        let model = presenter.recipeCellModels[indexPath.row]
+        cell.delegate = presenter
         cell.configure(with: model)
+        if let imageName = model.imageName {
+            presenter.fetchImage(with: imageName) { imageData in
+                DispatchQueue.main.async {
+//                    let updateCell = collectionView.cellForItem(at: indexPath)
+//                    if updateCell != nil {
+                        cell.updateRecipeImage(data: imageData)
+//                    }
+                }
+            }
+        }
         return cell
     }
 }
@@ -169,8 +155,10 @@ extension RecipeListViewController: UISearchBarDelegate {
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
-    func updateUI(with models: [RecipeCellModel]) {
-        self.models = models
+    func updateUI() {
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
     

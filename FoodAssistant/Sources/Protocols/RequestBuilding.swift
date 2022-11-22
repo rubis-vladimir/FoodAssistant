@@ -10,6 +10,7 @@ import Foundation
 typealias HTTPHeaders = [String: String]
 typealias Parameters = Codable
 
+/// Варианты http-методов
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -34,8 +35,12 @@ protocol RequestBuilding {
     func asURLRequest() throws -> URLRequest
 }
 
-/// Дефолтная реализация метода
+/// Дефолтная реализация
 extension RequestBuilding {
+    
+    var parameters: Parameters? { return nil }
+    var queryItems: [URLQueryItem]? { return nil }
+
     func asURLRequest() throws -> URLRequest {
         guard let url = url else { throw DataFetcherError.wrongUrl }
         print(url)
@@ -57,7 +62,7 @@ extension RequestBuilding {
         return request
     }
     
-    
+    /// Составление url по компонентам
     var url: URL? {
         var components = URLComponents()
         components.scheme = "https"

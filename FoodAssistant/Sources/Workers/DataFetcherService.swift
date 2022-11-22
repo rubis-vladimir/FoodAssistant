@@ -9,7 +9,7 @@ typealias DFM = DataFetcherTranslateManagement & DataFetcherRecipeManagement
 
 import Foundation
 
-/// Протокол работы с запросами Рецептами
+/// Протокол управления запросами на получение рецептов
 protocol DataFetcherRecipeManagement {
     /// Запрос аниме
     ///  - Parameters:
@@ -46,17 +46,17 @@ extension DataFetcherService: DataFetcherRecipeManagement {
     func fetchComplexRecipe(_ parameters: RecipeFilterParameters,
                             _ number: Int, _ query: String?,
                             completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void) {
-        
-        let request = RecipeRequest.complexSearch(parameters, number, query)
-        dataFetcher.fetchData(requestBuilder: request, completion: completion)
+        RecipeRequest
+            .complexSearch(parameters, number, query)
+            .download(with: dataFetcher, completion: completion)
     }
     
     func fetchRandomRecipe(number: Int,
                            tags: [String],
                            completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void) {
-        
-        let request = RecipeRequest.random(number, tags: tags)
-        dataFetcher.fetchData(requestBuilder: request, completion: completion)
+        RecipeRequest
+            .random(number, tags: tags)
+            .download(with: dataFetcher, completion: completion)
     }
 }
 
@@ -64,7 +64,8 @@ extension DataFetcherService: DataFetcherRecipeManagement {
 extension DataFetcherService: DataFetcherTranslateManagement {
     func translate(with parameters: TranslateParameters,
                    completion: @escaping (Result<Translate, DataFetcherError>) -> Void) {
-        dataFetcher.fetchData(requestBuilder: LanguageRequest.translate(patameters: parameters),
-                              completion: completion)
+        LanguageRequest
+            .translate(patameters: parameters)
+            .download(with: dataFetcher, completion: completion)
     }
 }

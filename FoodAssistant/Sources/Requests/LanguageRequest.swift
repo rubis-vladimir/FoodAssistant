@@ -7,11 +7,23 @@
 
 import Foundation
 
-import Foundation
-
+/// Варианты запросов на перевод
 enum LanguageRequest<T: Codable> {
     /// Перевести текст
     case translate(patameters: T)
+}
+
+extension LanguageRequest {
+    /// Обращается к сетевому сервису для получения перевода
+    func download<T: Decodable>(with service: DataFetcherProtocol,
+                  completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+        do {
+            service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
+        } catch {
+            guard let error = error as? DataFetcherError else { return }
+            completion(.failure(error))
+        }
+    }
 }
 
 // MARK: - RequestBuilding
@@ -27,23 +39,13 @@ extension LanguageRequest: RequestBuilding {
         }
     }
     
-    var queryItems: [URLQueryItem]? { nil }
-    
-    var method: HTTPMethod {
-        switch self {
-        case .translate:
-            return .post
-        }
-    }
+    var method: HTTPMethod { .post }
     
     var headers: HTTPHeaders? {
-        switch self {
-        case .translate:
-            return [
-                "Authorization": "Api-Key \(APIKeys.translateAPIKey.rawValue)",
-                "Content-Type": "text/plain"
-            ]
-        }
+        return [
+            "Authorization": "Api-Key \(APIKeys.translateAPIKey.rawValue)",
+            "Content-Type": "text/plain"
+        ]
     }
     
     var parameters: Parameters? {
@@ -51,26 +53,5 @@ extension LanguageRequest: RequestBuilding {
         case let .translate(parameters):
             return parameters
         }
-    }
-    
-    func asURLRequest() throws -> URLRequest {
-        guard let url = url else { throw DataFetcherError.wrongUrl }
-        print(url)
-        var request = URLRequest (url: url)
-        request.httpMethod = method.rawValue
-        
-        if let headers = headers {
-            headers.forEach {
-                request.setValue($1, forHTTPHeaderField: $0)
-            }
-        }
-        if let parameters = parameters {
-            do {
-                request.httpBody = try JSONEncoder().encode(parameters)
-            } catch {
-                throw ( DataFetcherError.failedToEncode )
-            }
-        }
-        return request
     }
 }
