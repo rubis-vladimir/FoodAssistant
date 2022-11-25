@@ -33,7 +33,7 @@ protocol RLLayoutChangable: AnyObject {
 }
 
 /// Протокол делегата бизнес логики модуля RecipeList
-protocol BusinessLogicDelegate: AnyObject {
+protocol RecipeListBusinessLogicDelegate: AnyObject {
     
 }
 
@@ -109,7 +109,7 @@ extension RecipeListPresenter: RecipeListPresentation {
 }
 
 // MARK: - BusinessLogicDelegate
-extension RecipeListPresenter: BusinessLogicDelegate {
+extension RecipeListPresenter: RecipeListBusinessLogicDelegate {
     
 }
 

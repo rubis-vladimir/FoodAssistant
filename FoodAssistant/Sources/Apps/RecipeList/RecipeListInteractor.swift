@@ -22,7 +22,7 @@ protocol RecipeListBusinessLogic {
 
 /// Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
-    weak var presenter: BusinessLogicDelegate?
+    weak var presenter: RecipeListBusinessLogicDelegate?
     private let dataFetcher: DFM
     
     init(dataFetcher: DFM) {
