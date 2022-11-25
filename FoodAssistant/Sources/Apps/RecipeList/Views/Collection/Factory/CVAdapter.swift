@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RLAdapter: NSObject {
+final class CVAdapter: NSObject {
     private let collectionView: UICollectionView
     var builders: [CVSectionBuilderProtocol] = [] {
         didSet {
@@ -24,7 +24,8 @@ final class RLAdapter: NSObject {
     }
 }
 
-extension RLAdapter: UICollectionViewDataSource {
+// MARK: - UICollectionViewDataSource
+extension CVAdapter: UICollectionViewDataSource {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         builders.count
@@ -43,23 +44,6 @@ extension RLAdapter: UICollectionViewDataSource {
             .itemBuilder
             .cellAt(indexPath: indexPath, collectionView: collectionView)
     }
-}
-
-extension RLAdapter: UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        builders[indexPath.section]
-            .itemBuilder
-            .didSelectItem(indexPath: indexPath)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        builders[indexPath.section]
-            .itemBuilder
-            .itemSize(collectionView: collectionView)
-    }
     
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
@@ -70,7 +54,28 @@ extension RLAdapter: UICollectionViewDelegateFlowLayout {
                                       kind: kind,
                                       indexPath: indexPath) ?? UICollectionReusableView()
     }
+}
+
+// MARK: - UICollectionViewDelegate
+extension CVAdapter: UICollectionViewDelegate {
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        builders[indexPath.section]
+            .itemBuilder
+            .didSelectItem(indexPath: indexPath)
+    }
+}
+
+// MARK: - UICollectionViewDelegateFlowLayout
+extension CVAdapter: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        builders[indexPath.section]
+            .itemBuilder
+            .itemSize(collectionView: collectionView)
+    }
+
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         builders[section]
             .headerBuilder?

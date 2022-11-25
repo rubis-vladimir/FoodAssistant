@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Строитель ячеек секции Recommended
 final class RecommendedItemBuilder {
     private let count = 1
     private let height: CGFloat = 320
@@ -21,6 +22,7 @@ final class RecommendedItemBuilder {
     }
 }
 
+// MARK: - RecommendedItemBuilder
 extension RecommendedItemBuilder: CVItemBuilderProtocol {
     func register(collectionView: UICollectionView) {
         collectionView.register(RecommendedViewCell.self)

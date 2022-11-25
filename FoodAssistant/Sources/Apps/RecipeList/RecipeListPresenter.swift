@@ -8,8 +8,8 @@
 import Foundation
 
 /// Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: AnyObject {
-    var recipeCellModels: [RecipeCellModel] { get }
+protocol RecipeListPresentation: RLLayoutChangable, RLRecipeButtonDelegate, AnyObject {
+    var viewModels: [RecipeCellModel] { get }
     func testTranslate()
     
     func testGetRandom()
@@ -19,8 +19,17 @@ protocol RecipeListPresentation: AnyObject {
                     completion: @escaping (Data) -> Void)
 }
 
-protocol FavoriteButtonDelegate {
-    func didTapFavoriteButton()
+
+protocol RLRecipeButtonDelegate: RLFavoriteChangable, AnyObject {
+    func didTapAddIngredientsButton(id: Int)
+}
+
+protocol RLFavoriteChangable: AnyObject {
+    func didTapFavoriteButton(id: Int)
+}
+
+protocol RLLayoutChangable: AnyObject {
+    func didTapChangeLayoutButton()
 }
 
 /// Протокол делегата бизнес логики модуля RecipeList
@@ -31,7 +40,7 @@ protocol BusinessLogicDelegate: AnyObject {
 /// Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
-    private(set) var recipeCellModels: [RecipeCellModel] = [] {
+    private(set) var viewModels: [RecipeCellModel] = [] {
         didSet {
             delegate?.updateUI()
         }
@@ -51,7 +60,7 @@ final class RecipeListPresenter {
         interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
-                self?.recipeCellModels = recipeCellModels
+                self?.viewModels = recipeCellModels
             case .failure(_):
                 break
             }
@@ -104,10 +113,18 @@ extension RecipeListPresenter: BusinessLogicDelegate {
     
 }
 
-extension RecipeListPresenter: FavoriteButtonDelegate {
-    func didTapFavoriteButton() {
-        print("XSXXSX")
+
+
+extension RecipeListPresenter {
+    func didTapFavoriteButton(id: Int) {
+        print("didTapFavoriteButton")
     }
     
+    func didTapAddIngredientsButton(id: Int) {
+        print("didTapAddIngredientsButton")
+    }
     
+    func didTapChangeLayoutButton() {
+        print("didTapChangeLayoutButton")
+    }
 }

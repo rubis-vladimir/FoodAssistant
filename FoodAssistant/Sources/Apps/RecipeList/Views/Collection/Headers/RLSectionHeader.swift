@@ -1,5 +1,5 @@
 //
-//  SectionHeader.swift
+//  RLSectionHeader.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 23.11.2022.
@@ -7,7 +7,9 @@
 
 import UIKit
 
-final class CustomSectionHeader: UICollectionReusableView {
+final class RLSectionHeader: UICollectionReusableView {
+    
+    weak var delegate: RLLayoutChangable?
     
     let titleLabel = UILabel()
     let changeLayoutButton = UIButton()
@@ -24,7 +26,7 @@ final class CustomSectionHeader: UICollectionReusableView {
     }
 }
 
-extension CustomSectionHeader {
+extension RLSectionHeader {
     
     func setupElements() {
         stackView.axis = .horizontal
@@ -37,15 +39,15 @@ extension CustomSectionHeader {
         changeLayoutButton.setImage(Icons.split2x2.image,
                                     for: .normal)
         changeLayoutButton.tintColor = .black
+        changeLayoutButton.translatesAutoresizingMaskIntoConstraints = false
     }
     
     func configure(title: String,
-                   selector: Selector?) {
+                   isSelector: Bool) {
         titleLabel.text = title
-        
-        if let selector = selector {
+        if isSelector {
             changeLayoutButton.addTarget(self,
-                                         action: selector,
+                                         action: #selector(changeLayoutButtonTapped),
                                          for: .touchUpInside)
         } else {
             changeLayoutButton.isHidden = true
@@ -62,6 +64,12 @@ extension CustomSectionHeader {
             stackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor, constant: -16),
             stackView.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
+            
+            changeLayoutButton.widthAnchor.constraint(equalToConstant: 30)
         ])
+    }
+    
+    @objc private func changeLayoutButtonTapped() {
+        delegate?.didTapChangeLayoutButton()
     }
 }

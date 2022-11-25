@@ -14,7 +14,7 @@ final class MainSectionConfigurator {
     private let models: [RecipeCellModel]
     private let layoutType: LayoutType
     private let title: String
-    private var selector: Selector?
+    private var isSelector: Bool
     
     weak var delegate: RecipeListPresentation?
     
@@ -22,13 +22,13 @@ final class MainSectionConfigurator {
          models: [RecipeCellModel],
          layoutType: LayoutType,
          title: String,
-         selector: Selector?,
+         isSelector: Bool,
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models
         self.layoutType = layoutType
         self.title = title
-        self.selector = selector
+        self.isSelector = isSelector
         self.delegate = delegate
     }
 }
@@ -41,7 +41,8 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем и регистрируем заголовок
         let headerBuilder = MainHeaderBuilder(title: title,
-                                              selector: selector)
+                                              isSelector: isSelector,
+                                              delegate: delegate)
         headerBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем и регистрируем ячейки
@@ -51,7 +52,7 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию
-        let mainSecionBuilder = SectionBuilder(headerBuilder: headerBuilder,
+        let mainSecionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                                itemBuilder: itemBuilder)
         return mainSecionBuilder
     }

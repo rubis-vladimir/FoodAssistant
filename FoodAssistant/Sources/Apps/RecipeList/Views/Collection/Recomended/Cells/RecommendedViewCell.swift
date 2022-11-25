@@ -11,23 +11,20 @@ final class RecommendedViewCell: UICollectionViewCell {
     
     weak var delegate: RecipeListPresentation?
     
-    private var models: [RecipeCellModel] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    private var recipeListAdapter: CVAdapter?
     
     private lazy var collectionView: UICollectionView = {
         let layout = setupLayout()
         let collectionView = UICollectionView(frame: bounds, collectionViewLayout: layout)
-        collectionView.dataSource = self
-        collectionView.register(RecommendedRecipeCell.self)
+        collectionView.backgroundColor = .none
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
+        recipeListAdapter = CVAdapter(collectionView: collectionView)
         setupConstraints()
     }
     
@@ -35,23 +32,24 @@ final class RecommendedViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
-    override func layoutSubviews() {
-        setupConstraints()
+    func configure(with models: [RecipeCellModel]) {
+        let builders = [
+            RecommendedRecipeSectionConfigurator(collectionView: collectionView,
+                                                            models: models,
+                                                            delegate: delegate).configure()
+        ]
+        recipeListAdapter?.builders = builders
     }
     
-    func configure(with: [RecipeCellModel]) {
-        models = with
-    }
-    
-    func setupConstraints() {
+    private func setupConstraints() {
+        collectionView.dataSource = recipeListAdapter
+        collectionView.delegate = recipeListAdapter
+        
         addSubview(collectionView)
         collectionView.pinEdges(to: self)
-        collectionView.backgroundColor = .none
-        collectionView.showsHorizontalScrollIndicator = false
     }
     
-    func setupLayout() -> UICollectionViewFlowLayout {
+    private func setupLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         
         let padding: CGFloat = 16
@@ -63,30 +61,7 @@ final class RecommendedViewCell: UICollectionViewCell {
         layout.minimumInteritemSpacing = 16
         layout.minimumLineSpacing = 16
         layout.scrollDirection = .horizontal
-        layout.itemSize = CGSize(width: bounds.width * 0.6, height: bounds.height)
         backgroundColor = .none
         return layout
-    }
-}
-
-
-extension RecommendedViewCell: UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        models.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(RecommendedRecipeCell.self, indexPath: indexPath)
-        
-        let recipeModel = models[indexPath.row]
-        cell.configure(with: recipeModel)
-        if let imageName = recipeModel.imageName {
-            delegate?.fetchImage(with: imageName) { imageData in
-                DispatchQueue.main.async {
-                    cell.updateRecipeImage(data: imageData)
-                }
-            }
-        }
-        return cell
     }
 }

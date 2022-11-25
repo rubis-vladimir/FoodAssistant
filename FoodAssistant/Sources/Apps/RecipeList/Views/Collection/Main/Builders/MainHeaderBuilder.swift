@@ -11,12 +11,16 @@ import UIKit
 final class MainHeaderBuilder {
     private let height: CGFloat = 45
     var title: String
-    var selector: Selector?
+    var isSelector: Bool
+
+    weak var delegate: RLLayoutChangable?
     
     init(title: String,
-         selector: Selector?) {
+         isSelector: Bool,
+         delegate: RLLayoutChangable?) {
         self.title = title
-        self.selector = selector
+        self.isSelector = isSelector
+        self.delegate = delegate
     }
 }
 
@@ -24,7 +28,7 @@ final class MainHeaderBuilder {
 extension MainHeaderBuilder: CVHeaderBuilderProtocol {
     
     func register(collectionView: UICollectionView) {
-        collectionView.register(CustomSectionHeader.self,
+        collectionView.register(RLSectionHeader.self,
                                 kind: UICollectionView.elementKindSectionHeader)
     }
     
@@ -33,11 +37,12 @@ extension MainHeaderBuilder: CVHeaderBuilderProtocol {
                                   indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            let headerView = collectionView.dequeueReusableView(CustomSectionHeader.self,
+            let headerView = collectionView.dequeueReusableView(RLSectionHeader.self,
                                                                 kind: kind,
                                                                 indexPath: indexPath)
+            headerView.delegate = delegate
             headerView.configure(title: title,
-                                 selector: selector)
+                                 isSelector: isSelector)
             return headerView
         default:
             assert(false, "Invalid element type")
@@ -45,6 +50,6 @@ extension MainHeaderBuilder: CVHeaderBuilderProtocol {
     }
     
     func headerSize(collectionView: UICollectionView) -> CGSize {
-        .init(width: collectionView.frame.width, height: height)
+        .init(width: collectionView.bounds.width, height: height)
     }
 }

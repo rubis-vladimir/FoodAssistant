@@ -9,7 +9,7 @@ import UIKit
 
 class MainRecipeCell: UICollectionViewCell {
     
-    weak var delegate: RecipeListPresentation?
+    weak var delegate: RLRecipeButtonDelegate?
     
     private var isFavorite: Bool = false {
         didSet {
@@ -75,7 +75,7 @@ class MainRecipeCell: UICollectionViewCell {
     
     @objc func didFavoriteButtonToggle() {
         isFavorite.toggle()
-        print("asdasda")
+        delegate?.didTapFavoriteButton(id: 1)
     }
     
     func updateRecipeImage(data: Data) {
@@ -115,26 +115,6 @@ class MainRecipeCell: UICollectionViewCell {
                                  action: #selector(didFavoriteButtonToggle),
                                  for: .touchUpInside)
     }
-    
-    
-    
-    func addEnding(number: Int) -> String {
-        let endingBy10 = number % 10
-        let endingBy100 = number % 100
-        var baseString = "\(number) ИНГРЕДИЕНТ"
-        
-        switch endingBy10 {
-        case 1:
-            baseString += 11 == endingBy100 ? "ОВ" : ""
-        case 2, 3, 4 :
-            baseString += 12...14 ~= endingBy100 ? "ОВ" : "А"
-        default:
-            baseString += "ОВ"
-        }
-        return baseString
-    }
-   
-    
     func setupConstraints() {
         
         let containerForLabel = UIStackView()

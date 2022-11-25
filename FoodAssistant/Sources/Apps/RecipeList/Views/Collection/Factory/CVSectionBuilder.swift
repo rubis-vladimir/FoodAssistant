@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class SectionBuilder: CVSectionBuilderProtocol {
+final class CVSectionBuilder: CVSectionBuilderProtocol {
     var headerBuilder: CVHeaderBuilderProtocol?
     var itemBuilder: CVItemBuilderProtocol
     

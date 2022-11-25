@@ -13,19 +13,19 @@ final class RecommendedSectionConfigurator {
     private let collectionView: UICollectionView
     private let models: [RecipeCellModel]
     private let title: String
-    private var selector: Selector?
+    private var isSelector: Bool
     
     weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
          models: [RecipeCellModel],
          title: String,
-         selector: Selector?,
+         isSelector: Bool,
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models
         self.title = title
-        self.selector = selector
+        self.isSelector = isSelector
         self.delegate = delegate
     }
 }
@@ -37,7 +37,8 @@ extension RecommendedSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем и регистрируем заголовок
         let headerBuilder = MainHeaderBuilder(title: title,
-                                              selector: selector)
+                                              isSelector: isSelector,
+                                              delegate: delegate!)
         headerBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем и регистрируем ячейки
@@ -46,7 +47,7 @@ extension RecommendedSectionConfigurator: CVSectionConfiguration {
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию
-        let secionBuilder = SectionBuilder(headerBuilder: headerBuilder,
+        let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                            itemBuilder: itemBuilder)
         return secionBuilder
     }

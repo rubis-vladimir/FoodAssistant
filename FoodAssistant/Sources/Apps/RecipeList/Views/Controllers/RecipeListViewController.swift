@@ -221,7 +221,7 @@ extension RecipeListViewController: UISearchBarDelegate {
 extension RecipeListViewController: RecipeListViewable {
     func updateUI() {
         DispatchQueue.main.async {
-            let models = self.presenter.recipeCellModels
+            let models = self.presenter.viewModels
             self.factory = RLFactory(collectionView: self.collectionView,
                                 buildType: .main(first: models,
                                                  second: models),

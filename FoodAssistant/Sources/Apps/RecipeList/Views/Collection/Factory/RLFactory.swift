@@ -28,7 +28,7 @@ final class RLFactory {
     
     private let collectionView: UICollectionView
     private let buildType: RLBuildType
-    private var recipeListAdapter: RLAdapter
+    private var recipeListAdapter: CVAdapter
     
     private weak var delegate: RecipeListPresentation?
     
@@ -43,7 +43,7 @@ final class RLFactory {
         self.buildType = buildType
         self.delegate = delegate
         
-        recipeListAdapter = RLAdapter(collectionView: collectionView)
+        recipeListAdapter = CVAdapter(collectionView: collectionView)
     }
     
     /// Настраивает табличное представление
@@ -53,7 +53,6 @@ final class RLFactory {
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
-        collectionView.register(CustomSectionHeader.self, kind: UICollectionView.elementKindSectionHeader)
         
         recipeListAdapter.builders = builders
     }
@@ -70,21 +69,21 @@ final class RLFactory {
             return RecommendedSectionConfigurator(collectionView: collectionView,
                                                   models: models,
                                                   title: "Рекомендации",
-                                                  selector: nil,
+                                                  isSelector: false,
                                                   delegate: delegate).configure()
         case .mainCell:
             return MainSectionConfigurator(collectionView: collectionView,
                                            models: models,
                                            layoutType: .split2xN,
                                            title: "Популярные блюда",
-                                           selector: nil,
+                                           isSelector: true,
                                            delegate: delegate).configure()
         case .fullMainCell:
             return MainSectionConfigurator(collectionView: collectionView,
                                            models: models,
                                            layoutType: .split2xN,
-                                           title: "Рекомендации",
-                                           selector: nil,
+                                           title: "Популярные блюда",
+                                           isSelector: true,
                                            delegate: delegate).configure()
         }
     }
@@ -108,5 +107,11 @@ extension RLFactory: CVFactoryProtocol {
             ])
         }
         return builders
+    }
+}
+
+private extension RLFactory {
+    @objc func changeLayoutButtonTapped() {
+        print("changeLayoutButtonTapped")
     }
 }

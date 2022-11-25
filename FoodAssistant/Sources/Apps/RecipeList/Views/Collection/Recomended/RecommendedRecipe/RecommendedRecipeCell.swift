@@ -19,18 +19,6 @@ final class RecommendedRecipeCell: MainRecipeCell {
         return button
     }()
     
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        setupCell()
-        setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
@@ -65,9 +53,10 @@ final class RecommendedRecipeCell: MainRecipeCell {
         favoriteButton.addTarget(self,
                                  action: #selector(didFavoriteButtonToggle),
                                  for: .touchUpInside)
+        addToBasketButton.addTarget(self,
+                                    action: #selector(addToBasketButtonTapped),
+                                    for: .touchUpInside)
     }
-    
-   
     
     override func setupConstraints() {
         
@@ -117,4 +106,22 @@ final class RecommendedRecipeCell: MainRecipeCell {
         addSubview(activity)
         activity.setUpSpinner(loadingImageView: recipeImageView)
     }
+    
+    private func addEnding(number: Int) -> String {
+        let endingBy10 = number % 10
+        let endingBy100 = number % 100
+        var baseString = "\(number) ИНГРЕДИЕНТ"
+        
+        switch endingBy10 {
+        case 1:
+            baseString += 11 == endingBy100 ? "ОВ" : ""
+        case 2, 3, 4 :
+            baseString += 12...14 ~= endingBy100 ? "ОВ" : "А"
+        default:
+            baseString += "ОВ"
+        }
+        return baseString
+    }
+   
+    
 }
