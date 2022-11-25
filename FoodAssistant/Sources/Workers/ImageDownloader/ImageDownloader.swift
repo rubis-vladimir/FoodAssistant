@@ -9,12 +9,11 @@ import Foundation
 
 /// Протокол загрузки изображений из сети
 protocol ImageDownloadProtocol {
-    
     /// Получает данные изображения
     ///  - Parameters:
-    ///   - urlRequest: url запрос
+    ///   - url: url
     ///   - completion: захватывает данные / ошибку
-    func fetchImage(urlRequest: URLRequest,
+    func fetchImage(url: URL,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
@@ -23,19 +22,15 @@ final class ImageDownloader { }
 
 // MARK: - ImageDownloadProtocol
 extension ImageDownloader: ImageDownloadProtocol {
-    func fetchImage(urlRequest: URLRequest, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        URLSession.shared.dataTask(with: urlRequest) { (data, responce, error) in
-            guard responce != nil else {
-                completion(.failure(.notInternet))
-                return
-            }
-            guard let data = data,
-                  error == nil else {
+    func fetchImage(url: URL,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        
+        DispatchQueue.global().async {
+            guard let data = try? Data(contentsOf: url) else {
                 completion(.failure(.failedToLoadImage))
                 return
             }
             completion(.success(data))
-        }.resume()
+        }
     }
 }
-

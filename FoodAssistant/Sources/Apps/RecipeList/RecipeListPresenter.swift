@@ -48,7 +48,7 @@ final class RecipeListPresenter {
     }
     
     func getStartData() {
-        interactor.fetchRandomRecipe(number: 8, tags: ["salad"]) { [weak self] result in
+        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 self?.recipeCellModels = recipeCellModels
@@ -79,7 +79,7 @@ extension RecipeListPresenter: RecipeListPresentation {
     }
     
     func testGetRandom() {
-        interactor.fetchRandomRecipe(number: 8, tags: ["salad"]) { [weak self] result in
+        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
             
             switch result {
             case .success(let recipeCellModels):

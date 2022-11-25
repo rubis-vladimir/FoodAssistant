@@ -5,39 +5,18 @@
 //  Created by Владимир Рубис on 09.11.2022.
 //
 
-typealias DFM = DataFetcherTranslateManagement & DataFetcherRecipeManagement
-
 import Foundation
-
-/// Протокол управления запросами на получение рецептов
-protocol DataFetcherRecipeManagement {
-    /// Запрос аниме
-    ///  - Parameters:
-    ///   - requestBuilder: конфигуратор запроса
-    ///   - completion: захватывает модель Аниме / ошибку
-    func fetchComplexRecipe(_ parameters: RecipeFilterParameters,
-                            _ number: Int, _ query: String?,
-                            completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void)
-    
-    func fetchRandomRecipe(number: Int,
-                           tags: [String],
-                           completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void)
-}
-
-/// Протокол работы с запросами на перевод
-protocol DataFetcherTranslateManagement {
-    /// Запрос на перевод текста
-    func translate(with parameters: TranslateParameters,
-                   completion: @escaping (Result<Translate, DataFetcherError>) -> Void)
-}
 
 /// Сервис работы с запросами
 final class DataFetcherService {
     
     private let dataFetcher: DataFetcherProtocol
+    private let imageDownloader: ImageDownloadProtocol
     
-    init(dataFetcher: DataFetcherProtocol) {
+    init(dataFetcher: DataFetcherProtocol
+         ,imageDownloader: ImageDownloadProtocol) {
         self.dataFetcher = dataFetcher
+        self.imageDownloader = imageDownloader
     }
 }
 
@@ -67,5 +46,19 @@ extension DataFetcherService: DataFetcherTranslateManagement {
         LanguageRequest
             .translate(patameters: parameters)
             .download(with: dataFetcher, completion: completion)
+    }
+}
+
+extension DataFetcherService: DataFetcherImageManagement {
+    func fetchRecipeImage(_ imageName: String, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        ImageRequest
+            .recipe(imageName: imageName)
+            .download(with: imageDownloader, completion: completion)
+    }
+    
+    func fetchIngredientImage(_ imageName: String, size: ImageSize, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        ImageRequest
+            .ingredient(imageName: imageName, size: size)
+            .download(with: imageDownloader, completion: completion)
     }
 }

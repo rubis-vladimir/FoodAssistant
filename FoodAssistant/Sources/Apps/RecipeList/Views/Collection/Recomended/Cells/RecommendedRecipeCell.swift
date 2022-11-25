@@ -7,19 +7,9 @@
 
 import UIKit
 
-final class RecommendedRecipeCell: RecipeCollectionViewCell {
-//
-//    private var isFavorite: Bool = false {
-//        didSet {
-//            if isFavorite {
-//                favoriteButton.setImage(Icons.heartFill.image, for: .normal)
-//            } else {
-//                favoriteButton.setImage(Icons.heart.image, for: .normal)
-//            }
-//        }
-//    }
+final class RecommendedRecipeCell: MainRecipeCell {
     
-    private lazy var addToBasketButton: UIButton = {
+    let addToBasketButton: UIButton = {
         var button = UIButton()
         button.setImage(Icons.basketSmall.image, for: .normal)
         button.backgroundColor = Palette.darkColor.color
@@ -27,15 +17,6 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
         button.layer.addShadow(color: Palette.shadowColor2.color)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()
-    
-    
-    private lazy var cookingTimeLabel: UILabel = {
-        var label = UILabel()
-        label.font = Fonts.selected
-        label.textColor = Palette.darkColor.color
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
     }()
     
     
@@ -60,7 +41,7 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
         print("addToBasketButtonTapped")
     }
     
-    func configure(with model: RecipeCellModel) {
+    override func configure(with model: RecipeCellModel) {
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",
                                    for: .normal)
         titleRecipeLabel.text = model.titleRecipe
@@ -71,28 +52,10 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
             print(imageName)
             addSubview(activity)
             activity.setUpSpinner(loadingImageView: recipeImageView)
-            
-//            delegate?.fetchImage(with: String(imageName)) { [weak self] result in
-//                switch result {
-//                case .success(let data):
-//                    guard let image = UIImage(data: data) else { return }
-//                    DispatchQueue.main.async {
-//                        self?.activity.removeFromSuperview()
-//                        self?.recipeImageView.alpha = 0.5
-//                        self?.recipeImageView.reloadInputViews()
-//                        UIView.animate(withDuration: 0.55) {
-//                            self?.recipeImageView.image = image
-//                            self?.recipeImageView.alpha = 1
-//                        }
-//                    }
-//                case .failure(_):
-//                    break
-//                }
-//            }
         }
     }
     
-    private func setupCell() {
+    override func setupCell() {
         backgroundColor = Palette.bgColor.color
         clipsToBounds = true
         layer.cornerRadius = 20
@@ -104,26 +67,9 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
                                  for: .touchUpInside)
     }
     
-    
-    
-    private func addEnding(number: Int) -> String {
-        let endingBy10 = number % 10
-        let endingBy100 = number % 100
-        var baseString = "\(number) ИНГРЕДИЕНТ"
-        
-        switch endingBy10 {
-        case 1:
-            baseString += 11 == endingBy100 ? "ОВ" : ""
-        case 2, 3, 4 :
-            baseString += 12...14 ~= endingBy100 ? "ОВ" : "А"
-        default:
-            baseString += "ОВ"
-        }
-        return baseString
-    }
    
     
-    private func setupConstraints() {
+    override func setupConstraints() {
         
         let containerForLabel = UIStackView()
         containerForLabel.axis = .horizontal
@@ -131,7 +77,7 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
         containerForLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let stack = UIStackView()
-        stack.spacing = 16
+        stack.spacing = 0
         stack.axis = .vertical
         stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
@@ -156,14 +102,14 @@ final class RecommendedRecipeCell: RecipeCollectionViewCell {
             favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             
-            containerForLabel.heightAnchor.constraint(equalToConstant: 45),
-            addToBasketButton.heightAnchor.constraint(equalToConstant: 40),
+            addToBasketButton.heightAnchor.constraint(equalToConstant: 35),
             
             recipeImageView.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -16),
             recipeImageView.topAnchor.constraint(equalTo: topAnchor),
             recipeImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             recipeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             
+            stack.heightAnchor.constraint(equalToConstant: 90),
             stack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             stack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16)

@@ -43,7 +43,7 @@ extension RequestBuilding {
 
     func asURLRequest() throws -> URLRequest {
         guard let url = url else { throw DataFetcherError.wrongUrl }
-        print(url)
+        
         var request = URLRequest (url: url)
         request.httpMethod = method.rawValue
         
@@ -56,7 +56,7 @@ extension RequestBuilding {
             do {
                 request.httpBody = try JSONEncoder().encode(parameters)
             } catch {
-                throw ( DataFetcherError.failedToEncode )
+                throw DataFetcherError.failedToEncode
             }
         }
         return request

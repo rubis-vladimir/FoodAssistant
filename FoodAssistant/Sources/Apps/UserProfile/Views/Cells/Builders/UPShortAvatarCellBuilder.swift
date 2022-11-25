@@ -22,8 +22,6 @@ final class UPShortAvatarCellBuilder {
 // MARK: - TVCBuilderProtocol
 extension UPShortAvatarCellBuilder: TVCBuilderProtocol {
     
-    var reuseId: String { String(describing: UPShortAvatarCell.self) }
-    
     func cellHeight() -> CGFloat { height }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {

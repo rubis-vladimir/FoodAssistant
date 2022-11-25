@@ -20,18 +20,14 @@ protocol RecipeListBusinessLogic {
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
-/// Слой бизнес логике модуля RecipeList
+/// Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
     weak var presenter: BusinessLogicDelegate?
     private let dataFetcher: DFM
-    private let imageDownloadManager: ImageDownloadManagement
     
-    init(dataFetcher: DFM, imageDownloadManager: ImageDownloadManagement) {
+    init(dataFetcher: DFM) {
         self.dataFetcher = dataFetcher
-        self.imageDownloadManager = imageDownloadManager
     }
-    
-    
 }
 
 // MARK: - BusinessLogic
@@ -39,7 +35,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     
     func fetchImage(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        imageDownloadManager.fetchRecipeImage(imageName, completion: completion)
+        dataFetcher.fetchRecipeImage(imageName, completion: completion)
     }
     
     func translate(texts: [String]) {

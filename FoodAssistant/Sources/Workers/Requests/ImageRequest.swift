@@ -17,22 +17,18 @@ extension ImageRequest {
     /// Обращается к сервису для загрузки изображений
     func download(with service: ImageDownloadProtocol,
                   completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        do {
-            service.fetchImage(urlRequest: try asURLRequest(), completion: completion)
-        } catch {
-            guard let error = error as? DataFetcherError else { return }
-            completion(.failure(error))
+        guard let url = url else {
+            completion(.failure(.wrongUrl))
+            return
         }
+        service.fetchImage(url: url, completion: completion)
     }
-}
-
-// MARK: - RequestBuilding
-extension ImageRequest: RequestBuilding {
-    var baseUrl: String {
+    
+    private var baseUrl: String {
         "spoonacular.com"
     }
     
-    var path: String {
+    private var path: String {
         switch self {
         case .recipe(let imageName):
            return "/recipeImages/\(imageName)"
@@ -41,6 +37,12 @@ extension ImageRequest: RequestBuilding {
         }
     }
     
-    var method: HTTPMethod { .get }
-    var headers: HTTPHeaders? { nil }
+    private var url: URL? {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = baseUrl
+        components.path = path
+        return components.url
+    }
 }
+

@@ -21,13 +21,17 @@ extension RecipeListAssembly: Assemblying {
     func assembly() -> UIViewController {
         
         let networkDataFetcher = NetworkDataFetcher()
-        let dataFetcherService = DataFetcherService(dataFetcher: networkDataFetcher)
         let imageDownloader = ImageDownloader()
-        let imageDownloadService = ImageDownloadService(imageDownloader: imageDownloader)
+        let imageCacheService = ImageCacheService()
+        let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
+                                                        imageCache: imageCacheService)
+        
+        let dataFetcherService = DataFetcherService(dataFetcher: networkDataFetcher,
+                                                    imageDownloader: imageDownloaderProxy)
+        
         
         let router = RecipeListRouter(navigationController: navigationController)
-        let interactor = RecipeListInteractor(dataFetcher: dataFetcherService,
-                                              imageDownloadManager: imageDownloadService)
+        let interactor = RecipeListInteractor(dataFetcher: dataFetcherService)
         let presenter = RecipeListPresenter(interactor: interactor,
                                   router: router)
         let viewController = RecipeListViewController(presenter: presenter)
