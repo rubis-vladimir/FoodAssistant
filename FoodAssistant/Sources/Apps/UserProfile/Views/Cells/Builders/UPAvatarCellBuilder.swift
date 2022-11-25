@@ -24,8 +24,6 @@ final class UPAvatarCellBuilder {
 // MARK: - TVCBuilderProtocol
 extension UPAvatarCellBuilder: TVCBuilderProtocol {
     
-    var reuseId: String { String(describing: UPAvatarCell.self) }
-    
     func cellHeight() -> CGFloat { height }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {

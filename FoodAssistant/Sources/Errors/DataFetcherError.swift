@@ -12,6 +12,7 @@ enum DataFetcherError: Error {
     case failedToEncode
     case failedToDecode
     case failedToLoadData
+    case failedToLoadImage
     case failedToTranslate
     case wrongUrl
     case wrongStatusCode

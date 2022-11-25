@@ -15,9 +15,12 @@ protocol RecipeListBusinessLogic {
     func fetchRandomRecipe(number: Int, tags: [String],
                            completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void)
     func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?)
+    
+    func fetchImage(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
-/// Слой бизнес логике модуля RecipeList
+/// Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
     weak var presenter: BusinessLogicDelegate?
     private let dataFetcher: DFM
@@ -25,12 +28,15 @@ final class RecipeListInteractor {
     init(dataFetcher: DFM) {
         self.dataFetcher = dataFetcher
     }
-    
-    
 }
 
 // MARK: - BusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
+    
+    func fetchImage(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        dataFetcher.fetchRecipeImage(imageName, completion: completion)
+    }
     
     func translate(texts: [String]) {
         
@@ -49,23 +55,69 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
     }
     
+    private func getImageName(from urlString: String?) -> String? {
+        guard let urlString = urlString else { return nil }
+        return String(urlString.dropFirst(37))
+    }
+    
+    /// Проверяет установленный на устройстве язык
+    private func currentAppleLanguage() -> String {
+        let appleLanguageKey = "AppleLanguages"
+        let userdef = UserDefaults.standard
+        var currentWithoutLocale = "Base"
+        if let langArray = userdef.object(forKey: appleLanguageKey) as? [String] {
+            if var current = langArray.first {
+                if let range = current.range(of: "-") {
+                    current = String(current[..<range.lowerBound])
+                }
+                
+                currentWithoutLocale = current
+            }
+        }
+        return currentWithoutLocale
+    }
+    
     func fetchRandomRecipe(number: Int, tags: [String],
                            completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void) {
-        dataFetcher.fetchRandomRecipe(number: number, tags: tags) { result in
+        dataFetcher.fetchRandomRecipe(number: number, tags: tags) { [weak self] result in
             switch result {
                 
             case .success(let recipe):
-                let recipes = recipe.recipes
+                guard let recipes = recipe.recipes else { return }
                 
-                var arrayModels = [RecipeCellModel]()
-                recipes?.forEach {
-                    
-                    let cookingTime = "\($0.readyInMinutes) мин"
-                    
-                    let recipeCellModel = RecipeCellModel(id: 1234, titleRecipe: $0.title, cookingTime: cookingTime, isFavorite: false, ingredientsCount: $0.extendedIngredients?.count ?? 0)
-                    arrayModels.append(recipeCellModel)
+                if self?.currentAppleLanguage() != "Base"  {
+                    let texts = recipes.map { $0.title }
+                    let translateParameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
+                                                                  texts: texts,
+                                                                  sourceLanguageCode: "en",
+                                                                  targetLanguageCode: "ru")
+                    self?.dataFetcher.translate(with: translateParameters) { result in
+                        switch result {
+                            
+                        case .success(let translate):
+                            let texts = translate.translations.map{ $0.text }
+                            
+                            var arrayModels = [RecipeCellModel]()
+                            
+                            (0..<recipes.count).forEach {
+                                
+                                let recipeCellModel = RecipeCellModel(id: 1234,
+                                                                      titleRecipe: texts[$0],
+                                                                      readyInMinutes: recipes[$0].readyInMinutes,
+                                                                      isFavorite: false,
+                                                                      ingredientsCount: recipes[$0].extendedIngredients?.count ?? 0,
+                                                                      imageName: self?.getImageName(from: recipes[$0].image))
+    
+                                arrayModels.append(recipeCellModel)
+                            }
+                            completion(.success(arrayModels))
+                        case .failure(_):
+                            break
+                        }
+                    }
                 }
-                completion(.success(arrayModels))
+                
+                
             case .failure(let error):
                 switch error {
                     
@@ -83,6 +135,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                     print(6)
                 case .notInternet:
                     print(7)
+                case .failedToLoadImage:
+                    print(8)
                 }
             }
         }
@@ -111,6 +165,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                     print(6)
                 case .notInternet:
                     print(7)
+                case .failedToLoadImage:
+                    print(8)
                 }
             }
 
