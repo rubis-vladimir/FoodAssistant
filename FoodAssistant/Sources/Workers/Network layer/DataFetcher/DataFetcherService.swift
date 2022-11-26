@@ -50,9 +50,9 @@ extension DataFetcherService: DataFetcherTranslateManagement {
 }
 
 extension DataFetcherService: DataFetcherImageManagement {
-    func fetchRecipeImage(_ imageName: String, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+    func fetchRecipeImage(_ imageName: String,  size: ImageSize, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         ImageRequest
-            .recipe(imageName: imageName)
+            .recipe(imageName: imageName, size: size)
             .download(with: imageDownloader, completion: completion)
     }
     

@@ -43,12 +43,13 @@ extension TabBarConfigurator: TabBarConfiguration {
         let personImage = UIImage(named: "person")
         let selectedPersonImage = UIImage(named: "person.fill")
         
+        let navigationController1 = UINavigationController()
+        let recipeListVC = RecipeListAssembly(navigationController: navigationController1).assembly()
+        navigationController1.viewControllers = [recipeListVC]
         
-        let recipeListVC = RecipeListAssembly(navigationController: navigationController).assembly()
-        let navigationController1 = UINavigationController(rootViewController: recipeListVC)
-        
+        let navigationController2 = UINavigationController()
         let userProfileVC = UserProfileAssembly(navigationController: navigationController).assembly()
-        let navigationController2 = UINavigationController(rootViewController: userProfileVC)
+        navigationController2.viewControllers = [userProfileVC]
         
         tabBar.viewControllers = [
             setupChildVC(navigationController1,

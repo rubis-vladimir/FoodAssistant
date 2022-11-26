@@ -44,7 +44,7 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
         cell.configure(with: model)
         
         if let imageName = model.imageName {
-            delegate?.fetchImage(with: imageName) { imageData in
+            delegate?.fetchImage(with: imageName, size: .medium) { imageData in
                 DispatchQueue.main.async {
                     cell.updateRecipeImage(data: imageData)
                 }
@@ -54,6 +54,7 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
     }
     
     func didSelectItem(indexPath: IndexPath) {
-        print("didSelectItem - 2")
+        delegate?.didSelectItem(type: .recommended,
+                                id: indexPath.row)
     }
 }

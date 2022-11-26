@@ -21,14 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = .black
         UINavigationBar.appearance().barTintColor = .white
         UIButton.appearance().tintColor = .white
-//        UIButton.appearance().setTitleColor(.black, for: .normal)
         
         /// Создаем NavigationController для TabBarController
         let navigationVC = UINavigationController()
         /// Устанавливаем зависимости и настраиваем TabBarController
-        let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
-        let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
-        navigationVC.viewControllers = [tabBarController]
+//        let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
+//        let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
+//        navigationVC.viewControllers = [tabBarController]
+        
+        let detailVC = DetailInfoAssembly(navigationController: navigationVC).assembly()
+        navigationVC.viewControllers = [detailVC]
         /// Определяем rootVC и отображаем на экране
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()

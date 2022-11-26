@@ -62,6 +62,14 @@ class MainRecipeCell: UICollectionViewCell {
         return label
     }()
     
+    let containerForCTLabel: UIStackView = {
+        let stack = UIStackView()
+        stack.layer.cornerRadius = 10
+        stack.backgroundColor = .white
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        return stack
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -75,7 +83,7 @@ class MainRecipeCell: UICollectionViewCell {
     
     @objc func didFavoriteButtonToggle() {
         isFavorite.toggle()
-        delegate?.didTapFavoriteButton(id: 1)
+//        delegate?.didTapFavoriteButton(id: 1)
     }
     
     func updateRecipeImage(data: Data) {
@@ -95,7 +103,7 @@ class MainRecipeCell: UICollectionViewCell {
     
     func configure(with model: RecipeCellModel) {
         titleRecipeLabel.text = model.titleRecipe
-        cookingTimeLabel.text = model.cookingTime
+        cookingTimeLabel.text = model.cookingTime + " "
         
         if let urlString = model.imageName {
             let imageName = urlString.dropFirst(37)
@@ -117,10 +125,10 @@ class MainRecipeCell: UICollectionViewCell {
     }
     func setupConstraints() {
         
-        let containerForLabel = UIStackView()
-        containerForLabel.axis = .horizontal
-        containerForLabel.alignment = .top
-        containerForLabel.translatesAutoresizingMaskIntoConstraints = false
+        let containerForTRLabel = UIStackView()
+        containerForTRLabel.axis = .horizontal
+        containerForTRLabel.alignment = .top
+        containerForTRLabel.translatesAutoresizingMaskIntoConstraints = false
         
         let stack = UIStackView()
         stack.spacing = 8
@@ -128,24 +136,27 @@ class MainRecipeCell: UICollectionViewCell {
         stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        
-        containerForLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(cookingTimeLabel)
+        containerForCTLabel.addArrangedSubview(cookingTimeLabel)
+        containerForTRLabel.addArrangedSubview(titleRecipeLabel)
+        recipeImageView.addSubview(containerForCTLabel)
         
         stack.addArrangedSubview(recipeImageView)
-        stack.addArrangedSubview(containerForLabel)
+        stack.addArrangedSubview(containerForTRLabel)
         
         addSubview(stack)
         addSubview(favoriteButton)
         
         NSLayoutConstraint.activate([
-            cookingTimeLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -16),
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: 16),
+            containerForCTLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -16),
+            containerForCTLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: 16),
+            containerForCTLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: containerForCTLabel.leadingAnchor, constant: 4),
             
             favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),
             
-            containerForLabel.heightAnchor.constraint(equalToConstant: 45),
+            containerForTRLabel.heightAnchor.constraint(equalToConstant: 45),
             
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.topAnchor.constraint(equalTo: topAnchor),

@@ -7,30 +7,33 @@
 
 import Foundation
 
+enum RLModelType {
+    case recommended, main
+}
+
 /// Протокол передачи UI-ивентов слою презентации модуля RecipeList
 protocol RecipeListPresentation: RLLayoutChangable, RLRecipeButtonDelegate, AnyObject {
-    var viewModels: [RecipeCellModel] { get }
+    var viewModels: [RLModelType: [RecipeCellModel]] { get }
     func testTranslate()
     
     func testGetRandom()
     func testGetRecipe()
     
-    func fetchImage(with imageName: String,
+    func fetchImage(with imageName: String, size: ImageSize,
                     completion: @escaping (Data) -> Void)
 }
 
 
-protocol RLRecipeButtonDelegate: RLFavoriteChangable, AnyObject {
+protocol RLRecipeButtonDelegate: AnyObject {
     func didTapAddIngredientsButton(id: Int)
-}
-
-protocol RLFavoriteChangable: AnyObject {
-    func didTapFavoriteButton(id: Int)
+    func didTapFavoriteButton(type: RLModelType, id: Int)
+    func didSelectItem(type: RLModelType, id: Int)
 }
 
 protocol RLLayoutChangable: AnyObject {
     func didTapChangeLayoutButton()
 }
+
 
 /// Протокол делегата бизнес логики модуля RecipeList
 protocol RecipeListBusinessLogicDelegate: AnyObject {
@@ -40,11 +43,21 @@ protocol RecipeListBusinessLogicDelegate: AnyObject {
 /// Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
-    private(set) var viewModels: [RecipeCellModel] = [] {
+    private(set) var viewModels: [RLModelType: [RecipeCellModel]] = [:] {
         didSet {
-            delegate?.updateUI()
+            if isStart {
+                guard let recommended = viewModels[.recommended],
+                      let main = viewModels[.main] else { return }
+                
+                delegate?.updateUI(with: .main(first: recommended,
+                                               second: main))
+            } else {
+                guard let main = viewModels[.main] else { return }
+                delegate?.updateUI(with: .search(models: main))
+            }
         }
     }
+    private var isStart: Bool = false
     
     weak var delegate: RecipeListViewable?
     private let interactor: RecipeListBusinessLogic
@@ -57,23 +70,44 @@ final class RecipeListPresenter {
     }
     
     func getStartData() {
-        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
+        
+//        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
+//            switch result {
+//            case .success(let recipeCellModels):
+//                self?.viewModels[.recommended] = recipeCellModels
+//            case .failure(_):
+//                break
+//            }
+//        }
+        
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["tomato"], excludeIngredients: [], maxCalories: 500, sort: nil)
+        
+        interactor.fetchRecipe(with: filterParameters, number: 5, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
-                self?.viewModels = recipeCellModels
+                self?.viewModels[.main] = recipeCellModels
             case .failure(_):
                 break
             }
         }
+        
+//        interactor.fetchRandomRecipe(number: 10, tags: ["salad"]) { [weak self] result in
+//            switch result {
+//            case .success(let recipeCellModels):
+//                self?.viewModels[.main] = recipeCellModels
+//            case .failure(_):
+//                break
+//            }
+//        }
     }
 }
 
 // MARK: - Presentation
 extension RecipeListPresenter: RecipeListPresentation {
     
-    func fetchImage(with imageName: String,
+    func fetchImage(with imageName: String, size: ImageSize,
                completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName) { [weak self] result in
+        interactor.fetchImage(imageName, size: size) { [weak self] result in
             switch result {
             case .success(let data):
                 completion(data)
@@ -88,15 +122,15 @@ extension RecipeListPresenter: RecipeListPresentation {
     }
     
     func testGetRandom() {
-        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
-            
-            switch result {
-            case .success(let recipeCellModels):
-                self?.delegate?.updateUI()
-            case .failure(_):
-                break
-            }
-        }
+//        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
+//
+//            switch result {
+//            case .success(let recipeCellModels):
+//                self?.delegate?.updateUI()
+//            case .failure(_):
+//                break
+//            }
+//        }
     }
     
     func testGetRecipe() {
@@ -104,7 +138,7 @@ extension RecipeListPresenter: RecipeListPresentation {
         var parameters = RecipeFilterParameters()
         parameters.includeIngredients.append(contentsOf: ["onion", "cod"])
         parameters.sort = "random"
-        interactor.fetchRecipe(with: parameters, number: 3, query: nil)
+//        interactor.fetchRecipe(with: parameters, number: 3, query: nil)
     }
 }
 
@@ -114,9 +148,9 @@ extension RecipeListPresenter: RecipeListBusinessLogicDelegate {
 }
 
 
-
 extension RecipeListPresenter {
-    func didTapFavoriteButton(id: Int) {
+
+    func didTapFavoriteButton(type: RLModelType, id: Int) {
         print("didTapFavoriteButton")
     }
     
@@ -124,7 +158,12 @@ extension RecipeListPresenter {
         print("didTapAddIngredientsButton")
     }
     
+    func didSelectItem(type: RLModelType, id: Int) {
+        router.route(to: .detailInfo)
+    }
+    
     func didTapChangeLayoutButton() {
         print("didTapChangeLayoutButton")
     }
+    
 }

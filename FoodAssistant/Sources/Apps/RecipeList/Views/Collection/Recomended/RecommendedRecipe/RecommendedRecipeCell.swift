@@ -33,7 +33,7 @@ final class RecommendedRecipeCell: MainRecipeCell {
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",
                                    for: .normal)
         titleRecipeLabel.text = model.titleRecipe
-        cookingTimeLabel.text = model.cookingTime
+        cookingTimeLabel.text = model.cookingTime + " "
         
         if let urlString = model.imageName {
             let imageName = urlString.dropFirst(37)
@@ -74,8 +74,9 @@ final class RecommendedRecipeCell: MainRecipeCell {
         
         addToBasketButton.imageEdgeInsets = Constants.edgeInsert
         
+        containerForCTLabel.addArrangedSubview(cookingTimeLabel)
         containerForLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(cookingTimeLabel)
+        recipeImageView.addSubview(containerForCTLabel)
         
         stack.addArrangedSubview(containerForLabel)
         stack.addArrangedSubview(addToBasketButton)
@@ -85,8 +86,11 @@ final class RecommendedRecipeCell: MainRecipeCell {
         addSubview(favoriteButton)
         
         NSLayoutConstraint.activate([
-            cookingTimeLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -16),
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: 16),
+            containerForCTLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -16),
+            containerForCTLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: 16),
+            containerForCTLabel.heightAnchor.constraint(equalToConstant: 30),
+            
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: containerForCTLabel.leadingAnchor, constant: 4),
             
             favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: 16),

@@ -40,7 +40,7 @@ protocol DataFetcherImageManagement {
     ///  - Parameters:
     ///   - imageName: название изображения
     ///   - completion: захватывает данные / ошибку
-    func fetchRecipeImage(_ imageName: String,
+    func fetchRecipeImage(_ imageName: String, size: ImageSize, 
                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
     /// Запрос на загрузку изображения ингредиента

@@ -14,9 +14,10 @@ protocol RecipeListBusinessLogic {
     
     func fetchRandomRecipe(number: Int, tags: [String],
                            completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void)
-    func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?)
+    func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?,
+                     completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void)
     
-    func fetchImage(_ imageName: String,
+    func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
@@ -33,9 +34,9 @@ final class RecipeListInteractor {
 // MARK: - BusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
     
-    func fetchImage(_ imageName: String,
+    func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        dataFetcher.fetchRecipeImage(imageName, completion: completion)
+        dataFetcher.fetchRecipeImage(imageName, size: size, completion: completion)
     }
     
     func translate(texts: [String]) {
@@ -101,12 +102,12 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                             
                             (0..<recipes.count).forEach {
                                 
-                                let recipeCellModel = RecipeCellModel(id: 1234,
+                                let recipeCellModel = RecipeCellModel(id: recipes[$0].id,
                                                                       titleRecipe: texts[$0],
                                                                       readyInMinutes: recipes[$0].readyInMinutes,
                                                                       isFavorite: false,
                                                                       ingredientsCount: recipes[$0].extendedIngredients?.count ?? 0,
-                                                                      imageName: self?.getImageName(from: recipes[$0].image))
+                                                                      imageName: String(recipes[$0].id))
     
                                 arrayModels.append(recipeCellModel)
                             }
@@ -142,12 +143,47 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
     }
     
-    func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?) {
-        dataFetcher.fetchComplexRecipe(parameters, number, query) { result in
+    func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?,
+                     completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void) {
+        dataFetcher.fetchComplexRecipe(parameters, number, query) { [weak self] result in
             switch result {
                 
             case .success(let recipe):
-                print(recipe)
+                guard let recipes = recipe.results else {
+                    return
+                }
+                
+                if self?.currentAppleLanguage() != "Base"  {
+                    let texts = recipes.map { $0.title }
+                    let translateParameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
+                                                                  texts: texts,
+                                                                  sourceLanguageCode: "en",
+                                                                  targetLanguageCode: "ru")
+                    self?.dataFetcher.translate(with: translateParameters) { result in
+                        switch result {
+                            
+                        case .success(let translate):
+                            let texts = translate.translations.map{ $0.text }
+                            
+                            var arrayModels = [RecipeCellModel]()
+                            
+                            (0..<recipes.count).forEach {
+                                
+                                let recipeCellModel = RecipeCellModel(id: recipes[$0].id,
+                                                                      titleRecipe: texts[$0],
+                                                                      readyInMinutes: recipes[$0].readyInMinutes,
+                                                                      isFavorite: false,
+                                                                      ingredientsCount: recipes[$0].extendedIngredients?.count ?? 0,
+                                                                      imageName: String(recipes[$0].id))
+    
+                                arrayModels.append(recipeCellModel)
+                            }
+                            completion(.success(arrayModels))
+                        case .failure(_):
+                            break
+                        }
+                    }
+                }
             case .failure(let error):
                 switch error {
                     
