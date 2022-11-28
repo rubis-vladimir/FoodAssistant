@@ -25,12 +25,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         /// Создаем NavigationController для TabBarController
         let navigationVC = UINavigationController()
         /// Устанавливаем зависимости и настраиваем TabBarController
-//        let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
-//        let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
-//        navigationVC.viewControllers = [tabBarController]
+        let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
+        let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
+        navigationVC.viewControllers = [tabBarController]
         
-        let detailVC = DetailInfoAssembly(navigationController: navigationVC).assembly()
-        navigationVC.viewControllers = [detailVC]
+//        let detailVC = DetailInfoAssembly(navigationController: navigationVC).assembly()
+//        navigationVC.viewControllers = [detailVC]
         /// Определяем rootVC и отображаем на экране
         window?.rootViewController = navigationVC
         window?.makeKeyAndVisible()

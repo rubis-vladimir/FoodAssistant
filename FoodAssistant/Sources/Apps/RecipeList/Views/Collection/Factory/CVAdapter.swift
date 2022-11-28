@@ -7,9 +7,11 @@
 
 import UIKit
 
+// Адаптер для CollectionView
 final class CVAdapter: NSObject {
+    
     private let collectionView: UICollectionView
-    var builders: [CVSectionBuilderProtocol] = [] {
+    private var builders: [CVSectionBuilderProtocol] = [] {
         didSet {
             collectionView.reloadData()
         }

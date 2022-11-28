@@ -159,7 +159,9 @@ extension RecipeListPresenter {
     }
     
     func didSelectItem(type: RLModelType, id: Int) {
-        router.route(to: .detailInfo)
+        interactor.getModel(id: id) { [weak self] model in
+            self?.router.route(to: .detailInfo, model: model)
+        }
     }
     
     func didTapChangeLayoutButton() {

@@ -8,8 +8,8 @@
 import Foundation
 
 /// Протокол передачи UI-ивентов слою презентации
-protocol DetailInfoPresentation {
-    
+protocol DetailInfoPresentation: AnyObject {
+    var model: Recipe { get }
 }
 
 /// Протокол делегата бизнес логики
@@ -23,10 +23,14 @@ final class DetailInfoPresenter {
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
     
+    private(set) var model: Recipe
+    
     init(interactor: DetailInfoBusinessLogic,
-         router: DetailInfoRouting) {
+         router: DetailInfoRouting,
+         model: Recipe) {
         self.interactor = interactor
         self.router = router
+        self.model = model
     }
 }
 

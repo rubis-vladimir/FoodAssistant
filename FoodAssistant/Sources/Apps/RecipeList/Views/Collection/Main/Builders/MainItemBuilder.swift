@@ -83,6 +83,6 @@ extension MainItemBuilder: CVItemBuilderProtocol {
         let model = models[indexPath.item]
         print("GO TO MODEL \(model)")
         delegate?.didSelectItem(type: .recommended,
-                                id: indexPath.row)
+                                id: model.id)
     }
 }

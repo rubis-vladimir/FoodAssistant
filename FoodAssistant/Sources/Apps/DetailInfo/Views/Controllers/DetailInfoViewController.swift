@@ -20,13 +20,24 @@ final class DetailInfoViewController: UIViewController {
     
     private let scrollView: UIScrollView = {
         let view = UIScrollView()
-//        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-//        view.layer.masksToBounds = true
-//        view.scrollsToTop = true
-//
-//        view.showsHorizontalScrollIndicator = false
+        //        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        //        view.layer.masksToBounds = true
+        //        view.scrollsToTop = true
+        //
+        //        view.showsHorizontalScrollIndicator = false
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
+    }()
+    
+    
+    let reuseIdentifier = "SettingsCell"
+    
+    private var factory: DIFactory?
+    
+    private let tableView: UITableView = {
+        let tv = UITableView()
+        tv.translatesAutoresizingMaskIntoConstraints = false
+        return tv
     }()
     
     private lazy var imageView: UIImageView = {
@@ -82,11 +93,19 @@ final class DetailInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        tableView.dataSource = self
+//        tableView.delegate = self
         
+       
         setupNavigationBar()
-        setupConstraints()
+        tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupConstraints2()
+    }
     
     func setupNavigationBar() {
         
@@ -109,9 +128,15 @@ final class DetailInfoViewController: UIViewController {
     
     @objc func backButtonTapped() {
         print("backButtonTapped")
+        navigationController?.popToRootViewController(animated: true)
     }
     
     func setupConstraints() {
+        
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
+        
+        tableView.backgroundColor = .blue
+        
         
         let nutrient = Nutrient(name: "Calories",
                                 amount: 125,
@@ -134,6 +159,7 @@ final class DetailInfoViewController: UIViewController {
         scrollView.addSubview(imageView)
         scrollView.addSubview(detailTitleView)
         scrollView.addSubview(detailNutrientsView)
+        scrollView.addSubview(tableView)
         
 //        scrollView.contentSize = CGSizeMake(view.frame.size.width, 3000)
         
@@ -153,17 +179,60 @@ final class DetailInfoViewController: UIViewController {
             detailNutrientsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             detailNutrientsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             detailNutrientsView.topAnchor.constraint(equalTo: detailTitleView.bottomAnchor, constant: 100),
-            detailNutrientsView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            tableView.topAnchor.constraint(equalTo: detailNutrientsView.bottomAnchor, constant: 100),
+//            tableView.heightAnchor.constraint(equalToConstant: 500),
+            
             
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor)
+            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            tableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+        ])
+    }
+    
+    private func setupConstraints2() {
+        let model = presenter.model
+        factory = DIFactory(tableView: tableView,
+                            delegate: presenter,
+                            model: model)
+        factory?.setupTableView()
+        
+        
+        print(navigationController?.navigationBar.frame.height)
+        view.addSubview(tableView)
+        
+        NSLayoutConstraint.activate([
+            
+            
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.frame.height)!),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
         ])
     }
     
 }
+
+
+//extension DetailInfoViewController: UITableViewDataSource, UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+//        5
+//    }
+//
+//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
+//        cell.textLabel?.text = "QWER"
+//
+//        return cell
+//    }
+//
+//
+//}
 
 // MARK: - Viewable
 extension DetailInfoViewController: DetailInfoViewable {

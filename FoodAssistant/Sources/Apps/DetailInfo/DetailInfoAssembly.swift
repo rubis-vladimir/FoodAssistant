@@ -10,9 +10,12 @@ import UIKit
 /// Компоновщик модуля
 final class DetailInfoAssembly {
     private let navigationController: UINavigationController
+    private let model: Recipe
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         model: Recipe) {
         self.navigationController = navigationController
+        self.model = model
     }
 }
 
@@ -22,11 +25,12 @@ extension DetailInfoAssembly: Assemblying {
         let router = DetailInfoRouter(navigationController: navigationController)
         let interactor = DetailInfoInteractor()
         let presenter = DetailInfoPresenter(interactor: interactor,
-                                  router: router)
+                                            router: router,
+                                            model: model)
         let viewController = DetailInfoViewController(presenter: presenter)
         presenter.delegate = viewController
         interactor.presenter = presenter
-    
+        
         return viewController
     }
 }

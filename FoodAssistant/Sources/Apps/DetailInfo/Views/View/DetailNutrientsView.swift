@@ -99,3 +99,5 @@ final class DetailNutrientsView: UIView {
         return stack
     }
 }
+
+

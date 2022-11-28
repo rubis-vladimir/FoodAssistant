@@ -5,8 +5,6 @@
 //  Created by Владимир Рубис on 15.11.2022.
 //
 
-import Foundation
-
 import UIKit
 
 /// Строитель ячейки UserProfileCell

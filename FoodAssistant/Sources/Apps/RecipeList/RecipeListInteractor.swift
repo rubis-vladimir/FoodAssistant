@@ -19,12 +19,16 @@ protocol RecipeListBusinessLogic {
     
     func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    
+    func getModel(id: Int, completion: @escaping (Recipe) -> Void)
 }
 
 /// Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
     weak var presenter: RecipeListBusinessLogicDelegate?
     private let dataFetcher: DFM
+    
+    private var models: [Recipe] = []
     
     init(dataFetcher: DFM) {
         self.dataFetcher = dataFetcher
@@ -33,6 +37,12 @@ final class RecipeListInteractor {
 
 // MARK: - BusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
+    
+    func getModel(id: Int, completion: @escaping (Recipe) -> Void) {
+        guard let model = models.first(where: { $0.id == id
+        }) else { return }
+        completion(model)
+    }
     
     func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
@@ -152,6 +162,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 guard let recipes = recipe.results else {
                     return
                 }
+                
+                self?.models.append(contentsOf: recipes)
                 
                 if self?.currentAppleLanguage() != "Base"  {
                     let texts = recipes.map { $0.title }
