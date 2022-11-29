@@ -35,7 +35,7 @@ final class DetailInfoViewController: UIViewController {
     private var factory: DIFactory?
     
     private let tableView: UITableView = {
-        let tv = UITableView()
+        let tv = UITableView(frame: CGRect.zero, style: .grouped)
         tv.translatesAutoresizingMaskIntoConstraints = false
         return tv
     }()
@@ -66,7 +66,6 @@ final class DetailInfoViewController: UIViewController {
     init(presenter: DetailInfoPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        view.backgroundColor = .orange
         
 //        navigationController?.navigationBar.backgroundColor = .none
 //        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -90,22 +89,25 @@ final class DetailInfoViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        print("DetailInfoViewController")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        tableView.dataSource = self
-//        tableView.delegate = self
         
-       
+        tableView.backgroundColor = .clear
         setupNavigationBar()
-        tableView.reloadData()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         setupConstraints2()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.contentInset.top = -UIApplication.shared.statusBarFrame.height - (navigationController?.navigationBar.frame.minY ?? 0)
+    }
+    
+    override var prefersStatusBarHidden: Bool { true }
     
     func setupNavigationBar() {
         
@@ -201,15 +203,19 @@ final class DetailInfoViewController: UIViewController {
                             delegate: presenter,
                             model: model)
         factory?.setupTableView()
+        tableView.reloadData()
         
-        
-        print(navigationController?.navigationBar.frame.height)
+//        view.addSubview(imageView)
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
             
+//            imageView.topAnchor.constraint(equalTo: navigationController?.navigationBar.topAnchor ?? view.topAnchor),
+//            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+//            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+//            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: (navigationController?.navigationBar.frame.height)!),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),

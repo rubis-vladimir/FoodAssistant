@@ -55,8 +55,6 @@ final class DetailNutrientsView: UIView {
             container.addArrangedSubview(stack)
         }
         
-        
-        
         reloadInputViews()
     }
     
@@ -66,8 +64,8 @@ final class DetailNutrientsView: UIView {
         addSubview(container)
         
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
+            container.topAnchor.constraint(equalTo: self.topAnchor, constant: 8),
+            container.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -8),
             container.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             container.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])

@@ -80,9 +80,9 @@ final class RecipeListPresenter {
 //            }
 //        }
         
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["tomato"], excludeIngredients: [], maxCalories: 500, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["fish"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 5, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 6, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 self?.viewModels[.main] = recipeCellModels

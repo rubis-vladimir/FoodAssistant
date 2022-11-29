@@ -22,8 +22,18 @@ final class DetailInfoAssembly {
 // MARK: - Assemblying
 extension DetailInfoAssembly: Assemblying {
     func assembly() -> UIViewController {
+        
+        let networkManager = NetworkDataFetcher()
+        let imageCache = ImageCacheService()
+        let imageDownloader = ImageDownloader()
+        
+        let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
+                                                   imageCache: imageCache)
+        
+        let dataFetcher = DataFetcherService(dataFetcher: networkManager, imageDownloader: imageDownloaderProxy)
+        
         let router = DetailInfoRouter(navigationController: navigationController)
-        let interactor = DetailInfoInteractor()
+        let interactor = DetailInfoInteractor(dataFetcher: dataFetcher)
         let presenter = DetailInfoPresenter(interactor: interactor,
                                             router: router,
                                             model: model)

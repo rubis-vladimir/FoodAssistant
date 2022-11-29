@@ -13,11 +13,15 @@ final class BaseInfoCellBuilder {
     private let height = CGFloat(500)
     private let model: Recipe
     
+    weak var delegate: DetailInfoPresentation?
+    
     var action: ((UITableViewCell) -> Void)?
     
     init(model: Recipe,
+         delegate: DetailInfoPresentation?,
          action: ((UITableViewCell) -> Void)? = nil) {
         self.model = model
+        self.delegate = delegate
         self.action = action
     }
 }
@@ -36,6 +40,14 @@ extension BaseInfoCellBuilder: TVCellBuilderProtocol {
         let cell = tableView.dequeueReusableCell(BaseInfoCell.self,
                                                  indexPath: indexPath)
         cell.configure(with: model)
+        let imageName = String(model.id)
+        print(imageName)
+        
+        delegate?.fetchImage(with: imageName, size: .huge) { imageData in
+            DispatchQueue.main.async {
+                cell.updateImage(with: imageData)
+            }
+        }
         return cell
     }
 }

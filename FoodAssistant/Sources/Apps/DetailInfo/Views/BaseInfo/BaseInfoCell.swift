@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BaseInfoCell: UITableViewCell {
+final class BaseInfoCell: CustomTableViewCell {
     
     private lazy var recipeImageView: UIImageView = {
         let iv = UIImageView()
@@ -24,15 +24,8 @@ final class BaseInfoCell: UITableViewCell {
         return view
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        backgroundColor = .orange
+    override func setupCell() {
         setupConstraints()
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
     
     func configure(with model: Recipe) {

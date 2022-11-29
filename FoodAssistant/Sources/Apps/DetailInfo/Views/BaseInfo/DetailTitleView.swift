@@ -98,8 +98,6 @@ final class DetailTitleView: UIView {
         let stack = UIStackView()
         stack.spacing = 8
         stack.alignment = .center
-//        stack.backgroundColor =
-        
         let iv = UIImageView()
         iv.image = image
         

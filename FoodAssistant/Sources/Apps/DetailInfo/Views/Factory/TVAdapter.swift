@@ -56,6 +56,7 @@ extension TVAdapter: UITableViewDelegate {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.textLabel?.text = builders[section].titleHeader
             headerView.textLabel?.font = Fonts.subtitle
+            headerView.contentView.backgroundColor = .white
         }
     }
 }

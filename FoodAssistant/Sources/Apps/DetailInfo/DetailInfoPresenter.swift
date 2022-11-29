@@ -10,6 +10,8 @@ import Foundation
 /// Протокол передачи UI-ивентов слою презентации
 protocol DetailInfoPresentation: AnyObject {
     var model: Recipe { get }
+    
+    func fetchImage(with imageName: String, size: ImageSize, completion: @escaping (Data) -> Void)
 }
 
 /// Протокол делегата бизнес логики
@@ -36,6 +38,18 @@ final class DetailInfoPresenter {
 
 // MARK: - Presentation
 extension DetailInfoPresenter: DetailInfoPresentation {
+    func fetchImage(with imageName: String, size: ImageSize, completion: @escaping (Data) -> Void) {
+        interactor.fetchImage(imageName, size: size) { result in
+            switch result {
+                
+            case .success(let data):
+                completion(data)
+            case .failure(_):
+                break
+            }
+        }
+    }
+    
     
 }
 

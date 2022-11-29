@@ -12,11 +12,11 @@ enum DISectionType {
     /// Секция с основной информацией
     case baseInfo
     /// Секция с питательными веществами
-    case nutrients
+    case nutrients(_ nutrition: Nutrition)
     /// Секция с ингредиентами
-    case ingredients
+    case ingredients(_ ingredients: [Ingredient])
     /// Секция с инструкциями по приготовлению
-    case instructions
+    case instructions(_ instructions: [Instruction])
 }
 
 /// Фабрика настройки табличного представления модуля AddEvent
@@ -47,52 +47,88 @@ final class DIFactory: NSObject {
     func setupTableView() {
         tableView.dataSource = tvAdapter
         tableView.delegate = tvAdapter
+        tableView.separatorStyle = .none
+        tableView.backgroundColor = .white
+//        let dummyViewHeight = CGFloat(40)
+//        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: dummyViewHeight))
+//        self.tableView.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
         
         tvAdapter?.configure(with: builders)
     }
     
-    /// Создает строителя ячеек
+    /// Создает строитель секции
     ///  - Parameters:
-    ///     - model: модель данных
-    ///     - type: тип ячейки
-    ///   - Return: объект протокола строителя
+    ///     - type: тип секции
+    ///  - Returns: объект протокола строителя секции
     private func createBuilder(type: DISectionType) -> TVSectionBuilderProtocol {
         switch type {
+            
         case .baseInfo:
-            let cellBuilder = BaseInfoCellBuilder(model: model)
+            let cellBuilder = BaseInfoCellBuilder(model: model,
+                                                  delegate: delegate)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: nil, cellBuilder: cellBuilder)
+            let sectionBuilder = TVSectionBuilder(titleHeader: nil,
+                                                  cellBuilder: cellBuilder)
             return sectionBuilder
-        case .nutrients:
-            let cellBuilder = BaseInfoCellBuilder(model: model)
+            
+        case .nutrients(let nutrition):
+            let cellBuilder = NutrientsCellBuilder(nutrition: nutrition)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: nil, cellBuilder: cellBuilder)
+            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleNutrition,
+                                                  cellBuilder: cellBuilder)
             return sectionBuilder
-        case .ingredients:
-            let cellBuilder = BaseInfoCellBuilder(model: model)
+            
+        case .ingredients(let ingredients):
+            let cellBuilder = IngredientsCellBuilder(ingredients: ingredients)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: nil, cellBuilder: cellBuilder)
+            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleIngredients,
+                                                  cellBuilder: cellBuilder)
             return sectionBuilder
-        case .instructions:
-            let cellBuilder = BaseInfoCellBuilder(model: model)
+            
+        case .instructions(let instructions):
+        
+            print(instructions.count)
+            
+            let cellBuilder = InstructionCellBuilder(instruction: instructions[0])
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: nil, cellBuilder: cellBuilder)
+            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleInstructions,
+                                                  cellBuilder: cellBuilder)
             return sectionBuilder
         }
     }
 }
 
-//MARK: - TVFactoryProtocol
+// MARK: - TVFactoryProtocol
 extension DIFactory: TVCFactoryProtocol {
     
     var builders: [TVSectionBuilderProtocol] {
         var builders: [TVSectionBuilderProtocol] = []
         
-        builders.append(contentsOf: [createBuilder(type: .baseInfo)])
+        builders.append(createBuilder(type: .baseInfo))
         
+        if let nutrition = model.nutrition {
+            builders.append(createBuilder(type: .nutrients(nutrition)))
+        }
+        
+        if let ingredients = model.extendedIngredients, !ingredients.isEmpty {
+            builders.append(createBuilder(type: .ingredients(ingredients)))
+        }
+        
+        if let instructions = model.analyzedInstructions, !instructions.isEmpty {
+            builders.append(createBuilder(type: .instructions(instructions)))
+        }
+                            
         return builders
     }
 }
 
+// MARK: - Константы
+extension DIFactory {
+    private struct HeaderConstants {
+        static let titleNutrition = "Питательные вещества"
+        static let titleIngredients = "Ингредиенты"
+        static let titleInstructions = "Инструкция по приготовлению"
+    }
+}
 
 
