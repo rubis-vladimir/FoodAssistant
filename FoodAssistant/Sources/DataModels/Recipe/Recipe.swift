@@ -25,14 +25,13 @@ struct Recipe: Codable, Equatable, Hashable {
     let glutenFree: Bool
     let dairyFree: Bool
     
-    
     let nutrition: Nutrition?
     let summary: String
     let cuisines: [String]
     let dishTypes: [String]
     let diets: [String]
     let instructions: String?
-    let analyzedInstructions: [Instruction]
+    let analyzedInstructions: [Instruction]?
     let spoonacularSourceUrl: String?
     var isFavorite: Bool?
     
@@ -60,7 +59,6 @@ struct Instruction: Codable, Hashable {
 struct InstuctionStep: Codable, Hashable {
     let number: Int
     let step: String
-//    let ingredients: [Ingredient]
 }
 
 struct Nutrition: Codable, Hashable {

@@ -10,6 +10,8 @@ import Foundation
 /// Протокол передачи UI-ивентов слою презентации
 protocol UserProfilePresentation: AnyObject {
     func showTag()
+    
+    
 }
 
 /// Протокол делегата бизнес логики модуля UserProfile
@@ -32,6 +34,7 @@ final class UserProfilePresenter {
 
 // MARK: - Presentation
 extension UserProfilePresenter: UserProfilePresentation {
+    
     func showTag() {
         delegate?.showTag()
     }

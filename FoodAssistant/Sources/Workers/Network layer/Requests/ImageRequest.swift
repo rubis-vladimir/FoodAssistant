@@ -9,7 +9,7 @@ import Foundation
 
 /// Варианты загрузки изображений
 enum ImageRequest {
-    case recipe(imageName: String, size: ImageSize)
+    case recipe(imageName: String)
     case ingredient(imageName: String, size: ImageSize)
 }
 
@@ -31,8 +31,8 @@ extension ImageRequest {
     
     private var path: String {
         switch self {
-        case let .recipe(imageName, size):
-            return "/recipeImages/\(imageName)-\(size.rawValue)"
+        case let .recipe(imageName):
+            return "/recipeImages/\(imageName)"
         case let .ingredient(imageName, size):
             return "/cdn/ingredients_\(size.rawValue)/\(imageName)"
         }

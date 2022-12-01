@@ -38,7 +38,7 @@ final class RecommendedViewCell: UICollectionViewCell {
                                                             models: models,
                                                             delegate: delegate).configure()
         ]
-        recipeListAdapter?.builders = builders
+        recipeListAdapter?.configure(with: builders)
     }
     
     private func setupConstraints() {

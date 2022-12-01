@@ -28,7 +28,7 @@ final class RLFactory {
     
     private let collectionView: UICollectionView
     private let buildType: RLBuildType
-    private var recipeListAdapter: CVAdapter
+    private var cvAdapter: CVAdapter
     
     private weak var delegate: RecipeListPresentation?
     
@@ -43,18 +43,18 @@ final class RLFactory {
         self.buildType = buildType
         self.delegate = delegate
         
-        recipeListAdapter = CVAdapter(collectionView: collectionView)
+        cvAdapter = CVAdapter(collectionView: collectionView)
     }
     
     /// Настраивает табличное представление
     func setupCollectionView() {
-        collectionView.dataSource = recipeListAdapter
-        collectionView.delegate = recipeListAdapter
+        collectionView.dataSource = cvAdapter
+        collectionView.delegate = cvAdapter
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
-        recipeListAdapter.builders = builders
+        cvAdapter.configure(with: builders)
     }
     
     /// Создает строителя ячеек

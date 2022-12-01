@@ -1,27 +1,11 @@
 //
-//  TVFactoryProtocol.swift
+//  FactoryCollectionViewProtocols.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 15.11.2022.
+//  Created by Владимир Рубис on 28.11.2022.
 //
 
 import UIKit
-
-// MARK: - Factory for TableView
-/// Протокол фабрики для TableView
-protocol TVFactoryProtocol {
-    /// Строители ячеек
-    var builders: [TVCBuilderProtocol] { get }
-}
-
-/// Протокол конструктора для создания и конфигурации ячейки
-protocol TVCBuilderProtocol {
-    /// Возвращает высоту ячейки
-    func cellHeight() -> CGFloat
-    /// Создает ячейку по indexPath
-    func cellAt(indexPath: IndexPath,
-                tableView: UITableView) -> UITableViewCell
-}
 
 // MARK: - Фабрика для CollectionView
 /// #Протокол фабрики для коллекции

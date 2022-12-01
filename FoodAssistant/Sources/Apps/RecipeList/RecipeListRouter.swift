@@ -19,7 +19,7 @@ enum RecipeListTarget {
 protocol RecipeListRouting {
     /// Переход к следующему экрану
     ///  - Parameter to: вариант перехода
-    func route(to: RecipeListTarget)
+    func route(to: RecipeListTarget, model: Recipe)
 }
 
 /// Слой навигации модуля
@@ -33,7 +33,7 @@ final class RecipeListRouter {
 
 // MARK: - Routing
 extension RecipeListRouter: RecipeListRouting {
-    func route(to: RecipeListTarget) {
+    func route(to: RecipeListTarget, model: Recipe) {
         switch to {
         case .addElement:
             /// Настройка модуля
@@ -52,7 +52,9 @@ extension RecipeListRouter: RecipeListRouting {
             navigationController.navigationBar.isTranslucent = true
             navigationController.view.backgroundColor = .clear
             
-            let vc = DetailInfoAssembly(navigationController: navigationController).assembly()
+            let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
+            vc.hidesBottomBarWhenPushed = true
+            
             navigationController.pushViewController(vc, animated: true)
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 enum ImageSize: String {
-    case mini = "90x90"
+    case mini = "100x100"
     case verySmall = "240x150"
     case small = "312x150"
     case medium = "312x231"
