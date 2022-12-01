@@ -29,7 +29,7 @@ extension UIViewController {
             UIImage(named: imageName)?.withRenderingMode(.alwaysTemplate),
             for: .normal
         )
-        button.tintColor = .black.withAlphaComponent(0.7)
+        button.tintColor = .black
         button.imageView?.contentMode = .scaleAspectFit
         button.contentVerticalAlignment = .fill
         button.contentHorizontalAlignment = .fill

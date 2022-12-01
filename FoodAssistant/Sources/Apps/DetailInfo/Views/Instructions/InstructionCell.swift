@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class InstructionCell: CustomTableViewCell {
+final class InstructionCell: BaseTableViewCell {
     
     private lazy var stepNumberLabel: UILabel = {
         let label = UILabel()
@@ -44,6 +44,14 @@ final class InstructionCell: CustomTableViewCell {
     func configure(with step: InstuctionStep) {
         stepNumberLabel.text = "Шаг \(step.number)"
         cookingInstructionsLabel.text = step.step
+        
+        stepNumberLabel.sizeToFit()
+        stepNumberLabel.layoutIfNeeded()
+        cookingInstructionsLabel.sizeToFit()
+        cookingInstructionsLabel.layoutIfNeeded()
+        
+        container.sizeToFit()
+        container.layoutIfNeeded()
     }
     
     private func setupConstraints() {
@@ -52,8 +60,8 @@ final class InstructionCell: CustomTableViewCell {
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
     }

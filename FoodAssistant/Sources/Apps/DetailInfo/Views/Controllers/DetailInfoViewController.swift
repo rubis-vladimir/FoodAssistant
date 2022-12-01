@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Протокол управления View-слоем
+// Протокол управления View-слоем модуля DetailInfo
 protocol DetailInfoViewable: AnyObject {
     /// Обновление UI
     func updateUI()
@@ -15,106 +15,56 @@ protocol DetailInfoViewable: AnyObject {
     func showError()
 }
 
-/// Контроллер представления
+// Контроллер представления детальной информации
 final class DetailInfoViewController: UIViewController {
     
-    private let scrollView: UIScrollView = {
-        let view = UIScrollView()
-        //        view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
-        //        view.layer.masksToBounds = true
-        //        view.scrollsToTop = true
-        //
-        //        view.showsHorizontalScrollIndicator = false
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    
-    let reuseIdentifier = "SettingsCell"
-    
+    // MARK: - Properties
+    private let tableView = UITableView(frame: CGRect.zero,
+                                        style: .grouped)
+    private let presenter: DetailInfoPresentation
     private var factory: DIFactory?
     
-    private let tableView: UITableView = {
-        let tv = UITableView(frame: CGRect.zero, style: .grouped)
-        tv.translatesAutoresizingMaskIntoConstraints = false
-        return tv
-    }()
-    
-    private lazy var imageView: UIImageView = {
-        let iv = UIImageView()
-        iv.backgroundColor = .orange
-        iv.contentMode = .scaleAspectFill
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.image = UIImage(named: "homeBackgroundImage")
-        return iv
-    }()
-    
-    private lazy var detailTitleView: DetailTitleView = {
-        let view = DetailTitleView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private lazy var detailNutrientsView: DetailNutrientsView = {
-        let view = DetailNutrientsView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    private let presenter: DetailInfoPresentation
-    
+    // MARK: - Init
     init(presenter: DetailInfoPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
-        
-//        navigationController?.navigationBar.backgroundColor = .none
-//        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        self.navigationController?.navigationBar.shadowImage = UIImage()
-//        self.navigationController?.navigationBar.isTranslucent = true
-//        self.navigationController?.view.backgroundColor = .clear
-//        self.navigationController?.navigationBar.tintColor = .clear
-//        self.navigationController?.navigationBar.barTintColor = .black
-        
     }
-    
-//    private func setupNavBar() {
-//            let navigationBarAppearance = UINavigationBarAppearance()
-//            navigationBarAppearance.configureWithOpaqueBackground()
-//            navigationBarAppearance.backgroundColor = .clear
-//        
-//            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
-//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("DetailInfoViewController")
-    }
-    
+    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.backgroundColor = .clear
         setupNavigationBar()
-        setupConstraints2()
+        setupView()
+        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.contentInset.top = -UIApplication.shared.statusBarFrame.height - (navigationController?.navigationBar.frame.minY ?? 0)
+//        tableView.contentInset.top = -(navigationController?.navigationBar.frame.maxY ?? UIApplication.shared.statusBarFrame.height)
+        print("____________________")
+        print(navigationController?.navigationBar.frame.minY)
+        print(UIApplication.shared.statusBarFrame.height)
+        print(navigationController?.navigationBar.frame.maxY)
+        
     }
     
-    override var prefersStatusBarHidden: Bool { true }
+    override func viewDidLayoutSubviews() {
+        tableView.contentInset.top = -(navigationController?.navigationBar.frame.maxY ?? UIApplication.shared.statusBarFrame.height)
+    }
     
-    func setupNavigationBar() {
-        
+    // MARK: - Private func
+    private func setupNavigationBar() {
         let faivoriteRightButton = createCustomBarButton(
             imageName: "heartLarge.fill",
             selector: #selector(changeFaivoriteButtonTapped)
         )
+        
         let backLeftButton = createCustomBarButton(
             imageName: "left.fill",
             selector: #selector(backButtonTapped)
@@ -124,97 +74,21 @@ final class DetailInfoViewController: UIViewController {
         navigationItem.leftBarButtonItems = [backLeftButton]
     }
     
-    @objc func changeFaivoriteButtonTapped() {
-        print("changeFaivoriteButtonTapped")
-    }
-    
-    @objc func backButtonTapped() {
-        print("backButtonTapped")
-        navigationController?.popToRootViewController(animated: true)
-    }
-    
-    func setupConstraints() {
+    private func setupView() {
+        tableView.translatesAutoresizingMaskIntoConstraints = false
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
-        
-        tableView.backgroundColor = .blue
-        
-        
-        let nutrient = Nutrient(name: "Calories",
-                                amount: 125,
-                                unit: "кал")
-        let nutrient2 = Nutrient(name: "Protein",
-                                amount: 10.5,
-                                unit: "g")
-        let nutrient3 = Nutrient(name: "Fat",
-                                amount: 7.3,
-                                unit: "g")
-        let nutrient4 = Nutrient(name: "Carbohydrates",
-                                amount: 18.25,
-                                unit: "g")
-        let nutrition = Nutrition(nutrients: [nutrient, nutrient2, nutrient3, nutrient4])
-        detailNutrientsView.configure(with: nutrition)
-        
-//        let containerView = UIView()
-//
-//        containerView.translatesAutoresizingMaskIntoConstraints = false
-        scrollView.addSubview(imageView)
-        scrollView.addSubview(detailTitleView)
-        scrollView.addSubview(detailNutrientsView)
-        scrollView.addSubview(tableView)
-        
-//        scrollView.contentSize = CGSizeMake(view.frame.size.width, 3000)
-        
-//        scrollView.addSubview(containerView)
-        view.addSubview(scrollView)
-        
-        NSLayoutConstraint.activate([
-            imageView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 400),
-        
-            detailTitleView.centerYAnchor.constraint(equalTo: imageView.bottomAnchor),
-            detailTitleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            detailTitleView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            
-            detailNutrientsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            detailNutrientsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            detailNutrientsView.topAnchor.constraint(equalTo: detailTitleView.bottomAnchor, constant: 100),
-            
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            tableView.topAnchor.constraint(equalTo: detailNutrientsView.bottomAnchor, constant: 100),
-//            tableView.heightAnchor.constraint(equalToConstant: 500),
-            
-            
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor),
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            scrollView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            tableView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-        ])
-    }
-    
-    private func setupConstraints2() {
         let model = presenter.model
         factory = DIFactory(tableView: tableView,
                             delegate: presenter,
                             model: model)
         factory?.setupTableView()
-        tableView.reloadData()
+    }
+    
+    private func setupConstraints() {
         
-//        view.addSubview(imageView)
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            
-//            imageView.topAnchor.constraint(equalTo: navigationController?.navigationBar.topAnchor ?? view.topAnchor),
-//            imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            imageView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            
             tableView.topAnchor.constraint(equalTo: view.topAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -222,25 +96,24 @@ final class DetailInfoViewController: UIViewController {
         ])
     }
     
+    @objc private func changeFaivoriteButtonTapped() {
+        print("changeFaivoriteButtonTapped")
+        guard let navigationController = navigationController else  {
+            return
+        }
+        
+        navigationController.navigationBar.setBackgroundImage(UIImage().alpha(1), for: UIBarMetrics.default)
+        navigationController.navigationBar.shadowImage = UIImage().alpha(1)
+        
+    }
+    
+    @objc private func backButtonTapped() {
+        print("backButtonTapped")
+        navigationController?.popToRootViewController(animated: true)
+    }
 }
 
-
-//extension DetailInfoViewController: UITableViewDataSource, UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        5
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: reuseIdentifier, for: indexPath)
-//        cell.textLabel?.text = "QWER"
-//
-//        return cell
-//    }
-//
-//
-//}
-
-// MARK: - Viewable
+// MARK: - DetailInfoViewable
 extension DetailInfoViewController: DetailInfoViewable {
     func updateUI() {
     
@@ -248,5 +121,31 @@ extension DetailInfoViewController: DetailInfoViewable {
     
     func showError() {
         
+    }
+}
+
+
+extension UIImage {
+    func maskWithColor(color: UIColor) -> UIImage? {
+        let maskImage = cgImage!
+
+        let width = size.width
+        let height = size.height
+        let bounds = CGRect(x: 0, y: 0, width: width, height: height)
+
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue)
+        let context = CGContext(data: nil, width: Int(width), height: Int(height), bitsPerComponent: 8, bytesPerRow: 0, space: colorSpace, bitmapInfo: bitmapInfo.rawValue)!
+
+        context.clip(to: bounds, mask: maskImage)
+        context.setFillColor(color.cgColor)
+        context.fill(bounds)
+
+        if let cgImage = context.makeImage() {
+            let coloredImage = UIImage(cgImage: cgImage)
+            return coloredImage
+        } else {
+            return nil
+        }
     }
 }

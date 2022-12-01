@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Вью 
 final class DetailTitleView: UIView {
     
     let titleRecipeLabel: UILabel = {
@@ -14,7 +15,6 @@ final class DetailTitleView: UIView {
         label.textAlignment = .center
         label.font = Fonts.subtitle
         label.numberOfLines = 0
-        label.text = "Прибрежный салат из авокадо с виноградом и креветками"
         return label
     }()
     
@@ -23,7 +23,6 @@ final class DetailTitleView: UIView {
         label.textAlignment = .center
         label.font = Fonts.selected
         label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        label.text = "2 ч 25 мин"
         return label
     }()
     
@@ -32,7 +31,6 @@ final class DetailTitleView: UIView {
         label.textAlignment = .center
         label.font = Fonts.selected
         label.textColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-        label.text = "5 Порций"
         return label
     }()
     

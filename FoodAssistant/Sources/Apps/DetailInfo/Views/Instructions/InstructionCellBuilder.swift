@@ -28,7 +28,7 @@ extension InstructionCellBuilder: TVCellBuilderProtocol {
         tableView.register(InstructionCell.self)
     }
     
-    func cellHeight() -> CGFloat { height }
+    func cellHeight() -> CGFloat { UITableView.automaticDimension }
     
     func cellCount() -> Int { instruction.steps.count }
     

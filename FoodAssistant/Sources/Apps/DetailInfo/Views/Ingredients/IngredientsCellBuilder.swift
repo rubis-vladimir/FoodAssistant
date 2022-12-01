@@ -18,8 +18,10 @@ final class IngredientsCellBuilder {
     var action: ((UITableViewCell) -> Void)?
     
     init(ingredients: [Ingredient],
+         delegate: DetailInfoPresentation?,
          action: ((UITableViewCell) -> Void)? = nil) {
         self.ingredients = ingredients
+        self.delegate = delegate
         self.action = action
     }
 }
@@ -30,7 +32,7 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
         tableView.register(IngredientsCell.self)
     }
     
-    func cellHeight() -> CGFloat { height }
+    func cellHeight() -> CGFloat { UITableView.automaticDimension }
     
     func cellCount() -> Int { ingredients.count }
     
@@ -40,11 +42,11 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
         let ingredient = ingredients[indexPath.row]
         cell.configure(with: ingredient)
         
-//        delegate?.fetchImage(with: ingredient.name, size: .mini) { imageData in
-//            DispatchQueue.main.async {
-//                cell.updateImage(with: imageData)
-//            }
-//        }
+        delegate?.fetchImage(with: ingredient.image ?? "", size: .mini) { imageData in
+            DispatchQueue.main.async {
+                cell.updateImage(with: imageData)
+            }
+        }
         return cell
     }
 }

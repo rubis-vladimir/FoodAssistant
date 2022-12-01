@@ -7,13 +7,14 @@
 
 import UIKit
 
-final class IngredientsCell: CustomTableViewCell {
+final class IngredientsCell: BaseTableViewCell {
     
     private lazy var ingredientImageView: UIImageView = {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
-        view.backgroundColor = Palette.bgColor.color
+        view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
         view.layer.cornerRadius = 25
+        view.clipsToBounds = true
         view.layer.addShadow()
         
         return view
@@ -47,7 +48,7 @@ final class IngredientsCell: CustomTableViewCell {
     
     func configure(with ingredient: Ingredient) {
         titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount ?? 0) \(ingredient.unit ?? ""))"
+        amountLabel.text = "\(ingredient.amount ?? 0) \(ingredient.unit ?? "")"
     }
     
     func updateImage(with imageData: Data) {
@@ -70,6 +71,7 @@ final class IngredientsCell: CustomTableViewCell {
             container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
+            ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
             amountLabel.widthAnchor.constraint(equalToConstant: 70)
         ])
     }

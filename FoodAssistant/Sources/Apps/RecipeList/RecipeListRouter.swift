@@ -53,7 +53,8 @@ extension RecipeListRouter: RecipeListRouting {
             navigationController.view.backgroundColor = .clear
             
             let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
-//            vc.childForStatusBarHidden = .none
+            vc.hidesBottomBarWhenPushed = true
+            
             navigationController.pushViewController(vc, animated: true)
         }
     }

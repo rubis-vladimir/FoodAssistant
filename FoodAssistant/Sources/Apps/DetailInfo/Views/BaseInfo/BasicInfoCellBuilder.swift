@@ -1,5 +1,5 @@
 //
-//  BaseInfoCellBuilder.swift
+//  BasicInfoCellBuilder.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 28.11.2022.
@@ -8,13 +8,11 @@
 import UIKit
 
 // Строитель ячейки BaseInfoCell
-final class BaseInfoCellBuilder {
-    /// Высота ячейки
-    private let height = CGFloat(500)
+final class BasicInfoCellBuilder {
+
     private let model: Recipe
-    
     weak var delegate: DetailInfoPresentation?
-    
+
     var action: ((UITableViewCell) -> Void)?
     
     init(model: Recipe,
@@ -27,25 +25,28 @@ final class BaseInfoCellBuilder {
 }
 
 // MARK: - TVCellBuilderProtocol
-extension BaseInfoCellBuilder: TVCellBuilderProtocol {
+extension BasicInfoCellBuilder: TVCellBuilderProtocol {
     func register(tableView: UITableView) {
-        tableView.register(BaseInfoCell.self)
+        tableView.register(BasicInfoCell.self)
     }
     
-    func cellHeight() -> CGFloat { height }
+    func cellHeight() -> CGFloat { UITableView.automaticDimension }
     
     func cellCount() -> Int { 1 }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(BaseInfoCell.self,
+        let cell = tableView.dequeueReusableCell(BasicInfoCell.self,
                                                  indexPath: indexPath)
         cell.configure(with: model)
-        let imageName = String(model.id)
-        print(imageName)
         
-        delegate?.fetchImage(with: imageName, size: .huge) { imageData in
-            DispatchQueue.main.async {
-                cell.updateImage(with: imageData)
+        
+        if let urlString = model.image {
+            let imageName = String(urlString.dropFirst(37))
+            print(imageName)
+            delegate?.fetchImage(with: imageName) { imageData in
+                DispatchQueue.main.async {
+                    cell.updateImage(with: imageData)
+                }
             }
         }
         return cell

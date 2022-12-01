@@ -9,6 +9,9 @@ import Foundation
 
 /// Протокол управления бизнес логикой модуля
 protocol DetailInfoBusinessLogic {
+    func fetchImage(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    
     func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
@@ -27,8 +30,13 @@ final class DetailInfoInteractor {
 
 // MARK: - BusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
+    func fetchImage(_ imageName: String, 
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        dataFetcher.fetchRecipeImage(imageName, completion: completion)
+    }
+    
     func fetchImage(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        dataFetcher.fetchRecipeImage(imageName, size: size, completion: completion)
+        dataFetcher.fetchIngredientImage(imageName, size: size, completion: completion)
     }
 }

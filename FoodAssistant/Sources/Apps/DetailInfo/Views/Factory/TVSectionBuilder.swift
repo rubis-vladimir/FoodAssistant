@@ -7,6 +7,7 @@
 
 import UIKit
 
+// Строитель секции для таблицы
 final class TVSectionBuilder: TVSectionBuilderProtocol {
     var titleHeader: String?
     

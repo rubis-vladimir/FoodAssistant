@@ -19,7 +19,7 @@ protocol RecipeListPresentation: RLLayoutChangable, RLRecipeButtonDelegate, AnyO
     func testGetRandom()
     func testGetRecipe()
     
-    func fetchImage(with imageName: String, size: ImageSize,
+    func fetchImage(with imageName: String,
                     completion: @escaping (Data) -> Void)
 }
 
@@ -57,7 +57,7 @@ final class RecipeListPresenter {
             }
         }
     }
-    private var isStart: Bool = false
+    private var isStart: Bool = true
     
     weak var delegate: RecipeListViewable?
     private let interactor: RecipeListBusinessLogic
@@ -71,18 +71,18 @@ final class RecipeListPresenter {
     
     func getStartData() {
         
-//        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
-//            switch result {
-//            case .success(let recipeCellModels):
-//                self?.viewModels[.recommended] = recipeCellModels
-//            case .failure(_):
-//                break
-//            }
-//        }
+        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
+            switch result {
+            case .success(let recipeCellModels):
+                self?.viewModels[.recommended] = recipeCellModels
+            case .failure(_):
+                break
+            }
+        }
         
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["fish"], excludeIngredients: [], maxCalories: nil, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 6, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 12, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 self?.viewModels[.main] = recipeCellModels
@@ -105,9 +105,9 @@ final class RecipeListPresenter {
 // MARK: - Presentation
 extension RecipeListPresenter: RecipeListPresentation {
     
-    func fetchImage(with imageName: String, size: ImageSize,
+    func fetchImage(with imageName: String,
                completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName, size: size) { [weak self] result in
+        interactor.fetchImage(imageName) { [weak self] result in
             switch result {
             case .success(let data):
                 completion(data)

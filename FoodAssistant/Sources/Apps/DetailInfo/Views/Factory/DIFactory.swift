@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Типы текстовых ячеек модуля AddEvent
+// Типы текстовых ячеек модуля AddEvent
 enum DISectionType {
     /// Секция с основной информацией
     case baseInfo
@@ -19,43 +19,44 @@ enum DISectionType {
     case instructions(_ instructions: [Instruction])
 }
 
-/// Фабрика настройки табличного представления модуля AddEvent
+// Фабрика для настройки табличного представления модуля DetailInfo
 final class DIFactory: NSObject {
     
+    // MARK: - Properties
     private let tableView: UITableView
-    private weak var delegate: DetailInfoPresentation?
     private let model: Recipe
-    
     private let tvAdapter: TVAdapter?
     
-    /// Инициализатор
+    private weak var delegate: DetailInfoPresentation?
+    
+    // MARK: - Init
     ///  - Parameters:
     ///    - tableView: настраиваемая таблица
     ///    - delegate: делегат для передачи UIEvent (VC)
+    ///    - model: модель рецепта
     init(tableView: UITableView,
          delegate: DetailInfoPresentation?,
          model: Recipe) {
-        
         self.tableView = tableView
         self.delegate = delegate
         self.model = model
         
+        /// Определяем адаптер для tableView
         tvAdapter = TVAdapter(tableView: tableView)
     }
     
+    // MARK: - Public func
     /// Настраивает табличное представление
     func setupTableView() {
         tableView.dataSource = tvAdapter
         tableView.delegate = tvAdapter
         tableView.separatorStyle = .none
         tableView.backgroundColor = .white
-//        let dummyViewHeight = CGFloat(40)
-//        self.tableView.tableHeaderView = UIView(frame: CGRect(x: 0, y: 0, width: self.tableView.bounds.size.width, height: dummyViewHeight))
-//        self.tableView.contentInset = UIEdgeInsets(top: -dummyViewHeight, left: 0, bottom: 0, right: 0)
         
         tvAdapter?.configure(with: builders)
     }
     
+    // MARK: - Private func
     /// Создает строитель секции
     ///  - Parameters:
     ///     - type: тип секции
@@ -64,7 +65,7 @@ final class DIFactory: NSObject {
         switch type {
             
         case .baseInfo:
-            let cellBuilder = BaseInfoCellBuilder(model: model,
+            let cellBuilder = BasicInfoCellBuilder(model: model,
                                                   delegate: delegate)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: nil,
@@ -79,16 +80,14 @@ final class DIFactory: NSObject {
             return sectionBuilder
             
         case .ingredients(let ingredients):
-            let cellBuilder = IngredientsCellBuilder(ingredients: ingredients)
+            let cellBuilder = IngredientsCellBuilder(ingredients: ingredients,
+                                                     delegate: delegate)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleIngredients,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
         case .instructions(let instructions):
-        
-            print(instructions.count)
-            
             let cellBuilder = InstructionCellBuilder(instruction: instructions[0])
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleInstructions,
@@ -104,16 +103,20 @@ extension DIFactory: TVCFactoryProtocol {
     var builders: [TVSectionBuilderProtocol] {
         var builders: [TVSectionBuilderProtocol] = []
         
+        /// Добавляем секцию с основной информацией
         builders.append(createBuilder(type: .baseInfo))
         
+        /// Добавляем секцию с питательными веществами
         if let nutrition = model.nutrition {
             builders.append(createBuilder(type: .nutrients(nutrition)))
         }
         
+        /// Добавляем секцию с ингредиентами
         if let ingredients = model.extendedIngredients, !ingredients.isEmpty {
             builders.append(createBuilder(type: .ingredients(ingredients)))
         }
         
+        /// Добавляем секцию с инструкцией по приготовлению
         if let instructions = model.analyzedInstructions, !instructions.isEmpty {
             builders.append(createBuilder(type: .instructions(instructions)))
         }

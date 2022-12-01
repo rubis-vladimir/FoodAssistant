@@ -44,7 +44,7 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
         cell.configure(with: model)
         
         if let imageName = model.imageName {
-            delegate?.fetchImage(with: imageName, size: .medium) { imageData in
+            delegate?.fetchImage(with: imageName) { imageData in
                 DispatchQueue.main.async {
                     cell.updateRecipeImage(data: imageData)
                 }

@@ -33,9 +33,10 @@ extension NutrientsCellBuilder: TVCellBuilderProtocol {
     func cellCount() -> Int { 1 }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(NutrientsCell.self,
-                                                 indexPath: indexPath)
-        cell.configure(with: nutrition)
+//        let cell = tableView.dequeueReusableCell(NutrientsCell.self,
+//                                                 indexPath: indexPath)
+        let cell = NutrientsCell(nutrition: nutrition)
+//        cell.configure(with: nutrition)
         return cell
     }
 }

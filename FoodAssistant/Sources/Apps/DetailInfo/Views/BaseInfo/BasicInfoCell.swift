@@ -1,5 +1,5 @@
 //
-//  BaseInfoCell.swift
+//  BasicInfoCell.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 28.11.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class BaseInfoCell: CustomTableViewCell {
+final class BasicInfoCell: BaseTableViewCell {
     
     private lazy var recipeImageView: UIImageView = {
         let iv = UIImageView()
@@ -51,7 +51,8 @@ final class BaseInfoCell: CustomTableViewCell {
             
             detailTitleView.centerYAnchor.constraint(equalTo: recipeImageView.bottomAnchor),
             detailTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            detailTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            detailTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            detailTitleView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
 }

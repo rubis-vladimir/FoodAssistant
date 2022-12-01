@@ -11,7 +11,7 @@ import UIKit
 final class TVAdapter: NSObject {
     
     private let tableView: UITableView
-    var builders: [TVSectionBuilderProtocol] = [] {
+    private var builders: [TVSectionBuilderProtocol] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -56,7 +56,11 @@ extension TVAdapter: UITableViewDelegate {
         if let headerView = view as? UITableViewHeaderFooterView {
             headerView.textLabel?.text = builders[section].titleHeader
             headerView.textLabel?.font = Fonts.subtitle
-            headerView.contentView.backgroundColor = .white
+            headerView.contentView.backgroundColor = .clear
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        print(scrollView.contentOffset)
     }
 }

@@ -17,7 +17,7 @@ protocol RecipeListBusinessLogic {
     func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?,
                      completion: @escaping (Result<[RecipeCellModel], DataFetcherError>) -> Void)
     
-    func fetchImage(_ imageName: String, size: ImageSize,
+    func fetchImage(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
     func getModel(id: Int, completion: @escaping (Recipe) -> Void)
@@ -44,9 +44,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         completion(model)
     }
     
-    func fetchImage(_ imageName: String, size: ImageSize,
+    func fetchImage(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        dataFetcher.fetchRecipeImage(imageName, size: size, completion: completion)
+        dataFetcher.fetchRecipeImage(imageName, completion: completion)
     }
     
     func translate(texts: [String]) {
@@ -117,7 +117,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                                                                       readyInMinutes: recipes[$0].readyInMinutes,
                                                                       isFavorite: false,
                                                                       ingredientsCount: recipes[$0].extendedIngredients?.count ?? 0,
-                                                                      imageName: String(recipes[$0].id))
+                                                                      imageName: self?.getImageName(from: recipes[$0].image))
     
                                 arrayModels.append(recipeCellModel)
                             }
@@ -186,7 +186,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                                                                       readyInMinutes: recipes[$0].readyInMinutes,
                                                                       isFavorite: false,
                                                                       ingredientsCount: recipes[$0].extendedIngredients?.count ?? 0,
-                                                                      imageName: String(recipes[$0].id))
+                                                                      imageName: self?.getImageName(from: recipes[$0].image))
     
                                 arrayModels.append(recipeCellModel)
                             }
