@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Варианты загрузки изображений
+/// #Варианты запросов на загрузку изображений
 enum ImageRequest {
     case recipe(imageName: String)
     case ingredient(imageName: String, size: ImageSize)
@@ -21,15 +21,16 @@ extension ImageRequest {
             completion(.failure(.wrongUrl))
             return
         }
-        print(url.absoluteString)
         service.fetchImage(url: url, completion: completion)
     }
+}
+
+// MARK: - RequestBuilding
+extension ImageRequest: RequestBuilding {
+
+    var baseUrl: String { "spoonacular.com" }
     
-    private var baseUrl: String {
-        "spoonacular.com"
-    }
-    
-    private var path: String {
+    var path: String {
         switch self {
         case let .recipe(imageName):
             return "/recipeImages/\(imageName)"
@@ -38,12 +39,8 @@ extension ImageRequest {
         }
     }
     
-    private var url: URL? {
-        var components = URLComponents()
-        components.scheme = "https"
-        components.host = baseUrl
-        components.path = path
-        return components.url
-    }
+    var method: HTTPMethod { .get }
+    var headers: HTTPHeaders? { ["Content-Type": "text/plain"] }
 }
+
 

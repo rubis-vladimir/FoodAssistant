@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Варианты запросов на перевод
+/// #Варианты запросов на перевод
 enum LanguageRequest<T: Codable> {
     /// Перевести текст
     case translate(patameters: T)

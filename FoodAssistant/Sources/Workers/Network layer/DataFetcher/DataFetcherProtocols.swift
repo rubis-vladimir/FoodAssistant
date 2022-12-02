@@ -17,11 +17,11 @@ protocol DataFetcherRecipeManagement {
     ///   - completion: захватывает модель рецептов / ошибку
     func fetchComplexRecipe(_ parameters: RecipeFilterParameters,
                             _ number: Int, _ query: String?,
-                            completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void)
+                            completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void)
     
     func fetchRandomRecipe(number: Int,
                            tags: [String],
-                           completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void)
+                           completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void)
 }
 
 // MARK: - Протокол управления запросами на перевод
@@ -31,7 +31,7 @@ protocol DataFetcherTranslateManagement {
     ///   - parameters: название изображения
     ///   - completion: захватывает переведенную модель / ошибку
     func translate(with parameters: TranslateParameters,
-                   completion: @escaping (Result<Translate, DataFetcherError>) -> Void)
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void)
 }
 
 // MARK: - Протокол управления с запросами на перевод

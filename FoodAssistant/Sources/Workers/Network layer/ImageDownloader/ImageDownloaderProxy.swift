@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Заместитель сервиса загрузки изображений (работает с cache)
+/// #Заместитель сервиса загрузки изображений (работает с cache)
 final class ImageDownloaderProxy {
     
     private let imageDownloader: ImageDownloadProtocol

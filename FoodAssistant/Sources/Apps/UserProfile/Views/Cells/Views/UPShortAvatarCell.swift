@@ -28,6 +28,12 @@ final class UPShortAvatarCell: UITableViewCell {
     func setupConstraints() {
         
         addSubview(userContainer)
-        userContainer.pinEdges(to: self, constant: 20)
+        
+        NSLayoutConstraint.activate([
+            userContainer.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            userContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            userContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
     }
 }

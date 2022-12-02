@@ -51,7 +51,7 @@ class UPCustomSegmentedControl: UIView {
     }
     
     func setupView() {
-        self.layer.addShadow(color: Palette.shadowColor.color)
+        layer.add(shadow: AppConstants.Shadow.defaultOne)
         backgroundColor = SelfConstants.bgColor
         updateView()
     }
@@ -72,7 +72,7 @@ class UPCustomSegmentedControl: UIView {
             button.addTarget(self,
                              action: #selector(buttonTapped),
                              for: .touchUpInside)
-            button.imageEdgeInsets = index == currentIndex ? Constants.edgeInsert : button.imageEdgeInsets
+            button.imageEdgeInsets = index == currentIndex ? AppConstants.edgeInsert : button.imageEdgeInsets
             button.tag = index
             
             buttons.append(button)
@@ -88,7 +88,12 @@ class UPCustomSegmentedControl: UIView {
         addSubview(slideView)
         addSubview(sv)
         
-        sv.pinEdges(to: self)
+        NSLayoutConstraint.activate([
+            sv.topAnchor.constraint(equalTo: topAnchor),
+            sv.bottomAnchor.constraint(equalTo: bottomAnchor),
+            sv.leadingAnchor.constraint(equalTo: leadingAnchor),
+            sv.trailingAnchor.constraint(equalTo: trailingAnchor)
+        ])
     }
     
     func setupFirstSelection(index: Int) {

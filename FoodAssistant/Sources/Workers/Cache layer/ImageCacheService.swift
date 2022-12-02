@@ -13,7 +13,7 @@ protocol ImageCacheProtocol {
     subscript(_ key: URL) -> Data? { get set }
 }
 
-/// Сервис кеширования изображений
+/// #Сервис кеширования изображений
 final class ImageCacheService {
 
     private lazy var cache: LRUCache<URL, Data> = {

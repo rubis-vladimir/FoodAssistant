@@ -14,7 +14,7 @@ final class UPAvatarCell: UITableViewCell {
     lazy var userContainer: UIView = {
         var view = UIView()
         view.backgroundColor = Palette.bgColor.color
-        view.layer.addShadow(color: Palette.shadowColor.color)
+        view.layer.add(shadow: AppConstants.Shadow.defaultOne)
         view.layer.cornerRadius = 25
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -42,7 +42,7 @@ final class UPAvatarCell: UITableViewCell {
     lazy var avatarView: UIImageView = {
         var view = UIImageView()
         view.backgroundColor = .white
-        view.layer.addShadow(color: Palette.shadowColor.color)
+        view.layer.add(shadow: AppConstants.Shadow.defaultOne)
         
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
@@ -113,6 +113,11 @@ final class UPAvatarCell: UITableViewCell {
         avatarView.widthAnchor.constraint(equalToConstant: 130).isActive = true
         avatarView.heightAnchor.constraint(equalToConstant: 130).isActive = true
 //
-        userContainer.pinEdges(to: self, constant: 20)
+        NSLayoutConstraint.activate([
+            userContainer.topAnchor.constraint(equalTo: topAnchor, constant: 20),
+            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
+            userContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            userContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+        ])
     }
 }

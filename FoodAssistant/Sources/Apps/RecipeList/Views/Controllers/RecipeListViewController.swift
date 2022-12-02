@@ -38,6 +38,11 @@ final class RecipeListViewController: UIViewController {
         setupElements()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+    }
+    
     private func setupElements() {
         /// `Navigation Bar` Setup
         navigationItem.title = "Food Assistant"
@@ -45,30 +50,50 @@ final class RecipeListViewController: UIViewController {
         /// `seacrhController` settings
         let seacrhController = UISearchController(searchResultsController: nil)
         navigationItem.searchController = seacrhController
+//        navigationController?.navigationBar.backgroundColor = .red
         seacrhController.hidesNavigationBarDuringPresentation = false
         seacrhController.obscuresBackgroundDuringPresentation = false
         seacrhController.searchBar.delegate = self
         
         /// `CollectionView` settings
-        let newFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - (tabBarController?.tabBar.bounds.height ?? 0) + 13)
-        collectionView = UICollectionView(frame: newFrame,
-                                          collectionViewLayout: getFlowLayout())
-        collectionView.backgroundColor = .clear
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
+        ///
+        let window = UIApplication.shared.keyWindow
+        let topPadding = window?.safeAreaInsets.top
+        let bottomPadding = window?.safeAreaInsets.bottom
+        print("____________)")
+        print(view.frame.height)
+        print(view.safeAreaLayoutGuide.layoutFrame.height)
+        print(tabBarController?.tabBar.frame.height)
         
+//        let newFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - (tabBarController?.tabBar.bounds.height ?? 0) + 13)
+        
+//        print(newFrame)
+        
+        collectionView = UICollectionView(frame: CGRect.zero,
+                                          collectionViewLayout: getFlowLayout())
+//        collectionView.contentInset = .init(top: .zero, left: .zero, bottom: , right: .zero)
+//        collectionView.backgroundColor = .clear
+//        collectionView.showsHorizontalScrollIndicator = false
+//        collectionView.showsVerticalScrollIndicator = false
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         /// Adding elements to the screen
         view.addSubview(collectionView)
         
         /// Setting up the location of elements on the screen
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+       
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.bottomAnchor, constant: 13)
+        ])
     }
     
     
     private func getFlowLayout() -> UICollectionViewFlowLayout {
         
         let layout = UICollectionViewFlowLayout()
-        
         let padding: CGFloat = 16
         layout.sectionInset = UIEdgeInsets(top: 0,
                                            left: padding,
@@ -77,8 +102,6 @@ final class RecipeListViewController: UIViewController {
         
         layout.minimumInteritemSpacing = 16
         layout.minimumLineSpacing = 16
-        
-//        layout.itemSize = calculateItemSize()
         return layout
     }
     

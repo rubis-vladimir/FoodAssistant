@@ -14,7 +14,7 @@ final class RecommendedRecipeCell: MainRecipeCell {
         button.setImage(Icons.basketSmall.image, for: .normal)
         button.backgroundColor = Palette.darkColor.color
         button.titleLabel?.font = Fonts.main
-        button.layer.addShadow(color: Palette.shadowColor2.color)
+        button.layer.add(shadow: AppConstants.Shadow.defaultTwo)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -47,7 +47,7 @@ final class RecommendedRecipeCell: MainRecipeCell {
         backgroundColor = Palette.bgColor.color
         clipsToBounds = true
         layer.cornerRadius = 20
-        layer.addShadow(color: Palette.shadowColor.color, radius: 10)
+        layer.add(shadow: AppConstants.Shadow.defaultOne)
         
         favoriteButton.setImage(Icons.heart.image, for: .normal)
         favoriteButton.addTarget(self,
@@ -72,7 +72,7 @@ final class RecommendedRecipeCell: MainRecipeCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         
-        addToBasketButton.imageEdgeInsets = Constants.edgeInsert
+        addToBasketButton.imageEdgeInsets = AppConstants.edgeInsert
         
         containerForCTLabel.addArrangedSubview(cookingTimeLabel)
         containerForLabel.addArrangedSubview(titleRecipeLabel)

@@ -57,7 +57,7 @@ final class RecipeListPresenter {
             }
         }
     }
-    private var isStart: Bool = true
+    private var isStart: Bool = false
     
     weak var delegate: RecipeListViewable?
     private let interactor: RecipeListBusinessLogic
@@ -71,18 +71,18 @@ final class RecipeListPresenter {
     
     func getStartData() {
         
-        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
-            switch result {
-            case .success(let recipeCellModels):
-                self?.viewModels[.recommended] = recipeCellModels
-            case .failure(_):
-                break
-            }
-        }
-        
+//        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
+//            switch result {
+//            case .success(let recipeCellModels):
+//                self?.viewModels[.recommended] = recipeCellModels
+//            case .failure(_):
+//                break
+//            }
+//        }
+//        
         let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 12, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 6, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 self?.viewModels[.main] = recipeCellModels
