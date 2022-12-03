@@ -7,8 +7,10 @@
 
 import UIKit
 
+///
 final class NutrientsCell: BaseTableViewCell {
     
+    // MARK: - Properties
     private var numberServingsLabel: [UILabel] = []
     
     private let container: UIStackView = {
@@ -20,25 +22,16 @@ final class NutrientsCell: BaseTableViewCell {
         return stack
     }()
     
-    
-    
-    override func setupCell() {
-        
-        
-        
-    }
-    
+    // MARK: - Init
     convenience init(nutrition: Nutrition) {
         self.init()
-
         configure(with: nutrition)
         container.backgroundColor = Palette.bgColor.color
         container.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        container.layer.cornerRadius = 20
-        setupConstraints()
-        
+        container.layer.cornerRadius = AppConstants.cornerRadius
     }
     
+    // MARK: - Function
     func configure(with nutrition: Nutrition) {
         
         if let calories = nutrition.calories {
@@ -59,9 +52,11 @@ final class NutrientsCell: BaseTableViewCell {
         }
     }
     
+    override func setupCell() {
+        setupConstraints()
+    }
     
     func setupConstraints() {
-        
         addSubview(container)
         
         NSLayoutConstraint.activate([
@@ -70,9 +65,13 @@ final class NutrientsCell: BaseTableViewCell {
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
         ])
-        
     }
     
+    /// Создает стэк из лейблов
+    ///  - Parameters:
+    ///   - title: название питательного вещества
+    ///   - number: количество питательного вещества
+    ///  - Returns: стэк
     private func createStack(title: String,
                              number: String) -> UIStackView {
         let stack = UIStackView()
@@ -94,11 +93,11 @@ final class NutrientsCell: BaseTableViewCell {
             $0.minimumScaleFactor = 0.5
             stack.addArrangedSubview($0)
         }
-        
         return stack
     }
 }
 
+/// #Константы
 extension NutrientsCell {
     private enum Nutrients: String {
         case calories = "Калории"

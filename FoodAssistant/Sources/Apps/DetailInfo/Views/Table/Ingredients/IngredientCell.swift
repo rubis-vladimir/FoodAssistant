@@ -1,5 +1,5 @@
 //
-//  IngredientsCell.swift
+//  IngredientCell.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 28.11.2022.
@@ -7,25 +7,30 @@
 
 import UIKit
 
-final class IngredientsCell: BaseTableViewCell {
+/// #Ячейка с информацией об ингредиенте
+final class IngredientCell: BaseTableViewCell {
     
+    // MARK: - Properties
+    /// Вью под изображение ингредиента
     private lazy var ingredientImageView: UIImageView = {
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        let width: CGFloat = 50
+        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = 25
+        view.layer.cornerRadius = width / 2
         view.clipsToBounds = true
         view.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        
         return view
     }()
     
+    /// Лейбл под название ингредиента
     private lazy var titleIngredientLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.selected
         return label
     }()
     
+    /// Лейбл под количество ингредиента
     private lazy var amountLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.main
@@ -33,6 +38,7 @@ final class IngredientsCell: BaseTableViewCell {
         return label
     }()
     
+    /// Общий контейнер
     private lazy var container: UIStackView = {
         let stack = UIStackView()
         stack.distribution = .fill
@@ -42,6 +48,7 @@ final class IngredientsCell: BaseTableViewCell {
         return stack
     }()
     
+    // MARK: - Functions
     override func setupCell() {
         setupConstraints()
     }
@@ -57,11 +64,9 @@ final class IngredientsCell: BaseTableViewCell {
     }
     
     private func setupConstraints() {
-        
         [ingredientImageView, amountLabel, titleIngredientLabel].forEach {
             container.addArrangedSubview($0)
         }
-        
         addSubview(container)
 
         NSLayoutConstraint.activate([

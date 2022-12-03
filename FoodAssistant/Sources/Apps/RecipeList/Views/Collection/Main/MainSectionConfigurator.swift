@@ -7,28 +7,26 @@
 
 import UIKit
 
-// Конфигуратор секции Main в collectionView
+/// #Конфигуратор секции Main в коллекции
 final class MainSectionConfigurator {
     
-    private let collectionView: UICollectionView
-    private let models: [RecipeCellModel]
-    private let layoutType: LayoutType
-    private let title: String
-    private var isSelector: Bool
+    private struct Constants {
+        static let titleOne = "Популярные блюда"
+        static let titleTwo = "Полученные рецепты"
+        static let firstImage = Icons.split2x2.image
+        static let secondImage = Icons.split1x2.image
+    }
     
-    weak var delegate: RecipeListPresentation?
+    private let collectionView: UICollectionView
+    private let models: [RecipeModel]
+    
+    private weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [RecipeCellModel],
-         layoutType: LayoutType,
-         title: String,
-         isSelector: Bool,
+         models: [RecipeModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models
-        self.layoutType = layoutType
-        self.title = title
-        self.isSelector = isSelector
         self.delegate = delegate
     }
 }
@@ -36,18 +34,20 @@ final class MainSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension MainSectionConfigurator: CVSectionConfiguration {
     
-    
     func configure() -> CVSectionBuilderProtocol {
-        
-        /// Конфигурируем и регистрируем заголовок
-        let headerBuilder = MainHeaderBuilder(title: title,
-                                              isSelector: isSelector,
-                                              delegate: delegate)
+        /// Создаем действие по изменению `Layout`
+        let action: (() -> Void)? = { self.delegate?.didTapChangeLayoutButton() }
+        /// Модель заголовка
+        let headerModel = HeaderSectionModel(title: Constants.titleOne,
+                                             firstImage: Constants.firstImage,
+                                             secondImage: Constants.secondImage,
+                                             action: action )
+        /// Конфигурируем билдер и регистрируем заголовок
+        let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))
         headerBuilder.register(collectionView: collectionView)
         
-        /// Конфигурируем и регистрируем ячейки
+        /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = MainItemBuilder(models: models,
-                                          layoutType: layoutType,
                                           delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

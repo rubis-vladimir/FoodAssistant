@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Строитель ячейки IngredientsCell
+/// #Строитель ячейки IngredientsCell
 final class IngredientsCellBuilder {
     /// Высота ячейки
     private let height = CGFloat(66)
@@ -15,21 +15,17 @@ final class IngredientsCellBuilder {
     
     weak var delegate: DetailInfoPresentation?
     
-    var action: ((UITableViewCell) -> Void)?
-    
     init(ingredients: [Ingredient],
-         delegate: DetailInfoPresentation?,
-         action: ((UITableViewCell) -> Void)? = nil) {
+         delegate: DetailInfoPresentation?) {
         self.ingredients = ingredients
         self.delegate = delegate
-        self.action = action
     }
 }
 
 // MARK: - TVCellBuilderProtocol
 extension IngredientsCellBuilder: TVCellBuilderProtocol {
     func register(tableView: UITableView) {
-        tableView.register(IngredientsCell.self)
+        tableView.register(IngredientCell.self)
     }
     
     func cellHeight() -> CGFloat { UITableView.automaticDimension }
@@ -37,7 +33,7 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
     func cellCount() -> Int { ingredients.count }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(IngredientsCell.self,
+        let cell = tableView.dequeueReusableCell(IngredientCell.self,
                                                  indexPath: indexPath)
         let ingredient = ingredients[indexPath.row]
         cell.configure(with: ingredient)

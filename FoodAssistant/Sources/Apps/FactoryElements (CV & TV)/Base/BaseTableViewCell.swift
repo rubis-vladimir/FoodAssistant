@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Базовая ячейка для TableView
+/// #Базовая ячейка для TableView
 class BaseTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {

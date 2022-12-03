@@ -7,23 +7,27 @@
 
 import UIKit
 
+/// #Ячейка основной информации Рецепта
 final class BasicInfoCell: BaseTableViewCell {
     
+    // MARK: - Properties
+    /// Изображение рецепта
     private lazy var recipeImageView: UIImageView = {
         let iv = UIImageView()
         iv.backgroundColor = .orange
         iv.contentMode = .scaleAspectFill
         iv.translatesAutoresizingMaskIntoConstraints = false
-        iv.image = UIImage(named: "homeBackgroundImage")
         return iv
     }()
     
+    /// Кастомный вью с информацие о рецепте
     private lazy var detailTitleView: DetailTitleView = {
         let view = DetailTitleView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
+    // MARK: - Function
     override func setupCell() {
         setupConstraints()
     }

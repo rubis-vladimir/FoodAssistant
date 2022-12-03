@@ -7,9 +7,11 @@
 
 import UIKit
 
-// Вью 
+/// #Кастомный вью с информацией о рецепте
 final class DetailTitleView: UIView {
     
+    // MARK: - Properties
+    /// Лейбл с названием рецепта
     let titleRecipeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -18,6 +20,7 @@ final class DetailTitleView: UIView {
         return label
     }()
     
+    /// Лейбл с временем приготовления
     let cookingTimeLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -26,6 +29,7 @@ final class DetailTitleView: UIView {
         return label
     }()
     
+    /// Лейбл с количеством порций
     let numberServingsLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
@@ -34,13 +38,9 @@ final class DetailTitleView: UIView {
         return label
     }()
     
-    
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
-        backgroundColor = Palette.bgColor.color
-        layer.add(shadow: AppConstants.Shadow.defaultOne)
-        layer.cornerRadius = 20
         
         setupElements()
     }
@@ -49,8 +49,12 @@ final class DetailTitleView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    // MARK: - Function
     func setupElements() {
+        backgroundColor = Palette.bgColor.color
+        layer.add(shadow: AppConstants.Shadow.defaultOne)
+        layer.cornerRadius = AppConstants.cornerRadius
+        
         /// Дефолтный лейбл
         let label = UILabel()
         label.text = "РЕЦЕПТ"
@@ -70,9 +74,9 @@ final class DetailTitleView: UIView {
         supContainer.distribution = .fillProportionally
         
         let cookingTimeStack = createStack(label: cookingTimeLabel,
-                                           image: UIImage(named: "clock")!)
+                                           image: Icons.clock.image)
         let numberServingsStack = createStack(label: numberServingsLabel,
-                                           image: UIImage(named: "dish")!)
+                                              image: Icons.dish.image)
         
         supContainer.addArrangedSubview(cookingTimeStack)
         supContainer.addArrangedSubview(numberServingsStack)
@@ -83,16 +87,20 @@ final class DetailTitleView: UIView {
         
         addSubview(containerForTitle)
         
+        /// Констрейнты
+        let padding: CGFloat = AppConstants.padding
+        
         NSLayoutConstraint.activate([
-            containerForTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
-            containerForTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
-            containerForTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
-            containerForTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+            containerForTitle.topAnchor.constraint(equalTo: self.topAnchor, constant: padding),
+            containerForTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -padding),
+            containerForTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: padding),
+            containerForTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -padding)
         ])
     }
     
+    /// Создает стэк с лейблом и изображением
     func createStack(label: UILabel,
-                     image: UIImage) -> UIStackView {
+                     image: UIImage?) -> UIStackView {
         let stack = UIStackView()
         stack.spacing = 8
         stack.alignment = .center
@@ -101,12 +109,6 @@ final class DetailTitleView: UIView {
         
         stack.addArrangedSubview(iv)
         stack.addArrangedSubview(label)
-        
         return stack
     }
-    
-    func setupConstraints() {
-        
-    }
-    
 }

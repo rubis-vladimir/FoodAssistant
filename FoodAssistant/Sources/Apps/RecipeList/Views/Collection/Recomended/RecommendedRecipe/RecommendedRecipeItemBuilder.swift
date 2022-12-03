@@ -7,15 +7,14 @@
 
 import UIKit
 
-// Строитель ячеек секции RecommendedRecipe
+/// #Строитель ячеек секции RecommendedRecipe
 final class RecommendedRecipeItemBuilder {
-    private let count = 1
     private let height: CGFloat = 320
-    private let models: [RecipeCellModel]
+    private let models: [RecipeModel]
     
     weak var delegate: RecipeListPresentation?
     
-    init(models: [RecipeCellModel],
+    init(models: [RecipeModel],
          delegate: RecipeListPresentation?) {
         self.models = models
         self.delegate = delegate
@@ -46,7 +45,7 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
         if let imageName = model.imageName {
             delegate?.fetchImage(with: imageName) { imageData in
                 DispatchQueue.main.async {
-                    cell.updateRecipeImage(data: imageData)
+                    cell.updateImage(data: imageData)
                 }
             }
         }

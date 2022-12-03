@@ -7,22 +7,13 @@
 
 import UIKit
 
-// Протокол управления View-слоем модуля DetailInfo
-protocol DetailInfoViewable: AnyObject {
-    /// Обновление UI
-    func updateUI()
-    /// Показать ошибку
-    func showError()
-}
-
-// Протокол делегата прокрутки экрана
+/// #Протокол делегата прокрутки экрана
 protocol ScrollDelegate: AnyObject {
-    // Отслеживает перемещение scrollView
+    /// Отслеживает перемещение scrollView
     func scrollViewDidScroll(to offset: CGFloat)
 }
 
-
-// Контроллер представления детальной информации
+/// #Контроллер представления детальной информации
 final class DetailInfoViewController: UIViewController {
     
     // MARK: - Properties
@@ -68,11 +59,6 @@ final class DetailInfoViewController: UIViewController {
         
         navigationItem.rightBarButtonItems = [faivoriteRightButton]
         navigationItem.leftBarButtonItems = [backLeftButton]
-        
-//        navigationController?.navigationBar.backgroundColor = .blue
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//        navigationController?.navigationBar.shadowImage = UIImage()
-//        navigationController?.navigationBar.isTranslucent = true
     }
     
     private func setupView() {
@@ -87,7 +73,6 @@ final class DetailInfoViewController: UIViewController {
     }
     
     private func setupConstraints() {
-        
         view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
@@ -106,30 +91,8 @@ final class DetailInfoViewController: UIViewController {
     /// Возврат к корневому экрану
     @objc private func backButtonTapped() {
         /// Убираем прозрачность navBar
-        ///
-//        guard let tabBar = tabBarController else { return }
-//        print(navigationController?.navigationBar.isTranslucent)
         navigationController?.navigationBar.isTranslucent = false
-//        navigationController?.popViewController(animated: true)
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "белый фон"), for: UIBarMetrics.default)
-//        navigationController?.navigationBar.barTintColor = .white
-//        navigationController?.navigationBar.tintColor = .white
-        
-        
-//        navigationController
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "белый фон")?.alpha(1000), for: UIBarMetrics.default)
-        navigationController?.popToRootViewController(animated: true)
-    }
-}
-
-// MARK: - DetailInfoViewable
-extension DetailInfoViewController: DetailInfoViewable {
-    func updateUI() {
-    
-    }
-    
-    func showError() {
-        
+        presenter.didTapBackButton()
     }
 }
 
@@ -137,6 +100,9 @@ extension DetailInfoViewController: DetailInfoViewable {
 extension DetailInfoViewController: ScrollDelegate {
     func scrollViewDidScroll(to offset: CGFloat) {
         let alpha = offset * 0.005
-        navigationController?.navigationBar.setBackgroundImage(UIImage(named: "белый фон")?.alpha(alpha), for: UIBarMetrics.default)
+        navigationController?
+            .navigationBar
+            .setBackgroundImage(UIImage(named: "белый фон")?.alpha(alpha),
+                                for: UIBarMetrics.default)
     }
 }

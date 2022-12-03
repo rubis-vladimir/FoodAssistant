@@ -7,13 +7,17 @@
 
 import Foundation
 
+/// #Типы моделей данных рецептов
 enum RLModelType {
-    case recommended, main
+    /// Рекомендованные
+    case recommended
+    /// Основные
+    case main
 }
 
-/// Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: RLLayoutChangable, RLRecipeButtonDelegate, AnyObject {
-    var viewModels: [RLModelType: [RecipeCellModel]] { get }
+/// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
+protocol RecipeListPresentation: RLLayoutChangable, RLCellEventDelegate, AnyObject {
+    var viewModels: [RLModelType: [RecipeModel]] { get }
     func testTranslate()
     
     func testGetRandom()
@@ -23,14 +27,35 @@ protocol RecipeListPresentation: RLLayoutChangable, RLRecipeButtonDelegate, AnyO
                     completion: @escaping (Data) -> Void)
 }
 
-
-protocol RLRecipeButtonDelegate: AnyObject {
-    func didTapAddIngredientsButton(id: Int)
-    func didTapFavoriteButton(type: RLModelType, id: Int)
+/// #Протокол передачи UI-ивентов от ячейки коллекции и ее элементов
+protocol RLCellEventDelegate: RLElementsCellDelegate, AnyObject {
+    /// Ивент нажатия ячейку коллекции
+    ///  - Parameters:
+    ///   - type: тип модели
+    ///   - id: идентификатор рецепта
     func didSelectItem(type: RLModelType, id: Int)
 }
 
+/// #Протокол передачи UI-ивентов от элементов ячейки
+protocol RLElementsCellDelegate: RLFavoriteChangable, AnyObject {
+    /// Ивент нажатия на кнопку добавления элементов
+    ///  - Parameter id: идентификатор рецепта
+    func didTapAddIngredientsButton(type: RLModelType, id: Int)
+}
+
+/// #Протокол изменения флага любимого рецепта
+protocol RLFavoriteChangable: AnyObject {
+    /// Ивент нажатия на кнопку изменения флага любимого рецепта
+    ///  - Parameters:
+    ///   - isFavorite: флаг (верно/неверно)
+    ///   - type: тип модели
+    ///   - id: идентификатор рецепта
+    func didTapFavoriteButton(_ isFavorite: Bool, type: RLModelType, id: Int)
+}
+
+/// #Протокол изменения `Layout` коллекции
 protocol RLLayoutChangable: AnyObject {
+    /// Ивент нажатия на кнопку изменения `Layout`
     func didTapChangeLayoutButton()
 }
 
@@ -40,10 +65,11 @@ protocol RecipeListBusinessLogicDelegate: AnyObject {
     
 }
 
-/// Слой презентации модуля RecipeList
+// MARK: - Presenter
+/// #Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
-    private(set) var viewModels: [RLModelType: [RecipeCellModel]] = [:] {
+    private(set) var viewModels: [RLModelType: [RecipeModel]] = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
@@ -71,7 +97,7 @@ final class RecipeListPresenter {
     
     func getStartData() {
         
-//        interactor.fetchRandomRecipe(number: 15, tags: ["main course"]) { [weak self] result in
+//        interactor.fetchRandomRecipe(number: 4, tags: ["main course"]) { [weak self] result in
 //            switch result {
 //            case .success(let recipeCellModels):
 //                self?.viewModels[.recommended] = recipeCellModels
@@ -150,11 +176,12 @@ extension RecipeListPresenter: RecipeListBusinessLogicDelegate {
 
 extension RecipeListPresenter {
 
-    func didTapFavoriteButton(type: RLModelType, id: Int) {
+    func didTapFavoriteButton(_ isFavorite: Bool,
+        type: RLModelType, id: Int) {
         print("didTapFavoriteButton")
     }
     
-    func didTapAddIngredientsButton(id: Int) {
+    func didTapAddIngredientsButton(type: RLModelType, id: Int) {
         print("didTapAddIngredientsButton")
     }
     
@@ -166,6 +193,12 @@ extension RecipeListPresenter {
     
     func didTapChangeLayoutButton() {
         print("didTapChangeLayoutButton")
+        
+        NotificationCenter.default
+                    .post(name: NSNotification.Name("changeLayoutType"),
+                     object: nil)
+        
+        delegate?.reloadSection(0)
     }
     
 }

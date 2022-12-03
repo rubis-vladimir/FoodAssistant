@@ -9,7 +9,7 @@ import UIKit
 
 /// #Протокол управления слоя навигации модуля MainTabBar
 protocol MainTabBarRoutable {
-    /// Переход к BasketVC
+    /// Переход к `BasketVC`
     func routeToBasket()
 }
 

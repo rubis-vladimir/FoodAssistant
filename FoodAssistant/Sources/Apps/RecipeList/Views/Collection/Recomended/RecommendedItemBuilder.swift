@@ -7,15 +7,15 @@
 
 import UIKit
 
-// Строитель ячеек секции Recommended
+/// #Строитель ячеек секции Recommended
 final class RecommendedItemBuilder {
     private let count = 1
     private let height: CGFloat = 320
-    private let models: [RecipeCellModel]
+    private let models: [RecipeModel]
     
     weak var delegate: RecipeListPresentation?
     
-    init(models: [RecipeCellModel],
+    init(models: [RecipeModel],
          delegate: RecipeListPresentation?) {
         self.models = models
         self.delegate = delegate

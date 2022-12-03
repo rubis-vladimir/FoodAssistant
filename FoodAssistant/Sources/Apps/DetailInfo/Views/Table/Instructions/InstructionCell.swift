@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// #Ячейка с инструкцией
 final class InstructionCell: BaseTableViewCell {
     
     private lazy var stepNumberLabel: UILabel = {

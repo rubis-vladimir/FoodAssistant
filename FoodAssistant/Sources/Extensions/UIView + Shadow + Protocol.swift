@@ -1,5 +1,5 @@
 //
-//  UIView + Shadow.swift
+//  UIView + Shadow + Protocol.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 14.11.2022.
@@ -17,11 +17,6 @@ protocol ShadowProtocol {
     var opacity: Float { get }
     /// Сдвиг
     var offset: CGSize { get }
-}
-
-/// По дефолту
-extension ShadowProtocol {
-    var color: UIColor { Palette.shadowColor.color }
 }
 
 // MARK: - CALayer

@@ -7,18 +7,14 @@
 
 import UIKit
 
-// Строитель ячейки IngredientsCell
+/// #Строитель ячейки IngredientsCell
 final class InstructionCellBuilder {
     /// Высота ячейки
-    private let height = CGFloat(150)
+    private let height: CGFloat = 150
     private let instruction: Instruction
     
-    var action: ((UITableViewCell) -> Void)?
-    
-    init(instruction: Instruction,
-         action: ((UITableViewCell) -> Void)? = nil) {
+    init(instruction: Instruction) {
         self.instruction = instruction
-        self.action = action
     }
 }
 
@@ -37,7 +33,6 @@ extension InstructionCellBuilder: TVCellBuilderProtocol {
                                                  indexPath: indexPath)
         let step = instruction.steps[indexPath.row]
         cell.configure(with: step)
-        
         return cell
     }
 }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Протокол управления бизнес логикой модуля
+/// #Протокол управления бизнес логикой модуля
 protocol DetailInfoBusinessLogic {
     func fetchImage(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
@@ -16,10 +16,8 @@ protocol DetailInfoBusinessLogic {
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
-/// Слой бизнес логике модуля
+/// #Слой бизнес логике модуля
 final class DetailInfoInteractor {
-    weak var presenter: DetailInfoBusinessLogicDelegate?
-    
     private let dataFetcher: DFM
     
     init(dataFetcher: DFM) {

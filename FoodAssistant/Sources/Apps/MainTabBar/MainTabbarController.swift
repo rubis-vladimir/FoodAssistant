@@ -11,7 +11,7 @@ import UIKit
 final class MainTabBarController: UITabBarController {
     
     // MARK: - Properties
-    /// Слой для TabBar
+    /// Слой для `TabBar`
     private var layer = CAShapeLayer()
     /// Высота для слоя
     private var layerHeight = CGFloat()
@@ -44,13 +44,12 @@ final class MainTabBarController: UITabBarController {
     }
     
     // MARK: - Private func
-    /// Настройка TabBar
     private func setupTabBar() {
-        /// Делаем TabBar прозрачным
+        /// Делаем `TabBar` прозрачным
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
         
-        /// Настраиваем и добавляем слой для TabBar
+        /// Настраиваем и добавляем слой для `TabBar`
         let width = self.tabBar.bounds.width - AppConstants.padding * 2
         let height = self.tabBar.bounds.height + AppConstants.padding * 1.2
         layerHeight = height
@@ -65,7 +64,7 @@ final class MainTabBarController: UITabBarController {
         
         tabBar.layer.insertSublayer(layer, at: 0)
         
-        /// Настраиваем элементы TabBar
+        /// Настраиваем элементы `TabBar`
         tabBar.itemWidth = width / 6
         tabBar.itemPositioning = .centered
         tabBar.tintColor = Palette.darkColor.color
@@ -123,6 +122,7 @@ extension MainTabBarController {
         enum Shadow: ShadowProtocol {
             case one, two
             
+            var color: UIColor { Palette.shadowColor.color }
             var radius: CGFloat {
                 switch self {
                 case .one: return 5.0

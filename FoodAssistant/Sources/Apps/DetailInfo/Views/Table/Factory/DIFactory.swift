@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Типы текстовых ячеек модуля AddEvent
+/// #Типы текстовых ячеек модуля AddEvent
 enum DISectionType {
     /// Секция с основной информацией
     case baseInfo
@@ -19,7 +19,7 @@ enum DISectionType {
     case instructions(_ instructions: [Instruction])
 }
 
-// Фабрика для настройки табличного представления модуля DetailInfo
+/// #Фабрика для настройки табличного представления модуля DetailInfo
 final class DIFactory: NSObject {
     
     // MARK: - Properties
@@ -101,8 +101,7 @@ final class DIFactory: NSObject {
         }
     }
     
-    
-    /// #Отслеживание повторяющихся
+    /// Отслеживание повторяющихся ингредиентов
     func getRepeatElement<T: Equatable>(from array: [T]) {
         
         for index in 0..<array.count - 1 {

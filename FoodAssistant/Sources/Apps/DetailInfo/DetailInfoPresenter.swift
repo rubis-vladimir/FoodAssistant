@@ -7,23 +7,18 @@
 
 import Foundation
 
-/// Протокол передачи UI-ивентов слою презентации
+/// #Протокол передачи UI-ивентов слою презентации
 protocol DetailInfoPresentation: AnyObject {
     var model: Recipe { get }
     
     func fetchImage(with imageName: String, completion: @escaping (Data) -> Void)
-    
     func fetchImage(with imageName: String, size: ImageSize, completion: @escaping (Data) -> Void)
-}
-
-/// Протокол делегата бизнес логики
-protocol DetailInfoBusinessLogicDelegate: AnyObject {
     
+    func didTapBackButton()
 }
 
-/// Слой презентации модуля
+/// #Слой презентации модуля
 final class DetailInfoPresenter {
-    weak var delegate: DetailInfoViewable?
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
     
@@ -64,9 +59,7 @@ extension DetailInfoPresenter: DetailInfoPresentation {
         }
     }
     
-}
-
-// MARK: - BusinessLogicDelegate
-extension DetailInfoPresenter: DetailInfoBusinessLogicDelegate {
-    
+    func didTapBackButton() {
+        router.routeToBack()
+    }
 }

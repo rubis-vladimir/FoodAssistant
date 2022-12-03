@@ -7,20 +7,16 @@
 
 import UIKit
 
-// Строитель ячейки BaseInfoCell
+/// #Строитель ячейки BaseInfoCell
 final class BasicInfoCellBuilder {
 
     private let model: Recipe
     weak var delegate: DetailInfoPresentation?
-
-    var action: ((UITableViewCell) -> Void)?
     
     init(model: Recipe,
-         delegate: DetailInfoPresentation?,
-         action: ((UITableViewCell) -> Void)? = nil) {
+         delegate: DetailInfoPresentation?) {
         self.model = model
         self.delegate = delegate
-        self.action = action
     }
 }
 
@@ -42,7 +38,7 @@ extension BasicInfoCellBuilder: TVCellBuilderProtocol {
         
         if let urlString = model.image {
             let imageName = String(urlString.dropFirst(37))
-            print(imageName)
+            
             delegate?.fetchImage(with: imageName) { imageData in
                 DispatchQueue.main.async {
                     cell.updateImage(with: imageData)

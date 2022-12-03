@@ -9,7 +9,7 @@ import UIKit
 
 /// #Протокол конфигурации контроллера панели вкладок
 protocol TabBarConfiguration {
-    /// Настраивает TabBar и его дочерние VC
+    /// Настраивает `TabBar` и его дочерние VC
     func generate(tabBar: UITabBarController)
 }
 

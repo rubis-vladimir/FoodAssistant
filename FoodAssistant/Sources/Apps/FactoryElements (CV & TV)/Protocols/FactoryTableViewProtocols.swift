@@ -40,8 +40,6 @@ protocol TVCellBuilderProtocol {
     /// Создает ячейку по indexPath
     func cellAt(indexPath: IndexPath,
                 tableView: UITableView) -> UITableViewCell
-    /// Действие при тапе на ячейку
-    var action: ((UITableViewCell) -> Void)? { get }
 }
 
 /// Протокол конструктора для создания и конфигурации ячейки

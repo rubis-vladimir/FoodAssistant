@@ -7,16 +7,16 @@
 
 import UIKit
 
-// Конфигуратор секции RecommendedRecipe в коллекции
+/// #Конфигуратор секции RecommendedRecipe в коллекции
 final class RecommendedRecipeSectionConfigurator {
     
     private let collectionView: UICollectionView
-    private let models: [RecipeCellModel]
+    private let models: [RecipeModel]
     
     weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [RecipeCellModel],
+         models: [RecipeModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models

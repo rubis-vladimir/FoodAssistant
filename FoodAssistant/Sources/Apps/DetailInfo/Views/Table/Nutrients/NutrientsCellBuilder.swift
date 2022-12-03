@@ -7,18 +7,14 @@
 
 import UIKit
 
-// Строитель ячейки NutrientsCell
+/// #Строитель ячейки NutrientsCell
 final class NutrientsCellBuilder {
     /// Высота ячейки
     private let height = CGFloat(100)
     private let nutrition: Nutrition
     
-    var action: ((UITableViewCell) -> Void)?
-    
-    init(nutrition: Nutrition,
-         action: ((UITableViewCell) -> Void)? = nil) {
+    init(nutrition: Nutrition) {
         self.nutrition = nutrition
-        self.action = action
     }
 }
 
@@ -33,10 +29,6 @@ extension NutrientsCellBuilder: TVCellBuilderProtocol {
     func cellCount() -> Int { 1 }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(NutrientsCell.self,
-//                                                 indexPath: indexPath)
-        let cell = NutrientsCell(nutrition: nutrition)
-//        cell.configure(with: nutrition)
-        return cell
+        return NutrientsCell(nutrition: nutrition)
     }
 }
