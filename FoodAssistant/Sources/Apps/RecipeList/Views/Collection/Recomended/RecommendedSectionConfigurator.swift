@@ -7,25 +7,21 @@
 
 import UIKit
 
-// Конфигуратор секции Recommended в collectionView
+/// #Конфигуратор секции Recommended в collectionView
 final class RecommendedSectionConfigurator {
+    /// Заголовок секции
+    private let title: String = "Рекомендации"
     
     private let collectionView: UICollectionView
-    private let models: [RecipeCellModel]
-    private let title: String
-    private var isSelector: Bool
+    private let models: [RecipeModel]
     
     weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [RecipeCellModel],
-         title: String,
-         isSelector: Bool,
+         models: [RecipeModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models
-        self.title = title
-        self.isSelector = isSelector
         self.delegate = delegate
     }
 }
@@ -36,9 +32,7 @@ extension RecommendedSectionConfigurator: CVSectionConfiguration {
     func configure() -> CVSectionBuilderProtocol {
         
         /// Конфигурируем и регистрируем заголовок
-        let headerBuilder = MainHeaderBuilder(title: title,
-                                              isSelector: isSelector,
-                                              delegate: delegate!)
+        let headerBuilder = HeaderBuilder(type: .base(title: title))
         headerBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем и регистрируем ячейки

@@ -7,16 +7,27 @@
 
 import UIKit
 
-/// Протокол управления View-слоем в модуле MainTabBar
-protocol MainTabBarViewable: AnyObject {
-    
-}
-
-/// Контроллер панели вкладок
+/// #Контроллер панели вкладок
 final class MainTabBarController: UITabBarController {
+    
+    // MARK: - Properties
+    /// Слой для `TabBar`
+    private var layer = CAShapeLayer()
+    /// Высота для слоя
+    private var layerHeight = CGFloat()
+    
+    /// Центральная кнопка
+    private var middleButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Icons.basket.image,
+                   for: .normal)
+        button.imageView?.tintColor = .white
+        return button
+    }()
     
     private let presenter: MainTabBarPresentation
     
+    // MARK: - Init & ViewDidLoad
     init(presenter: MainTabBarPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -26,139 +37,110 @@ final class MainTabBarController: UITabBarController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // tab bar layer
-    var layer = CAShapeLayer()
-    var layerHeight = CGFloat()
-    
-    var middleButton: UIButton = {
-        let b = UIButton()
-        b.setImage(Icons.basket.image,
-                   for: .normal)
-        b.imageView?.tintColor = .white
-        return b
-    }()
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpTabBar()
-        setupNavigationBar()
+        setupTabBar()
     }
     
-    func setUpTabBar() {
-        
+    // MARK: - Private func
+    private func setupTabBar() {
+        /// Делаем `TabBar` прозрачным
         tabBar.backgroundImage = UIImage()
         tabBar.shadowImage = UIImage()
         
-        // tab bar layer
-        let x: CGFloat = 16
-        let y: CGFloat = 20
-        let width = self.tabBar.bounds.width - x * 2
-        let height = self.tabBar.bounds.height + y * 1.3
+        /// Настраиваем и добавляем слой для `TabBar`
+        let width = self.tabBar.bounds.width - AppConstants.padding * 2
+        let height = self.tabBar.bounds.height + AppConstants.padding * 1.2
         layerHeight = height
+        
         layer.fillColor = Palette.bgColor.color.cgColor
-        layer.path = UIBezierPath(roundedRect: CGRect(x: x,
-                                                      y: self.tabBar.bounds.minY - y,
+        layer.path = UIBezierPath(roundedRect: CGRect(x: AppConstants.padding,
+                                                      y: self.tabBar.bounds.minY - AppConstants.padding,
                                                       width: width,
                                                       height: height),
                                   cornerRadius: height / 2).cgPath
+        layer.add(shadow: Constant.Shadow.one)
         
-        // tab bar shadow
-        layer.shadowColor = Palette.shadowColor.color.cgColor
-        layer.shadowOffset = CGSize(width: 0.0, height: 1.0)
-        layer.shadowRadius = 5.0
-        layer.shadowOpacity = 0.5
-        
-        // add tab bar layer
         tabBar.layer.insertSublayer(layer, at: 0)
         
-        // fix items positioning
+        /// Настраиваем элементы `TabBar`
         tabBar.itemWidth = width / 6
         tabBar.itemPositioning = .centered
         tabBar.tintColor = Palette.darkColor.color
         tabBar.unselectedItemTintColor = Palette.lightColor.color
-        
-        // add middle button
+    
         addMiddleButton()
-        
     }
     
     /// Добавляем Среднюю кнопку и настраиваем ее
-    func addMiddleButton() {
+    private func addMiddleButton() {
         
-        /// Отключаем tabBarItem за пользовательской кнопкой middleButton
+        let constant: CGFloat = layerHeight / 2 - AppConstants.padding
+        
+        /// Отключаем элемент TabBar за пользовательской кнопкой middleButton
         DispatchQueue.main.async {
             if let items = self.tabBar.items {
                 items[1].isEnabled = false
             }
         }
         
-        //#colorLiteral(red: 0.1843137255, green: 0.3019607843, blue: 0.05490196078, alpha: 1)
-        // #colorLiteral(red: 0.8885247111, green: 0.6562783122, blue: 0.01885649748, alpha: 1)
-        tabBar.addSubview(middleButton)
-        let size = CGFloat(50)
-        let constant: CGFloat = -20 + ( layerHeight / 2 )
-        middleButton.layer.cornerRadius = size / 2
-        middleButton.backgroundColor = Palette.darkColor.color
-        
-        // set constraints
-        let constraints = [
-            middleButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
-            middleButton.centerYAnchor.constraint(equalTo: tabBar.topAnchor, constant: constant),
-            middleButton.heightAnchor.constraint(equalToConstant: size),
-            middleButton.widthAnchor.constraint(equalToConstant: size)
-        ]
-        
-        for constraint in constraints {
-            constraint.isActive = true
-        }
-        
-        // shadow
-        middleButton.layer.addShadow(color: Palette.shadowColor2.color,
-                                     radius: 6,
-                                     offsetHeight: 3)
-        
-        // other
+        /// Настраиваем свойства
+        middleButton.layer.cornerRadius = Constant.middleButtonSize / 2
         middleButton.layer.masksToBounds = false
         middleButton.translatesAutoresizingMaskIntoConstraints = false
+        middleButton.backgroundColor = Palette.darkColor.color
+        middleButton.addTarget(self, action: #selector(didMiddleButtonTapped), for: .touchUpInside)
         
-        // action
-        middleButton.addTarget(self, action: #selector(routeToCreateEvent(sender:)), for: .touchUpInside)
+        middleButton.layer.add(shadow: Constant.Shadow.two)
+        
+        tabBar.addSubview(middleButton)
+        
+        /// Настраиваем констрейнты
+        NSLayoutConstraint.activate([
+            middleButton.centerXAnchor.constraint(equalTo: tabBar.centerXAnchor),
+            middleButton.centerYAnchor.constraint(equalTo: tabBar.topAnchor, constant: constant),
+            middleButton.heightAnchor.constraint(equalToConstant: Constant.middleButtonSize),
+            middleButton.widthAnchor.constraint(equalToConstant: Constant.middleButtonSize)
+        ])
     }
     
     /// Передача ивента навигации в Presenter
-    @objc func routeToCreateEvent(sender: UIButton) {
-        print("XXX")
+    @objc func didMiddleButtonTapped() {
         presenter.readyForRoute()
-    }
-    
-    func setupNavigationBar() {
-        let saveRightButton = createCustomBarButton(
-            imageName: "xmark",
-            selector: #selector(saveAndExitRightButtonTapped)
-        )
-        let cancelLeftButton = createCustomBarButton(
-            imageName: "xmark",
-            selector: #selector(cancelLeftButtonTapped)
-        )
-        
-        navigationItem.rightBarButtonItems = [saveRightButton]
-        navigationItem.leftBarButtonItems = [cancelLeftButton]
-    }
-    
-    /// Сохраняет событие и скрывает экран
-    @objc private func saveAndExitRightButtonTapped() {
-        
-    }
-    
-    /// Скрывает экран
-    @objc private func cancelLeftButtonTapped() {
-        
     }
 }
 
-// MARK: - MainTabBarViewable
-extension MainTabBarController: MainTabBarViewable {
+// MARK: - Константы
+extension MainTabBarController {
     
+    private struct Constant {
+        /// Размер кнопки
+        static let middleButtonSize: CGFloat = 50
+        
+        /// Тени
+        enum Shadow: ShadowProtocol {
+            case one, two
+            
+            var color: UIColor { Palette.shadowColor.color }
+            var radius: CGFloat {
+                switch self {
+                case .one: return 5.0
+                case .two: return 6.0
+                }
+            }
+            var opacity: Float {
+                switch self {
+                case .one: return 0.5
+                case .two: return 0.65
+                }
+            }
+            var offset: CGSize {
+                switch self {
+                case .one: return CGSize(width: 0.0, height: 1.0)
+                case .two: return CGSize(width: 0.0, height: 3.0)
+                }
+            }
+        }
+    }
 }

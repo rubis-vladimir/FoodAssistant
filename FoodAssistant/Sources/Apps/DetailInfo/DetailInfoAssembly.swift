@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Компоновщик модуля
+/// #Компоновщик модуля DetailInfo
 final class DetailInfoAssembly {
     private let navigationController: UINavigationController
     private let model: Recipe
@@ -38,9 +38,6 @@ extension DetailInfoAssembly: Assemblying {
                                             router: router,
                                             model: model)
         let viewController = DetailInfoViewController(presenter: presenter)
-        presenter.delegate = viewController
-        interactor.presenter = presenter
-        
         return viewController
     }
 }

@@ -7,23 +7,16 @@
 
 import UIKit
 
-/// Типы текстовых ячеек модуля AddEvent
-enum RLCellType {
-    
-    case recommendedViewCell
-    
-    case mainCell
-    
-    case fullMainCell
-}
-
+/// #Типы сборок коллекции модуля RecipeList
 enum RLBuildType {
-    case main(first: [RecipeCellModel],
-              second: [RecipeCellModel])
-    case search(models: [RecipeCellModel])
+    /// Основная при загрузке
+    case main(first: [RecipeModel],
+              second: [RecipeModel])
+    /// При поиске рецептов
+    case search(models: [RecipeModel])
 }
 
-/// Фабрика настройки табличного представления модуля AddEvent
+/// #Фабрика настройки табличного представления модуля RecipeList
 final class RLFactory {
     
     private let collectionView: UICollectionView
@@ -35,6 +28,7 @@ final class RLFactory {
     /// Инициализатор
     ///  - Parameters:
     ///    - tableView: настраиваемая таблица
+    ///    - buildType: тип сборки
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
          buildType: RLBuildType,
@@ -50,10 +44,8 @@ final class RLFactory {
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
         
+        /// Обновление данных в коллекции
         cvAdapter.configure(with: builders)
     }
     
@@ -62,28 +54,16 @@ final class RLFactory {
     ///     - model: модель данных
     ///     - type: тип ячейки
     ///   - Return: объект протокола строителя
-    private func createBuilder(models: [RecipeCellModel],
-                               type: RLCellType) -> CVSectionBuilderProtocol {
+    private func createBuilder(models: [RecipeModel],
+                               type: RLModelType) -> CVSectionBuilderProtocol {
         switch type {
-        case .recommendedViewCell:
+        case .recommended:
             return RecommendedSectionConfigurator(collectionView: collectionView,
                                                   models: models,
-                                                  title: "Рекомендации",
-                                                  isSelector: false,
                                                   delegate: delegate).configure()
-        case .mainCell:
+        case .main:
             return MainSectionConfigurator(collectionView: collectionView,
                                            models: models,
-                                           layoutType: .split2xN,
-                                           title: "Популярные блюда",
-                                           isSelector: true,
-                                           delegate: delegate).configure()
-        case .fullMainCell:
-            return MainSectionConfigurator(collectionView: collectionView,
-                                           models: models,
-                                           layoutType: .split2xN,
-                                           title: "Популярные блюда",
-                                           isSelector: true,
                                            delegate: delegate).configure()
         }
     }
@@ -94,24 +74,20 @@ extension RLFactory: CVFactoryProtocol {
     
     var builders: [CVSectionBuilderProtocol] {
         var builders: [CVSectionBuilderProtocol] = []
+        
         switch buildType {
+            
         case let .main(first, second):
             builders.append(contentsOf: [
-                createBuilder(models: first, type: .recommendedViewCell),
-                createBuilder(models: second, type: .mainCell)
+                createBuilder(models: first, type: .recommended),
+                createBuilder(models: second, type: .main)
             ])
-            print("CVCBuilderProtocol - \(builders)")
+            
         case .search(let models):
             builders.append(contentsOf: [
-                createBuilder(models: models, type: .fullMainCell)
+                createBuilder(models: models, type: .main)
             ])
         }
         return builders
-    }
-}
-
-private extension RLFactory {
-    @objc func changeLayoutButtonTapped() {
-        print("changeLayoutButtonTapped")
     }
 }

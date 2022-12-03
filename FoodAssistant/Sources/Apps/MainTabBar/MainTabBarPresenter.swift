@@ -7,17 +7,15 @@
 
 import UIKit
 
-/// Протокол передачи UI-эвентов слою презентации
+/// #Протокол передачи UI-эвентов слою презентации
 protocol MainTabBarPresentation {
-    
     /// Отправка запроса навигации
     func readyForRoute()
 }
 
-/// Слой презентации модуля MainTabBar
+/// #Слой презентации модуля MainTabBar
 final class MainTabBarPresenter {
     
-    weak var tabBarController: MainTabBarViewable?
     private let router: MainTabBarRouter
     
     init(router: MainTabBarRouter) {
@@ -28,6 +26,6 @@ final class MainTabBarPresenter {
 // MARK: - MainTabBarPresentation
 extension MainTabBarPresenter: MainTabBarPresentation {
     func readyForRoute() {
-        router.routeToAddEvent()
+        router.routeToBasket()
     }
 }

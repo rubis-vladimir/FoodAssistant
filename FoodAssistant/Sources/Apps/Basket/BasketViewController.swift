@@ -41,11 +41,11 @@ final class BasketViewController: UIViewController {
     private func setupNavigitionBarViews() {
         
         let saveRightButton = createCustomBarButton(
-            imageName: "xmark",
+            icon: .xmark,
             selector: #selector(saveAndExitRightButtonTapped)
         )
         let cancelLeftButton = createCustomBarButton(
-            imageName: "xmark",
+            icon: .xmark,
             selector: #selector(cancelLeftButtonTapped)
         )
         

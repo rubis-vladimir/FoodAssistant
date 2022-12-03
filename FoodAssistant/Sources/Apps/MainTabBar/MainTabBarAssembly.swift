@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Компоновщик VIPER-модуля MainTabBar
+/// #Компоновщик VIPER-модуля MainTabBar
 final class MainTabBarAssembly {
     
     private let navigationController: UINavigationController
@@ -17,18 +17,19 @@ final class MainTabBarAssembly {
          tabBarConfigurator: TabBarConfiguration) {
         self.navigationController = navigationController
         self.tabBarConfigurator = tabBarConfigurator
+        
+        /// Скрываю `navigationBar` для `TabBar`
         navigationController.navigationBar.isHidden = true
     }
 }
 
 // MARK: - Assemblying
 extension MainTabBarAssembly: Assemblying {
+    
     func assembly() -> UIViewController {
-        
         let router = MainTabBarRouter(navigationController: navigationController)
         let presenter = MainTabBarPresenter(router: router)
         let tb = MainTabBarController(presenter: presenter)
-        presenter.tabBarController = tb
         tabBarConfigurator.generate(tabBar: tb)
         return tb
     }

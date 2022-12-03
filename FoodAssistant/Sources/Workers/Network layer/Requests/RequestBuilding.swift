@@ -10,13 +10,13 @@ import Foundation
 typealias HTTPHeaders = [String: String]
 typealias Parameters = Codable
 
-/// Варианты http-методов
+// Варианты http-методов
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
 }
 
-/// Протокол строителя интернет-запроса
+/// #Протокол строителя интернет-запроса
 protocol RequestBuilding {
     /// Основной url-адрес
     var baseUrl: String { get }
@@ -35,7 +35,7 @@ protocol RequestBuilding {
     func asURLRequest() throws -> URLRequest
 }
 
-/// Дефолтная реализация
+// Дефолтная реализация
 extension RequestBuilding {
     
     var parameters: Parameters? { return nil }

@@ -9,7 +9,7 @@ import UIKit
 
 extension UINavigationController {
     
-    /// Анимирование переходов
+    /// Добавляет кастомную анимацию перехода
     func createCustomTransition(with transitionType: CATransitionType) {
         let transition = CATransition()
         transition.duration = 0.5

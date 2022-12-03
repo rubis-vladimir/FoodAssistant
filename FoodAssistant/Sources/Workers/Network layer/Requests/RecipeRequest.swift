@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Варианты запросов рецептов
+/// #Варианты запросов рецептов
 enum RecipeRequest {
     case complexSearch(_ parameters: RecipeFilterParameters, _ number: Int, _ query: String?)
     case findByIngredients(_ ingridients: [String], _ number: Int)

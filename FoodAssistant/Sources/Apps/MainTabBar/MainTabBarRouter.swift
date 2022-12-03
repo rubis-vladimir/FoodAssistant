@@ -7,14 +7,13 @@
 
 import UIKit	
 
-/// Протокол управления слоя навигации модуля MainTabBar
+/// #Протокол управления слоя навигации модуля MainTabBar
 protocol MainTabBarRoutable {
-    
-    /// Переход к AddEventVC
-    func routeToAddEvent()
+    /// Переход к `BasketVC`
+    func routeToBasket()
 }
 
-/// Слой навигации модуля MainTabBar
+/// #Слой навигации модуля MainTabBar
 final class MainTabBarRouter {
     private let navigationController: UINavigationController
     
@@ -26,11 +25,11 @@ final class MainTabBarRouter {
 // MARK: - MainTabBarRoutable
 extension MainTabBarRouter: MainTabBarRoutable {
     
-    func routeToAddEvent() {
+    func routeToBasket() {
         let vc = BasketAssembly(navigationController: navigationController).assembly()
         
+        /// Добавляем кастомный переход
         navigationController.createCustomTransition(with: .moveIn)
-        
         navigationController.pushViewController(vc, animated: false)
     }
 }

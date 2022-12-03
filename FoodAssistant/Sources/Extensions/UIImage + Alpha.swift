@@ -8,10 +8,14 @@
 import UIKit
 
 extension UIImage {
-
-    func alpha(_ value:CGFloat) -> UIImage? {
+    /// Изменяет прозрачность изображения
+    ///  - Parameter value: значение alpha
+    ///  - Returns: измененное изображение
+    func alpha(_ value: CGFloat) -> UIImage? {
         UIGraphicsBeginImageContextWithOptions(size, false, scale)
-        draw(at: CGPoint.zero, blendMode: .normal, alpha: value)
+        draw(at: CGPoint.zero,
+             blendMode: .normal,
+             alpha: value)
         let newImage = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return newImage

@@ -78,7 +78,7 @@ final class UserProfileViewController: UIViewController {
     
     func setupNavigationBar() {
         let saveRightButton = createCustomBarButton(
-            imageName: Icons.gearshape.rawValue,
+            icon:.gearshape,
             selector: #selector(saveAndExitRightButtonTapped)
         )
         

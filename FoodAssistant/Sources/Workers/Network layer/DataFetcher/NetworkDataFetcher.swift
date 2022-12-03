@@ -7,7 +7,7 @@
 
 import Foundation
 
-// MARK: Протокол получения данных из сети
+/// Протокол получения и декодирования данных из сети
 protocol DataFetcherProtocol {
     
     /// Создает и направляет запрос в сеть для получения данных
@@ -18,7 +18,7 @@ protocol DataFetcherProtocol {
                                  completion: @escaping (Result<T, DataFetcherError>) -> Void)
 }
 
-/// Сервис работы с сетью
+/// #Сервис работы с сетью
 final class NetworkDataFetcher {
     
     /// Запрос данных из сети

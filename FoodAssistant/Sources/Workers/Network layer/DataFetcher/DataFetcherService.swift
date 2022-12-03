@@ -24,7 +24,7 @@ final class DataFetcherService {
 extension DataFetcherService: DataFetcherRecipeManagement {
     func fetchComplexRecipe(_ parameters: RecipeFilterParameters,
                             _ number: Int, _ query: String?,
-                            completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void) {
+                            completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
         RecipeRequest
             .complexSearch(parameters, number, query)
             .download(with: dataFetcher, completion: completion)
@@ -32,7 +32,7 @@ extension DataFetcherService: DataFetcherRecipeManagement {
     
     func fetchRandomRecipe(number: Int,
                            tags: [String],
-                           completion: @escaping (Result<RecipeModel, DataFetcherError>) -> Void) {
+                           completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
         RecipeRequest
             .random(number, tags: tags)
             .download(with: dataFetcher, completion: completion)
@@ -42,7 +42,7 @@ extension DataFetcherService: DataFetcherRecipeManagement {
 // MARK: - DataFetcherTranslateManagement
 extension DataFetcherService: DataFetcherTranslateManagement {
     func translate(with parameters: TranslateParameters,
-                   completion: @escaping (Result<Translate, DataFetcherError>) -> Void) {
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
         LanguageRequest
             .translate(patameters: parameters)
             .download(with: dataFetcher, completion: completion)

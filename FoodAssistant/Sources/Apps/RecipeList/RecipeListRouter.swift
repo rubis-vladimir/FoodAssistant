@@ -44,13 +44,11 @@ extension RecipeListRouter: RecipeListRouting {
             navigationController.pushViewController(vc, animated: true)
         case .detailInfo:
             /// Аналогично
-            print("Переход на экран детальной информации")
-            
-            
-            navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-            navigationController.navigationBar.shadowImage = UIImage()
+            /// 
+//            navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+//            navigationController.navigationBar.shadowImage = UIImage()
             navigationController.navigationBar.isTranslucent = true
-            navigationController.view.backgroundColor = .clear
+//            navigationController.view.backgroundColor = .clear
             
             let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
             vc.hidesBottomBarWhenPushed = true

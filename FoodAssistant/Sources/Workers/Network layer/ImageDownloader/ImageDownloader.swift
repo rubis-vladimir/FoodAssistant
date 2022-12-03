@@ -17,7 +17,7 @@ protocol ImageDownloadProtocol {
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
-/// Сервис загрузки изображений
+/// #Сервис загрузки изображений
 final class ImageDownloader { }
 
 // MARK: - ImageDownloadProtocol

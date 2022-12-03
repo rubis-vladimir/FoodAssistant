@@ -7,22 +7,28 @@
 
 import UIKit
 
-/// Протокол управления View-слоем модуля RecipeList
+/// #Протокол управления View-слоем модуля RecipeList
 protocol RecipeListViewable: AnyObject {
-    /// Обновление UI
+    /// Обновляет UI
+    /// - Parameter type: тип сборки
     func updateUI(with type: RLBuildType)
-    /// Показать ошибку
+    /// Показывает ошибку
     func showError()
+    
+    func reloadSection(_ section: Int)
 }
 
-/// Контроллер представления списка рецептов
+/// #Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {
 
-    private let presenter: RecipeListPresentation
+    // MARK: - Properties
     private var collectionView: UICollectionView!
     private var timer: Timer?
     private var factory: RLFactory?
     
+    private let presenter: RecipeListPresentation
+    
+    // MARK: - Init & ViewDidLoad
     init(presenter: RecipeListPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -34,57 +40,61 @@ final class RecipeListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        
         setupElements()
     }
     
+    
+    // MARK: - Private func
     private func setupElements() {
-        /// `Navigation Bar` Setup
+        /// Настройка`navigationBar`
         navigationItem.title = "Food Assistant"
+        navigationController?.navigationBar.shadowImage = UIImage()
         
-        /// `seacrhController` settings
+        /// Настройка `searchBar`
         let seacrhController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = seacrhController
         seacrhController.hidesNavigationBarDuringPresentation = false
         seacrhController.obscuresBackgroundDuringPresentation = false
         seacrhController.searchBar.delegate = self
         
-        /// `CollectionView` settings
-        let newFrame = CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height - (tabBarController?.tabBar.bounds.height ?? 0) + 13)
-        collectionView = UICollectionView(frame: newFrame,
+        navigationItem.searchController = seacrhController
+        
+        /// Настройка `CollectionView`
+        collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: getFlowLayout())
-        collectionView.backgroundColor = .clear
+        
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
         
-        /// Adding elements to the screen
         view.addSubview(collectionView)
         
-        /// Setting up the location of elements on the screen
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        /// Настройка констрейнтов
+        NSLayoutConstraint.activate([
+            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            collectionView.bottomAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
+        ])
     }
     
-    
+    /// Возвращает настроенный `FlowLayout`
     private func getFlowLayout() -> UICollectionViewFlowLayout {
-        
         let layout = UICollectionViewFlowLayout()
-        
-        let padding: CGFloat = 16
+        let padding = AppConstants.padding
         layout.sectionInset = UIEdgeInsets(top: 0,
                                            left: padding,
                                            bottom: padding,
                                            right: padding)
-        
-        layout.minimumInteritemSpacing = 16
-        layout.minimumLineSpacing = 16
-        
-//        layout.itemSize = calculateItemSize()
+        layout.minimumInteritemSpacing = padding
+        layout.minimumLineSpacing = padding
         return layout
     }
     
     /// Рассчитывает размер Item
     private func calculateItemSize() -> CGSize {
-        let padding: CGFloat = 16
+        let padding: CGFloat = AppConstants.padding
         let itemPerRow: CGFloat = 2
         let paddingWidht = padding * (itemPerRow + 1)
         let availableWidth = (view.bounds.width - paddingWidht) / itemPerRow
@@ -93,6 +103,7 @@ final class RecipeListViewController: UIViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
 extension RecipeListViewController: UISearchBarDelegate {
     
 }
@@ -112,5 +123,9 @@ extension RecipeListViewController: RecipeListViewable {
     
     func showError() {
         
+    }
+    
+    func reloadSection(_ section: Int) {
+        collectionView.reloadSections(IndexSet(integer: section))
     }
 }
