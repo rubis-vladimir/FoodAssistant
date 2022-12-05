@@ -16,36 +16,34 @@ struct RecipeResponce: Codable, Hashable {
 // Модель рецепта
 struct Recipe: Codable, Equatable, Hashable {
     /// Идентификатор
-    let id: Int
+    var id: Int
     /// Название рецепта
-    let title: String
+    var title: String
     /// Полная готовность в мин
-    let readyInMinutes: Int
+    var readyInMinutes: Int
     /// Количество порций
-    let servings: Int
+    var servings: Int
     /// Массив используемых ингредиентов
-    let extendedIngredients: [Ingredient]?
+    var extendedIngredients: [Ingredient]?
     /// Изображение рецепта
-    let image: String?
+    var image: String?
     /// Информация по питательным веществам
-    let nutrition: Nutrition?
+    var nutrition: Nutrition?
     /// Инструкции для приготовления
-    let analyzedInstructions: [Instruction]?
+    var analyzedInstructions: [Instruction]?
     
     /// Теги
-    let vegetarian: Bool
-    let vegan: Bool
-    let glutenFree: Bool
-    let dairyFree: Bool
+    var vegetarian: Bool
+    var vegan: Bool
+    var glutenFree: Bool
+    var dairyFree: Bool
     
-    /// ?
-    let summary: String
-    let cuisines: [String]
-    let dishTypes: [String]
-    let diets: [String]
-    let instructions: String?
-    let spoonacularSourceUrl: String?
-    var isFavorite: Bool?
+    /// Пока не требуются
+//    var cuisines: [String]
+//    var dishTypes: [String]
+//    var diets: [String]
+//    var spoonacularSourceUrl: String?
+//    var isFavorite: Bool?
     
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
         if lhs.id == rhs.id {
@@ -58,15 +56,15 @@ struct Recipe: Codable, Equatable, Hashable {
 // Модель ингредиента
 struct Ingredient: Codable, Hashable, Equatable {
     /// Идентификатор ингредиента
-    let id: Int?
+    var id: Int?
     /// Название изображения ингредиента
-    let image: String?
+    var image: String?
     /// Название ингредиента
-    let name: String
+    var name: String
     /// Количество
-    let amount: Float?
+    var amount: Float?
     /// Единицы измерения
-    let unit: String?
+    var unit: String?
     
     static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
         if lhs.id == rhs.id {
@@ -79,23 +77,23 @@ struct Ingredient: Codable, Hashable, Equatable {
 // Модель инструкции по приготовлению
 struct Instruction: Codable, Hashable {
     /// Название
-    let name: String
+    var name: String
     /// Шаги
-    let steps: [InstuctionStep]
+    var steps: [InstuctionStep]
 }
 
 // Модель этапа(шага) приготовления
 struct InstuctionStep: Codable, Hashable {
     /// Номер
-    let number: Int
+    var number: Int
     /// Текстовая информация
-    let step: String
+    var step: String
 }
 
 // Модель питательных веществ
 struct Nutrition: Codable, Hashable {
     /// Массив питателных веществ
-    let nutrients: [Nutrient]
+    var nutrients: [Nutrient]
 
     /// Информация для о количестве питательных веществ (калории, белки, жиры, углеводы):
     var calories: String? {
@@ -126,9 +124,9 @@ struct Nutrition: Codable, Hashable {
 // Модель питательного вещества
 struct Nutrient: Codable, Hashable {
     /// Название
-    let name: String
+    var name: String
     /// Количество
-    let amount: Float
+    var amount: Float
     /// Единицы измерения
-    let unit: String
+    var unit: String
 }

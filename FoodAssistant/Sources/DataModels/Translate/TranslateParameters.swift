@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Модель параметров перевода
+// Модель параметров перевода
 struct TranslateParameters: Codable {
     /// Идентификатор сервисного аккаунта
     var folderId: String

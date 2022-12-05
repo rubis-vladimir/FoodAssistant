@@ -7,14 +7,25 @@
 
 import Foundation
 
-/// #Варианты запросов на загрузку изображений
+/// #Запросы на загрузку изображений
 enum ImageRequest {
+    /// Запрос изображения рецепта
+    ///  - Parameter imageName: название изображения
     case recipe(imageName: String)
-    case ingredient(imageName: String, size: ImageSize)
+    
+    /// Запрос изображения ингредиента
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - size: размер
+    case ingredient(imageName: String,
+                    size: ImageSize)
 }
 
 extension ImageRequest {
     /// Обращается к сервису для загрузки изображений
+    ///  - Parameters:
+    ///   - service: используемый сервис для загрузки изображений
+    ///   - completion: захватывает данные изображения / ошибку
     func download(with service: ImageDownloadProtocol,
                   completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         guard let url = url else {

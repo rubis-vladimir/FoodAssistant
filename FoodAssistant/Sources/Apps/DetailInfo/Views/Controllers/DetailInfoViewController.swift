@@ -10,6 +10,7 @@ import UIKit
 /// #Протокол делегата прокрутки экрана
 protocol ScrollDelegate: AnyObject {
     /// Отслеживает перемещение scrollView
+    /// - Parameter offset: перемещение Y
     func scrollViewDidScroll(to offset: CGFloat)
 }
 
@@ -63,8 +64,9 @@ final class DetailInfoViewController: UIViewController {
     
     private func setupView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        
         let model = presenter.model
+        
+        /// Создаем фабрику для конфигурации таблицы
         factory = DIFactory(tableView: tableView,
                             delegate: presenter,
                             scrollDelegate: self,

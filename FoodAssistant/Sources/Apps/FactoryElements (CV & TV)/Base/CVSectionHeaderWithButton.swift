@@ -11,9 +11,11 @@ import UIKit
 final class CVSectionHeaderWithButton: CVBaseSectionHeader {
     
     // MARK: - Properties
-    private var action: (() -> Void)?
+    private var action: ((Int) -> Void)?
     private var firstImage: UIImage?
     private var secondImage: UIImage?
+    /// Номер секции
+    private var section: Int?
     
     /// Флаг изменения изображения кнопки
     private var isFirst: Bool = true {
@@ -65,15 +67,14 @@ final class CVSectionHeaderWithButton: CVBaseSectionHeader {
     }
     
     /// Настраивает содержимое заголовка
-    func configure(title: String,
-                   firstImage: UIImage?,
-                   secondImage: UIImage?,
-                   action: (() -> Void)?) {
-        configure(title: title)
+    func configure(model: HeaderSectionModel,
+                   section: Int?) {
+        configure(title: model.title)
         
-        self.firstImage = firstImage
-        self.secondImage = secondImage
-        self.action = action
+        self.firstImage = model.firstImage
+        self.secondImage = model.secondImage
+        self.action = model.action
+        self.section = section
         
         if let image = firstImage {
             headerButton.setImage(image,
@@ -88,7 +89,8 @@ final class CVSectionHeaderWithButton: CVBaseSectionHeader {
             isFirst.toggle()
         }
         
-        guard let action = action else { return }
-        action()
+        guard let action = action,
+              let section = section else { return }
+        action(section)
     }
 }

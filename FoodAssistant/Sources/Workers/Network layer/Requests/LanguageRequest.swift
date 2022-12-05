@@ -7,16 +7,19 @@
 
 import Foundation
 
-/// #Варианты запросов на перевод
+/// #Запросы на перевод
 enum LanguageRequest<T: Codable> {
-    /// Перевести текст
+    /// Запрос на перевод текста по параметрам
     case translate(patameters: T)
 }
 
 extension LanguageRequest {
     /// Обращается к сетевому сервису для получения перевода
-    func download<T: Decodable>(with service: DataFetcherProtocol,
-                  completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+    ///  - Parameters:
+    ///   - service: сетевой сервис
+    ///   - completion: захватывает ответ с переводом / ошибку
+    func download(with service: DataFetcherProtocol,
+                  completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
         do {
             service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
         } catch {

@@ -16,13 +16,14 @@ enum RLModelType {
 }
 
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: RLLayoutChangable, RLCellEventDelegate, AnyObject {
+protocol RecipeListPresentation: LayoutChangable, RLCellEventDelegate, AnyObject {
+    /// Вью модели
     var viewModels: [RLModelType: [RecipeModel]] { get }
-    func testTranslate()
     
-    func testGetRandom()
-    func testGetRecipe()
-    
+    /// Запрошена загрузка изображения
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - completion: захватывает данные изображения / ошибку
     func fetchImage(with imageName: String,
                     completion: @escaping (Data) -> Void)
 }
@@ -37,14 +38,14 @@ protocol RLCellEventDelegate: RLElementsCellDelegate, AnyObject {
 }
 
 /// #Протокол передачи UI-ивентов от элементов ячейки
-protocol RLElementsCellDelegate: RLFavoriteChangable, AnyObject {
+protocol RLElementsCellDelegate: FavoriteChangable, AnyObject {
     /// Ивент нажатия на кнопку добавления элементов
     ///  - Parameter id: идентификатор рецепта
     func didTapAddIngredientsButton(type: RLModelType, id: Int)
 }
 
 /// #Протокол изменения флага любимого рецепта
-protocol RLFavoriteChangable: AnyObject {
+protocol FavoriteChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения флага любимого рецепта
     ///  - Parameters:
     ///   - isFavorite: флаг (верно/неверно)
@@ -54,16 +55,11 @@ protocol RLFavoriteChangable: AnyObject {
 }
 
 /// #Протокол изменения `Layout` коллекции
-protocol RLLayoutChangable: AnyObject {
+protocol LayoutChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения `Layout`
-    func didTapChangeLayoutButton()
+    func didTapChangeLayoutButton(section: Int)
 }
 
-
-/// Протокол делегата бизнес логики модуля RecipeList
-protocol RecipeListBusinessLogicDelegate: AnyObject {
-    
-}
 
 // MARK: - Presenter
 /// #Слой презентации модуля RecipeList
@@ -83,6 +79,7 @@ final class RecipeListPresenter {
             }
         }
     }
+    /// Флаг варианта загрузки данных коллекции
     private var isStart: Bool = false
     
     weak var delegate: RecipeListViewable?
@@ -95,20 +92,11 @@ final class RecipeListPresenter {
         self.router = router
     }
     
+    /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        
-//        interactor.fetchRandomRecipe(number: 4, tags: ["main course"]) { [weak self] result in
-//            switch result {
-//            case .success(let recipeCellModels):
-//                self?.viewModels[.recommended] = recipeCellModels
-//            case .failure(_):
-//                break
-//            }
-//        }
-//        
         let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 6, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 self?.viewModels[.main] = recipeCellModels
@@ -117,14 +105,16 @@ final class RecipeListPresenter {
             }
         }
         
-//        interactor.fetchRandomRecipe(number: 10, tags: ["salad"]) { [weak self] result in
-//            switch result {
-//            case .success(let recipeCellModels):
-//                self?.viewModels[.main] = recipeCellModels
-//            case .failure(_):
-//                break
-//            }
-//        }
+        // Доп запрос
+        //        interactor.fetchRandomRecipe(number: 4, tags: ["main course"]) { [weak self] result in
+        //            switch result {
+        //            case .success(let recipeCellModels):
+        //                self?.viewModels[.recommended] = recipeCellModels
+        //            case .failure(_):
+        //                break
+        //            }
+        //        }
+        //
     }
 }
 
@@ -142,35 +132,6 @@ extension RecipeListPresenter: RecipeListPresentation {
             }
         }
     }
-    
-    func testTranslate() {
-        interactor.translate(texts: ["Hello", "World"])
-    }
-    
-    func testGetRandom() {
-//        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
-//
-//            switch result {
-//            case .success(let recipeCellModels):
-//                self?.delegate?.updateUI()
-//            case .failure(_):
-//                break
-//            }
-//        }
-    }
-    
-    func testGetRecipe() {
-        
-        var parameters = RecipeFilterParameters()
-        parameters.includeIngredients.append(contentsOf: ["onion", "cod"])
-        parameters.sort = "random"
-//        interactor.fetchRecipe(with: parameters, number: 3, query: nil)
-    }
-}
-
-// MARK: - BusinessLogicDelegate
-extension RecipeListPresenter: RecipeListBusinessLogicDelegate {
-    
 }
 
 
@@ -191,14 +152,11 @@ extension RecipeListPresenter {
         }
     }
     
-    func didTapChangeLayoutButton() {
-        print("didTapChangeLayoutButton")
-        
+    func didTapChangeLayoutButton(section: Int) {
         NotificationCenter.default
                     .post(name: NSNotification.Name("changeLayoutType"),
                      object: nil)
         
-        delegate?.reloadSection(0)
+        delegate?.reloadSection(section)
     }
-    
 }

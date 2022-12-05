@@ -78,6 +78,7 @@ extension RLFactory: CVFactoryProtocol {
         switch buildType {
             
         case let .main(first, second):
+            
             builders.append(contentsOf: [
                 createBuilder(models: first, type: .recommended),
                 createBuilder(models: second, type: .main)

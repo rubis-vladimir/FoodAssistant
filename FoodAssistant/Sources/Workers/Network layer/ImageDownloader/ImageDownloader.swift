@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Протокол загрузки изображений из сети
+/// #Протокол загрузки изображений из сети
 protocol ImageDownloadProtocol {
     /// Получает данные изображения
     ///  - Parameters:

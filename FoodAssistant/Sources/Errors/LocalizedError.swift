@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Протокол описания ошибки
+// Протокол описания ошибки
 protocol LocalizedError : Error {
     /// Заголовок ошибки
     var errorTitle: String? { get }

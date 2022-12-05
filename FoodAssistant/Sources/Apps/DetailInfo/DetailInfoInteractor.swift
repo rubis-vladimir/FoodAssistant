@@ -9,32 +9,52 @@ import Foundation
 
 /// #Протокол управления бизнес логикой модуля
 protocol DetailInfoBusinessLogic {
-    func fetchImage(_ imageName: String,
+    
+    /// Получить изображения из сети/кэша
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - completion: захватывает данные изображения / ошибку
+    func fetchImageRecipe(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
-    func fetchImage(_ imageName: String, size: ImageSize,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    /// Получить изображения из сети/кэша
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - size: размер изображения
+    ///   - completion: захватывает данные изображения / ошибку
+    func fetchImageIngredients(_ imageName: String,
+                               size: ImageSize,
+                               completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
 /// #Слой бизнес логике модуля
 final class DetailInfoInteractor {
-    private let dataFetcher: DFM
+    private let imageDownloader: ImageDownloadProtocol
     
-    init(dataFetcher: DFM) {
-        self.dataFetcher = dataFetcher
+    
+    init(imageDownloader: ImageDownloadProtocol) {
+        self.imageDownloader = imageDownloader
     }
-    /// Тут настройка Сервисов
 }
 
 // MARK: - BusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
-    func fetchImage(_ imageName: String, 
+    func fetchImageRecipe(_ imageName: String, 
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        dataFetcher.fetchRecipeImage(imageName, completion: completion)
+        
+        ImageRequest
+            .recipe(imageName: imageName)
+            .download(with: imageDownloader,
+                      completion: completion)
     }
     
-    func fetchImage(_ imageName: String, size: ImageSize,
+    func fetchImageIngredients(_ imageName: String, size: ImageSize,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        dataFetcher.fetchIngredientImage(imageName, size: size, completion: completion)
+       
+        ImageRequest
+            .ingredient(imageName: imageName,
+                        size: size)
+            .download(with: imageDownloader,
+                      completion: completion)
     }
 }

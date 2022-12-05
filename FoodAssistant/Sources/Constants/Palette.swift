@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Палитра цветов приложения
+/// #Палитра цветов приложения
 enum Palette {
     case bgColor
     case lightColor

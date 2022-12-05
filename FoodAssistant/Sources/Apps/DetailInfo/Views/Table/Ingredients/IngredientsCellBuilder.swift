@@ -38,7 +38,7 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
         let ingredient = ingredients[indexPath.row]
         cell.configure(with: ingredient)
         
-        delegate?.fetchImage(with: ingredient.image ?? "", size: .mini) { imageData in
+        delegate?.fetchIngredients(with: ingredient.image ?? "", size: .mini) { imageData in
             DispatchQueue.main.async {
                 cell.updateImage(with: imageData)
             }

@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Шрифты
+/// #Шрифты
 struct Fonts {
     static let header = UIFont(name: "AppleSDGothicNeo-Bold", size: 26)
     static let subtitle = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 22)

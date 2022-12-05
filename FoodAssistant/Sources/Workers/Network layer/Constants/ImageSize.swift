@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Размеры изображений
+/// #Размеры изображений
 enum ImageSize: String {
     case mini = "100x100"
     case verySmall = "240x150"

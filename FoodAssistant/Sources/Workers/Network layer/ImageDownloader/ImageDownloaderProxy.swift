@@ -25,8 +25,10 @@ extension ImageDownloaderProxy: ImageDownloadProtocol {
     func fetchImage(url: URL,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         if let imageData = imageCache[url] {
+            /// Загрузка из кэша
             completion(.success(imageData))
         } else {
+            /// Загрузка из сети
             imageDownloader.fetchImage(url: url) { [weak self] result in
                 switch result {
                 case .success(let imageData):

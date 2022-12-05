@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// #Варианты `Layout
+/// #Варианты Layout
 enum LayoutType {
     /// Две в ряду
     case split2xN
