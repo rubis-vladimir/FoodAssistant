@@ -7,9 +7,8 @@
 
 import UIKit
 
-// Константы
+/// #Константы
 struct AppConstants {
-    /// Отступы по дефолту
     static let padding: CGFloat = 16
     static let cornerRadius: CGFloat = 20
     static let edgeInsert = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)

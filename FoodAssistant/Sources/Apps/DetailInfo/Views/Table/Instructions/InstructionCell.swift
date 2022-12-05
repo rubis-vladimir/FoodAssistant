@@ -46,12 +46,6 @@ final class InstructionCell: BaseTableViewCell {
         stepNumberLabel.text = "Шаг \(step.number)"
         cookingInstructionsLabel.text = step.step
         
-        stepNumberLabel.sizeToFit()
-        stepNumberLabel.layoutIfNeeded()
-        cookingInstructionsLabel.sizeToFit()
-        cookingInstructionsLabel.layoutIfNeeded()
-        
-        container.sizeToFit()
         container.layoutIfNeeded()
     }
     

@@ -9,7 +9,7 @@ import Foundation
 
 /// #Запросы на перевод
 enum LanguageRequest<T: Codable> {
-    /// Перевести текст
+    /// Запрос на перевод текста по параметрам
     case translate(patameters: T)
 }
 

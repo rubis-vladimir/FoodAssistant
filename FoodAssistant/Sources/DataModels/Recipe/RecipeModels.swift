@@ -38,20 +38,12 @@ struct Recipe: Codable, Equatable, Hashable {
     var glutenFree: Bool
     var dairyFree: Bool
     
-    /// ?
-    var cuisines: [String]
-    var dishTypes: [String]
-    var diets: [String]
-    var spoonacularSourceUrl: String?
-    var isFavorite: Bool?
-    
-    var instructions: [InstuctionStep] {
-        var array = [InstuctionStep]()
-        analyzedInstructions?.forEach {
-            array.append(contentsOf: $0.steps)
-        }
-        return array
-    }
+    /// Пока не требуются
+//    var cuisines: [String]
+//    var dishTypes: [String]
+//    var diets: [String]
+//    var spoonacularSourceUrl: String?
+//    var isFavorite: Bool?
     
     static func == (lhs: Recipe, rhs: Recipe) -> Bool {
         if lhs.id == rhs.id {

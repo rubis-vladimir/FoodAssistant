@@ -9,15 +9,34 @@ import Foundation
 
 /// #Запросы рецептов
 enum RecipeRequest {
-    case complexSearch(_ parameters: RecipeFilterParameters, _ number: Int, _ query: String?)
-    case findByIngredients(_ ingridients: [String], _ number: Int)
-    case random(_ number: Int, tags: [String])
+    /// Общий запрос рецептов по параметрам
+    ///  - Parameters:
+    ///   - parameters: параметры запроса
+    ///   - number: количество рецептов
+    ///   - query: поиск по названию рецепта
+    case complexSearch(_ parameters: RecipeFilterParameters,
+                       _ number: Int,
+                       _ query: String?)
+    
+    /// Запрос рецепта по ингредиентам
+    ///  - Parameters:
+    ///   - ingridients: массив ингредиентов
+    ///   - number: количество рецептов
+    case findByIngredients(_ ingridients: [String],
+                           _ number: Int)
+    
+    /// Запрос случайных рецептов
+    ///  - Parameters:
+    ///   - number: количество рецептов
+    ///   - tags: теги для рецептов
+    case random(_ number: Int,
+                tags: [String])
 }
 
 extension RecipeRequest {
     /// Обращается к сетевому сервису для загрузки рецептов
     ///  - Parameters:
-    ///   - parameters: параметры запроса
+    ///   - service: используемый сервис для запроса из сети
     ///   - completion: захватывает модель ответ с рецептами / ошибку
     func download(with service: DataFetcherProtocol,
                   completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {

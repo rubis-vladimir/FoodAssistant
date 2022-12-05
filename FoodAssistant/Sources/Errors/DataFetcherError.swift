@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Варианты ошибок сетевого слоя
+/// #Варианты ошибок сетевого слоя
 enum DataFetcherError: Error {
     case failedToEncode
     case failedToDecode

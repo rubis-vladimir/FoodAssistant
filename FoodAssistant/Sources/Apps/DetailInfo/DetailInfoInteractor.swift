@@ -9,11 +9,22 @@ import Foundation
 
 /// #Протокол управления бизнес логикой модуля
 protocol DetailInfoBusinessLogic {
+    
+    /// Получить изображения из сети/кэша
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - completion: захватывает данные изображения / ошибку
     func fetchImageRecipe(_ imageName: String,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
-    func fetchImageIngredients(_ imageName: String, size: ImageSize,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    /// Получить изображения из сети/кэша
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - size: размер изображения
+    ///   - completion: захватывает данные изображения / ошибку
+    func fetchImageIngredients(_ imageName: String,
+                               size: ImageSize,
+                               completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
 /// #Слой бизнес логике модуля
@@ -24,7 +35,6 @@ final class DetailInfoInteractor {
     init(imageDownloader: ImageDownloadProtocol) {
         self.imageDownloader = imageDownloader
     }
-    /// Тут настройка Сервисов
 }
 
 // MARK: - BusinessLogic

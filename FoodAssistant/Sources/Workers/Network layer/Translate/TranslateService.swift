@@ -107,14 +107,14 @@ private extension TranslateService {
         if let ingredients = recipe.extendedIngredients {
             let ingredientTitles = ingredients.map { $0.name }
             arrayString.append(contentsOf: ingredientTitles)
-            elementsCount["ingredientTitles"] = ingredientTitles.count
+            elementsCount["ingredientTitles \(recipe.id)"] = ingredients.count
         }
         
         /// Шаги приготовления по инструкции
-        if let instructions = recipe.analyzedInstructions {
-            let steps = instructions[0].steps.map { $0.step }
-            arrayString.append(contentsOf: steps)
-            elementsCount["steps"] = steps.count
+        if let steps = recipe.analyzedInstructions?[0].steps {
+            let stepTitles = steps.map { $0.step }
+            arrayString.append(contentsOf: stepTitles)
+            elementsCount["steps \(recipe.id)"] = steps.count
         }
         
         return arrayString
@@ -133,7 +133,7 @@ private extension TranslateService {
         recipe.title = texts[0]
         
         /// Названия ингредиентов
-        if let count = elementsCount["ingredientTitles"],
+        if let count = elementsCount["ingredientTitles \(recipe.id)"],
            count == recipe.extendedIngredients?.count {
             let ingredientTexts = texts.dropFirst().prefix(count).map {String($0)}
             
@@ -143,11 +143,11 @@ private extension TranslateService {
         }
         
         /// Шаги приготовления по инструкции
-        if let count = elementsCount["steps"],
+        if let count = elementsCount["steps \(recipe.id)"],
            count == recipe.analyzedInstructions?[0].steps.count {
             let instructionTexts = texts.suffix(count).map {String($0)}
             
-            for index in 0..<count-1 {
+            for index in 0..<count {
                 recipe.analyzedInstructions?[0].steps[index].step = instructionTexts[index]
             }
         }
@@ -155,6 +155,7 @@ private extension TranslateService {
     }
     
     /// Проверяет установленный на устройстве язык
+    /// - Returns: обозначение локализации языка
     private func currentAppleLanguage() -> String {
         let appleLanguageKey = "AppleLanguages"
         let userdef = UserDefaults.standard

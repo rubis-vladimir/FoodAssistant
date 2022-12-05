@@ -36,6 +36,7 @@ final class BasicInfoCell: BaseTableViewCell {
         detailTitleView.titleRecipeLabel.text = model.title
         detailTitleView.cookingTimeLabel.text = "\(model.readyInMinutes) мин"
         detailTitleView.numberServingsLabel.text = "\(model.servings) Порций"
+        detailTitleView.layoutSubviews()
     }
     
     func updateImage(with imageData: Data) {

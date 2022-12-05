@@ -7,7 +7,7 @@
 
 import UIKit
 
-// Изображения
+/// #Изображения
 enum Icons: String {
     case basket, fridge, fridgeFill, gearshape, heart, heartFill, house, houseFill, person, personFill, card, cardFill, split2x2, split1x2, basketSmall, heart1, xmark, heartLargeFill, leftFill, dish, clock
 }

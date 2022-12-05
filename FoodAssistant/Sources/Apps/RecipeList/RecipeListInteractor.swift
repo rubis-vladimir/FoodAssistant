@@ -39,9 +39,7 @@ protocol RecipeListBusinessLogic {
 final class RecipeListInteractor {
     
     private var models: [Recipe] = []
-    
-    weak var presenter: RecipeListBusinessLogicDelegate?
-    
+
     private let dataFetcher: DataFetcherProtocol
     private let imageDownloader: ImageDownloadProtocol
     private let translateService: RecipeTranslatable

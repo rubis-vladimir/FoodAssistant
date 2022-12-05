@@ -87,7 +87,6 @@
 		7D875DD5292D2A1B0033A4C0 /* ImageDownloaderProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D875DD4292D2A1B0033A4C0 /* ImageDownloaderProxy.swift */; };
 		7DC16111292E49310026A072 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16110292E49310026A072 /* ImageCacheService.swift */; };
 		7DC16113292E4FA20026A072 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16112292E4FA20026A072 /* LRUCache.swift */; };
-		7DC16116292E7C0E0026A072 /* DataFetcherProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16115292E7C0E0026A072 /* DataFetcherProtocols.swift */; };
 		7DC1611E292E91F80026A072 /* CVSectionHeaderWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */; };
 		7DC16122292EB6060026A072 /* RecommendedViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16121292EB6060026A072 /* RecommendedViewCell.swift */; };
 		7DC16125292FBDDA0026A072 /* RLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16124292FBDDA0026A072 /* RLFactory.swift */; };
@@ -111,7 +110,6 @@
 		7DEF8E352923F4400016A207 /* UPFavoriteRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */; };
 		7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */; };
 		7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */; };
-		7DFEB5E0291C2FAA008C28FC /* DataFetcherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */; };
 		7DFEB5E2291C32F0008C28FC /* RecipeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */; };
 		7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */; };
 		7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E7291C3CB5008C28FC /* LanguageRequest.swift */; };
@@ -220,7 +218,6 @@
 		7D875DD4292D2A1B0033A4C0 /* ImageDownloaderProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderProxy.swift; sourceTree = "<group>"; };
 		7DC16110292E49310026A072 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		7DC16112292E4FA20026A072 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
-		7DC16115292E7C0E0026A072 /* DataFetcherProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherProtocols.swift; sourceTree = "<group>"; };
 		7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSectionHeaderWithButton.swift; sourceTree = "<group>"; };
 		7DC16121292EB6060026A072 /* RecommendedViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendedViewCell.swift; sourceTree = "<group>"; };
 		7DC16124292FBDDA0026A072 /* RLFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLFactory.swift; sourceTree = "<group>"; };
@@ -244,7 +241,6 @@
 		7DEF8E342923F4400016A207 /* UPFavoriteRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPFavoriteRecipeCell.swift; sourceTree = "<group>"; };
 		7DEF8E382925209C0016A207 /* UPCustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPCustomSegmentedControl.swift; sourceTree = "<group>"; };
 		7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
-		7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataFetcherService.swift; sourceTree = "<group>"; };
 		7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModels.swift; sourceTree = "<group>"; };
 		7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateParameters.swift; sourceTree = "<group>"; };
 		7DFEB5E7291C3CB5008C28FC /* LanguageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageRequest.swift; sourceTree = "<group>"; };
@@ -536,6 +532,7 @@
 				7DC16114292E51D50026A072 /* Constants */,
 				7D2F773D291A991A009D3444 /* Requests */,
 				7DC1610E292E47C40026A072 /* DataFetcher */,
+				7D451C74293E681A00A4CDC5 /* Translate */,
 				7DC1610D292E47AF0026A072 /* ImageDownloader */,
 			);
 			path = "Network layer";
@@ -610,6 +607,14 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		7D451C74293E681A00A4CDC5 /* Translate */ = {
+			isa = PBXGroup;
+			children = (
+				7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */,
+			);
+			path = Translate;
+			sourceTree = "<group>";
+		};
 		7D48A9A82927B5F2009EF273 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
@@ -678,9 +683,6 @@
 		7DC1610E292E47C40026A072 /* DataFetcher */ = {
 			isa = PBXGroup;
 			children = (
-				7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */,
-				7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */,
-				7DC16115292E7C0E0026A072 /* DataFetcherProtocols.swift */,
 				7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */,
 			);
 			path = DataFetcher;
@@ -988,7 +990,6 @@
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7DEF8E1A2923C4FE0016A207 /* FactoryTableViewProtocols.swift in Sources */,
 				7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */,
-				7DFEB5E0291C2FAA008C28FC /* DataFetcherService.swift in Sources */,
 				7D48A9AE2928EE89009EF273 /* AppConstants.swift in Sources */,
 				7D875DCF292BEBB60033A4C0 /* RecommendedRecipeCell.swift in Sources */,
 				7DFEB5EA291C3D36008C28FC /* TranslateResponce.swift in Sources */,
@@ -1036,7 +1037,6 @@
 				7D2F773F291A99B6009D3444 /* RecipeRequest.swift in Sources */,
 				7D0F2B832935151D00F57E2A /* NutrientsCell.swift in Sources */,
 				7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */,
-				7DC16116292E7C0E0026A072 /* DataFetcherProtocols.swift in Sources */,
 				7D0F2B7C2934C21900F57E2A /* BasicInfoCellBuilder.swift in Sources */,
 				7D77FDAB291FC56C0085D7FF /* BasketViewController.swift in Sources */,
 				7D3BC9352930D957001B1B57 /* MainSectionConfigurator.swift in Sources */,

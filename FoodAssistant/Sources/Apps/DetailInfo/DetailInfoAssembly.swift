@@ -28,10 +28,7 @@ extension DetailInfoAssembly: Assemblying {
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCache)
         
-//        let dataFetcher = DataFetcherService(dataFetcher: networkManager, imageDownloader: imageDownloaderProxy)
-        
         let router = DetailInfoRouter(navigationController: navigationController)
-        
         let interactor = DetailInfoInteractor(imageDownloader: imageDownloaderProxy)
         let presenter = DetailInfoPresenter(interactor: interactor,
                                             router: router,

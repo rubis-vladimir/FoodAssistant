@@ -20,7 +20,6 @@ final class RecipeListAssembly {
 extension RecipeListAssembly: Assemblying {
     func assembly() -> UIViewController {
         
-        
         let networkManager = NetworkDataFetcher()
         let translateService = TranslateService(dataFetcher: networkManager)
         
@@ -28,10 +27,6 @@ extension RecipeListAssembly: Assemblying {
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
-        
-//        let dataFetcherService = DataFetcherService(dataFetcher: networkDataFetcher,
-//                                                    imageDownloader: imageDownloaderProxy)
-        
         
         let router = RecipeListRouter(navigationController: navigationController)
         let interactor = RecipeListInteractor(dataFetcher: networkManager,
@@ -42,7 +37,6 @@ extension RecipeListAssembly: Assemblying {
         let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.delegate = viewController
-        interactor.presenter = presenter
         presenter.getStartData()
         
         return viewController

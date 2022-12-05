@@ -7,8 +7,9 @@
 
 import Foundation
 
+// Параметры для запроса рецептов
 struct RecipeFilterParameters {
-    /// Вид кухни ????
+    /// Вид кухни
     var cuisine: String?
     /// Диета
     var diet: String?

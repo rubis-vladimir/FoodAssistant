@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// #Второй вариант ячейки коллекции для секции Main
+/// #Второй вариант ячейки коллекции для секции Main !!!! ПОКА НЕ СДЕЛАН !!!
 final class MainSecondRecipeCell: CVBaseRecipeCell {
     
     weak var delegate: FavoriteChangable?
