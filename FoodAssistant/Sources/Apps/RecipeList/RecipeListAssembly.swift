@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Компоновщик модуля RecipeList
+/// #Компоновщик модуля RecipeList
 final class RecipeListAssembly {
     private let navigationController: UINavigationController
     
@@ -20,18 +20,23 @@ final class RecipeListAssembly {
 extension RecipeListAssembly: Assemblying {
     func assembly() -> UIViewController {
         
-        let networkDataFetcher = NetworkDataFetcher()
+        
+        let networkManager = NetworkDataFetcher()
+        let translateService = TranslateService(dataFetcher: networkManager)
+        
         let imageDownloader = ImageDownloader()
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
         
-        let dataFetcherService = DataFetcherService(dataFetcher: networkDataFetcher,
-                                                    imageDownloader: imageDownloaderProxy)
+//        let dataFetcherService = DataFetcherService(dataFetcher: networkDataFetcher,
+//                                                    imageDownloader: imageDownloaderProxy)
         
         
         let router = RecipeListRouter(navigationController: navigationController)
-        let interactor = RecipeListInteractor(dataFetcher: dataFetcherService)
+        let interactor = RecipeListInteractor(dataFetcher: networkManager,
+                                              imageDownloader: imageDownloaderProxy,
+                                              translateService: translateService)
         let presenter = RecipeListPresenter(interactor: interactor,
                                   router: router)
         let viewController = RecipeListViewController(presenter: presenter)

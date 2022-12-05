@@ -16,5 +16,5 @@ struct HeaderSectionModel {
     /// Второе изображение кнопки
     var secondImage: UIImage? = nil
     /// Действие
-    var action: (() -> Void)? = nil
+    var action: ((Int) -> Void)? = nil
 }

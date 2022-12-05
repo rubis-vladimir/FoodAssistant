@@ -16,12 +16,10 @@ enum RLModelType {
 }
 
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: RLLayoutChangable, RLCellEventDelegate, AnyObject {
+protocol RecipeListPresentation: LayoutChangable, RLCellEventDelegate, AnyObject {
     var viewModels: [RLModelType: [RecipeModel]] { get }
-    func testTranslate()
     
     func testGetRandom()
-    func testGetRecipe()
     
     func fetchImage(with imageName: String,
                     completion: @escaping (Data) -> Void)
@@ -37,14 +35,14 @@ protocol RLCellEventDelegate: RLElementsCellDelegate, AnyObject {
 }
 
 /// #Протокол передачи UI-ивентов от элементов ячейки
-protocol RLElementsCellDelegate: RLFavoriteChangable, AnyObject {
+protocol RLElementsCellDelegate: FavoriteChangable, AnyObject {
     /// Ивент нажатия на кнопку добавления элементов
     ///  - Parameter id: идентификатор рецепта
     func didTapAddIngredientsButton(type: RLModelType, id: Int)
 }
 
 /// #Протокол изменения флага любимого рецепта
-protocol RLFavoriteChangable: AnyObject {
+protocol FavoriteChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения флага любимого рецепта
     ///  - Parameters:
     ///   - isFavorite: флаг (верно/неверно)
@@ -54,9 +52,9 @@ protocol RLFavoriteChangable: AnyObject {
 }
 
 /// #Протокол изменения `Layout` коллекции
-protocol RLLayoutChangable: AnyObject {
+protocol LayoutChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения `Layout`
-    func didTapChangeLayoutButton()
+    func didTapChangeLayoutButton(section: Int)
 }
 
 
@@ -143,10 +141,6 @@ extension RecipeListPresenter: RecipeListPresentation {
         }
     }
     
-    func testTranslate() {
-        interactor.translate(texts: ["Hello", "World"])
-    }
-    
     func testGetRandom() {
 //        interactor.fetchRandomRecipe(number: 8, tags: ["main course"]) { [weak self] result in
 //
@@ -157,14 +151,6 @@ extension RecipeListPresenter: RecipeListPresentation {
 //                break
 //            }
 //        }
-    }
-    
-    func testGetRecipe() {
-        
-        var parameters = RecipeFilterParameters()
-        parameters.includeIngredients.append(contentsOf: ["onion", "cod"])
-        parameters.sort = "random"
-//        interactor.fetchRecipe(with: parameters, number: 3, query: nil)
     }
 }
 
@@ -191,14 +177,11 @@ extension RecipeListPresenter {
         }
     }
     
-    func didTapChangeLayoutButton() {
-        print("didTapChangeLayoutButton")
-        
+    func didTapChangeLayoutButton(section: Int) {
         NotificationCenter.default
                     .post(name: NSNotification.Name("changeLayoutType"),
                      object: nil)
         
-        delegate?.reloadSection(0)
+        delegate?.reloadSection(section)
     }
-    
 }

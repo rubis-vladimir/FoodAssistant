@@ -59,6 +59,7 @@
 		7D451C6C293B5C5200A4CDC5 /* MainSecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* MainSecondRecipeCell.swift */; };
 		7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */; };
 		7D451C71293BB3C100A4CDC5 /* HeaderSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */; };
+		7D451C73293E1B7F00A4CDC5 /* TranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */; };
 		7D48A9AA2927B5FF009EF273 /* MainFirstRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9A92927B5FF009EF273 /* MainFirstRecipeCell.swift */; };
 		7D48A9AE2928EE89009EF273 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9AD2928EE89009EF273 /* AppConstants.swift */; };
 		7D48A9B229291137009EF273 /* UIImage + Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9B129291137009EF273 /* UIImage + Alpha.swift */; };
@@ -191,6 +192,7 @@
 		7D451C6B293B5C5200A4CDC5 /* MainSecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSecondRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseSectionHeader.swift; sourceTree = "<group>"; };
 		7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSectionModel.swift; sourceTree = "<group>"; };
+		7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateService.swift; sourceTree = "<group>"; };
 		7D48A9A92927B5FF009EF273 /* MainFirstRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFirstRecipeCell.swift; sourceTree = "<group>"; };
 		7D48A9AD2928EE89009EF273 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		7D48A9B129291137009EF273 /* UIImage + Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Alpha.swift"; sourceTree = "<group>"; };
@@ -600,9 +602,10 @@
 		7D451C6F293BA8E200A4CDC5 /* Base */ = {
 			isa = PBXGroup;
 			children = (
+				7D0F2B7F2935134900F57E2A /* BaseTableViewCell.swift */,
 				7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */,
 				7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */,
-				7D0F2B7F2935134900F57E2A /* BaseTableViewCell.swift */,
+				7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -622,6 +625,7 @@
 			isa = PBXGroup;
 			children = (
 				7D48A9B6292A154A009EF273 /* RecipeModel.swift */,
+				7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -675,6 +679,7 @@
 			isa = PBXGroup;
 			children = (
 				7DFEB5DF291C2FAA008C28FC /* DataFetcherService.swift */,
+				7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */,
 				7DC16115292E7C0E0026A072 /* DataFetcherProtocols.swift */,
 				7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */,
 			);
@@ -713,9 +718,7 @@
 		7DC16118292E8EF40026A072 /* Headers */ = {
 			isa = PBXGroup;
 			children = (
-				7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */,
 				7D3BC9302930D70C001B1B57 /* HeaderBuilder.swift */,
-				7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */,
 			);
 			path = Headers;
 			sourceTree = "<group>";
@@ -962,6 +965,7 @@
 				7D2F7741291A9A44009D3444 /* RequestBuilding.swift in Sources */,
 				7DEF8E2D2923DD610016A207 /* UPShortAvatarCellBuilder.swift in Sources */,
 				7DEF8E292923D3F70016A207 /* UITableView + Extensions.swift in Sources */,
+				7D451C73293E1B7F00A4CDC5 /* TranslateService.swift in Sources */,
 				7D48A9B7292A154A009EF273 /* RecipeModel.swift in Sources */,
 				7DC16127292FC0340026A072 /* CVAdapter.swift in Sources */,
 				7D0F2B7A2934C20100F57E2A /* BasicInfoCell.swift in Sources */,

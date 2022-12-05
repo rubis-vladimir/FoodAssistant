@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// #Варианты запросов рецептов
+/// #Запросы рецептов
 enum RecipeRequest {
     case complexSearch(_ parameters: RecipeFilterParameters, _ number: Int, _ query: String?)
     case findByIngredients(_ ingridients: [String], _ number: Int)
@@ -16,8 +16,11 @@ enum RecipeRequest {
 
 extension RecipeRequest {
     /// Обращается к сетевому сервису для загрузки рецептов
-    func download<T: Decodable>(with service: DataFetcherProtocol,
-                                completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+    ///  - Parameters:
+    ///   - parameters: параметры запроса
+    ///   - completion: захватывает модель ответ с рецептами / ошибку
+    func download(with service: DataFetcherProtocol,
+                  completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
         do {
             service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
         } catch {

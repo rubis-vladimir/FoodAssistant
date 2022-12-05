@@ -7,22 +7,20 @@
 
 import UIKit
 
-/// Навигация в модуле
+/// #Навигация в модуле RecipeList
 enum RecipeListTarget {
-    /// Добавление элемента
-    case addElement
     /// Детальная информация
     case detailInfo
 }
 
-/// Протокол управления слоем навигации модуля
+/// #Протокол управления слоем навигации модуля RecipeList
 protocol RecipeListRouting {
     /// Переход к следующему экрану
     ///  - Parameter to: вариант перехода
     func route(to: RecipeListTarget, model: Recipe)
 }
 
-/// Слой навигации модуля
+/// #Слой навигации модуля
 final class RecipeListRouter {
     private let navigationController: UINavigationController
     
@@ -31,28 +29,14 @@ final class RecipeListRouter {
     }
 }
 
-// MARK: - Routing
+// MARK: - RecipeListRouting
 extension RecipeListRouter: RecipeListRouting {
     func route(to: RecipeListTarget, model: Recipe) {
         switch to {
-        case .addElement:
-            /// Настройка модуля
-            let vc = UIViewController()
-            /*
-             Вызов конфигуратора
-             */
-            navigationController.pushViewController(vc, animated: true)
         case .detailInfo:
-            /// Аналогично
-            /// 
-//            navigationController.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-//            navigationController.navigationBar.shadowImage = UIImage()
-            navigationController.navigationBar.isTranslucent = true
-//            navigationController.view.backgroundColor = .clear
-            
             let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
             vc.hidesBottomBarWhenPushed = true
-            
+            navigationController.navigationBar.isTranslucent = true
             navigationController.pushViewController(vc, animated: true)
         }
     }

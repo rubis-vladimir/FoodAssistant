@@ -10,7 +10,7 @@ import UIKit
 /// #Ячейка коллекции для секции Main
 final class MainFirstRecipeCell: CVBaseRecipeCell {
     
-    weak var delegate: RLFavoriteChangable?
+    weak var delegate: FavoriteChangable?
     
     // MARK: - Override func
     override func setupCell() {

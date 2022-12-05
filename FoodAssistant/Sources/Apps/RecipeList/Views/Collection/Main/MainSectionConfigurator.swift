@@ -36,7 +36,7 @@ extension MainSectionConfigurator: CVSectionConfiguration {
     
     func configure() -> CVSectionBuilderProtocol {
         /// Создаем действие по изменению `Layout`
-        let action: (() -> Void)? = { self.delegate?.didTapChangeLayoutButton() }
+        let action: ((Int) -> Void)? = { section in self.delegate?.didTapChangeLayoutButton(section: section) }
         /// Модель заголовка
         let headerModel = HeaderSectionModel(title: Constants.titleOne,
                                              firstImage: Constants.firstImage,

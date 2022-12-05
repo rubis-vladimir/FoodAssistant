@@ -53,10 +53,8 @@ extension HeaderBuilder: CVHeaderBuilderProtocol {
                 let headerView = collectionView.dequeueReusableView(CVSectionHeaderWithButton.self,
                                                                     kind: kind,
                                                                     indexPath: indexPath)
-                headerView.configure(title: headerModel.title,
-                                     firstImage: headerModel.firstImage,
-                                     secondImage: headerModel.secondImage,
-                                     action: headerModel.action)
+                headerView.configure(model: headerModel,
+                                     section: indexPath.section)
                 return headerView
             }
         default:
