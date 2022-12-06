@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreData
 
 // Модель ответа по запросу рецептов
 struct RecipeResponce: Codable, Hashable {

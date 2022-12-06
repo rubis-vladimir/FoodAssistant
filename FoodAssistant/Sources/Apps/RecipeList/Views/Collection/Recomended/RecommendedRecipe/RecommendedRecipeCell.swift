@@ -33,7 +33,6 @@ final class RecommendedRecipeCell: CVBaseRecipeCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
-        favoriteButton.layer.cornerRadius = favoriteButton.frame.height / 2
     }
     
     override func configure(with model: RecipeModel) {
@@ -68,7 +67,7 @@ final class RecommendedRecipeCell: CVBaseRecipeCell {
     }
     
     /// Настройка констрейнтов
-    func setupConstraints() {
+    private func setupConstraints() {
         
         let stack = UIStackView()
         stack.axis = .vertical

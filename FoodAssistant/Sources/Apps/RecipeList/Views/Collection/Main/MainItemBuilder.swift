@@ -34,15 +34,13 @@ final class MainItemBuilder {
     /// Рассчитывает размер ячеек
     private func calculateItemSize(width: CGFloat) -> CGSize {
         let padding: CGFloat = AppConstants.padding
-        var itemPerRow: CGFloat = 0
-        switch layoutType {
-        case .split2xN: itemPerRow = 2
-        case .split1xN: itemPerRow = 2
-        }
+        let itemPerRow: CGFloat = layoutType == .split1xN ? 1 : 2
         let paddingWidht = padding * (itemPerRow + 1)
         let availableWidth = (width - paddingWidht) / itemPerRow
+        let availableHeight = layoutType == .split1xN ? 125 : availableWidth + padding + 50
+        
         return CGSize(width: availableWidth,
-                      height: availableWidth + padding + 50)
+                      height: availableHeight)
     }
     
     /// Подписываем на класс на нотификацию
@@ -64,7 +62,7 @@ extension MainItemBuilder: CVItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
         collectionView.register(MainFirstRecipeCell.self)
-        collectionView.register(RecommendedRecipeCell.self)
+        collectionView.register(MainSecondRecipeCell.self)
     }
     
     func itemCount() -> Int { models.count }
@@ -94,7 +92,7 @@ extension MainItemBuilder: CVItemBuilderProtocol {
             
             return cell
         case .split1xN:
-            let cell = collectionView.dequeueReusableCell(RecommendedRecipeCell.self,
+            let cell = collectionView.dequeueReusableCell(MainSecondRecipeCell.self,
                                                           indexPath: indexPath)
             let model = models[indexPath.item]
             cell.delegate = delegate
