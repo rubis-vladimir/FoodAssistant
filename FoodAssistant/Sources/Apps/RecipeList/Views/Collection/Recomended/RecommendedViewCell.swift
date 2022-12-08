@@ -40,7 +40,7 @@ final class RecommendedViewCell: UICollectionViewCell {
     
     // MARK: - Functions
     /// Конфигурирует внутреннюю коллекцию по переданному массиву моделей
-    func configure(with models: [RecipeModel]) {
+    func configure(with models: [ShortRecipeViewModel]) {
         /// Конфигурируем строитель секции
         let builders = [
             RecommendedRecipeSectionConfigurator(collectionView: collectionView,

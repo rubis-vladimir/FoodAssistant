@@ -10,11 +10,11 @@ import UIKit
 /// #Строитель ячеек секции RecommendedRecipe
 final class RecommendedRecipeItemBuilder {
     private let height: CGFloat = 320
-    private let models: [RecipeModel]
+    private let models: [ShortRecipeViewModel]
     
     weak var delegate: RecipeListPresentation?
     
-    init(models: [RecipeModel],
+    init(models: [ShortRecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.models = models
         self.delegate = delegate
@@ -24,7 +24,7 @@ final class RecommendedRecipeItemBuilder {
 // MARK: - RecommendedRecipeItemBuilder
 extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
     func register(collectionView: UICollectionView) {
-        collectionView.register(RecommendedRecipeCell.self)
+        collectionView.register(ThirdRecipeCell.self)
     }
     
     func itemCount() -> Int { models.count }
@@ -36,7 +36,7 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
     
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(RecommendedRecipeCell.self,
+        let cell = collectionView.dequeueReusableCell(ThirdRecipeCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
         cell.delegate = delegate
@@ -53,7 +53,6 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
     }
     
     func didSelectItem(indexPath: IndexPath) {
-        delegate?.didSelectItem(type: .recommended,
-                                id: indexPath.row)
+        delegate?.didSelectItem(id: indexPath.row)
     }
 }

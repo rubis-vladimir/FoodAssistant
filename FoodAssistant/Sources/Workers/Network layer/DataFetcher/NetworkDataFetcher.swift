@@ -26,18 +26,18 @@ final class NetworkDataFetcher {
     ///   - request: http-запрос
     ///   - response: ответ, захватывает данные/ошибку
     private func fetchData(request: URLRequest,
-                           response: @escaping (Result<Data, DataFetcherError>) -> Void) {
+                           completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         URLSession.shared.dataTask(with: request) { (data, responce, error) in
             guard responce != nil else {
-                response(.failure(.notInternet))
+                completion(.failure(.notInternet))
                 return
             }
             guard let data = data,
                     error == nil else {
-                response(.failure(.failedToLoadData))
+                completion(.failure(.failedToLoadData))
                 return
             }
-            response(.success(data))
+            completion(.success(data))
         }.resume()
     }
     
@@ -46,12 +46,12 @@ final class NetworkDataFetcher {
     ///   - data: json-данные
     ///   - response: ответ, захватывает модель данных/ошибку
     private func decode<T: Decodable>(data: Data,
-                                      response: @escaping (Result<T, DataFetcherError>) -> Void) {
+                                      completion: @escaping (Result<T, DataFetcherError>) -> Void) {
         do {
             let decodedObject = try JSONDecoder().decode(T.self, from: data)
-            response(.success(decodedObject))
+            completion(.success(decodedObject))
         } catch {
-            response(.failure(.failedToDecode))
+            completion(.failure(.failedToDecode))
         }
     }
 }
@@ -63,7 +63,7 @@ extension NetworkDataFetcher: DataFetcherProtocol {
         fetchData(request: urlRequest) { [weak self] result in
             switch result {
             case .success(let data):
-                self?.decode(data: data, response: completion)
+                self?.decode(data: data, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }

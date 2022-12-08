@@ -28,12 +28,15 @@ extension RecipeListAssembly: Assemblying {
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
         
+        let storage = StorageManager.shared
+        
         let router = RecipeListRouter(navigationController: navigationController)
         let interactor = RecipeListInteractor(dataFetcher: networkManager,
                                               imageDownloader: imageDownloaderProxy,
-                                              translateService: translateService)
+                                              translateService: translateService,
+                                              storage: storage)
         let presenter = RecipeListPresenter(interactor: interactor,
-                                  router: router)
+                                            router: router)
         let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.delegate = viewController

@@ -19,11 +19,11 @@ enum LayoutType {
 final class MainItemBuilder {
     
     private var layoutType: LayoutType = .split2xN
-    private let models: [RecipeModel]
+    private let models: [ShortRecipeViewModel]
     
     weak var delegate: RecipeListPresentation?
     
-    init(models: [RecipeModel],
+    init(models: [ShortRecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.models = models
         self.delegate = delegate
@@ -111,7 +111,6 @@ extension MainItemBuilder: CVItemBuilderProtocol {
     
     func didSelectItem(indexPath: IndexPath) {
         let model = models[indexPath.item]
-        delegate?.didSelectItem(type: .recommended,
-                                id: model.id)
+        delegate?.didSelectItem(id: model.id)
     }
 }

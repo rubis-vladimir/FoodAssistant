@@ -100,7 +100,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Functions
     /// Конфигурирует ячейку по модели рецептов
-    func configure(with model: RecipeModel) {
+    func configure(with model: ShortRecipeViewModel) {
         titleRecipeLabel.text = model.title
         cookingTimeLabel.text = model.cookingTime + " "
         isFavorite = model.isFavorite

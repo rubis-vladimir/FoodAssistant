@@ -25,7 +25,7 @@ final class MainFirstRecipeCell: CVBaseRecipeCell {
         super.didFavoriteButtonToggle()
         
         guard let id = id else { return }
-        delegate?.didTapFavoriteButton(isFavorite, type: .main, id: id)
+        delegate?.didTapFavoriteButton(isFavorite, id: id)
     }
     
     /// Настройка констрейнтов

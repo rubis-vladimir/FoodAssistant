@@ -8,10 +8,10 @@
 import UIKit
 
 /// #Ячейка коллекции для рекомендованных рецептов
-final class RecommendedRecipeCell: CVBaseRecipeCell {
+final class ThirdRecipeCell: CVBaseRecipeCell {
     
     // MARK: - Properties
-    weak var delegate: RLElementsCellDelegate?
+    weak var delegate: EventsCellDelegate?
     
     private lazy var addToBasketButton: UIButton = {
         var button = UIButton()
@@ -35,7 +35,7 @@ final class RecommendedRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: RecipeModel) {
+    override func configure(with model: ShortRecipeViewModel) {
         super.configure(with: model)
         
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",
@@ -57,13 +57,13 @@ final class RecommendedRecipeCell: CVBaseRecipeCell {
         super.didFavoriteButtonToggle()
         
         guard let id = id else { return }
-        delegate?.didTapFavoriteButton(isFavorite, type: .recommended, id: id)
+        delegate?.didTapFavoriteButton(isFavorite, id: id)
     }
     
     /// Нажата кнопка добавления в корзину ингредиентов рецепта
     @objc func addToBasketButtonTapped() {
         guard let id = id else { return }
-        delegate?.didTapAddIngredientsButton(type: .recommended, id: id)
+        delegate?.didTapAddIngredientsButton(id: id)
     }
     
     /// Настройка констрейнтов

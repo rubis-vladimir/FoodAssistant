@@ -16,9 +16,9 @@ enum RLModelType {
 }
 
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: LayoutChangable, RLCellEventDelegate, AnyObject {
+protocol RecipeListPresentation: LayoutChangable, SelectedCellDelegate, EventsCellDelegate, AnyObject {
     /// Вью модели
-    var viewModels: [RLModelType: [RecipeModel]] { get }
+    var viewModels: [RLModelType: [ShortRecipeViewModel]] { get }
     
     /// Запрошена загрузка изображения
     ///  - Parameters:
@@ -28,44 +28,12 @@ protocol RecipeListPresentation: LayoutChangable, RLCellEventDelegate, AnyObject
                     completion: @escaping (Data) -> Void)
 }
 
-/// #Протокол передачи UI-ивентов от ячейки коллекции и ее элементов
-protocol RLCellEventDelegate: RLElementsCellDelegate, AnyObject {
-    /// Ивент нажатия ячейку коллекции
-    ///  - Parameters:
-    ///   - type: тип модели
-    ///   - id: идентификатор рецепта
-    func didSelectItem(type: RLModelType, id: Int)
-}
-
-/// #Протокол передачи UI-ивентов от элементов ячейки
-protocol RLElementsCellDelegate: FavoriteChangable, AnyObject {
-    /// Ивент нажатия на кнопку добавления элементов
-    ///  - Parameter id: идентификатор рецепта
-    func didTapAddIngredientsButton(type: RLModelType, id: Int)
-}
-
-/// #Протокол изменения флага любимого рецепта
-protocol FavoriteChangable: AnyObject {
-    /// Ивент нажатия на кнопку изменения флага любимого рецепта
-    ///  - Parameters:
-    ///   - isFavorite: флаг (верно/неверно)
-    ///   - type: тип модели
-    ///   - id: идентификатор рецепта
-    func didTapFavoriteButton(_ isFavorite: Bool, type: RLModelType, id: Int)
-}
-
-/// #Протокол изменения `Layout` коллекции
-protocol LayoutChangable: AnyObject {
-    /// Ивент нажатия на кнопку изменения `Layout`
-    func didTapChangeLayoutButton(section: Int)
-}
-
 
 // MARK: - Presenter
 /// #Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
-    private(set) var viewModels: [RLModelType: [RecipeModel]] = [:] {
+    private(set) var viewModels: [RLModelType: [ShortRecipeViewModel]] = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
@@ -105,6 +73,28 @@ final class RecipeListPresenter {
             }
         }
         
+        var recipes: [CDRecipe] = []
+        interactor.fetchRecipes { cdRecipes in
+            
+            print(cdRecipes)
+            
+            
+            recipes.append(contentsOf: cdRecipes)
+        }
+        
+        if let first = recipes.first {
+//            print(first.ingredients?.allObjects as! [CDIngredient])
+            
+            interactor.delete(id: Int(first.id))
+        }
+        
+        interactor.fetchRecipes { cdRecipes in
+            
+            print(cdRecipes)
+            
+        }
+        
+        
         // Доп запрос
         //        interactor.fetchRandomRecipe(number: 4, tags: ["main course"]) { [weak self] result in
         //            switch result {
@@ -137,18 +127,18 @@ extension RecipeListPresenter: RecipeListPresentation {
 
 extension RecipeListPresenter {
 
-    func didTapFavoriteButton(_ isFavorite: Bool,
-        type: RLModelType, id: Int) {
-        print("didTapFavoriteButton")
+    func didTapFavoriteButton(_ isFavorite: Bool, id: Int) {
+        
+        interactor.saveRecipe(id: id)
     }
     
-    func didTapAddIngredientsButton(type: RLModelType, id: Int) {
+    func didTapAddIngredientsButton(id: Int) {
         print("didTapAddIngredientsButton")
     }
     
-    func didSelectItem(type: RLModelType, id: Int) {
+    func didSelectItem(id: Int) {
         interactor.getModel(id: id) { [weak self] model in
-            self?.router.route(to: .detailInfo, model: model)
+//            self?.router.route(to: .detailInfo, model: model)
         }
     }
     

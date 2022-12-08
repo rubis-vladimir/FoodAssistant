@@ -8,7 +8,7 @@
 import Foundation
 
 // Упрощенная модель рецепта для отображения
-struct RecipeModel {
+struct ShortRecipeViewModel {
     /// Идентификатор
     var id: Int
     /// Название рецепта
@@ -20,17 +20,5 @@ struct RecipeModel {
     /// Флаг отнесения к любимым рецептам
     var isFavorite: Bool
     /// Время приготовления в минутах
-    var readyInMinutes: Int
-    
-    /// Время приготовления в часах и минутах
-    var cookingTime: String {
-        let hours = readyInMinutes / 60
-        let minutes = readyInMinutes % 60
-        
-        return hours > 0 && minutes > 0 // Условие 1
-        ? "\(hours) ч \(minutes) мин" :
-        hours > 0 // Условие 2
-        ? "\(hours) ч"
-        :  "\(minutes) мин"
-    }
+    var cookingTime: String
 }

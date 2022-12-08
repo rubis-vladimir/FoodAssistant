@@ -10,10 +10,10 @@ import UIKit
 /// #Типы сборок коллекции модуля RecipeList
 enum RLBuildType {
     /// Основная при загрузке
-    case main(first: [RecipeModel],
-              second: [RecipeModel])
+    case main(first: [ShortRecipeViewModel],
+              second: [ShortRecipeViewModel])
     /// При поиске рецептов
-    case search(models: [RecipeModel])
+    case search(models: [ShortRecipeViewModel])
 }
 
 /// #Фабрика настройки табличного представления модуля RecipeList
@@ -54,7 +54,7 @@ final class RLFactory {
     ///     - model: модель данных
     ///     - type: тип ячейки
     ///   - Return: объект протокола строителя
-    private func createBuilder(models: [RecipeModel],
+    private func createBuilder(models: [ShortRecipeViewModel],
                                type: RLModelType) -> CVSectionBuilderProtocol {
         switch type {
         case .recommended:

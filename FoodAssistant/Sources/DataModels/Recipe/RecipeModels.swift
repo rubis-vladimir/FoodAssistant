@@ -39,6 +39,18 @@ struct Recipe: Codable, Equatable, Hashable {
     var glutenFree: Bool
     var dairyFree: Bool
     
+    /// Время приготовления в часах и минутах
+    var cookingTime: String {
+        let hours = readyInMinutes / 60
+        let minutes = readyInMinutes % 60
+        
+        return hours > 0 && minutes > 0 // Условие 1
+        ? "\(hours) ч \(minutes) мин" :
+        hours > 0 // Условие 2
+        ? "\(hours) ч"
+        :  "\(minutes) мин"
+    }
+    
     /// Пока не требуются
 //    var cuisines: [String]
 //    var dishTypes: [String]
@@ -57,13 +69,13 @@ struct Recipe: Codable, Equatable, Hashable {
 // Модель ингредиента
 struct Ingredient: Codable, Hashable, Equatable {
     /// Идентификатор ингредиента
-    var id: Int?
+    var id: Int
     /// Название изображения ингредиента
     var image: String?
     /// Название ингредиента
     var name: String
     /// Количество
-    var amount: Float?
+    var amount: Float
     /// Единицы измерения
     var unit: String?
     

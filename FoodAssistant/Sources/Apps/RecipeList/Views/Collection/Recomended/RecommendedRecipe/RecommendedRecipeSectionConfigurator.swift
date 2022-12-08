@@ -11,12 +11,12 @@ import UIKit
 final class RecommendedRecipeSectionConfigurator {
     
     private let collectionView: UICollectionView
-    private let models: [RecipeModel]
+    private let models: [ShortRecipeViewModel]
     
     weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [RecipeModel],
+         models: [ShortRecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models

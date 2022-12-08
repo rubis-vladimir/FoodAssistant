@@ -18,12 +18,12 @@ final class MainSectionConfigurator {
     }
     
     private let collectionView: UICollectionView
-    private let models: [RecipeModel]
+    private let models: [ShortRecipeViewModel]
     
     private weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [RecipeModel],
+         models: [ShortRecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models
