@@ -15,7 +15,7 @@ protocol RecipeListBusinessLogic {
     ///   - id: идентификатор
     ///   - completion: захватывает модель рецепта
     func getModel(id: Int,
-                  completion: @escaping (RecipeViewModel) -> Void)
+                  completion: @escaping (RecipeProtocol) -> Void)
     
     /// Получить изображения из сети/кэша
     ///  - Parameters:
@@ -31,11 +31,11 @@ protocol RecipeListBusinessLogic {
     ///   - query: поиск по названию
     ///   - completion: захватывает вью модель рецепта / ошибку
     func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?,
-                     completion: @escaping (Result<[ShortRecipeViewModel], DataFetcherError>) -> Void)
+                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
     
-    func fetchRecipes(completion: @escaping ([CDRecipe]) -> Void)
+    func fetchRecipes(completion: @escaping ([RecipeProtocol]) -> Void)
     
-    func delete(id: Int)
+    func remove(id: Int)
     
     func saveRecipe(id: Int)
 }
@@ -44,7 +44,7 @@ protocol RecipeListBusinessLogic {
 /// #Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
     
-    private var models: [RecipeViewModel] = []
+    private var models: [RecipeProtocol] = []
 
     private let dataFetcher: DataFetcherProtocol
     private let imageDownloader: ImageDownloadProtocol
@@ -65,23 +65,23 @@ final class RecipeListInteractor {
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
-    func fetchRecipes(completion: @escaping ([CDRecipe]) -> Void) {
+    func fetchRecipes(completion: @escaping ([RecipeProtocol]) -> Void) {
         storage.fetchRecipes(completion: completion)
     }
     
-    func delete(id: Int) {
-        storage.deleteRecipe(id: id)
+    func remove(id: Int) {
+        storage.remove(id: id, for: .favorite)
     }
     
     func saveRecipe(id: Int) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         
-        storage.save(recipe: model)
+        storage.save(recipe: model, for: .favorite)
     }
     
     
     func getModel(id: Int,
-                  completion: @escaping (RecipeViewModel) -> Void) {
+                  completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         completion(model)
     }
@@ -97,7 +97,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,
                      query: String?,
-                     completion: @escaping (Result<[ShortRecipeViewModel], DataFetcherError>) -> Void) {
+                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         
         RecipeRequest
             .complexSearch(parameters, number, query)
@@ -118,12 +118,12 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                             /// Получаем массив рецептов с переведенными текстами
                             
                             
-                            let viewModels = self.convertInViewModels(recipes: newRecipes)
+                            self.models.append(contentsOf: newRecipes)
                             
-                            self.models.append(contentsOf: viewModels)
-                            
-                            let shortVM = self.convertInShortViewModels(recipes: newRecipes)
-                            completion(.success(shortVM))
+                            let viewModels = newRecipes.map {
+                                RecipeViewModel(with: $0)
+                            }
+                            completion(.success(viewModels))
                             
                         case .failure(let error):
                             /// Ошибки при переводе
@@ -132,11 +132,13 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                     }
                 } else {
                     /// Если переводить не нужно
-                    let viewModels = self.convertInViewModels(recipes: recipes)
-                    self.models.append(contentsOf: viewModels)
                     
-                    let shortVM = self.convertInShortViewModels(recipes: recipes)
-                    completion(.success(shortVM))
+                    self.models.append(contentsOf: recipes)
+                    let viewModels = recipes.map {
+                        RecipeViewModel(with: $0)
+                    }
+                    
+                    completion(.success(viewModels))
                 }
                 
             case .failure(let error):
@@ -156,37 +158,37 @@ extension RecipeListInteractor {
     }
     
     /// Преобразует модель рецепта во вью модель
-    private func convertInShortViewModels(recipes: [Recipe]) -> [ShortRecipeViewModel] {
-        var array: [ShortRecipeViewModel] = []
-        
-        recipes.forEach {
-            let recipeModel = ShortRecipeViewModel(id: $0.id,
-                                                   title: $0.title,
-                                                   ingredientsCount: $0.extendedIngredients?.count ?? 0,
-                                                   imageName: getImageName(from: $0.image),
-                                                   isFavorite: false,
-                                                   cookingTime: $0.cookingTime)
-            array.append(recipeModel)
-        }
-        return array
-    }
+//    private func convertInShortViewModels(recipes: [RecipeProtocol]) -> [RecipeViewModel] {
+//        var array: [RecipeViewModel] = []
+//
+//        recipes.forEach {
+//            let recipeModel = RecipeViewModel(id: $0.id,
+//                                                   title: $0.title,
+//                                                   ingredientsCount: $0.extendedIngredients?.count ?? 0,
+//                                                   imageName: getImageName(from: $0.image),
+//                                                   isFavorite: false,
+//                                                   cookingTime: $0.cookingTime)
+//            array.append(recipeModel)
+//        }
+//        return array
+//    }
     
-    private func convertInViewModels(recipes: [Recipe]) -> [RecipeViewModel] {
-        var array: [RecipeViewModel] = []
-        
-        recipes.forEach {
-            let recipeModel = RecipeViewModel(id: $0.id,
-                                              title: $0.title,
-                                              cookingTime: $0.cookingTime,
-                                              servings: $0.servings,
-                                              imageName: $0.image,
-                                              nutrients: $0.nutrition?.nutrients,
-                                              ingredients: $0.extendedIngredients,
-                                              instructionSteps: $0.analyzedInstructions?[0].steps)
-            array.append(recipeModel)
-        }
-        return array
-    }
+//    private func convertInViewModels(recipes: [Recipe]) -> [RecipeProtocol] {
+//        var array: [RecipeViewModel] = []
+//        
+//        recipes.forEach {
+//            let recipeModel = RecipeViewModel(id: $0.id,
+//                                              title: $0.title,
+//                                              cookingTime: $0.cookingTime,
+//                                              servings: $0.servings,
+//                                              imageName: $0.image,
+//                                              nutrients: $0.nutrition?.nutrients,
+//                                              ingredients: $0.extendedIngredients,
+//                                              instructionSteps: $0.analyzedInstructions?[0].steps)
+//            array.append(recipeModel)
+//        }
+//        return array
+//    }
     
     /// Проверяет установленный на устройстве язык
     private func currentAppleLanguage() -> String {

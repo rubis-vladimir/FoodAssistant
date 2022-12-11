@@ -11,11 +11,11 @@ import UIKit
 final class RecommendedItemBuilder {
     private let count = 1
     private let height: CGFloat = 320
-    private let models: [ShortRecipeViewModel]
+    private let models: [RecipeViewModel]
     
     weak var delegate: RecipeListPresentation?
     
-    init(models: [ShortRecipeViewModel],
+    init(models: [RecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.models = models
         self.delegate = delegate

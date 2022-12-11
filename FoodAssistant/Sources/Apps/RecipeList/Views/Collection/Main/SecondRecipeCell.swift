@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Второй вариант ячейки коллекции для секции Main !!!! ПОКА НЕ СДЕЛАН !!!
-final class MainSecondRecipeCell: CVBaseRecipeCell {
+final class SecondRecipeCell: CVBaseRecipeCell {
     
     // MARK: - Properties
     weak var delegate: EventsCellDelegate?
@@ -35,7 +35,7 @@ final class MainSecondRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: ShortRecipeViewModel) {
+    override func configure(with model: RecipeViewModel) {
         super.configure(with: model)
         
         addToBasketButton.setTitle("\(model.ingredientsCount)",

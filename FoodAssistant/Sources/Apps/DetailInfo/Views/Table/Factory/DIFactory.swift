@@ -12,11 +12,11 @@ enum DISectionType {
     /// Секция с основной информацией
     case baseInfo
     /// Секция с питательными веществами
-    case nutrients(_ nutrition: Nutrition)
+    case nutrients(_ nutrients: [NutrientProtocol])
     /// Секция с ингредиентами
-    case ingredients(_ ingredients: [Ingredient])
+    case ingredients(_ ingredients: [IngredientProtocol])
     /// Секция с инструкциями по приготовлению
-    case instructions(_ instructions: [Instruction])
+    case instructions(_ instructions: [InstructionStepProtocol])
 }
 
 /// #Фабрика для настройки табличного представления модуля DetailInfo
@@ -24,7 +24,7 @@ final class DIFactory: NSObject {
     
     // MARK: - Properties
     private let tableView: UITableView
-    private let model: Recipe
+    private let model: RecipeProtocol
     private let tvAdapter: TVAdapter?
     
     private weak var delegate: DetailInfoPresentation?
@@ -37,7 +37,7 @@ final class DIFactory: NSObject {
     init(tableView: UITableView,
          delegate: DetailInfoPresentation?,
          scrollDelegate: ScrollDelegate?,
-         model: Recipe) {
+         model: RecipeProtocol) {
         self.tableView = tableView
         self.delegate = delegate
         self.model = model
@@ -74,16 +74,14 @@ final class DIFactory: NSObject {
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
-        case .nutrients(let nutrition):
-            let cellBuilder = NutrientsCellBuilder(nutrition: nutrition)
+        case .nutrients(let nutrients):
+            let cellBuilder = NutrientsCellBuilder(nutrients: nutrients)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleNutrition,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
         case .ingredients(let ingredients):
-            
-            getRepeatElement(from: ingredients)
             
             let cellBuilder = IngredientsCellBuilder(ingredients: ingredients,
                                                      delegate: delegate)
@@ -93,7 +91,7 @@ final class DIFactory: NSObject {
             return sectionBuilder
             
         case .instructions(let instructions):
-            let cellBuilder = InstructionCellBuilder(instruction: instructions[0])
+            let cellBuilder = InstructionCellBuilder(instructions: instructions)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleInstructions,
                                                   cellBuilder: cellBuilder)
@@ -122,17 +120,17 @@ extension DIFactory: TVCFactoryProtocol {
         builders.append(createBuilder(type: .baseInfo))
         
         /// Добавляем секцию с питательными веществами
-        if let nutrition = model.nutrition {
-            builders.append(createBuilder(type: .nutrients(nutrition)))
+        if let nutrients = model.nutrients {
+            builders.append(createBuilder(type: .nutrients(nutrients)))
         }
         
         /// Добавляем секцию с ингредиентами
-        if let ingredients = model.extendedIngredients, !ingredients.isEmpty {
+        if let ingredients = model.ingredients, !ingredients.isEmpty {
             builders.append(createBuilder(type: .ingredients(ingredients)))
         }
         
         /// Добавляем секцию с инструкцией по приготовлению
-        if let instructions = model.analyzedInstructions, !instructions.isEmpty {
+        if let instructions = model.instructions, !instructions.isEmpty {
             builders.append(createBuilder(type: .instructions(instructions)))
         }
                             

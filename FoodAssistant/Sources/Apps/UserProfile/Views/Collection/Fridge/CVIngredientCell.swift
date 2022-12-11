@@ -1,14 +1,13 @@
 //
-//  IngredientCell.swift
+//  CVIngredientCell.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 28.11.2022.
+//  Created by Владимир Рубис on 10.12.2022.
 //
 
 import UIKit
 
-/// #Ячейка с информацией об ингредиенте
-final class IngredientCell: BaseTableViewCell {
+final class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Properties
     /// Вью под изображение ингредиента
@@ -38,6 +37,14 @@ final class IngredientCell: BaseTableViewCell {
         return label
     }()
     
+    private lazy var useIngredientButton: UIButton = {
+        let button = UIButton()
+        button.setImage(Icons.circle.image, for: .normal)
+        button.tintColor = Palette.darkColor.color
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
     /// Общий контейнер
     private lazy var container: UIStackView = {
         let stack = UIStackView()
@@ -48,14 +55,25 @@ final class IngredientCell: BaseTableViewCell {
         return stack
     }()
     
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        setupCell()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     // MARK: - Functions
-    override func setupCell() {
+    func setupCell() {
         setupConstraints()
     }
     
     func configure(with ingredient: IngredientProtocol) {
         titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount ?? 0) \(ingredient.unit ?? "")"
+        amountLabel.text = "\(ingredient.amount) \(ingredient.unit ?? "")"
     }
     
     func updateImage(with imageData: Data) {
@@ -64,7 +82,7 @@ final class IngredientCell: BaseTableViewCell {
     }
     
     private func setupConstraints() {
-        [ingredientImageView, amountLabel, titleIngredientLabel].forEach {
+        [ingredientImageView, amountLabel, titleIngredientLabel, useIngredientButton].forEach {
             container.addArrangedSubview($0)
         }
         addSubview(container)
@@ -77,7 +95,8 @@ final class IngredientCell: BaseTableViewCell {
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
             ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
-            amountLabel.widthAnchor.constraint(equalToConstant: 70)
+            amountLabel.widthAnchor.constraint(equalToConstant: 70),
+            useIngredientButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])
     }
 }

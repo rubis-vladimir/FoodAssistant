@@ -18,7 +18,7 @@ enum RLModelType {
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
 protocol RecipeListPresentation: LayoutChangable, SelectedCellDelegate, EventsCellDelegate, AnyObject {
     /// Вью модели
-    var viewModels: [RLModelType: [ShortRecipeViewModel]] { get }
+    var viewModels: [RLModelType: [RecipeViewModel]] { get }
     
     /// Запрошена загрузка изображения
     ///  - Parameters:
@@ -33,7 +33,7 @@ protocol RecipeListPresentation: LayoutChangable, SelectedCellDelegate, EventsCe
 /// #Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
-    private(set) var viewModels: [RLModelType: [ShortRecipeViewModel]] = [:] {
+    private(set) var viewModels: [RLModelType: [RecipeViewModel]] = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
@@ -62,49 +62,56 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: ["egg"], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
         interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
+                
                 self?.viewModels[.main] = recipeCellModels
+                
             case .failure(_):
                 break
             }
         }
         
-        var recipes: [CDRecipe] = []
-        interactor.fetchRecipes { cdRecipes in
+        interactor.fetchRecipes { [weak self] cdRecipes in
             
+            let recipes = cdRecipes.map {
+                RecipeViewModel.init(with: $0)
+            }
+            self?.viewModels[.main] = recipes
+            print("_________________")
             print(cdRecipes)
+            print("_________________")
+            if let first = cdRecipes.first {
+                print(first.id)
+                print(first.title)
+                print(first.ingredients as? [IngredientProtocol])
+                
+                self?.interactor.remove(id: first.id)
+            }
             
-            
-            recipes.append(contentsOf: cdRecipes)
-        }
-        
-        if let first = recipes.first {
-//            print(first.ingredients?.allObjects as! [CDIngredient])
-            
-            interactor.delete(id: Int(first.id))
-        }
-        
-        interactor.fetchRecipes { cdRecipes in
-            
-            print(cdRecipes)
             
         }
         
+//        if let first = recipes.first {
+////            print(first.ingredients?.allObjects as! [CDIngredient])
+//
+//            interactor.delete(id: Int(first.id))
+//        }
+//
+//
+//         Доп запрос
+//                interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
+//                    switch result {
+//                    case .success(let recipeCellModels):
+//                        self?.viewModels[.recommended] = recipeCellModels
+//                    case .failure(_):
+//                        break
+//                    }
+//                }
         
-        // Доп запрос
-        //        interactor.fetchRandomRecipe(number: 4, tags: ["main course"]) { [weak self] result in
-        //            switch result {
-        //            case .success(let recipeCellModels):
-        //                self?.viewModels[.recommended] = recipeCellModels
-        //            case .failure(_):
-        //                break
-        //            }
-        //        }
-        //
     }
 }
 
@@ -138,7 +145,7 @@ extension RecipeListPresenter {
     
     func didSelectItem(id: Int) {
         interactor.getModel(id: id) { [weak self] model in
-//            self?.router.route(to: .detailInfo, model: model)
+            self?.router.route(to: .detailInfo, model: model)
         }
     }
     

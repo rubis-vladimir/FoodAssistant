@@ -10,14 +10,15 @@ import Foundation
 import CoreData
 
 
-extension CDInstrutionStep {
-
+extension CDInstrutionStep: InstructionStepProtocol {
+    var number: Int { Int(cdNumber) }
+    
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDInstrutionStep> {
         return NSFetchRequest<CDInstrutionStep>(entityName: "CDInstrutionStep")
     }
 
-    @NSManaged public var number: Int16
-    @NSManaged public var step: String?
+    @NSManaged public var cdNumber: Int16
+    @NSManaged public var step: String
     @NSManaged public var recipe: CDRecipe?
 
 }

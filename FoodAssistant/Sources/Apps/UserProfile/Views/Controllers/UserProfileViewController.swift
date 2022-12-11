@@ -10,20 +10,21 @@ import UIKit
 /// Протокол управления View-слоем
 protocol UserProfileViewable: AnyObject {
     /// Обновление UI
-    func updateUI()
+    func updateUI(with type: UPBuildType)
     /// Показать ошибку
     func showError()
     
-    func showTag()
+    func reloadSection(_ section: Int)
 }
 
 /// Контроллер представления
 final class UserProfileViewController: UIViewController {
     
     /// Фабрика настройки табличного представления
-    private var factory: TVFactoryProtocol?
+    private var factory: CVFactoryProtocol?
     
-    private var tableView = UITableView()
+    private var collectionView: UICollectionView!
+    
     private let presenter: UserProfilePresentation
     
     init(presenter: UserProfilePresentation) {
@@ -39,41 +40,67 @@ final class UserProfileViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         setupNavigationBar()
+        setupElements()
         
-        
-        factory = UPFactory(tableView: tableView,
-                                     delegate: presenter,
-                                     buildType: .start)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+//        let models = presenter.viewModels
+//        factory = UPFactory(collectionView: collectionView,
+//                            delegate: presenter,
+//                            buildType: .favorite(models))
+//        DispatchQueue.main.async {
+//            self.collectionView.reloadData()
+//        }
         
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        setupElements()
+        presenter.fetchRecipe()
     }
     
     func setupElements() {
+        
+        /// Настройка `CollectionView`
+        collectionView = UICollectionView(frame: CGRect.zero,
+                                          collectionViewLayout: getFlowLayout())
+        
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
+        collectionView.backgroundColor = .blue
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         let titleView = UPCustomSegmentedControl()
+        titleView.delegate = presenter
+        
         view.addSubview(titleView)
-        view.addSubview(tableView)
+        view.addSubview(collectionView)
         titleView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            titleView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            titleView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             titleView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            titleView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             titleView.heightAnchor.constraint(equalToConstant: 42),
             
-            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 5),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 5),
+            collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
         ])
+    }
+    
+    /// Возвращает настроенный `FlowLayout`
+    private func getFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        let padding = AppConstants.padding
+        layout.sectionInset = UIEdgeInsets(top: 0,
+                                           left: padding,
+                                           bottom: padding,
+                                           right: padding)
+        layout.minimumInteritemSpacing = padding
+        layout.minimumLineSpacing = padding
+        return layout
     }
     
     func setupNavigationBar() {
@@ -94,20 +121,20 @@ final class UserProfileViewController: UIViewController {
 
 // MARK: - Viewable
 extension UserProfileViewController: UserProfileViewable {
-    func updateUI() {
-    
+    func reloadSection(_ section: Int) {
+        collectionView.reloadSections(IndexSet(integer: section))
     }
+    
+    func updateUI(with type: UPBuildType) {
+        DispatchQueue.main.async {
+            self.factory = UPFactory(collectionView: self.collectionView,
+                                     delegate: self.presenter,
+                                     buildType: type)
+        }
+    }
+    
     
     func showError() {
         
-    }
-    
-    func showTag() {
-//        factory = UPFactory(tableView: tableView,
-//                                     delegate: presenter,
-//                                     buildType: .tagFridge)
-//        DispatchQueue.main.async {
-//            self.tableView.reloadData()
-//        }
     }
 }

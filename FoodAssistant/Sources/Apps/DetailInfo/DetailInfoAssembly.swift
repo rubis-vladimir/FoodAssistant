@@ -10,10 +10,10 @@ import UIKit
 /// #Компоновщик модуля DetailInfo
 final class DetailInfoAssembly {
     private let navigationController: UINavigationController
-    private let model: Recipe
+    private let model: RecipeProtocol
     
     init(navigationController: UINavigationController,
-         model: Recipe) {
+         model: RecipeProtocol) {
         self.navigationController = navigationController
         self.model = model
     }

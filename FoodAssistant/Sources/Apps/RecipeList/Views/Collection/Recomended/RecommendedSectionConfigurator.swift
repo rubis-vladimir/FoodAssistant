@@ -13,12 +13,12 @@ final class RecommendedSectionConfigurator {
     private let title: String = "Рекомендации"
     
     private let collectionView: UICollectionView
-    private let models: [ShortRecipeViewModel]
+    private let models: [RecipeViewModel]
     
     weak var delegate: RecipeListPresentation?
     
     init(collectionView: UICollectionView,
-         models: [ShortRecipeViewModel],
+         models: [RecipeViewModel],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
         self.models = models

@@ -17,7 +17,7 @@ enum RecipeListTarget {
 protocol RecipeListRouting {
     /// Переход к следующему экрану
     ///  - Parameter to: вариант перехода
-    func route(to: RecipeListTarget, model: Recipe)
+    func route(to: RecipeListTarget, model: RecipeProtocol)
 }
 
 /// #Слой навигации модуля
@@ -31,7 +31,7 @@ final class RecipeListRouter {
 
 // MARK: - RecipeListRouting
 extension RecipeListRouter: RecipeListRouting {
-    func route(to: RecipeListTarget, model: Recipe) {
+    func route(to: RecipeListTarget, model: RecipeProtocol) {
         switch to {
         case .detailInfo:
             let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()

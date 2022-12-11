@@ -42,7 +42,7 @@ final class InstructionCell: BaseTableViewCell {
         setupConstraints()
     }
     
-    func configure(with step: InstuctionStep) {
+    func configure(with step: InstructionStepProtocol) {
         stepNumberLabel.text = "Шаг \(step.number)"
         cookingInstructionsLabel.text = step.step
         

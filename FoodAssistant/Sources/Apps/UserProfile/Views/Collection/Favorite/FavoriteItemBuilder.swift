@@ -1,30 +1,22 @@
 //
-//  MainItemBuilder.swift
+//  FavoriteItemBuilder.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 25.11.2022.
+//  Created by Владимир Рубис on 09.12.2022.
 //
 
 import UIKit
 
-/// #Варианты Layout
-enum LayoutType {
-    /// Две в ряду
-    case split2xN
-    /// Одна в ряду
-    case split1xN
-}
-
-/// #Строитель ячеек секции Main
-final class MainItemBuilder {
+/// #Строитель ячеек секции Favorite
+final class FavoriteItemBuilder {
     
-    private var layoutType: LayoutType = .split2xN
+    private var layoutType: LayoutType = .split1xN
     private let models: [RecipeViewModel]
     
-    weak var delegate: RecipeListPresentation?
+    weak var delegate: UserProfilePresentation?
     
     init(models: [RecipeViewModel],
-         delegate: RecipeListPresentation?) {
+         delegate: UserProfilePresentation?) {
         self.models = models
         self.delegate = delegate
         
@@ -37,7 +29,7 @@ final class MainItemBuilder {
         let itemPerRow: CGFloat = layoutType == .split1xN ? 1 : 2
         let paddingWidht = padding * (itemPerRow + 1)
         let availableWidth = (width - paddingWidht) / itemPerRow
-        let availableHeight = layoutType == .split1xN ? 125 : availableWidth + padding + 50
+        let availableHeight = layoutType == .split1xN ? 125 : availableWidth + padding + 100
         
         return CGSize(width: availableWidth,
                       height: availableHeight)
@@ -47,7 +39,7 @@ final class MainItemBuilder {
     private func signInNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(changeLayoutType),
-                                               name: NSNotification.Name ("changeLayoutType"),
+                                               name: NSNotification.Name ("changeLayoutType2"),
                                                object: nil)
     }
     
@@ -58,10 +50,10 @@ final class MainItemBuilder {
 }
 
 // MARK: - CVItemBuilderProtocol
-extension MainItemBuilder: CVItemBuilderProtocol {
+extension FavoriteItemBuilder: CVItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
-        collectionView.register(FirstRecipeCell.self)
+        collectionView.register(ThirdRecipeCell.self)
         collectionView.register(SecondRecipeCell.self)
     }
     
@@ -77,13 +69,13 @@ extension MainItemBuilder: CVItemBuilderProtocol {
         switch layoutType {
             
         case .split2xN:
-            let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
+            let cell = collectionView.dequeueReusableCell(ThirdRecipeCell.self,
                                                           indexPath: indexPath)
             let model = models[indexPath.item]
             cell.delegate = delegate
             cell.configure(with: model)
             if let imageName = model.imageName {
-                delegate?.fetchImage(with: imageName) { imageData in
+                delegate?.fetchRecipeImage(with: imageName) { imageData in
                     DispatchQueue.main.async {
                         cell.updateImage(data: imageData)
                     }
@@ -98,7 +90,7 @@ extension MainItemBuilder: CVItemBuilderProtocol {
             cell.delegate = delegate
             cell.configure(with: model)
             if let imageName = model.imageName {
-                delegate?.fetchImage(with: imageName) { imageData in
+                delegate?.fetchRecipeImage(with: imageName) { imageData in
                     DispatchQueue.main.async {
                         cell.updateImage(data: imageData)
                     }

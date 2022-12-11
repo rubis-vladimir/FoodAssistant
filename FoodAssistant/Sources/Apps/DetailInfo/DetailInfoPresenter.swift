@@ -10,7 +10,7 @@ import Foundation
 /// #Протокол передачи UI-ивентов слою презентации
 protocol DetailInfoPresentation: AnyObject {
     /// Модель рецепта
-    var model: Recipe { get }
+    var model: RecipeProtocol { get }
     
     /// Запрошена загрузка изображения
     ///  - Parameters:
@@ -37,11 +37,11 @@ final class DetailInfoPresenter {
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
     
-    private(set) var model: Recipe
+    private(set) var model: RecipeProtocol
     
     init(interactor: DetailInfoBusinessLogic,
          router: DetailInfoRouting,
-         model: Recipe) {
+         model: RecipeProtocol) {
         self.interactor = interactor
         self.router = router
         self.model = model

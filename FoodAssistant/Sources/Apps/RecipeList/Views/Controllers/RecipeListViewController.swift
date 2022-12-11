@@ -44,7 +44,6 @@ final class RecipeListViewController: UIViewController {
         setupElements()
     }
     
-    
     // MARK: - Private func
     private func setupElements() {
         /// Настройка`navigationBar`

@@ -1,20 +1,19 @@
 //
-//  Recipe.swift
+//  RecipeModels.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 09.11.2022.
 //
 
 import Foundation
-import CoreData
 
-// Модель ответа по запросу рецептов
+/// #Модель ответа по запросу рецептов
 struct RecipeResponce: Codable, Hashable {
     var recipes: [Recipe]?
     var results: [Recipe]?
 }
 
-// Модель рецепта
+/// #Модель рецепта
 struct Recipe: Codable, Equatable, Hashable {
     /// Идентификатор
     var id: Int
@@ -33,11 +32,34 @@ struct Recipe: Codable, Equatable, Hashable {
     /// Инструкции для приготовления
     var analyzedInstructions: [Instruction]?
     
-    /// Теги
-    var vegetarian: Bool
-    var vegan: Bool
-    var glutenFree: Bool
-    var dairyFree: Bool
+    /// #Пока не требуются
+//    var vegetarian: Bool
+//    var vegan: Bool
+//    var glutenFree: Bool
+//    var dairyFree: Bool
+//    var cuisines: [String]
+//    var dishTypes: [String]
+//    var diets: [String]
+//    var spoonacularSourceUrl: String?
+//    var isFavorite: Bool?
+}
+
+// MARK: - RecipeProtocol
+extension Recipe: RecipeProtocol {
+    var inBasket: Bool {
+        false
+    }
+    
+    var imageName: String? {
+        guard let image = image else { return nil }
+        return String(image.dropFirst(37))
+    }
+    
+    var ingredients: [IngredientProtocol]? { extendedIngredients }
+    
+    var nutrients: [NutrientProtocol]? { nutrition?.nutrients }
+    
+    var instructions: [InstructionStepProtocol]? { analyzedInstructions?.first?.steps }
     
     /// Время приготовления в часах и минутах
     var cookingTime: String {
@@ -51,23 +73,11 @@ struct Recipe: Codable, Equatable, Hashable {
         :  "\(minutes) мин"
     }
     
-    /// Пока не требуются
-//    var cuisines: [String]
-//    var dishTypes: [String]
-//    var diets: [String]
-//    var spoonacularSourceUrl: String?
-//    var isFavorite: Bool?
-    
-    static func == (lhs: Recipe, rhs: Recipe) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        }
-        return false
-    }
+    var isFavorite: Bool { false }
 }
 
 // Модель ингредиента
-struct Ingredient: Codable, Hashable, Equatable {
+struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
     /// Идентификатор ингредиента
     var id: Int
     /// Название изображения ингредиента
@@ -96,7 +106,7 @@ struct Instruction: Codable, Hashable {
 }
 
 // Модель этапа(шага) приготовления
-struct InstuctionStep: Codable, Hashable {
+struct InstuctionStep: InstructionStepProtocol, Codable, Hashable {
     /// Номер
     var number: Int
     /// Текстовая информация
@@ -135,7 +145,7 @@ struct Nutrition: Codable, Hashable {
 }
 
 // Модель питательного вещества
-struct Nutrient: Codable, Hashable {
+struct Nutrient: NutrientProtocol, Codable, Hashable {
     /// Название
     var name: String
     /// Количество

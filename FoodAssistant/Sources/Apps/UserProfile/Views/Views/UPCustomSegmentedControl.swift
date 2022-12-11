@@ -9,7 +9,7 @@ import UIKit
 
 class UPCustomSegmentedControl: UIView {
     
-    var delegate: UPSegmentedViewDelegate?
+    var delegate: SegmentedViewDelegate?
     
     private lazy var buttonImages: [UIImage?] = [Icons.card.image, Icons.fridge.image, Icons.heart.image]
     private lazy var buttonSelectImages: [UIImage?] = [Icons.cardFill.image, Icons.fridgeFill.image, Icons.heartFill.image]
@@ -107,6 +107,7 @@ class UPCustomSegmentedControl: UIView {
     
     @objc func buttonTapped(sender: UIButton) {
         didSelectButton(at: sender.tag)
+        delegate?.didSelectPage(index: sender.tag)
     }
     
     func didSelectButton(at index: Int) {
@@ -140,6 +141,3 @@ class UPCustomSegmentedControl: UIView {
 }
 
 
-protocol UPSegmentedViewDelegate {
-    func didSelectPage(index: Int)
-}

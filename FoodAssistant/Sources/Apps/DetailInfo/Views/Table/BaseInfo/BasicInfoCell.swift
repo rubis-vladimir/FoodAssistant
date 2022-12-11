@@ -32,9 +32,9 @@ final class BasicInfoCell: BaseTableViewCell {
         setupConstraints()
     }
     
-    func configure(with model: Recipe) {
+    func configure(with model: RecipeProtocol) {
         detailTitleView.titleRecipeLabel.text = model.title
-        detailTitleView.cookingTimeLabel.text = "\(model.readyInMinutes) мин"
+        detailTitleView.cookingTimeLabel.text = model.cookingTime
         detailTitleView.numberServingsLabel.text = "\(model.servings) Порций"
         detailTitleView.layoutSubviews()
     }

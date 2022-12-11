@@ -2,27 +2,32 @@
 //  RecipeViewModel.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 08.12.2022.
+//  Created by Владимир Рубис on 20.11.2022.
 //
 
 import Foundation
 
+// Модель рецепта для отображения
 struct RecipeViewModel {
     /// Идентификатор
     var id: Int
     /// Название рецепта
     var title: String
-    /// Полная готовность в мин
-    var cookingTime: String
-    /// Количество порций
-    var servings: Int
-    /// Изображение рецепта
+    /// Количество ингредиентов
+    var ingredientsCount: Int
+    /// Название изображения
     var imageName: String?
-    /// Информация по питательным веществам
-    var nutrients: [Nutrient]?
-    /// Массив используемых ингредиентов
-    var ingredients: [Ingredient]?
-    /// Инструкции для приготовления
-    var instructionSteps: [InstuctionStep]?
-
+    /// Флаг отнесения к любимым рецептам
+    var isFavorite: Bool
+    /// Время приготовления в минутах
+    var cookingTime: String
+    
+    init(with recipe: RecipeProtocol) {
+        self.id = recipe.id
+        self.title = recipe.title
+        self.ingredientsCount = recipe.ingredients?.count ?? 0
+        self.imageName = recipe.imageName
+        self.isFavorite = recipe.isFavorite
+        self.cookingTime = recipe.cookingTime
+    }
 }

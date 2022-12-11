@@ -11,11 +11,11 @@ import UIKit
 final class IngredientsCellBuilder {
     /// Высота ячейки
     private let height = CGFloat(66)
-    private let ingredients: [Ingredient]
+    private let ingredients: [IngredientProtocol]
     
     weak var delegate: DetailInfoPresentation?
     
-    init(ingredients: [Ingredient],
+    init(ingredients: [IngredientProtocol],
          delegate: DetailInfoPresentation?) {
         self.ingredients = ingredients
         self.delegate = delegate

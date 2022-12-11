@@ -35,7 +35,7 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: ShortRecipeViewModel) {
+    override func configure(with model: RecipeViewModel) {
         super.configure(with: model)
         
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",

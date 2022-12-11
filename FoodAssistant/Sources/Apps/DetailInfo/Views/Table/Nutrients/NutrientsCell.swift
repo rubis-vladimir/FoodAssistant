@@ -23,31 +23,31 @@ final class NutrientsCell: BaseTableViewCell {
     }()
     
     // MARK: - Init
-    convenience init(nutrition: Nutrition) {
+    convenience init(nutrients: [NutrientProtocol]) {
         self.init()
-        configure(with: nutrition)
+        configure(with: nutrients)
         container.backgroundColor = Palette.bgColor.color
         container.layer.add(shadow: AppConstants.Shadow.defaultOne)
         container.layer.cornerRadius = AppConstants.cornerRadius
     }
     
     // MARK: - Function
-    func configure(with nutrition: Nutrition) {
+    func configure(with nutrients: [NutrientProtocol]) {
         
-        if let calories = nutrition.calories {
-            let stack = createStack(title: Nutrients.calories.rawValue, number: calories)
+        if let calories = nutrients.first(where: {$0.name == "Calories"}) {
+            let stack = createStack(title: Nutrients.calories.rawValue, number: "\(calories.amount)")
             container.addArrangedSubview(stack)
         }
-        if let protein = nutrition.protein {
-            let stack = createStack(title: Nutrients.protein.rawValue, number: protein)
+        if let protein = nutrients.first(where: {$0.name == "Protein"}) {
+            let stack = createStack(title: Nutrients.protein.rawValue, number: "\(protein.amount)")
             container.addArrangedSubview(stack)
         }
-        if let fats = nutrition.fats {
-            let stack = createStack(title: Nutrients.fats.rawValue, number: fats)
+        if let fats = nutrients.first(where: {$0.name == "Fat"}) {
+            let stack = createStack(title: Nutrients.fats.rawValue, number: "\(fats.amount)")
             container.addArrangedSubview(stack)
         }
-        if let carbohydrates = nutrition.carbohydrates {
-            let stack = createStack(title: Nutrients.carbohydrates.rawValue, number: carbohydrates)
+        if let carbohydrates = nutrients.first(where: {$0.name == "Carbohydrates"}) {
+            let stack = createStack(title: Nutrients.carbohydrates.rawValue, number: "\(carbohydrates.amount)")
             container.addArrangedSubview(stack)
         }
     }

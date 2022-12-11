@@ -11,10 +11,10 @@ import UIKit
 final class NutrientsCellBuilder {
     /// Высота ячейки
     private let height = CGFloat(100)
-    private let nutrition: Nutrition
+    private let nutrients: [NutrientProtocol]
     
-    init(nutrition: Nutrition) {
-        self.nutrition = nutrition
+    init(nutrients: [NutrientProtocol]) {
+        self.nutrients = nutrients
     }
 }
 
@@ -29,6 +29,6 @@ extension NutrientsCellBuilder: TVCellBuilderProtocol {
     func cellCount() -> Int { 1 }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
-        return NutrientsCell(nutrition: nutrition)
+        return NutrientsCell(nutrients: nutrients)
     }
 }

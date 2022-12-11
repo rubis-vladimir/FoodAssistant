@@ -11,10 +11,10 @@ import UIKit
 final class InstructionCellBuilder {
     /// Высота ячейки
     private let height: CGFloat = 150
-    private let instruction: Instruction
+    private let instructions: [InstructionStepProtocol]
     
-    init(instruction: Instruction) {
-        self.instruction = instruction
+    init(instructions: [InstructionStepProtocol]) {
+        self.instructions = instructions
     }
 }
 
@@ -26,12 +26,12 @@ extension InstructionCellBuilder: TVCellBuilderProtocol {
     
     func cellHeight() -> CGFloat { UITableView.automaticDimension }
     
-    func cellCount() -> Int { instruction.steps.count }
+    func cellCount() -> Int { instructions.count }
     
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(InstructionCell.self,
                                                  indexPath: indexPath)
-        let step = instruction.steps[indexPath.row]
+        let step = instructions[indexPath.row]
         cell.configure(with: step)
         return cell
     }

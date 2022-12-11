@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Ячейка коллекции для секции Main
-final class MainFirstRecipeCell: CVBaseRecipeCell {
+final class FirstRecipeCell: CVBaseRecipeCell {
     
     weak var delegate: FavoriteChangable?
     

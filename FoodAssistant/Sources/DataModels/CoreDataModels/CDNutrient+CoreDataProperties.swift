@@ -10,15 +10,15 @@ import Foundation
 import CoreData
 
 
-extension CDNutrient {
+extension CDNutrient: NutrientProtocol {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDNutrient> {
         return NSFetchRequest<CDNutrient>(entityName: "CDNutrient")
     }
 
     @NSManaged public var amount: Float
-    @NSManaged public var name: String?
-    @NSManaged public var unit: String?
+    @NSManaged public var name: String
+    @NSManaged public var unit: String
     @NSManaged public var recipe: CDRecipe?
 
 }

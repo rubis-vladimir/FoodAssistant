@@ -1,51 +1,50 @@
 //
-//  RecommendedRecipeItemBuilder.swift
+//  FridgeItemBuilder.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 25.11.2022.
+//  Created by Владимир Рубис on 10.12.2022.
 //
 
 import UIKit
 
 /// #Строитель ячеек секции RecommendedRecipe
-final class RecommendedRecipeItemBuilder {
-    private let height: CGFloat = 320
-    private let models: [RecipeViewModel]
+final class FridgeItemBuilder {
+    private let height: CGFloat = 66
+    private let models: [IngredientProtocol]
     
-    weak var delegate: RecipeListPresentation?
+    weak var delegate: UserProfilePresentation?
     
-    init(models: [RecipeViewModel],
-         delegate: RecipeListPresentation?) {
+    init(models: [IngredientProtocol],
+         delegate: UserProfilePresentation?) {
         self.models = models
         self.delegate = delegate
     }
 }
 
 // MARK: - RecommendedRecipeItemBuilder
-extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
+extension FridgeItemBuilder: CVItemBuilderProtocol {
     func register(collectionView: UICollectionView) {
-        collectionView.register(ThirdRecipeCell.self)
+        collectionView.register(CVIngredientCell.self)
     }
     
     func itemCount() -> Int { models.count }
     
     func itemSize(collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.width * 0.6,
-               height: collectionView.bounds.height)
+        CGSize(width: collectionView.bounds.width,
+               height: height)
     }
     
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(ThirdRecipeCell.self,
+        let cell = collectionView.dequeueReusableCell(CVIngredientCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.delegate = delegate
         cell.configure(with: model)
         
-        if let imageName = model.imageName {
-            delegate?.fetchImage(with: imageName) { imageData in
+        if let imageName = model.image {
+            delegate?.fetchIngredientImage(with: imageName, size: .mini) { imageData in
                 DispatchQueue.main.async {
-                    cell.updateImage(data: imageData)
+                    cell.updateImage(with: imageData)
                 }
             }
         }
@@ -56,3 +55,4 @@ extension RecommendedRecipeItemBuilder: CVItemBuilderProtocol {
         delegate?.didSelectItem(id: indexPath.row)
     }
 }
+

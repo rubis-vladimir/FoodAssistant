@@ -10,10 +10,10 @@ import UIKit
 /// #Строитель ячейки BaseInfoCell
 final class BasicInfoCellBuilder {
 
-    private let model: Recipe
+    private let model: RecipeProtocol
     weak var delegate: DetailInfoPresentation?
     
-    init(model: Recipe,
+    init(model: RecipeProtocol,
          delegate: DetailInfoPresentation?) {
         self.model = model
         self.delegate = delegate
@@ -36,8 +36,8 @@ extension BasicInfoCellBuilder: TVCellBuilderProtocol {
         cell.configure(with: model)
         
         
-        if let urlString = model.image {
-            let imageName = String(urlString.dropFirst(37))
+        if let imageName = model.imageName {
+//            let imageName = String(urlString.dropFirst(37))
             
             delegate?.fetchRecipe(with: imageName) { imageData in
                 DispatchQueue.main.async {
