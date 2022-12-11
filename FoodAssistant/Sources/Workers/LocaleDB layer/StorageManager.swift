@@ -73,7 +73,6 @@ extension StorageManager: DBRecipeManagement {
     func save(recipe: RecipeProtocol, for goal: TargetOfSave) {
         
         switch goal {
-            
         case .favorite:
             if let object = read(model: CDRecipe.self).first(where: {$0.id == recipe.id}) {
                 object.setValue(true, forKey: "isFavorite")
@@ -89,11 +88,6 @@ extension StorageManager: DBRecipeManagement {
         }
         
         saveContext()
-//        let objects = read(model: CDRecipe.self)
-//
-//        guard !objects.contains(where: {$0.id == recipe.id}) else { return }
-//        createCDRecipe(recipe: recipe)
-//        saveContext()
     }
     
     func remove(id: Int, for goal: TargetOfSave) {
