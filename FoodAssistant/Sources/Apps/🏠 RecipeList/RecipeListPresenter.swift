@@ -7,25 +7,64 @@
 
 import Foundation
 
-/// #Типы моделей данных рецептов
-enum RLModelType {
-    /// Рекомендованные
-    case recommended
-    /// Основные
-    case main
+/// #Протокол управления слоем навигации модуля RecipeList
+protocol RecipeListRouting {
+    /// Переход к экрану детальной информации
+    ///  - Parameter model: модель рецепта
+    func routeToDetail(model: RecipeProtocol)
 }
 
-/// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
-protocol RecipeListPresentation: LayoutChangable, SelectedCellDelegate, EventsCellDelegate, AnyObject {
-    /// Вью модели
-    var viewModels: [RLModelType: [RecipeViewModel]] { get }
+/// #Протокол управления View-слоем модуля RecipeList
+protocol RecipeListViewable: AnyObject {
+    /// Обновляет UI
+    /// - Parameter type: тип сборки
+    func updateUI(with type: RLBuildType)
     
-    /// Запрошена загрузка изображения
+    /// Перезагружает секцию коллекции
+    /// - Parameter section: номер секции
+    func reloadSection(_ section: Int)
+    
+    /// Показывает ошибку
+    func showError()
+}
+
+/// #Протокол управления бизнес логикой модуля RecipeList
+protocol RecipeListBusinessLogic {
+    /// Получить модель по идентификатору
+    ///  - Parameters:
+    ///   - id: идентификатор
+    ///   - completion: захватывает модель рецепта
+    func getModel(id: Int,
+                  completion: @escaping (RecipeProtocol) -> Void)
+    
+    /// Получить изображения из сети/кэша
     ///  - Parameters:
     ///   - imageName: название изображения
     ///   - completion: захватывает данные изображения / ошибку
-    func fetchImage(with imageName: String,
-                    completion: @escaping (Data) -> Void)
+    func fetchImage(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    
+    /// Получить рецепт из сети
+    ///  - Parameters:
+    ///   - parameters: установленные параметры
+    ///   - number: количество рецептов
+    ///   - query: поиск по названию
+    ///   - completion: захватывает вью модель рецепта / ошибку
+    func fetchRecipe(with parameters: RecipeFilterParameters,
+                     number: Int,
+                     query: String?,
+                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
+    
+    /// Удалить рецепт
+    /// - Parameter id: идентификатор рецепта
+    func removeRecipe(id: Int)
+    
+    /// Сохранить рецепт
+    /// - Parameters:
+    ///   - id: идентификатор рецепта
+    ///   - target: цель сохранения
+    func saveRecipe(id: Int,
+                    for target: TargetOfSave)
 }
 
 
@@ -33,26 +72,27 @@ protocol RecipeListPresentation: LayoutChangable, SelectedCellDelegate, EventsCe
 /// #Слой презентации модуля RecipeList
 final class RecipeListPresenter {
     
+    private let interactor: RecipeListBusinessLogic
+    private let router: RecipeListRouting
+    
+    weak var view: RecipeListViewable?
+    
     private(set) var viewModels: [RLModelType: [RecipeViewModel]] = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
                       let main = viewModels[.main] else { return }
                 
-                delegate?.updateUI(with: .main(first: recommended,
+                view?.updateUI(with: .main(first: recommended,
                                                second: main))
             } else {
                 guard let main = viewModels[.main] else { return }
-                delegate?.updateUI(with: .search(models: main))
+                view?.updateUI(with: .search(models: main))
             }
         }
     }
     /// Флаг варианта загрузки данных коллекции
     private var isStart: Bool = false
-    
-    weak var delegate: RecipeListViewable?
-    private let interactor: RecipeListBusinessLogic
-    private let router: RecipeListRouting
     
     init(interactor: RecipeListBusinessLogic,
          router: RecipeListRouting) {
@@ -75,32 +115,6 @@ final class RecipeListPresenter {
             }
         }
         
-        interactor.fetchRecipes { [weak self] cdRecipes in
-            
-            let recipes = cdRecipes.map {
-                RecipeViewModel.init(with: $0)
-            }
-            self?.viewModels[.main] = recipes
-            print("_________________")
-            print(cdRecipes)
-            print("_________________")
-            if let first = cdRecipes.first {
-                print(first.id)
-                print(first.title)
-                print(first.ingredients as? [IngredientProtocol])
-                
-                self?.interactor.remove(id: first.id)
-            }
-            
-            
-        }
-        
-//        if let first = recipes.first {
-////            print(first.ingredients?.allObjects as! [CDIngredient])
-//
-//            interactor.delete(id: Int(first.id))
-//        }
-//
 //
 //         Доп запрос
 //                interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
@@ -125,7 +139,7 @@ extension RecipeListPresenter: RecipeListPresentation {
             case .success(let data):
                 completion(data)
             case .failure(_):
-                self?.delegate?.showError()
+                self?.view?.showError()
             }
         }
     }
@@ -135,25 +149,29 @@ extension RecipeListPresenter: RecipeListPresentation {
 extension RecipeListPresenter {
 
     func didTapFavoriteButton(_ isFavorite: Bool, id: Int) {
-        
-        interactor.saveRecipe(id: id)
+        if isFavorite {
+            interactor.saveRecipe(id: id, for: .favorite)
+        } else {
+            interactor.removeRecipe(id: id)
+        }
     }
     
     func didTapAddIngredientsButton(id: Int) {
-        print("didTapAddIngredientsButton")
+        
+        interactor.saveRecipe(id: id, for: .basket)
     }
     
     func didSelectItem(id: Int) {
         interactor.getModel(id: id) { [weak self] model in
-            self?.router.route(to: .detailInfo, model: model)
+            self?.router.routeToDetail(model: model)
         }
     }
     
     func didTapChangeLayoutButton(section: Int) {
+        /// Вызываем уведомление изменения layout
         NotificationCenter.default
                     .post(name: NSNotification.Name("changeLayoutType"),
                      object: nil)
-        
-        delegate?.reloadSection(section)
+        view?.reloadSection(section)
     }
 }

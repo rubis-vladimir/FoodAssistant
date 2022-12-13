@@ -72,11 +72,11 @@ extension UserProfilePresenter: UserProfilePresentation {
         switch index {
         case 0:
             delegate?.updateUI(with: .profile)
-        case 1:
-            let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", amount: 3)
-            let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", amount: 5)
-            let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", amount: 1, unit: "кг")
-            delegate?.updateUI(with: .fridge([ingredient1, ingredient2, ingredient3]))
+        case 1: break
+//            let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", amount: 3)
+//            let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", amount: 5, toUse: false)
+//            let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", amount: 1, unit: "кг", toUse: false)
+//            delegate?.updateUI(with: .fridge([ingredient1, ingredient2, ingredient3]))
         default:
             delegate?.updateUI(with: .favorite(viewModels))
         }

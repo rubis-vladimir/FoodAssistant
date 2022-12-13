@@ -2,7 +2,7 @@
 //  CDRecipe+CoreDataProperties.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 09.12.2022.
+//  Created by Владимир Рубис on 12.12.2022.
 //
 //
 
@@ -11,35 +11,32 @@ import CoreData
 
 
 extension CDRecipe: RecipeProtocol {
-    var inBasket: Bool {
-        false
-    }
     
-    var isFavorite: Bool { true }
+        var id: Int { Int(cdId) }
+        var servings: Int { Int(cdServings) }
     
-    var id: Int { Int(cdId) }
-    var servings: Int { Int(cdServings) }
-
-    var ingredients: [IngredientProtocol]? {
-        return cdIngredients
-    }
+        var ingredients: [IngredientProtocol]? {
+            return cdIngredients
+        }
     
-    var nutrients: [NutrientProtocol]? {
-        return cdNutrients
-    }
+        var nutrients: [NutrientProtocol]? {
+            return cdNutrients
+        }
     
-    var instructions: [InstructionStepProtocol]? {
-        return cdInstructionSteps
-    }
+        var instructions: [InstructionStepProtocol]? {
+            return cdInstructionSteps
+        }
     
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDRecipe> {
         return NSFetchRequest<CDRecipe>(entityName: "CDRecipe")
     }
 
-    @NSManaged public var cookingTime: String
     @NSManaged public var cdId: Int32
-    @NSManaged public var imageName: String?
     @NSManaged public var cdServings: Int16
+    @NSManaged public var cookingTime: String
+    @NSManaged public var imageName: String?
+    @NSManaged public var inBasket: Bool
+    @NSManaged public var isFavorite: Bool
     @NSManaged public var title: String
     @NSManaged public var cdIngredients: [CDIngredient]?
     @NSManaged public var cdInstructionSteps: [CDInstrutionStep]?

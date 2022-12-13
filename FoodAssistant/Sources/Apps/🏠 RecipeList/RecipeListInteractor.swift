@@ -8,37 +8,7 @@
 
 import Foundation
 
-/// #Протокол управления бизнес логикой модуля RecipeList
-protocol RecipeListBusinessLogic {
-    /// Получить модель по идентификатору
-    ///  - Parameters:
-    ///   - id: идентификатор
-    ///   - completion: захватывает модель рецепта
-    func getModel(id: Int,
-                  completion: @escaping (RecipeProtocol) -> Void)
-    
-    /// Получить изображения из сети/кэша
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchImage(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-    
-    /// Получить рецепт из сети
-    ///  - Parameters:
-    ///   - parameters: установленные параметры
-    ///   - number: количество рецептов
-    ///   - query: поиск по названию
-    ///   - completion: захватывает вью модель рецепта / ошибку
-    func fetchRecipe(with parameters: RecipeFilterParameters, number: Int, query: String?,
-                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
-    
-    func fetchRecipes(completion: @escaping ([RecipeProtocol]) -> Void)
-    
-    func remove(id: Int)
-    
-    func saveRecipe(id: Int)
-}
+
 
 
 /// #Слой бизнес логики модуля RecipeList
@@ -66,17 +36,16 @@ final class RecipeListInteractor {
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
     func fetchRecipes(completion: @escaping ([RecipeProtocol]) -> Void) {
-        storage.fetchRecipes(completion: completion)
+        storage.fetchRecipes(for: .favorite, completion: completion)
     }
     
-    func remove(id: Int) {
+    func removeRecipe(id: Int) {
         storage.remove(id: id, for: .favorite)
     }
     
-    func saveRecipe(id: Int) {
+    func saveRecipe(id: Int, for target: TargetOfSave) {
         guard let model = models.first(where: { $0.id == id }) else { return }
-        
-        storage.save(recipe: model, for: .favorite)
+        storage.save(recipe: model, for: target)
     }
     
     
@@ -106,18 +75,23 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
             
             switch result {
             case .success(let responce):
-                guard let recipes = responce.results else { return }
+                /// Получили рецепты из запроса
+                guard var recipes = responce.results else { return }
+                /// Изменяем флаг isFavorite, если рецепт уже записан в любимые
+                for i in 0..<recipes.count {
+                    if self.storage.check(id: recipes[i].id) {
+                        recipes[i].isFavorite = true
+                    }
+                }
                 
                 /// Если установленный язык не базовый
                 if self.currentAppleLanguage() != "Base" {
-                    /// Запрашиваем для рецептов в сервисе
+                    /// Запрашиваем перевод для рецептов в сервисе
                     self.translateService.fetchTranslate(recipes: recipes) { result in
                         
                         switch result {
                         case .success(let newRecipes):
-                            /// Получаем массив рецептов с переведенными текстами
-                            
-                            
+                            /// Получили массив рецептов с переведенными текстами
                             self.models.append(contentsOf: newRecipes)
                             
                             let viewModels = newRecipes.map {
@@ -126,24 +100,23 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                             completion(.success(viewModels))
                             
                         case .failure(let error):
-                            /// Ошибки при переводе
+                            /// Если перевод не удался
                             completion(.failure(error))
                         }
                     }
                 } else {
                     /// Если переводить не нужно
-                    
                     self.models.append(contentsOf: recipes)
+                    
                     let viewModels = recipes.map {
                         RecipeViewModel(with: $0)
                     }
-                    
                     completion(.success(viewModels))
                 }
                 
             case .failure(let error):
+                /// Если запрос рецептов вернул ошибку
                 completion(.failure(error))
-                
             }
         }
     }
@@ -156,39 +129,6 @@ extension RecipeListInteractor {
         guard let urlString = urlString else { return nil }
         return String(urlString.dropFirst(37))
     }
-    
-    /// Преобразует модель рецепта во вью модель
-//    private func convertInShortViewModels(recipes: [RecipeProtocol]) -> [RecipeViewModel] {
-//        var array: [RecipeViewModel] = []
-//
-//        recipes.forEach {
-//            let recipeModel = RecipeViewModel(id: $0.id,
-//                                                   title: $0.title,
-//                                                   ingredientsCount: $0.extendedIngredients?.count ?? 0,
-//                                                   imageName: getImageName(from: $0.image),
-//                                                   isFavorite: false,
-//                                                   cookingTime: $0.cookingTime)
-//            array.append(recipeModel)
-//        }
-//        return array
-//    }
-    
-//    private func convertInViewModels(recipes: [Recipe]) -> [RecipeProtocol] {
-//        var array: [RecipeViewModel] = []
-//        
-//        recipes.forEach {
-//            let recipeModel = RecipeViewModel(id: $0.id,
-//                                              title: $0.title,
-//                                              cookingTime: $0.cookingTime,
-//                                              servings: $0.servings,
-//                                              imageName: $0.image,
-//                                              nutrients: $0.nutrition?.nutrients,
-//                                              ingredients: $0.extendedIngredients,
-//                                              instructionSteps: $0.analyzedInstructions?[0].steps)
-//            array.append(recipeModel)
-//        }
-//        return array
-//    }
     
     /// Проверяет установленный на устройстве язык
     private func currentAppleLanguage() -> String {

@@ -7,8 +7,9 @@
 
 import Foundation
 
+/// #Протокол описывающий рецепт
 protocol RecipeProtocol {
-    
+    /// Идентификатор рецепта
     var id: Int { get }
     /// Название рецепта
     var title: String { get }
@@ -24,22 +25,12 @@ protocol RecipeProtocol {
     var nutrients: [NutrientProtocol]? { get }
     /// Инструкции для приготовления
     var instructions: [InstructionStepProtocol]? { get }
-    
+    /// Флаг любимого рецепта
     var isFavorite: Bool { get }
-    
-    var inBasket: Bool { get }
 }
 
-extension RecipeProtocol {
-    
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        }
-        return false
-    }
-}
 
+/// #Протокол описывающий ингредиент
 protocol IngredientProtocol {
     /// Идентификатор ингредиента
     var id: Int { get }
@@ -51,8 +42,11 @@ protocol IngredientProtocol {
     var amount: Float { get }
     /// Единицы измерения
     var unit: String? { get }
+    /// Флаг использования при приготовлении
+    var toUse: Bool { get }
 }
 
+/// #Протокол описывающий питательное вещество
 protocol NutrientProtocol {
     /// Название
     var name: String { get }
@@ -62,8 +56,9 @@ protocol NutrientProtocol {
     var unit: String { get }
 }
 
+/// #Протокол описывающий шаг в инструкции по приготовлению
 protocol InstructionStepProtocol {
-    /// Номер
+    /// Номер шага
     var number: Int { get }
     /// Текстовая информация
     var step: String { get }

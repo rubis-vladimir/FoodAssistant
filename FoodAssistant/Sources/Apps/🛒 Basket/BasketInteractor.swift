@@ -39,11 +39,8 @@ extension BasketInteractor: BasketBusinessLogic {
     }
     
     func fetchRecipeFromDB(completion: @escaping ([RecipeProtocol]) -> Void) {
-        storage.fetchRecipes { [weak self] recipes in
+        storage.fetchRecipes(for: .basket) { [weak self] recipes in
             self?.models = recipes
-//            let viewModels = recipes.map {
-//                RecipeViewModel(with: $0)
-//            }
             completion(recipes)
         }
     }

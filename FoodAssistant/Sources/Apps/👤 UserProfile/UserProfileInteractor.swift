@@ -62,7 +62,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     }
     
     func fetchRecipeFromDB(completion: @escaping ([RecipeViewModel]) -> Void) {
-        storage.fetchRecipes { [weak self] recipes in
+        storage.fetchRecipes(for: .favorite) { [weak self] recipes in
             self?.models = recipes
             
             let viewModels = recipes.map {

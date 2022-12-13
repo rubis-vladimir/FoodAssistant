@@ -32,23 +32,23 @@ struct Recipe: Codable, Equatable, Hashable {
     /// Инструкции для приготовления
     var analyzedInstructions: [Instruction]?
     
-    /// #Пока не требуются
-//    var vegetarian: Bool
-//    var vegan: Bool
-//    var glutenFree: Bool
-//    var dairyFree: Bool
-//    var cuisines: [String]
-//    var dishTypes: [String]
-//    var diets: [String]
-//    var spoonacularSourceUrl: String?
-//    var isFavorite: Bool?
+    var isFavorite: Bool = false
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.title = try container.decode(String.self, forKey: .title)
+        self.readyInMinutes = try container.decode(Int.self, forKey: .readyInMinutes)
+        self.servings = try container.decode(Int.self, forKey: .servings)
+        self.extendedIngredients = try container.decodeIfPresent([Ingredient].self, forKey: .extendedIngredients)
+        self.image = try container.decodeIfPresent(String.self, forKey: .image)
+        self.nutrition = try container.decodeIfPresent(Nutrition.self, forKey: .nutrition)
+        self.analyzedInstructions = try container.decodeIfPresent([Instruction].self, forKey: .analyzedInstructions)
+    }
 }
 
 // MARK: - RecipeProtocol
 extension Recipe: RecipeProtocol {
-    var inBasket: Bool {
-        false
-    }
     
     var imageName: String? {
         guard let image = image else { return nil }
@@ -72,12 +72,11 @@ extension Recipe: RecipeProtocol {
         ? "\(hours) ч"
         :  "\(minutes) мин"
     }
-    
-    var isFavorite: Bool { false }
 }
 
 // Модель ингредиента
 struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
+    
     /// Идентификатор ингредиента
     var id: Int
     /// Название изображения ингредиента
@@ -88,6 +87,8 @@ struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
     var amount: Float
     /// Единицы измерения
     var unit: String?
+    /// Флаг использования
+    var toUse: Bool { false }
     
     static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
         if lhs.id == rhs.id {

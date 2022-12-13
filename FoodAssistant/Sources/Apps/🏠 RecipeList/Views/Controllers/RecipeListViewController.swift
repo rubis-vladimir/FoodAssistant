@@ -7,15 +7,25 @@
 
 import UIKit
 
-/// #Протокол управления View-слоем модуля RecipeList
-protocol RecipeListViewable: AnyObject {
-    /// Обновляет UI
-    /// - Parameter type: тип сборки
-    func updateUI(with type: RLBuildType)
-    /// Показывает ошибку
-    func showError()
-    
-    func reloadSection(_ section: Int)
+/// #Типы моделей данных рецептов
+enum RLModelType {
+    /// Рекомендованные
+    case recommended
+    /// Основные
+    case main
+}
+
+/// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
+protocol RecipeListPresentation: LayoutChangable,
+                                 SelectedCellDelegate,
+                                 EventsCellDelegate,
+                                 AnyObject {
+    /// Получить изображение
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - completion: захватывает данные изображения / ошибку
+    func fetchImage(with imageName: String,
+                    completion: @escaping (Data) -> Void)
 }
 
 /// #Контроллер представления списка рецептов

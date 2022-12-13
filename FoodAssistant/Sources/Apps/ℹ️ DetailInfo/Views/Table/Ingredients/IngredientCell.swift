@@ -55,7 +55,7 @@ final class IngredientCell: BaseTableViewCell {
     
     func configure(with ingredient: IngredientProtocol) {
         titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount ?? 0) \(ingredient.unit ?? "")"
+        amountLabel.text = "\(ingredient.amount) \(ingredient.unit ?? "")"
     }
     
     func updateImage(with imageData: Data) {

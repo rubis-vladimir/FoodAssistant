@@ -18,18 +18,23 @@ final class RecipeListAssembly {
 
 // MARK: - Assemblying
 extension RecipeListAssembly: Assemblying {
+    
     func assembly() -> UIViewController {
-        
+        /// Менеджер для работы с сетью
         let networkManager = NetworkDataFetcher()
+        /// Сервис перевода текста
         let translateService = TranslateService(dataFetcher: networkManager)
         
+        /// Сервис загрузки изображений
         let imageDownloader = ImageDownloader()
+        /// Сервис кеширования изображений
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
-        
+        /// Менеджер работы с БД
         let storage = StorageManager.shared
         
+        /// Модуль VIPER
         let router = RecipeListRouter(navigationController: navigationController)
         let interactor = RecipeListInteractor(dataFetcher: networkManager,
                                               imageDownloader: imageDownloaderProxy,
@@ -39,7 +44,7 @@ extension RecipeListAssembly: Assemblying {
                                             router: router)
         let viewController = RecipeListViewController(presenter: presenter)
         
-        presenter.delegate = viewController
+        presenter.view = viewController
         presenter.getStartData()
         
         return viewController

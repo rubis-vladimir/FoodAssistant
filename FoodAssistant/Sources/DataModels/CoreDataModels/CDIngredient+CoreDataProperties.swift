@@ -2,7 +2,7 @@
 //  CDIngredient+CoreDataProperties.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 08.12.2022.
+//  Created by Владимир Рубис on 12.12.2022.
 //
 //
 
@@ -12,7 +12,7 @@ import CoreData
 
 extension CDIngredient: IngredientProtocol {
     var id: Int { Int(cdId) }
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDIngredient> {
         return NSFetchRequest<CDIngredient>(entityName: "CDIngredient")
     }
@@ -22,6 +22,8 @@ extension CDIngredient: IngredientProtocol {
     @NSManaged public var image: String?
     @NSManaged public var name: String
     @NSManaged public var unit: String?
+    @NSManaged public var toUse: Bool
+    @NSManaged public var inFridge: Bool
     @NSManaged public var recipe: CDRecipe?
 
 }
