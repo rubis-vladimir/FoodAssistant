@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Ячейка с инструкцией
-final class InstructionCell: BaseTableViewCell {
+final class InstructionCell: TVBaseCell {
     
     private lazy var stepNumberLabel: UILabel = {
         let label = UILabel()

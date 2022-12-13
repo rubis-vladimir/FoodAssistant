@@ -7,10 +7,9 @@
 
 import UIKit
 
-/// #Строитель ячеек секции Recommended
+/// #Строитель ячеек секции AddedRecipes
 final class AddedRecipesItemBuilder {
     
-    private let height: CGFloat = 320
     private let models: [RecipeViewModel]
     
     weak var delegate: BasketPresentation?
@@ -41,7 +40,7 @@ extension AddedRecipesItemBuilder: CVItemBuilderProtocol {
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
         cell.delegate = delegate
-        cell.configure(with: model)
+        cell.configure(with: model, type: .delete)
         
         if let imageName = model.imageName {
             delegate?.fetchRecipeImage(with: imageName) { imageData in

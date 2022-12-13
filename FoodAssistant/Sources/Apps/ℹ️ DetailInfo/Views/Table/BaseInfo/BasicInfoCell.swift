@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Ячейка основной информации Рецепта
-final class BasicInfoCell: BaseTableViewCell {
+final class BasicInfoCell: TVBaseCell {
     
     // MARK: - Properties
     /// Изображение рецепта

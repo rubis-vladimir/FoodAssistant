@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Ячейка с информацией об ингредиенте
-final class IngredientCell: BaseTableViewCell {
+final class IngredientCell: TVBaseCell {
     
     // MARK: - Properties
     /// Вью под изображение ингредиента

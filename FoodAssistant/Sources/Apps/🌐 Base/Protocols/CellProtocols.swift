@@ -35,6 +35,14 @@ protocol FavoriteChangable: AnyObject {
                               id: Int)
 }
 
+/// #Варианты Layout
+enum LayoutType {
+    /// Две в ряду
+    case split2xN
+    /// Одна в ряду
+    case split1xN
+}
+
 /// #Протокол изменения `Layout` секции коллекции
 protocol LayoutChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения `Layout`

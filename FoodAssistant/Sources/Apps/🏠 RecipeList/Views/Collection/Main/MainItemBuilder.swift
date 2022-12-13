@@ -7,21 +7,11 @@
 
 import UIKit
 
-/// #Варианты Layout
-enum LayoutType {
-    /// Две в ряду
-    case split2xN
-    /// Одна в ряду
-    case split1xN
-}
-
 /// #Строитель ячеек секции Main
 final class MainItemBuilder {
     
     private var layoutType: LayoutType = .split2xN
     private let models: [RecipeViewModel]
-    
-    var cellAction: ((IndexPath) -> Void)?
     
     weak var delegate: RecipeListPresentation?
     
@@ -31,14 +21,9 @@ final class MainItemBuilder {
         self.delegate = delegate
         
         signInNotification()
-        
-        cellAction = { indexPath in
-            let model = models[indexPath.item]
-            delegate?.didSelectItem(id: model.id)
-        }
     }
     
-    /// Рассчитывает размер ячеек
+    /// Рассчитывает размеры ячейки
     private func calculateItemSize(width: CGFloat) -> CGSize {
         let padding: CGFloat = AppConstants.padding
         let itemPerRow: CGFloat = layoutType == .split1xN ? 1 : 2
@@ -58,7 +43,7 @@ final class MainItemBuilder {
                                                object: nil)
     }
     
-    /// Изменение
+    /// Изменение `Layout` секции
     @objc private func changeLayoutType() {
         layoutType = layoutType == .split2xN ? .split1xN : .split2xN
     }
@@ -80,40 +65,27 @@ extension MainItemBuilder: CVItemBuilderProtocol {
     
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
+        /// Получаем модель для ячейки
+        let model = models[indexPath.item]
+        /// Получаем вариант исполнения ячейки в зависимости от типа `Layout`
+        let typeCell = layoutType == .split2xN ? FirstRecipeCell.self : SecondRecipeCell.self
         
-        switch layoutType {
-            
-        case .split2xN:
-            let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
-                                                          indexPath: indexPath)
-            let model = models[indexPath.item]
-            cell.delegate = delegate
-            cell.configure(with: model)
-            if let imageName = model.imageName {
-                delegate?.fetchImage(with: imageName) { imageData in
-                    DispatchQueue.main.async {
-                        cell.updateImage(data: imageData)
-                    }
+        /// Создаем и настраиваем ячейку
+        let cell = collectionView.dequeueReusableCell(typeCell,
+                                                      indexPath: indexPath)
+        cell.delegate = delegate
+        cell.configure(with: model, type: .favorite)
+        
+        if let imageName = model.imageName {
+            /// Загрузка изображения
+            delegate?.fetchImage(imageName,
+                                 type: .recipe) { imageData in
+                DispatchQueue.main.async {
+                    cell.updateImage(data: imageData)
                 }
             }
-            
-            return cell
-        case .split1xN:
-            let cell = collectionView.dequeueReusableCell(SecondRecipeCell.self,
-                                                          indexPath: indexPath)
-            let model = models[indexPath.item]
-            cell.delegate = delegate
-            cell.configure(with: model)
-            if let imageName = model.imageName {
-                delegate?.fetchImage(with: imageName) { imageData in
-                    DispatchQueue.main.async {
-                        cell.updateImage(data: imageData)
-                    }
-                }
-            }
-            
-            return cell
         }
+        return cell
     }
     
     

@@ -7,10 +7,8 @@
 
 import UIKit
 
-/// #Конфигуратор секции Recommended в collectionView
+/// #Конфигуратор секции Recommended в коллекции
 final class RecommendedSectionConfigurator {
-    /// Заголовок секции
-    private let title: String = "Рекомендации"
     
     private let models: [RecipeViewModel]
     
@@ -27,20 +25,14 @@ final class RecommendedSectionConfigurator {
 extension RecommendedSectionConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
-        
-        /// Конфигурируем и регистрируем заголовок
-        let headerBuilder = HeaderBuilder(type: .base(title: title))
-        headerBuilder.register(collectionView: collectionView)
-        
         /// Конфигурируем и регистрируем ячейки
         let itemBuilder = RecommendedItemBuilder(models: models,
-                                                 delegate: delegate)
+                                                       delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         
-        /// Конфигурируем секцию
-        let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
-                                           itemBuilder: itemBuilder)
-        return secionBuilder
+        /// Конфигурируем секцию без заголовка
+        let mainSecionBuilder = CVSectionBuilder(headerBuilder: nil,
+                                               itemBuilder: itemBuilder)
+        return mainSecionBuilder
     }
 }
-

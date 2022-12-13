@@ -29,20 +29,14 @@ protocol RecipeListViewable: AnyObject {
 }
 
 /// #Протокол управления бизнес логикой модуля RecipeList
-protocol RecipeListBusinessLogic {
+protocol RecipeListBusinessLogic: ImageBusinessLogic {
+    
     /// Получить модель по идентификатору
     ///  - Parameters:
     ///   - id: идентификатор
-    ///   - completion: захватывает модель рецепта
+    ///   - completion: захватывает рецепт
     func getModel(id: Int,
                   completion: @escaping (RecipeProtocol) -> Void)
-    
-    /// Получить изображения из сети/кэша
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchImage(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
     /// Получить рецепт из сети
     ///  - Parameters:
@@ -92,7 +86,7 @@ final class RecipeListPresenter {
         }
     }
     /// Флаг варианта загрузки данных коллекции
-    private var isStart: Bool = false
+    private var isStart: Bool = true
     
     init(interactor: RecipeListBusinessLogic,
          router: RecipeListRouting) {
@@ -109,32 +103,21 @@ final class RecipeListPresenter {
             case .success(let recipeCellModels):
                 
                 self?.viewModels[.main] = recipeCellModels
-                
+                self?.viewModels[.recommended] = recipeCellModels
             case .failure(_):
                 break
             }
         }
-        
-//
-//         Доп запрос
-//                interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
-//                    switch result {
-//                    case .success(let recipeCellModels):
-//                        self?.viewModels[.recommended] = recipeCellModels
-//                    case .failure(_):
-//                        break
-//                    }
-//                }
-        
     }
 }
 
-// MARK: - Presentation
+// MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
     
-    func fetchImage(with imageName: String,
-               completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName) { [weak self] result in
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Data) -> Void) {
+        interactor.fetchImage(imageName, type: type) { [weak self] result in
             switch result {
             case .success(let data):
                 completion(data)
@@ -143,22 +126,20 @@ extension RecipeListPresenter: RecipeListPresentation {
             }
         }
     }
-}
 
-
-extension RecipeListPresenter {
-
-    func didTapFavoriteButton(_ isFavorite: Bool, id: Int) {
+    func didTapFavoriteButton(_ isFavorite: Bool,
+                              id: Int) {
         if isFavorite {
-            interactor.saveRecipe(id: id, for: .favorite)
+            interactor.saveRecipe(id: id,
+                                  for: .favorite)
         } else {
             interactor.removeRecipe(id: id)
         }
     }
     
     func didTapAddIngredientsButton(id: Int) {
-        
-        interactor.saveRecipe(id: id, for: .basket)
+        interactor.saveRecipe(id: id,
+                              for: .basket)
     }
     
     func didSelectItem(id: Int) {

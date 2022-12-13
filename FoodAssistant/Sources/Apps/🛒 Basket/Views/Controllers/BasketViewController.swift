@@ -7,15 +7,15 @@
 
 import UIKit
 
-/// Протокол управления View-слоем
-protocol BasketViewable: AnyObject {
-    /// Обновление UI
-    func updateUI(with models: [RecipeProtocol])
-    /// Показать ошибку
-    func showError()
+/// #Протокол передачи UI-ивентов слою презентации
+protocol BasketPresentation: FavoriteChangable, AnyObject {
+    func fetchAddedRecipe()
+    
+    func fetchRecipeImage(with imageName: String,
+                          completion: @escaping (Data) -> Void)
 }
 
-/// Контроллер представления корзины 
+/// #Контроллер представления Корзины
 final class BasketViewController: UIViewController {
 
     private let presenter: BasketPresentation

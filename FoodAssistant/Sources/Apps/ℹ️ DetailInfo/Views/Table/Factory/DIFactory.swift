@@ -19,7 +19,7 @@ enum DISectionType {
     case instructions(_ instructions: [InstructionStepProtocol])
 }
 
-/// #Фабрика для настройки табличного представления модуля DetailInfo
+/// #Фабрика для настройки представления коллекции модуля DetailInfo
 final class DIFactory: NSObject {
     
     // MARK: - Properties

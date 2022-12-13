@@ -7,27 +7,8 @@
 
 import UIKit
 
-/// #Второй вариант ячейки коллекции для секции Main !!!! ПОКА НЕ СДЕЛАН !!!
+/// #Второй вариант ячейки Рецепта
 final class SecondRecipeCell: CVBaseRecipeCell {
-    
-    // MARK: - Properties
-    weak var delegate: EventsCellDelegate?
-    
-    private lazy var addToBasketButton: UIButton = {
-        var button = UIButton()
-        button.setImage(Icons.basketSmall.image,
-                        for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.titleLabel?.font = Fonts.main
-        button.tintColor = .white
-        button.layer.add(shadow: AppConstants.Shadow.defaultTwo)
-        button.addTarget(self,
-                         action: #selector(addToBasketButtonTapped),
-                         for: .touchUpInside)
-        button.imageEdgeInsets = AppConstants.edgeInsert
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
     
     // MARK: - Functions
     override func layoutSubviews() {
@@ -35,8 +16,8 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: RecipeViewModel) {
-        super.configure(with: model)
+    override func configure(with model: RecipeViewModel, type: TypeOfButton) {
+        super.configure(with: model, type: type)
         
         addToBasketButton.setTitle("\(model.ingredientsCount)",
                                    for: .normal)
@@ -50,20 +31,6 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         
         setupConstraints()
-    }
-    
-    /// Нажата кнопка изменения флага любимого рецепта
-    @objc override func didFavoriteButtonToggle() {
-        super.didFavoriteButtonToggle()
-        
-        guard let id = id else { return }
-        delegate?.didTapFavoriteButton(isFavorite, id: id)
-    }
-    
-    /// Нажата кнопка добавления в корзину ингредиентов рецепта
-    @objc func addToBasketButtonTapped() {
-        guard let id = id else { return }
-        delegate?.didTapAddIngredientsButton(id: id)
     }
     
     /// Настройка констрейнтов
@@ -82,7 +49,7 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         
         addSubview(recipeImageView)
         addSubview(stack)
-        addSubview(favoriteButton)
+        addSubview(actionButton)
         addSubview(containerTitleLabel)
         
         /// Константы
@@ -103,11 +70,11 @@ final class SecondRecipeCell: CVBaseRecipeCell {
             
             containerTitleLabel.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -paddingMin),
             containerTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            containerTitleLabel.trailingAnchor.constraint(equalTo: favoriteButton.leadingAnchor, constant: -paddingMin),
+            containerTitleLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -paddingMin),
             
-            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            favoriteButton.widthAnchor.constraint(equalToConstant: width),
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            actionButton.widthAnchor.constraint(equalToConstant: width),
             
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),

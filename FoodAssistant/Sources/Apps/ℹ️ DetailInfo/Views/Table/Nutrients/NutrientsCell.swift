@@ -7,12 +7,10 @@
 
 import UIKit
 
-///
-final class NutrientsCell: BaseTableViewCell {
+/// #Ячейка с информацией о питательных веществах
+final class NutrientsCell: TVBaseCell {
     
     // MARK: - Properties
-    private var numberServingsLabel: [UILabel] = []
-    
     private let container: UIStackView = {
        let stack = UIStackView()
         stack.distribution = .fillEqually

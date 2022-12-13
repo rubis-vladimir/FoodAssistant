@@ -1,17 +1,17 @@
 //
-//  RecommendedViewCell.swift
+//  SingleCell.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 23.11.2022.
+//  Created by Владимир Рубис on 11.12.2022.
 //
+
 
 import UIKit
 
-/// #Ячейка коллекции для размещения рекомендованных рецептов
-final class RecommendedViewCell: UICollectionViewCell {
+/// #Ячейка для размещения горизонтальной коллекции
+final class SingleCell: UICollectionViewCell {
     
     // MARK: - Properties
-    weak var delegate: RecipeListPresentation?
     /// Адаптер для конфигурации внутренней коллекции
     private var recipeListAdapter: CVAdapter?
     /// Внутренняя коллекция
@@ -40,12 +40,14 @@ final class RecommendedViewCell: UICollectionViewCell {
     
     // MARK: - Functions
     /// Конфигурирует внутреннюю коллекцию по переданному массиву моделей
-    func configure(with models: [RecipeViewModel]) {
+    func configure(with configurators: [CVSectionConfiguration]) {
         /// Конфигурируем строитель секции
-        let builders = [
-            RecommendedRecipeSectionConfigurator(models: models,
-                                                 delegate: delegate).configure(for: collectionView)
-        ]
+       
+        guard !configurators.isEmpty else { return }
+        
+        
+        let builders = configurators.map { $0.configure(for: collectionView) }
+        
         /// Передаем в адаптер для обновления коллекции
         recipeListAdapter?.configure(with: builders)
     }

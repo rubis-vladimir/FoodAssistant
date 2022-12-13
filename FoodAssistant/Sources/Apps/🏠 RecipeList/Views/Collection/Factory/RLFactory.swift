@@ -16,7 +16,7 @@ enum RLBuildType {
     case search(models: [RecipeViewModel])
 }
 
-/// #Фабрика настройки табличного представления модуля RecipeList
+/// #Фабрика настройки коллекции модуля RecipeList
 final class RLFactory {
     
     private let collectionView: UICollectionView
@@ -58,8 +58,12 @@ final class RLFactory {
                                type: RLModelType) -> CVSectionBuilderProtocol {
         switch type {
         case .recommended:
-            return RecommendedSectionConfigurator(models: models,
-                                                  delegate: delegate).configure(for: collectionView)
+            let configurator = RecommendedSectionConfigurator(models: models,
+                                                              delegate: delegate)
+            return SingleCellSectionConfigurator(title: "Рекомендации",
+                                                 configurators: [configurator],
+                                                 height: 320).configure(for: collectionView)
+            
         case .main:
             return MainSectionConfigurator(models: models,
                                            delegate: delegate).configure(for: collectionView)

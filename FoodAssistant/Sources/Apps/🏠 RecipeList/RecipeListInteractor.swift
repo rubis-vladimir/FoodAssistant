@@ -35,8 +35,19 @@ final class RecipeListInteractor {
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
-    func fetchRecipes(completion: @escaping ([RecipeProtocol]) -> Void) {
-        storage.fetchRecipes(for: .favorite, completion: completion)
+    
+    func getModel(id: Int,
+                  completion: @escaping (RecipeProtocol) -> Void) {
+        guard let model = models.first(where: { $0.id == id }) else { return }
+        completion(model)
+    }
+    
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        ImageRequest
+            .recipe(imageName: imageName)
+            .download(with: imageDownloader, completion: completion)
     }
     
     func removeRecipe(id: Int) {
@@ -47,21 +58,6 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         guard let model = models.first(where: { $0.id == id }) else { return }
         storage.save(recipe: model, for: target)
     }
-    
-    
-    func getModel(id: Int,
-                  completion: @escaping (RecipeProtocol) -> Void) {
-        guard let model = models.first(where: { $0.id == id }) else { return }
-        completion(model)
-    }
-    
-    func fetchImage(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        ImageRequest
-            .recipe(imageName: imageName)
-            .download(with: imageDownloader, completion: completion)
-    }
-    
    
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,

@@ -10,33 +10,14 @@ import UIKit
 /// #Ячейка коллекции для рекомендованных рецептов
 final class ThirdRecipeCell: CVBaseRecipeCell {
     
-    // MARK: - Properties
-    weak var delegate: EventsCellDelegate?
-    
-    private lazy var addToBasketButton: UIButton = {
-        var button = UIButton()
-        button.setImage(Icons.basketSmall.image,
-                        for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.titleLabel?.font = Fonts.main
-        button.tintColor = .white
-        button.layer.add(shadow: AppConstants.Shadow.defaultTwo)
-        button.addTarget(self,
-                         action: #selector(addToBasketButtonTapped),
-                         for: .touchUpInside)
-        button.imageEdgeInsets = AppConstants.edgeInsert
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     // MARK: - Functions
     override func layoutSubviews() {
         super.layoutSubviews()
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: RecipeViewModel) {
-        super.configure(with: model)
+    override func configure(with model: RecipeViewModel, type: TypeOfButton) {
+        super.configure(with: model, type: type)
         
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",
                                    for: .normal)
@@ -50,20 +31,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         
         setupConstraints()
-    }
-    
-    /// Нажата кнопка изменения флага любимого рецепта
-    @objc override func didFavoriteButtonToggle() {
-        super.didFavoriteButtonToggle()
-        
-        guard let id = id else { return }
-        delegate?.didTapFavoriteButton(isFavorite, id: id)
-    }
-    
-    /// Нажата кнопка добавления в корзину ингредиентов рецепта
-    @objc func addToBasketButtonTapped() {
-        guard let id = id else { return }
-        delegate?.didTapAddIngredientsButton(id: id)
     }
     
     /// Настройка констрейнтов
@@ -83,7 +50,7 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         
         addSubview(recipeImageView)
         addSubview(stack)
-        addSubview(favoriteButton)
+        addSubview(actionButton)
         
         /// Константы
         let padding: CGFloat = AppConstants.padding
@@ -100,8 +67,8 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
             
             cookingTimeLabel.leadingAnchor.constraint(equalTo: containerCookingLabel.leadingAnchor, constant: paddingCL),
             
-            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             
             addToBasketButton.heightAnchor.constraint(equalToConstant: heightTwo),
             

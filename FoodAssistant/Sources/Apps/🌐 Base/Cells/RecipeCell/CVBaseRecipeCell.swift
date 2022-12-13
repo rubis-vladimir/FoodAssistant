@@ -7,19 +7,26 @@
 
 import UIKit
 
+enum TypeOfButton {
+    case favorite
+    case delete
+}
+
 /// #Базовая ячейка рецепта
 class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Properties
+    
+    weak var delegate: EventsCellDelegate?
     /// Идентификатор рецепта
     var id: Int?
     /// Флаг любимого рецепта
     var isFavorite: Bool = false {
         didSet {
             if isFavorite {
-                favoriteButton.setImage(Icons.heartFill.image, for: .normal)
+                actionButton.setImage(Icons.heartFill.image, for: .normal)
             } else {
-                favoriteButton.setImage(Icons.heart.image, for: .normal)
+                actionButton.setImage(Icons.heart.image, for: .normal)
             }
         }
     }
@@ -39,14 +46,29 @@ class CVBaseRecipeCell: UICollectionViewCell {
         iv.tintColor = .white
         iv.layer.add(shadow: AppConstants.Shadow.defaultOne)
         iv.clipsToBounds = true
+        iv.isUserInteractionEnabled = true
         iv.translatesAutoresizingMaskIntoConstraints = false
         return iv
     }()
     
     /// Кнопка изменения флага любимого рецепта
-    let favoriteButton: UIButton = {
+    let actionButton: UIButton = {
         var button = UIButton()
         button.imageView?.tintColor = Palette.darkColor.color
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    // MARK: - Properties
+    let addToBasketButton: UIButton = {
+        var button = UIButton()
+        button.setImage(Icons.basketSmall.image,
+                        for: .normal)
+        button.backgroundColor = Palette.darkColor.color
+        button.titleLabel?.font = Fonts.main
+        button.tintColor = .white
+        button.layer.add(shadow: AppConstants.Shadow.defaultTwo)
+        button.imageEdgeInsets = AppConstants.edgeInsert
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -100,16 +122,31 @@ class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Functions
     /// Конфигурирует ячейку по модели рецептов
-    func configure(with model: RecipeViewModel) {
+    func configure(with model: RecipeViewModel,
+                   type: TypeOfButton) {
         titleRecipeLabel.text = model.title
         cookingTimeLabel.text = model.cookingTime + " "
-        isFavorite = model.isFavorite
         id = model.id
         
         if model.imageName != nil {
             addSubview(activity)
             activity.setupSpinner(loadingImageView: recipeImageView)
         }
+        
+        switch type {
+            
+        case .favorite:
+            isFavorite = model.isFavorite
+            actionButton.addTarget(self,
+                                     action: #selector(didFavoriteButtonTapped),
+                                     for: .touchUpInside)
+        case .delete:
+            actionButton.setImage(Icons.xmark.image, for: .normal)
+            actionButton.addTarget(self,
+                                     action: #selector(didDeleteButtonTapped),
+                                     for: .touchUpInside)
+        }
+        
     }
     
     /// Обновляет изображение рецепта
@@ -130,14 +167,29 @@ class CVBaseRecipeCell: UICollectionViewCell {
 
     /// Функция для настройки ячейки
     func setupCell() {
-        favoriteButton.addTarget(self,
-                                 action: #selector(didFavoriteButtonToggle),
-                                 for: .touchUpInside)
+        addToBasketButton.addTarget(self,
+                                    action: #selector(addToBasketButtonTapped),
+                                    for: .touchUpInside)
     }
     
     /// Нажата кнопка изменения флага любимого рецепта
-    @objc func didFavoriteButtonToggle() {
+    @objc func didDeleteButtonTapped() {
+        guard let id = id else { return }
+        delegate?.didTapFavoriteButton(false, id: id)
+    }
+
+    /// Нажата кнопка изменения флага любимого рецепта
+    @objc func didFavoriteButtonTapped() {
         isFavorite.toggle()
+        
+        guard let id = id else { return }
+        delegate?.didTapFavoriteButton(isFavorite, id: id)
+    }
+    
+    /// Нажата кнопка добавления в корзину ингредиентов рецепта
+    @objc func addToBasketButtonTapped() {
+        guard let id = id else { return }
+        delegate?.didTapAddIngredientsButton(id: id)
     }
 }
 

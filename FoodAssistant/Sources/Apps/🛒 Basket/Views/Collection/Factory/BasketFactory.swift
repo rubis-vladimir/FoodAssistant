@@ -12,8 +12,7 @@ enum BasketModelType {
     case ingredients
 }
 
-
-/// #Фабрика настройки табличного представления модуля AddEvent
+/// #Фабрика настройки коллекции модуля Basket
 final class BasketFactory: NSObject {
     
     private let collectionView: UICollectionView

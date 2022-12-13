@@ -1,14 +1,14 @@
 //
-//  AddedRecipesConfigurator.swift
+//  AddedIngredientsConfigurator.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 11.12.2022.
+//  Created by Владимир Рубис on 13.12.2022.
 //
 
 import UIKit
 
 /// #Конфигуратор секции AddedRecipes в коллекции
-final class AddedRecipesConfigurator {
+final class AddedIngredientsConfigurator {
     
     private let models: [RecipeViewModel]
     
@@ -22,7 +22,7 @@ final class AddedRecipesConfigurator {
 }
     
 // MARK: - CVSectionConfiguration
-extension AddedRecipesConfigurator: CVSectionConfiguration {
+extension AddedIngredientsConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
         

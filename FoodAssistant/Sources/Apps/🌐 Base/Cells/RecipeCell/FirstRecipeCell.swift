@@ -10,24 +10,15 @@ import UIKit
 /// #Ячейка коллекции для секции Main
 final class FirstRecipeCell: CVBaseRecipeCell {
     
-    weak var delegate: FavoriteChangable?
-    
     // MARK: - Override func
     override func setupCell() {
+        super.setupCell()
         recipeImageView.layer.cornerRadius = AppConstants.cornerRadius
         
         setupConstraints()
     }
     
     // MARK: - Private func
-    /// Нажата кнопка изменения флага любимого рецепта
-    @objc override func didFavoriteButtonToggle() {
-        super.didFavoriteButtonToggle()
-        
-        guard let id = id else { return }
-        delegate?.didTapFavoriteButton(isFavorite, id: id)
-    }
-    
     /// Настройка констрейнтов
     private func setupConstraints() {
         /// Основной стэк
@@ -47,7 +38,7 @@ final class FirstRecipeCell: CVBaseRecipeCell {
         stack.addArrangedSubview(containerTitleLabel)
         
         addSubview(stack)
-        addSubview(favoriteButton)
+        addSubview(actionButton)
         
         /// Констрейнты
         let heightOne: CGFloat = 30
@@ -61,8 +52,8 @@ final class FirstRecipeCell: CVBaseRecipeCell {
             
             cookingTimeLabel.leadingAnchor.constraint(equalTo: containerCookingLabel.leadingAnchor, constant: paddingCL),
             
-            favoriteButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
-            favoriteButton.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
+            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
             
             containerTitleLabel.heightAnchor.constraint(equalToConstant: heightTwo),
             

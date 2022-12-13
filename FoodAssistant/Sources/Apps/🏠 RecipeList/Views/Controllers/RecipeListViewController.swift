@@ -19,14 +19,8 @@ enum RLModelType {
 protocol RecipeListPresentation: LayoutChangable,
                                  SelectedCellDelegate,
                                  EventsCellDelegate,
-                                 AnyObject {
-    /// Получить изображение
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchImage(with imageName: String,
-                    completion: @escaping (Data) -> Void)
-}
+                                 ImagePresentation,
+                                 AnyObject { }
 
 /// #Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {

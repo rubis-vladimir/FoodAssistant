@@ -73,7 +73,7 @@ extension FavoriteItemBuilder: CVItemBuilderProtocol {
                                                           indexPath: indexPath)
             let model = models[indexPath.item]
             cell.delegate = delegate
-            cell.configure(with: model)
+            cell.configure(with: model, type: .delete)
             if let imageName = model.imageName {
                 delegate?.fetchRecipeImage(with: imageName) { imageData in
                     DispatchQueue.main.async {
@@ -88,7 +88,7 @@ extension FavoriteItemBuilder: CVItemBuilderProtocol {
                                                           indexPath: indexPath)
             let model = models[indexPath.item]
             cell.delegate = delegate
-            cell.configure(with: model)
+            cell.configure(with: model, type: .delete)
             if let imageName = model.imageName {
                 delegate?.fetchRecipeImage(with: imageName) { imageData in
                     DispatchQueue.main.async {
