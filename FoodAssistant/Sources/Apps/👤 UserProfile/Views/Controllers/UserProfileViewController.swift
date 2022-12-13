@@ -7,17 +7,33 @@
 
 import UIKit
 
-/// Протокол управления View-слоем
-protocol UserProfileViewable: AnyObject {
-    /// Обновление UI
-    func updateUI(with type: UPBuildType)
-    /// Показать ошибку
-    func showError()
+
+/// #Протокол передачи UI-ивентов слою презентации
+protocol UserProfilePresentation: EventsCellDelegate,
+                                  LayoutChangable,
+                                  SelectedCellDelegate,
+                                  SegmentedViewDelegate,
+                                  AnyObject {
+    /// Запрошена загрузка изображения
+    ///  - Parameters:
+    ///   - imageName: название изображения
+    ///   - completion: захватывает данные изображения / ошибку
+    func fetchRecipeImage(with imageName: String,
+                          completion: @escaping (Data) -> Void)
+    func fetchIngredientImage(with imageName: String, size: ImageSize,
+                              completion: @escaping (Data) -> Void)
     
-    func reloadSection(_ section: Int)
+    func fetchRecipe()
 }
 
-/// Контроллер представления
+/// #Протокол управления UI-ивентами сегмент-вью
+protocol SegmentedViewDelegate {
+    /// Ивент при выборе элемента
+    ///  - Parameter index: индекс элемента
+    func didSelectItem(index: Int)
+}
+
+/// #Контроллер представления профиля пользователя
 final class UserProfileViewController: UIViewController {
     
     /// Фабрика настройки табличного представления
@@ -42,13 +58,6 @@ final class UserProfileViewController: UIViewController {
         setupNavigationBar()
         setupElements()
         
-//        let models = presenter.viewModels
-//        factory = UPFactory(collectionView: collectionView,
-//                            delegate: presenter,
-//                            buildType: .favorite(models))
-        //        DispatchQueue.main.async {
-        //            self.collectionView.reloadData()
-        //        }
         factory = UPFactory(collectionView: collectionView,
                             delegate: presenter,
                             buildType: .profile)

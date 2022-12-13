@@ -7,32 +7,34 @@
 
 import Foundation
 
-/// #Протокол передачи UI-ивентов слою презентации
-protocol DetailInfoPresentation: AnyObject {
-    /// Модель рецепта
-    var model: RecipeProtocol { get }
+/// #Протокол делегата прокрутки экрана
+protocol ScrollDelegate: AnyObject {
+    /// Отслеживает перемещение scrollView
+    /// - Parameter offset: перемещение Y
+    func scrollViewDidScroll(to offset: CGFloat)
+}
+
+/// #Протокол управления бизнес логикой модуля DetailInfo
+protocol DetailInfoBusinessLogic {
     
-    /// Запрошена загрузка изображения
+    /// Получить изображения из сети/кэша
     ///  - Parameters:
     ///   - imageName: название изображения
     ///   - completion: захватывает данные изображения / ошибку
-    func fetchRecipe(with imageName: String,
-                     completion: @escaping (Data) -> Void)
+    func fetchImageRecipe(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
     
-    /// Запрошена загрузка изображения
+    /// Получить изображения из сети/кэша
     ///  - Parameters:
     ///   - imageName: название изображения
     ///   - size: размер изображения
     ///   - completion: захватывает данные изображения / ошибку
-    func fetchIngredients(with imageName: String,
-                          size: ImageSize,
-                          completion: @escaping (Data) -> Void)
-    
-    /// Нажата кнопка назад
-    func didTapBackButton()
+    func fetchImageIngredients(_ imageName: String,
+                               size: ImageSize,
+                               completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
-/// #Слой презентации модуля
+/// #Слой презентации модуля DetailInfo
 final class DetailInfoPresenter {
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting

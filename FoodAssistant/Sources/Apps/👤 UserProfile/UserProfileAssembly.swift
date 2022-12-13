@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Компоновщик модуля UserProfile
+/// #Компоновщик модуля UserProfile
 final class UserProfileAssembly {
     private let navigationController: UINavigationController
     

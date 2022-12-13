@@ -7,20 +7,7 @@
 
 import UIKit
 
-/// Навигация в модуле
-enum UserProfileTarget {
-    /// Детальная информация
-    case detailInfo
-}
-
-/// Протокол управления слоем навигации модуля
-protocol UserProfileRouting {
-    /// Переход к следующему экрану
-    ///  - Parameter to: вариант перехода
-    func route(to: UserProfileTarget, model: RecipeProtocol)
-}
-
-/// Слой навигации модуля
+/// #Слой навигации модуля
 final class UserProfileRouter {
     private let navigationController: UINavigationController
     
@@ -29,7 +16,7 @@ final class UserProfileRouter {
     }
 }
 
-// MARK: - Routing
+// MARK: - UserProfileRouting
 extension UserProfileRouter: UserProfileRouting {
     func route(to: UserProfileTarget, model: RecipeProtocol) {
         switch to {

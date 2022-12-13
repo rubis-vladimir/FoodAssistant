@@ -17,6 +17,14 @@ protocol BasketViewable: AnyObject {
     func showError()
 }
 
+/// #Протокол управления бизнес логикой модуля Basket
+protocol BasketBusinessLogic {
+    func fetchRecipeFromDB(completion: @escaping ([RecipeProtocol]) -> Void)
+    
+    func fetchRecipeImage(_ imageName: String,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+}
+
 /// #Слой презентации модуля Basket
 final class BasketPresenter {
     

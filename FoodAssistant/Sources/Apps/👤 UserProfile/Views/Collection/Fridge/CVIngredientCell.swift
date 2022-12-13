@@ -95,7 +95,7 @@ final class CVIngredientCell: UICollectionViewCell {
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
             ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
-            amountLabel.widthAnchor.constraint(equalToConstant: 70),
+            amountLabel.widthAnchor.constraint(equalToConstant: 50),
             useIngredientButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])
     }

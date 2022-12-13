@@ -107,11 +107,11 @@ class UPCustomSegmentedControl: UIView {
     
     @objc func buttonTapped(sender: UIButton) {
         didSelectButton(at: sender.tag)
-        delegate?.didSelectPage(index: sender.tag)
+        delegate?.didSelectItem(index: sender.tag)
     }
     
     func didSelectButton(at index: Int) {
-        self.delegate?.didSelectPage(index: index)
+        self.delegate?.didSelectItem(index: index)
         
         let oldButton = buttons[currentIndex]
         let newButton = buttons[index]

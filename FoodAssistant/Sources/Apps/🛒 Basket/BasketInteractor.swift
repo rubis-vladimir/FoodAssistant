@@ -7,15 +7,9 @@
 
 import Foundation
 
-/// Протокол управления бизнес логикой модуля Basket
-protocol BasketBusinessLogic {
-    func fetchRecipeFromDB(completion: @escaping ([RecipeProtocol]) -> Void)
-    
-    func fetchRecipeImage(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-}
 
-/// Слой бизнес логике модуля Basket
+
+/// #Слой бизнес логике модуля Basket
 final class BasketInteractor {
     private var models: [RecipeProtocol] = []
 

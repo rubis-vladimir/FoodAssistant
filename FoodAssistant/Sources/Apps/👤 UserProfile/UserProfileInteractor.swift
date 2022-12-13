@@ -7,27 +7,7 @@
 
 import Foundation
 
-/// Протокол управления бизнес логикой модуля UserProfile
-protocol UserProfileBusinessLogic {
-    
-    func getModel(id: Int,
-                  completion: @escaping (RecipeProtocol) -> Void)
-    
-    /// Получить изображения из сети/кэша
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchRecipeImage(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-    
-    func fetchIngredientImage(_ imageName: String, size: ImageSize,
-                              completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-    
-    func fetchRecipeFromDB(completion: @escaping ([RecipeViewModel]) -> Void)
-    
-}
-
-/// Слой бизнес логике модуля UserProfile
+/// #Слой бизнес логике модуля UserProfile
 final class UserProfileInteractor {
     private var models: [RecipeProtocol] = []
 
@@ -41,7 +21,7 @@ final class UserProfileInteractor {
     }
 }
 
-// MARK: - BusinessLogic
+// MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
     func getModel(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }

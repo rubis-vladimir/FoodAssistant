@@ -39,7 +39,7 @@ extension AddedRecipesItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.delegate = delegate
+//        cell.delegate = delegate
         cell.configure(with: model, type: .delete)
         
         if let imageName = model.imageName {
