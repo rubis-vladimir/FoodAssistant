@@ -17,7 +17,7 @@ extension CDRecipe: RecipeProtocol {
     
         var ingredients: [IngredientProtocol]? {
             return cdIngredients
-        }
+        	}
     
         var nutrients: [NutrientProtocol]? {
             return cdNutrients

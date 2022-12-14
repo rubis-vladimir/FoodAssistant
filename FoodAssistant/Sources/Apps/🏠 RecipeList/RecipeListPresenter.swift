@@ -29,15 +29,8 @@ protocol RecipeListViewable: AnyObject {
 }
 
 /// #Протокол управления бизнес логикой модуля RecipeList
-protocol RecipeListBusinessLogic: ImageBusinessLogic {
-    
-    /// Получить модель по идентификатору
-    ///  - Parameters:
-    ///   - id: идентификатор
-    ///   - completion: захватывает рецепт
-    func getModel(id: Int,
-                  completion: @escaping (RecipeProtocol) -> Void)
-    
+protocol RecipeListBusinessLogic: RecipeReceived,
+                                  ImageBusinessLogic {
     /// Получить рецепт из сети
     ///  - Parameters:
     ///   - parameters: установленные параметры
@@ -71,7 +64,7 @@ final class RecipeListPresenter {
     
     weak var view: RecipeListViewable?
     
-    private(set) var viewModels: [RLModelType: [RecipeViewModel]] = [:] {
+    private(set) var viewModels: [RLSectionType: [RecipeViewModel]] = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
@@ -98,7 +91,7 @@ final class RecipeListPresenter {
     func getStartData() {
         let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 4, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 
@@ -137,13 +130,14 @@ extension RecipeListPresenter: RecipeListPresentation {
         }
     }
     
-    func didTapAddIngredientsButton(id: Int) {
+    func didTapAddInBasketButton(id: Int) {
         interactor.saveRecipe(id: id,
                               for: .basket)
     }
     
+    
     func didSelectItem(id: Int) {
-        interactor.getModel(id: id) { [weak self] model in
+        interactor.getRecipe(id: id) { [weak self] model in
             self?.router.routeToDetail(model: model)
         }
     }

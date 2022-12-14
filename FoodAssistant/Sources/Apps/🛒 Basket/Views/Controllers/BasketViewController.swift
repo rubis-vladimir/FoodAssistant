@@ -7,21 +7,25 @@
 
 import UIKit
 
-/// #Протокол передачи UI-ивентов слою презентации
-protocol BasketPresentation: FavoriteChangable, AnyObject {
+/// #Протокол передачи UI-ивентов слою презентации модуля Basket
+protocol BasketPresentation: RecipeRemovable,
+                             ImagePresentation,
+                             SelectedCellDelegate,
+                             AnyObject {
     func fetchAddedRecipe()
     
-    func fetchRecipeImage(with imageName: String,
-                          completion: @escaping (Data) -> Void)
+    func route(to: BasketTarget)
 }
 
 /// #Контроллер представления Корзины
 final class BasketViewController: UIViewController {
 
+    // MARK: - Properties
     private let presenter: BasketPresentation
     private var factory: CVFactoryProtocol?
     private var collectionView: UICollectionView!
     
+    // MARK: - Init & ViewDidLoad
     init(presenter: BasketPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -30,7 +34,6 @@ final class BasketViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,15 +44,15 @@ final class BasketViewController: UIViewController {
         presenter.fetchAddedRecipe()
     }
     
-    func setupElements() {
-        
+    // MARK: - Private func
+    private func setupElements() {
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: getFlowLayout())
         
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .blue
+        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(collectionView)
@@ -78,42 +81,37 @@ final class BasketViewController: UIViewController {
     /// Настраивает кастомный NavigitionBar
     private func setupNavigitionBarViews() {
         
-        let cancelLeftButton = createCustomBarButton(
+        let dismissButton = createCustomBarButton(
             icon: .xmark,
-            selector: #selector(cancelLeftButtonTapped)
+            selector: #selector(dismissButtonTapped)
         )
         
         let label = UILabel()
         label.text = "Корзина"
         
-        navigationItem.leftBarButtonItems = [cancelLeftButton]
+        navigationItem.leftBarButtonItems = [dismissButton]
         navigationItem.titleView = label
     }
-    
-    /// Сохраняет событие и скрывает экран
-    @objc private func saveAndExitRightButtonTapped() {
-        
-    }
-    
+
     /// Скрывает экран
-    @objc private func cancelLeftButtonTapped() {
-        dismissVC()
-    }
-    
-    private func dismissVC() {
-        guard let nc = navigationController else { return }
-        nc.createCustomTransition(with: .fade)
-        nc.navigationBar.isHidden = true
-        nc.popViewController(animated: false)
+    @objc private func dismissButtonTapped() {
+        presenter.route(to: .back)
     }
 }
 
 // MARK: - BasketViewable
 extension BasketViewController: BasketViewable {
-    func updateUI(with models: [RecipeProtocol]) {
-        factory = BasketFactory(collectionView: collectionView,
-                                models: models,
-                                delegate: presenter)
+    func updateCV(recipes: [RecipeProtocol],
+                  ingredients: [IngredientProtocol]) {
+        if recipes.isEmpty {
+            factory = nil
+            collectionView.reloadData()
+        } else {
+            factory = BasketFactory(collectionView: collectionView,
+                                    recipes: recipes,
+                                    ingredients: ingredients,
+                                    delegate: presenter)
+        }
     }
     
     

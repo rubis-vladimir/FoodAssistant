@@ -9,7 +9,7 @@ import UIKit
 
 /// #Строитель ячеек секции RecommendedRecipe
 final class AddedIngredientsItemBuilder {
-    private let height: CGFloat = 66
+    private let height: CGFloat = 55
     private let models: [IngredientProtocol]
     
     weak var delegate: BasketPresentation?
@@ -41,13 +41,13 @@ extension AddedIngredientsItemBuilder: CVItemBuilderProtocol {
         let model = models[indexPath.item]
         cell.configure(with: model)
         
-//        if let imageName = model.image {
-//            delegate?.fetchIngredientImage(with: imageName, size: .mini) { imageData in
-//                DispatchQueue.main.async {
-//                    cell.updateImage(with: imageData)
-//                }
-//            }
-//        }
+        if let imageName = model.image {
+            delegate?.fetchImage(imageName, type: .ingredient) { imageData in
+                DispatchQueue.main.async {
+                    cell.updateImage(with: imageData)
+                }
+            }
+        }
         return cell
     }
 }

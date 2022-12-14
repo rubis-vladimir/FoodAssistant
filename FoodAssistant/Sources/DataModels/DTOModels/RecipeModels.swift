@@ -32,18 +32,12 @@ struct Recipe: Codable, Equatable, Hashable {
     /// Инструкции для приготовления
     var analyzedInstructions: [Instruction]?
     
+    /// Собственное свойство модели
+    /// Флаг избранного рецепта
     var isFavorite: Bool = false
     
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.id = try container.decode(Int.self, forKey: .id)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.readyInMinutes = try container.decode(Int.self, forKey: .readyInMinutes)
-        self.servings = try container.decode(Int.self, forKey: .servings)
-        self.extendedIngredients = try container.decodeIfPresent([Ingredient].self, forKey: .extendedIngredients)
-        self.image = try container.decodeIfPresent(String.self, forKey: .image)
-        self.nutrition = try container.decodeIfPresent(Nutrition.self, forKey: .nutrition)
-        self.analyzedInstructions = try container.decodeIfPresent([Instruction].self, forKey: .analyzedInstructions)
+    enum CodingKeys: CodingKey {
+        case id, title, readyInMinutes, servings, extendedIngredients, image, nutrition, analyzedInstructions
     }
 }
 

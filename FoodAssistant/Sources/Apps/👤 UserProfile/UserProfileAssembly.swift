@@ -33,7 +33,7 @@ extension UserProfileAssembly: Assemblying {
         let presenter = UserProfilePresenter(interactor: interactor,
                                   router: router)
         let viewController = UserProfileViewController(presenter: presenter)
-        presenter.delegate = viewController
+        presenter.view = viewController
         return viewController
     }
 }

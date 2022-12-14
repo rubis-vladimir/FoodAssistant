@@ -7,7 +7,15 @@
 
 import UIKit
 
-/// #Типы сборок коллекции модуля RecipeList
+/// #Варианты секций модуля RecipeList
+enum RLSectionType {
+    /// Рекомендованные
+    case recommended
+    /// Основные
+    case main
+}
+
+/// #Варианты сборок коллекции модуля RecipeList
 enum RLBuildType {
     /// Основная при загрузке
     case main(first: [RecipeViewModel],
@@ -55,7 +63,7 @@ final class RLFactory {
     ///     - type: тип ячейки
     ///   - Return: объект протокола строителя
     private func createBuilder(models: [RecipeViewModel],
-                               type: RLModelType) -> CVSectionBuilderProtocol {
+                               type: RLSectionType) -> CVSectionBuilderProtocol {
         switch type {
         case .recommended:
             let configurator = RecommendedSectionConfigurator(models: models,
@@ -78,9 +86,7 @@ extension RLFactory: CVFactoryProtocol {
         var builders: [CVSectionBuilderProtocol] = []
         
         switch buildType {
-            
         case let .main(first, second):
-            
             builders.append(contentsOf: [
                 createBuilder(models: first, type: .recommended),
                 createBuilder(models: second, type: .main)

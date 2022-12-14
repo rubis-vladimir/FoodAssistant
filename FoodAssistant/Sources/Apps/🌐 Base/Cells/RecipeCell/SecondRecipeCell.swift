@@ -16,7 +16,7 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: RecipeViewModel, type: TypeOfButton) {
+    override func configure(with model: RecipeViewModel, type: TypeOfActionButton) {
         super.configure(with: model, type: type)
         
         addToBasketButton.setTitle("\(model.ingredientsCount)",
@@ -37,7 +37,7 @@ final class SecondRecipeCell: CVBaseRecipeCell {
     private func setupConstraints() {
         
         titleRecipeLabel.numberOfLines = 0
-        containerTitleLabel.addArrangedSubview(titleRecipeLabel)
+        containerTopLabel.addArrangedSubview(titleRecipeLabel)
         
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -50,7 +50,7 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         addSubview(recipeImageView)
         addSubview(stack)
         addSubview(actionButton)
-        addSubview(containerTitleLabel)
+        addSubview(containerTopLabel)
         
         /// Константы
         let padding: CGFloat = AppConstants.padding
@@ -66,11 +66,11 @@ final class SecondRecipeCell: CVBaseRecipeCell {
             recipeImageView.topAnchor.constraint(equalTo: topAnchor),
             recipeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             recipeImageView.heightAnchor.constraint(equalTo: recipeImageView.widthAnchor),
-            recipeImageView.trailingAnchor.constraint(equalTo: containerTitleLabel.leadingAnchor, constant: -padding),
+            recipeImageView.trailingAnchor.constraint(equalTo: containerTopLabel.leadingAnchor, constant: -padding),
             
-            containerTitleLabel.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -paddingMin),
-            containerTitleLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            containerTitleLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -paddingMin),
+            containerTopLabel.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -paddingMin),
+            containerTopLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            containerTopLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -paddingMin),
             
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
@@ -78,7 +78,7 @@ final class SecondRecipeCell: CVBaseRecipeCell {
             
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-            stack.leadingAnchor.constraint(equalTo: containerTitleLabel.leadingAnchor),
+            stack.leadingAnchor.constraint(equalTo: containerTopLabel.leadingAnchor),
             
             addToBasketButton.heightAnchor.constraint(equalToConstant: height),
             addToBasketButton.widthAnchor.constraint(equalToConstant: widthAB)

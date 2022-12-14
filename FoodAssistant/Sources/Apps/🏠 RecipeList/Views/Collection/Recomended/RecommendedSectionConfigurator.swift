@@ -31,8 +31,8 @@ extension RecommendedSectionConfigurator: CVSectionConfiguration {
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию без заголовка
-        let mainSecionBuilder = CVSectionBuilder(headerBuilder: nil,
+        let secionBuilder = CVSectionBuilder(headerBuilder: nil,
                                                itemBuilder: itemBuilder)
-        return mainSecionBuilder
+        return secionBuilder
     }
 }

@@ -7,18 +7,11 @@
 
 import UIKit
 
-/// #Типы моделей данных рецептов
-enum RLModelType {
-    /// Рекомендованные
-    case recommended
-    /// Основные
-    case main
-}
-
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeList
 protocol RecipeListPresentation: LayoutChangable,
                                  SelectedCellDelegate,
-                                 EventsCellDelegate,
+                                 FavoriteChangable,
+                                 InBasketAdded,
                                  ImagePresentation,
                                  AnyObject { }
 

@@ -63,9 +63,11 @@ extension CVAdapter: UICollectionViewDataSource {
 extension CVAdapter: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        builders[indexPath.section]
-            .itemBuilder
-            .didSelectItem(indexPath: indexPath)
+        
+        /// Для ячеек с расширенной функциональностью
+        if let itemBuilder = builders[indexPath.section].itemBuilder as? CVSelectableItemBuilderProtocol {
+            itemBuilder.didSelectItem(indexPath: indexPath)
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView,

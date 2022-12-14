@@ -7,8 +7,11 @@
 
 import UIKit
 
-enum BasketModelType {
+/// #Варианты секций модуля Basket
+enum BasketSectionType {
+    /// Добавленные рецепты
     case addedRecipe
+    /// Добавленные ингредиенты
     case ingredients
 }
 
@@ -16,7 +19,8 @@ enum BasketModelType {
 final class BasketFactory: NSObject {
     
     private let collectionView: UICollectionView
-    private let models: [RecipeProtocol]
+    private let recipes: [RecipeProtocol]
+    private let ingredients: [IngredientProtocol]
     private let cvAdapter: CVAdapter
     
     private weak var delegate: BasketPresentation?
@@ -26,10 +30,12 @@ final class BasketFactory: NSObject {
     ///    - tableView: настраиваемая таблица
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
-         models: [RecipeProtocol],
+         recipes: [RecipeProtocol],
+         ingredients: [IngredientProtocol],
          delegate: BasketPresentation?) {
         self.collectionView = collectionView
-        self.models = models
+        self.recipes = recipes
+        self.ingredients = ingredients
         self.delegate = delegate
         
         cvAdapter = CVAdapter(collectionView: collectionView)
@@ -50,28 +56,23 @@ final class BasketFactory: NSObject {
     /// Создает строителя ячеек
     ///  - Parameters:
     ///     - model: модель данных
-    ///     - type: тип ячейки
+    ///     - type: тип секции
     ///   - Return: объект протокола строителя
-    private func createBuilder(type: BasketModelType) -> CVSectionBuilderProtocol {
-        
-        
+    private func createBuilder(type: BasketSectionType) -> CVSectionBuilderProtocol {
         switch type {
         case .addedRecipe:
-            let viewModels = models.map { RecipeViewModel(with: $0) }
+            let viewModels = recipes.map { RecipeViewModel(with: $0) }
             let configurator = AddedRecipesConfigurator(models: viewModels,
                                                         delegate: delegate)
             return SingleCellSectionConfigurator(title: "Добавленные рецепты",
                                                  configurators: [configurator],
                                                  height: 200).configure(for: collectionView)
         case .ingredients:
-            let viewModels = models.map { RecipeViewModel(with: $0) }
-            let configurator = AddedRecipesConfigurator(models: viewModels,
-                                                        delegate: delegate)
-            return SingleCellSectionConfigurator(title: nil,
-                                                 configurators: [configurator],
-                                                 height: 200).configure(for: collectionView)
+            
+            return AddedIngredientsConfigurator(models: ingredients,
+                                                title: "Необходимо приобрести",
+                                                delegate: delegate).configure(for: collectionView)
         }
-        
     }
 }
 
@@ -82,6 +83,7 @@ extension BasketFactory: CVFactoryProtocol {
         var builders: [CVSectionBuilderProtocol] = []
         
         builders.append(createBuilder(type: .addedRecipe))
+        builders.append(createBuilder(type: .ingredients))
         
         return builders
     }

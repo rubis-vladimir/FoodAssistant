@@ -8,9 +8,6 @@
 
 import Foundation
 
-
-
-
 /// #Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
     
@@ -36,7 +33,7 @@ final class RecipeListInteractor {
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
     
-    func getModel(id: Int,
+    func getRecipe(id: Int,
                   completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         completion(model)
@@ -118,7 +115,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     }
 }
 
-/// #Вспомогательные функции
+/// #Вспомогательные приватные функции
 extension RecipeListInteractor {
     /// Получает из url-строки название изображения
     private func getImageName(from urlString: String?) -> String? {

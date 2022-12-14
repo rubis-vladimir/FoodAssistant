@@ -22,7 +22,8 @@ final class AddedRecipesItemBuilder {
 }
 
 // MARK: - RecommendedItemBuilder
-extension AddedRecipesItemBuilder: CVItemBuilderProtocol {
+extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
+    
     func register(collectionView: UICollectionView) {
         collectionView.register(FirstRecipeCell.self)
     }
@@ -39,16 +40,22 @@ extension AddedRecipesItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-//        cell.delegate = delegate
+        cell.deleteDelegate = delegate
         cell.configure(with: model, type: .delete)
         
         if let imageName = model.imageName {
-            delegate?.fetchRecipeImage(with: imageName) { imageData in
+            delegate?.fetchImage(imageName,
+                                 type: .recipe) { imageData in
                 DispatchQueue.main.async {
                     cell.updateImage(data: imageData)
                 }
             }
         }
         return cell
+    }
+    
+    func didSelectItem(indexPath: IndexPath) {
+        let id = models[indexPath.row].id
+        delegate?.didSelectItem(id: id)
     }
 }

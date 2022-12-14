@@ -50,7 +50,7 @@ final class FavoriteItemBuilder {
 }
 
 // MARK: - CVItemBuilderProtocol
-extension FavoriteItemBuilder: CVItemBuilderProtocol {
+extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
         collectionView.register(ThirdRecipeCell.self)
@@ -66,39 +66,28 @@ extension FavoriteItemBuilder: CVItemBuilderProtocol {
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
         
-        switch layoutType {
-            
-        case .split2xN:
-            let cell = collectionView.dequeueReusableCell(ThirdRecipeCell.self,
-                                                          indexPath: indexPath)
-            let model = models[indexPath.item]
-            cell.delegate = delegate
-            cell.configure(with: model, type: .delete)
-            if let imageName = model.imageName {
-                delegate?.fetchRecipeImage(with: imageName) { imageData in
-                    DispatchQueue.main.async {
-                        cell.updateImage(data: imageData)
-                    }
+        /// Получаем модель для ячейки
+        let model = models[indexPath.item]
+        /// Получаем вариант исполнения ячейки в зависимости от типа `Layout`
+        let typeCell = layoutType == .split2xN ? ThirdRecipeCell.self : SecondRecipeCell.self
+        
+        /// Создаем и настраиваем ячейку
+        let cell = collectionView.dequeueReusableCell(typeCell,
+                                                      indexPath: indexPath)
+        cell.deleteDelegate = delegate
+        cell.basketDelegate = delegate
+        cell.configure(with: model, type: .delete)
+        
+        if let imageName = model.imageName {
+            /// Загрузка изображения
+            delegate?.fetchImage(imageName,
+                                 type: .recipe) { imageData in
+                DispatchQueue.main.async {
+                    cell.updateImage(data: imageData)
                 }
             }
-            
-            return cell
-        case .split1xN:
-            let cell = collectionView.dequeueReusableCell(SecondRecipeCell.self,
-                                                          indexPath: indexPath)
-            let model = models[indexPath.item]
-            cell.delegate = delegate
-            cell.configure(with: model, type: .delete)
-            if let imageName = model.imageName {
-                delegate?.fetchRecipeImage(with: imageName) { imageData in
-                    DispatchQueue.main.async {
-                        cell.updateImage(data: imageData)
-                    }
-                }
-            }
-            
-            return cell
         }
+        return cell
     }
     
     func didSelectItem(indexPath: IndexPath) {

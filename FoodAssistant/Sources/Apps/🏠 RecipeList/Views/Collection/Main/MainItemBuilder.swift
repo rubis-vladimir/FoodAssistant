@@ -50,7 +50,7 @@ final class MainItemBuilder {
 }
 
 // MARK: - CVItemBuilderProtocol
-extension MainItemBuilder: CVItemBuilderProtocol {
+extension MainItemBuilder: CVSelectableItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
         collectionView.register(FirstRecipeCell.self)
@@ -73,7 +73,8 @@ extension MainItemBuilder: CVItemBuilderProtocol {
         /// Создаем и настраиваем ячейку
         let cell = collectionView.dequeueReusableCell(typeCell,
                                                       indexPath: indexPath)
-        cell.delegate = delegate
+        cell.basketDelegate = delegate
+        cell.favoriteDelegate = delegate
         cell.configure(with: model, type: .favorite)
         
         if let imageName = model.imageName {

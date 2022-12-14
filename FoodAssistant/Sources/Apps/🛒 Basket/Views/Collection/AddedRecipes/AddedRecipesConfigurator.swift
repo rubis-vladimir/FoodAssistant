@@ -32,8 +32,8 @@ extension AddedRecipesConfigurator: CVSectionConfiguration {
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию
-        let mainSecionBuilder = CVSectionBuilder(headerBuilder: nil,
+        let secionBuilder = CVSectionBuilder(headerBuilder: nil,
                                                itemBuilder: itemBuilder)
-        return mainSecionBuilder
+        return secionBuilder
     }
 }

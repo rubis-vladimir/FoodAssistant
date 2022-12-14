@@ -7,22 +7,7 @@
 
 import UIKit
 
-/// Навигация в модуле
-enum BasketTarget {
-    /// Добавление элемента
-    case addElement
-    /// Детальная информация
-    case detailInfo
-}
-
-/// Протокол управления слоем навигации модуля
-protocol BasketRouting {
-    /// Переход к следующему экрану
-    ///  - Parameter to: вариант перехода
-    func route(to: BasketTarget)
-}
-
-/// Слой навигации модуля Basket
+/// #Слой навигации модуля Basket
 final class BasketRouter {
     private let navigationController: UINavigationController
     
@@ -35,16 +20,17 @@ final class BasketRouter {
 extension BasketRouter: BasketRouting {
     func route(to: BasketTarget) {
         switch to {
-        case .addElement:
-            /// Настройка модуля
-            let vc = UIViewController()
-            /*
-             Вызов конфигуратора
-             */
+        case .back:
+            navigationController.createCustomTransition(with: .fade)
+            navigationController.navigationBar.isHidden = true
+            navigationController.popViewController(animated: false)
+            
+        case .detailInfo(let model):
+            let vc = DetailInfoAssembly(navigationController: navigationController,
+                                        model: model).assembly()
+            vc.hidesBottomBarWhenPushed = true
+            navigationController.navigationBar.isTranslucent = true
             navigationController.pushViewController(vc, animated: true)
-        case .detailInfo:
-            /// Аналогично
-            print("Переход на экран детальной информации")
         }
     }
 }

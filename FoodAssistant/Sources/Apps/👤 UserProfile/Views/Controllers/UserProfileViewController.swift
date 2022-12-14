@@ -9,20 +9,13 @@ import UIKit
 
 
 /// #Протокол передачи UI-ивентов слою презентации
-protocol UserProfilePresentation: EventsCellDelegate,
+protocol UserProfilePresentation: RecipeRemovable,
+                                  InBasketAdded,
                                   LayoutChangable,
                                   SelectedCellDelegate,
                                   SegmentedViewDelegate,
+                                  ImagePresentation,
                                   AnyObject {
-    /// Запрошена загрузка изображения
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchRecipeImage(with imageName: String,
-                          completion: @escaping (Data) -> Void)
-    func fetchIngredientImage(with imageName: String, size: ImageSize,
-                              completion: @escaping (Data) -> Void)
-    
     func fetchRecipe()
 }
 
@@ -30,7 +23,7 @@ protocol UserProfilePresentation: EventsCellDelegate,
 protocol SegmentedViewDelegate {
     /// Ивент при выборе элемента
     ///  - Parameter index: индекс элемента
-    func didSelectItem(index: Int)
+    func didSelectSegment(index: Int)
 }
 
 /// #Контроллер представления профиля пользователя
@@ -95,7 +88,7 @@ final class UserProfileViewController: UIViewController {
             titleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             titleView.heightAnchor.constraint(equalToConstant: 42),
             
-            collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 5),
+            collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 12),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
@@ -106,7 +99,7 @@ final class UserProfileViewController: UIViewController {
     private func getFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         let padding = AppConstants.padding
-        layout.sectionInset = UIEdgeInsets(top: 0,
+        layout.sectionInset = UIEdgeInsets(top: padding / 2,
                                            left: padding,
                                            bottom: padding,
                                            right: padding)

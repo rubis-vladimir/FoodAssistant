@@ -49,8 +49,8 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию
-        let mainSecionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
+        let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                                itemBuilder: itemBuilder)
-        return mainSecionBuilder
+        return secionBuilder
     }
 }

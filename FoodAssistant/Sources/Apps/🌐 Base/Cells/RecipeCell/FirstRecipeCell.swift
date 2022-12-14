@@ -30,12 +30,12 @@ final class FirstRecipeCell: CVBaseRecipeCell {
         
         
         /// Добавление элементов в слои
-        containerCookingLabel.addArrangedSubview(cookingTimeLabel)
-        containerTitleLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(containerCookingLabel)
+        substrate.addArrangedSubview(cookingTimeLabel)
+        containerTopLabel.addArrangedSubview(titleRecipeLabel)
+        recipeImageView.addSubview(substrate)
         
         stack.addArrangedSubview(recipeImageView)
-        stack.addArrangedSubview(containerTitleLabel)
+        stack.addArrangedSubview(containerTopLabel)
         
         addSubview(stack)
         addSubview(actionButton)
@@ -46,16 +46,16 @@ final class FirstRecipeCell: CVBaseRecipeCell {
         let paddingCL: CGFloat = 5
         
         NSLayoutConstraint.activate([
-            containerCookingLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -AppConstants.padding),
-            containerCookingLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: AppConstants.padding),
-            containerCookingLabel.heightAnchor.constraint(equalToConstant: heightOne),
+            substrate.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -AppConstants.padding),
+            substrate.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: AppConstants.padding),
+            substrate.heightAnchor.constraint(equalToConstant: heightOne),
             
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: containerCookingLabel.leadingAnchor, constant: paddingCL),
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrate.leadingAnchor, constant: paddingCL),
             
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
             actionButton.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
             
-            containerTitleLabel.heightAnchor.constraint(equalToConstant: heightTwo),
+            containerTopLabel.heightAnchor.constraint(equalToConstant: heightTwo),
             
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.topAnchor.constraint(equalTo: topAnchor),

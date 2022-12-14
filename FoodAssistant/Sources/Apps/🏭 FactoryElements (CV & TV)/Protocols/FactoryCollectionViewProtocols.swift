@@ -42,12 +42,12 @@ protocol CVItemBuilderProtocol {
     /// Создает ячейку по indexPath
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell
-    /// Ивент при нажатии на ячейку
-    func didSelectItem(indexPath: IndexPath)
 }
 
-extension CVItemBuilderProtocol {
-    func didSelectItem(indexPath: IndexPath) {}
+/// #
+protocol CVSelectableItemBuilderProtocol: CVItemBuilderProtocol {
+    /// Ивент при нажатии на ячейку
+    func didSelectItem(indexPath: IndexPath)
 }
 
 /// #Протокол строителя заголовка коллекции

@@ -7,8 +7,6 @@
 
 import Foundation
 
-typealias EventsCellDelegate = AddIngredientsDelegate & FavoriteChangable
-
 /// #Протокол передачи UI-ивента при нажатии на ячейку
 protocol SelectedCellDelegate: AnyObject {
     /// Ивент нажатия ячейку коллекции
@@ -18,11 +16,11 @@ protocol SelectedCellDelegate: AnyObject {
     func didSelectItem(id: Int)
 }
 
-/// #Протокол передачи UI-ивента при нажатии на кнопку добавления ингредиентов
-protocol AddIngredientsDelegate: AnyObject {
-    /// Ивент нажатия на кнопку добавления элементов
+/// #Протокол передачи UI-ивента при нажатии на кнопку добавления в корзину
+protocol InBasketAdded: AnyObject {
+    /// Ивент нажатия на кнопку добавления элементов в корзину
     ///  - Parameter id: идентификатор рецепта
-    func didTapAddIngredientsButton(id: Int)
+    func didTapAddInBasketButton(id: Int)
 }
 
 /// #Протокол изменения флага любимого рецепта
@@ -33,6 +31,14 @@ protocol FavoriteChangable: AnyObject {
     ///   - id: идентификатор рецепта
     func didTapFavoriteButton(_ isFavorite: Bool,
                               id: Int)
+}
+
+/// #Протокол изменения флага любимого рецепта
+protocol RecipeRemovable: AnyObject {
+    /// Ивент нажатия на кнопку удаления рецепта
+    ///  - Parameters:
+    ///   - id: идентификатор рецепта
+    func didTapDeleteButton(id: Int)
 }
 
 /// #Варианты Layout

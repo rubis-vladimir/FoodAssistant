@@ -16,7 +16,7 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         addToBasketButton.layer.cornerRadius = addToBasketButton.frame.height / 2
     }
     
-    override func configure(with model: RecipeViewModel, type: TypeOfButton) {
+    override func configure(with model: RecipeViewModel, type: TypeOfActionButton) {
         super.configure(with: model, type: type)
         
         addToBasketButton.setTitle("\(addEnding(number: model.ingredientsCount))",
@@ -41,11 +41,11 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        containerCookingLabel.addArrangedSubview(cookingTimeLabel)
-        containerTitleLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(containerCookingLabel)
+        substrate.addArrangedSubview(cookingTimeLabel)
+        containerTopLabel.addArrangedSubview(titleRecipeLabel)
+        recipeImageView.addSubview(substrate)
         
-        stack.addArrangedSubview(containerTitleLabel)
+        stack.addArrangedSubview(containerTopLabel)
         stack.addArrangedSubview(addToBasketButton)
         
         addSubview(recipeImageView)
@@ -61,11 +61,11 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         
         /// Настраиваем констрейнты
         NSLayoutConstraint.activate([
-            containerCookingLabel.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
-            containerCookingLabel.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
-            containerCookingLabel.heightAnchor.constraint(equalToConstant: heightOne),
+            substrate.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
+            substrate.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
+            substrate.heightAnchor.constraint(equalToConstant: heightOne),
             
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: containerCookingLabel.leadingAnchor, constant: paddingCL),
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrate.leadingAnchor, constant: paddingCL),
             
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),

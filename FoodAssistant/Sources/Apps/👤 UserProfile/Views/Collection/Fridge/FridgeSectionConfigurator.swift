@@ -12,6 +12,7 @@ final class FridgeSectionConfigurator {
     
     private struct Constants {
         static let title = "В моем холодильнике"
+        static let image = Icons.plusFill.image
     }
     
     private let models: [IngredientProtocol]
@@ -29,8 +30,17 @@ final class FridgeSectionConfigurator {
 extension FridgeSectionConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+        
+        /// Создаем действие по изменению `Layout`
+        let action: ((Int) -> Void)? = { _ in print("Добавить ингредиент") }
+        /// Модель заголовка
+        let headerModel = HeaderSectionModel(title: Constants.title,
+                                             firstImage: Constants.image,
+                                             secondImage: nil,
+                                             action: action )
+        
         /// Конфигурируем билдер и регистрируем заголовок
-        let headerBuilder = HeaderBuilder(type: .base(title: Constants.title))
+        let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))
         headerBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем билдер и регистрируем ячейки

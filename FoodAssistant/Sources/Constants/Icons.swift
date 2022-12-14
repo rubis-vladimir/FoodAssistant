@@ -9,7 +9,7 @@ import UIKit
 
 /// #Изображения
 enum Icons: String {
-    case basket, fridge, fridgeFill, gearshape, heart, heartFill, house, houseFill, person, personFill, card, cardFill, split2x2, split1x2, basketSmall, heart1, xmark, heartLargeFill, leftFill, dish, clock, checkFill, circle,
+    case basket, fridge, fridgeFill, gearshape, heart, heartFill, house, houseFill, person, personFill, card, cardFill, split2x2, split1x2, basketSmall, heart1, xmark, heartLargeFill, leftFill, dish, clock, checkFill, circle, plusFill,
     myPhoto
 }
 

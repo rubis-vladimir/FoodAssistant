@@ -16,8 +16,8 @@ final class CVIngredientCell: UICollectionViewCell {
         let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: width))
         view.backgroundColor = .white
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = width / 2
         view.clipsToBounds = true
+        view.contentMode = .scaleToFill
         view.layer.add(shadow: AppConstants.Shadow.defaultOne)
         return view
     }()
@@ -25,6 +25,7 @@ final class CVIngredientCell: UICollectionViewCell {
     /// Лейбл под название ингредиента
     private lazy var titleIngredientLabel: UILabel = {
         let label = UILabel()
+        label.numberOfLines = 2
         label.font = Fonts.selected
         return label
     }()
@@ -88,13 +89,13 @@ final class CVIngredientCell: UICollectionViewCell {
         addSubview(container)
 
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
+            container.topAnchor.constraint(equalTo: topAnchor),
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
-            ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
+//            ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
             amountLabel.widthAnchor.constraint(equalToConstant: 50),
             useIngredientButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])

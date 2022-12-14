@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// #Слой бизнес логике модуля UserProfile
+/// #Слой бизнес логики модуля UserProfile
 final class UserProfileInteractor {
     private var models: [RecipeProtocol] = []
 
@@ -23,22 +23,27 @@ final class UserProfileInteractor {
 
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
-    func getModel(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
+
+    func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         completion(model)
     }
     
-    func fetchRecipeImage(_ imageName: String, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        ImageRequest
-            .recipe(imageName: imageName)
-            .download(with: imageDownloader, completion: completion)
-    }
-    
-    func fetchIngredientImage(_ imageName: String, size: ImageSize,
-                              completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        ImageRequest
-            .ingredient(imageName: imageName, size: size)
-            .download(with: imageDownloader, completion: completion)
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        switch type {
+        case .recipe:
+            ImageRequest
+                .recipe(imageName: imageName)
+                .download(with: imageDownloader,
+                          completion: completion)
+        case .ingredient:
+            ImageRequest
+                .ingredient(imageName: imageName, size: .mini)
+                .download(with: imageDownloader,
+                          completion: completion)
+        }
     }
     
     func fetchRecipeFromDB(completion: @escaping ([RecipeViewModel]) -> Void) {
@@ -50,5 +55,17 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
             }
             completion(viewModels)
         }
+    }
+    
+    func removeRecipe(id: Int) {
+        storage.remove(id: id, for: .favorite)
+        
+        guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
+        models.remove(at: index)
+    }
+    
+    func addToBasket(id: Int) {
+        guard let model = models.first(where: { $0.id == id }) else { return }
+        storage.save(recipe: model, for: .basket)
     }
 }

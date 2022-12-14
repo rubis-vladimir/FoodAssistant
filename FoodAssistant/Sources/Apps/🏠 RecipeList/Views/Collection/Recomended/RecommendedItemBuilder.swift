@@ -39,7 +39,8 @@ extension RecommendedItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(ThirdRecipeCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.delegate = delegate
+        cell.favoriteDelegate = delegate
+        cell.basketDelegate = delegate
         cell.configure(with: model, type: .favorite)
         
         if let imageName = model.imageName {
