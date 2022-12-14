@@ -111,7 +111,7 @@ private extension TranslateService {
         }
         
         /// Шаги приготовления по инструкции
-        if let steps = recipe.analyzedInstructions?[0].steps {
+        if let steps = recipe.analyzedInstructions?.first?.steps {
             let stepTitles = steps.map { $0.step }
             arrayString.append(contentsOf: stepTitles)
             elementsCount["steps \(recipe.id)"] = steps.count

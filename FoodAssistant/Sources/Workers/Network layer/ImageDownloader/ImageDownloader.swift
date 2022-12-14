@@ -25,12 +25,17 @@ extension ImageDownloader: ImageDownloadProtocol {
     func fetchImage(url: URL,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         
-        DispatchQueue.global().async {
-            guard let data = try? Data(contentsOf: url) else {
-                completion(.failure(.failedToLoadImage))
+        URLSession.shared.dataTask(with: url) { (data, responce, error) in
+            guard responce != nil else {
+                completion(.failure(.notInternet))
+                return
+            }
+            guard let data = data,
+                    error == nil else {
+                completion(.failure(.failedToLoadData))
                 return
             }
             completion(.success(data))
-        }
+        }.resume()
     }
 }
