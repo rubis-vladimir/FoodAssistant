@@ -1,0 +1,212 @@
+//
+//  StorageManager.swift
+//  FoodAssistant
+//
+//  Created by Владимир Рубис on 06.12.2022.
+//
+
+import CoreData
+
+/// #Менеджер сохранения и загрузки данных из БД
+class StorageManager {
+    
+    static let shared = StorageManager()
+    
+    // MARK: - Core Data stack
+    ///   Обращаемся к своему NSPersistentContainer который является оберткой для NSPersistentStoreCoordinator
+    private let persistentContainer: NSPersistentContainer = {
+        let container = NSPersistentContainer(name: "FoodAssistant")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        return container
+    }()
+    private let viewContext: NSManagedObjectContext
+    
+    private init() {
+        /// Обращаемся к NSManagedObjectContext через наш PersistentContainer
+        viewContext = persistentContainer.viewContext
+        /// viewContext - база данных восстановленная из памяти / контекст главной очереди
+    }
+}
+
+// MARK: - Core Data Saving support
+extension StorageManager{
+    /// Сохранение контекста если он изменился
+    private func saveContext () {
+        if viewContext.hasChanges {
+            do {
+                try viewContext.save()
+            } catch {
+                let nserror = error as NSError
+                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+            }
+        }
+    }
+    
+    /// Получение моделей типа `T` из БД
+    private func read<T: NSManagedObject>(model: T.Type) -> [T] {
+        /// создаем запрос к базе данных "fetchRequest" - выбрать из базы ВСЕ объекты с типом CDRecipe
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
+        do {
+            ///Persistent Store Coordinator возвращает в context массив Managed Object `[CDRecipe]`
+            let objects = try viewContext.fetch(fetchRequest) as! [T]
+            /// при удаче возвращаем массив рецептов
+            return objects
+        } catch let error {
+            print (error)
+            /// при неудаче возвращаем пустой массив
+            return []
+        }
+    }
+}
+
+
+// MARK: - DBRecipeManagement
+extension StorageManager: DBRecipeManagement {
+    
+    func fetchRecipes(for target: TargetOfSave,
+                      completion: @escaping ([RecipeProtocol]) -> Void) {
+        let objects = read(model: CDRecipe.self)
+        
+        switch target {
+        case .favorite:
+            let favoriteRecipes = objects.filter { $0.isFavorite == true }
+            completion(favoriteRecipes)
+        case .basket:
+            let basketRecipes = objects.filter { $0.inBasket == true }
+            completion(basketRecipes)
+        }
+    }
+    
+    func save(recipe: RecipeProtocol, for target: TargetOfSave) {
+        switch target {
+        case .favorite:
+            if let object = read(model: CDRecipe.self).first(where: {$0.id == recipe.id}) {
+                object.setValue(true, forKey: "isFavorite")
+            } else {
+                createCDRecipe(recipe: recipe, for: target)
+            }
+        case .basket:
+            if let object = read(model: CDRecipe.self).first(where: {$0.id == recipe.id}) {
+                object.setValue(true, forKey: "inBasket")
+            } else {
+                createCDRecipe(recipe: recipe, for: target)
+            }
+        }
+        saveContext()
+    }
+    
+    func remove(id: Int, for target: TargetOfSave) {
+        guard let object = read(model: CDRecipe.self).first(where: {$0.id == id}) else { return }
+        
+        switch target {
+        case .favorite:
+            if object.inBasket {
+                object.setValue(false, forKey: "isFavorite")
+            } else {
+                viewContext.delete(object)
+            }
+        case .basket:
+            if object.isFavorite {
+                object.setValue(false, forKey: "inBasket")
+                
+            } else {
+                viewContext.delete(object)
+            }
+        }
+        saveContext()
+    }
+    
+    func check(id: Int) -> Bool {
+        guard read(model: CDRecipe.self).first(where: {$0.id == id && $0.isFavorite == true }) != nil else { return false }
+        return true
+    }
+    
+    /// Создает и добавляет в контекст модель данных CDRecipe
+    ///  - Parameters:
+    ///   - recipe: переданная модель рецепта
+    ///   - target: цель сохранения рецепта
+    private func createCDRecipe(recipe: RecipeProtocol,
+                                for target: TargetOfSave) {
+        /// Создаем модель рецепта CDRecipe и конфигурируем ее свойства
+        let cdRecipe = CDRecipe(context: viewContext)
+        cdRecipe.cdId = Int32(recipe.id)
+        cdRecipe.title = recipe.title
+        cdRecipe.imageName = recipe.imageName
+        cdRecipe.cookingTime = recipe.cookingTime
+        cdRecipe.cdServings = Int16(recipe.servings)
+        
+        switch target {
+        case .favorite:
+            cdRecipe.isFavorite = true
+            cdRecipe.inBasket = false
+        case .basket:
+            cdRecipe.isFavorite = false
+            cdRecipe.inBasket = true
+        }
+        
+        /// Создаем модели CDIngredient и добавляем их в рецепт
+        if let ingredients = recipe.ingredients {
+            ingredients.forEach {
+                let cdIngredient = CDIngredient(context: viewContext)
+                cdIngredient.cdId = Int32($0.id)
+                cdIngredient.name = $0.name
+                cdIngredient.amount = $0.amount
+                cdIngredient.unit = $0.unit
+                cdIngredient.image = $0.image
+                cdIngredient.recipe = cdRecipe
+                cdRecipe.addToCdIngredients(cdIngredient)
+            }
+        }
+        
+        /// Создаем модели CDNutrient и добавляем их в рецепт
+        if let nutrients = recipe.nutrients {
+            nutrients.forEach {
+                let cdNutrient = CDNutrient(context: viewContext)
+                cdNutrient.name = $0.name
+                cdNutrient.amount = $0.amount
+                cdNutrient.unit = $0.unit
+                cdRecipe.addToCdNutrients(cdNutrient)
+            }
+        }
+        
+        /// Создаем модели CDInstrutionStep и добавляем их в рецепт
+        if let instructionSteps = recipe.instructions {
+            instructionSteps.forEach {
+                let cdInstructionStep = CDInstrutionStep(context: viewContext)
+                cdInstructionStep.cdNumber = Int16($0.number)
+                cdInstructionStep.step = $0.step
+                cdRecipe.addToCdInstructionSteps(cdInstructionStep)
+            }
+        }
+    }
+}
+
+// MARK: - DBIngredientsFridgeManagement
+extension StorageManager: DBIngredientsFridgeManagement {
+    func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void) {
+        let objects = read(model: CDIngredient.self).filter { $0.inFridge == true }
+        completion(objects)
+    }
+    
+    func save(ingredient: IngredientProtocol) {
+        let cdIngredient = CDIngredient(context: viewContext)
+        cdIngredient.cdId = Int32(ingredient.id)
+        cdIngredient.name = ingredient.name
+        cdIngredient.image = ingredient.image
+        cdIngredient.amount = ingredient.amount
+        cdIngredient.unit = ingredient.unit
+        cdIngredient.toUse = ingredient.toUse
+        cdIngredient.inFridge = true
+        saveContext()
+    }
+    
+    func remove(id: Int) {
+        guard let object = read(model: CDIngredient.self).first(where: { $0.inFridge == true && $0.id == id}) else { return }
+        viewContext.delete(object)
+    }
+}
+
