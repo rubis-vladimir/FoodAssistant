@@ -61,6 +61,26 @@ extension StorageManager{
             return []
         }
     }
+    
+    private func read<T: NSManagedObject>(model: T.Type, predicate: NSPredicate?) -> [T] {
+        /// создаем запрос к базе данных "fetchRequest" - выбрать из базы ВСЕ объекты с типом CDRecipe
+        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
+        
+        if let predicate = predicate {
+            fetchRequest.predicate = predicate
+        }
+        
+        do {
+            ///Persistent Store Coordinator возвращает в context массив Managed Object `[CDRecipe]`
+            let objects = try viewContext.fetch(fetchRequest) as! [T]
+            /// при удаче возвращаем массив рецептов
+            return objects
+        } catch let error {
+            print (error)
+            /// при неудаче возвращаем пустой массив
+            return []
+        }
+    }
 }
 
 
@@ -69,55 +89,51 @@ extension StorageManager: DBRecipeManagement {
     
     func fetchRecipes(for target: TargetOfSave,
                       completion: @escaping ([RecipeProtocol]) -> Void) {
-        let objects = read(model: CDRecipe.self)
-        
-        switch target {
-        case .favorite:
-            let favoriteRecipes = objects.filter { $0.isFavorite == true }
-            completion(favoriteRecipes)
-        case .basket:
-            let basketRecipes = objects.filter { $0.inBasket == true }
-            completion(basketRecipes)
-        }
+        let predicate = NSPredicate(format: "\(target.rawValue) == %@",
+                                    NSNumber(value: true))
+        let objects = read(model: CDRecipe.self, predicate: predicate)
+        completion(objects)
     }
     
-    func save(recipe: RecipeProtocol, for target: TargetOfSave) {
-        switch target {
-        case .favorite:
-            if let object = read(model: CDRecipe.self).first(where: {$0.id == recipe.id}) {
-                object.setValue(true, forKey: "isFavorite")
-            } else {
-                createCDRecipe(recipe: recipe, for: target)
-            }
-        case .basket:
-            if let object = read(model: CDRecipe.self).first(where: {$0.id == recipe.id}) {
-                object.setValue(true, forKey: "inBasket")
-            } else {
-                createCDRecipe(recipe: recipe, for: target)
-            }
+    func save(recipe: RecipeProtocol,
+              for target: TargetOfSave) {
+        let predicate = NSPredicate(format: "cdId == %@",
+                                    NSNumber(value: recipe.id))
+        if let object = read(model: CDRecipe.self, predicate: predicate).first {
+            object.setValue(true, forKey: "\(target.rawValue)")
+        } else {
+            createCDRecipe(recipe: recipe, for: target)
         }
         saveContext()
     }
     
-    func remove(id: Int, for target: TargetOfSave) {
-        guard let object = read(model: CDRecipe.self).first(where: {$0.id == id}) else { return }
+    func remove(id: Int,
+                for target: TargetOfSave) {
+        let predicate = NSPredicate(format: "cdId == %@",
+                                    NSNumber(value: id))
+        guard let object = read(model: CDRecipe.self, predicate: predicate).first else { return }
         
         switch target {
-        case .favorite:
+        case .isFavorite:
             if object.inBasket {
-                object.setValue(false, forKey: "isFavorite")
+                object.setValue(false, forKey: target.rawValue)
             } else {
                 viewContext.delete(object)
             }
-        case .basket:
+        case .inBasket:
             if object.isFavorite {
-                object.setValue(false, forKey: "inBasket")
-                
+                object.setValue(false, forKey: target.rawValue)
             } else {
                 viewContext.delete(object)
             }
         }
         saveContext()
+    }
+    
+    func checkRecipes(id: [Int]) -> [Int] {
+        let objects = read(model: CDRecipe.self, predicate: nil)
+        let cdId = objects.map { $0.id }
+        return id.filter { cdId.contains($0) }
     }
     
     func check(id: Int) -> Bool {
@@ -140,10 +156,10 @@ extension StorageManager: DBRecipeManagement {
         cdRecipe.cdServings = Int16(recipe.servings)
         
         switch target {
-        case .favorite:
+        case .isFavorite:
             cdRecipe.isFavorite = true
             cdRecipe.inBasket = false
-        case .basket:
+        case .inBasket:
             cdRecipe.isFavorite = false
             cdRecipe.inBasket = true
         }

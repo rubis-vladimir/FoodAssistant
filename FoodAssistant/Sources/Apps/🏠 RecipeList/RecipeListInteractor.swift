@@ -32,6 +32,10 @@ final class RecipeListInteractor {
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
+    func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void) {
+        
+    }
+    
     
     func getRecipe(id: Int,
                   completion: @escaping (RecipeProtocol) -> Void) {
@@ -48,7 +52,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     }
     
     func removeRecipe(id: Int) {
-        storage.remove(id: id, for: .favorite)
+        storage.remove(id: id, for: .isFavorite)
     }
     
     func saveRecipe(id: Int, for target: TargetOfSave) {
@@ -70,9 +74,14 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
             case .success(let responce):
                 /// Получили рецепты из запроса
                 guard var recipes = responce.results else { return }
-                /// Изменяем флаг isFavorite, если рецепт уже записан в любимые
+                
+                /// Фильтруем и получаем id рецептов, записанных в избранные
+                let arrayId = recipes.map { $0.id }
+                let favoriteArrayId = self.storage.checkRecipes(id: arrayId)
+                
+                /// Изменяем флаг isFavorite, если рецепт записан в избранные
                 for i in 0..<recipes.count {
-                    if self.storage.check(id: recipes[i].id) {
+                    if favoriteArrayId.contains(recipes[i].id) {
                         recipes[i].isFavorite = true
                     }
                 }

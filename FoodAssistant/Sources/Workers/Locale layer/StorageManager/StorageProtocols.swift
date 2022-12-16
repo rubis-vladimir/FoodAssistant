@@ -8,11 +8,11 @@
 import Foundation
 
 /// #Цель сохранения рецепта в БД
-enum TargetOfSave {
+enum TargetOfSave: String {
     /// Добавили в любимые рецепты
-    case favorite
+    case isFavorite
     /// Добавили в корзину
-    case basket
+    case inBasket
 }
 
 /// #Протокол управления менеджером хранения данных для рецептов
@@ -23,6 +23,8 @@ protocol DBRecipeManagement {
     ///   - completion: захватывает массив рецептов
     func fetchRecipes(for target: TargetOfSave,
                       completion: @escaping ([RecipeProtocol]) -> Void)
+    
+//    func fetchRecipesWithPredicates(name: String, completion: @escaping ([RecipeProtocol]) -> Void) 
     
     /// Сохраняет рецепт
     ///  - Parameters:
@@ -42,6 +44,8 @@ protocol DBRecipeManagement {
     /// - Parameter id: идентификатор рецепта
     /// - Returns: да/нет
     func check(id: Int) -> Bool
+    
+    func checkRecipes(id: [Int]) -> [Int]
 }
 
 /// #Протокол управления менеджером хранения данных для ингредиентов в твоем холодильнике

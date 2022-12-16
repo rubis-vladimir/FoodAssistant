@@ -29,8 +29,9 @@ extension RecipeListAssembly: Assemblying {
         let imageDownloader = ImageDownloader()
         /// Сервис кеширования изображений
         let imageCacheService = ImageCacheService()
+        let fileManager = FileManagerService.shared
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
-                                                        imageCache: imageCacheService)
+                                                        imageCache: fileManager)
         /// Менеджер работы с БД
         let storage = StorageManager.shared
         
