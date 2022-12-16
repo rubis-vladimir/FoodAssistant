@@ -15,20 +15,11 @@ enum RLSectionType {
     case main
 }
 
-/// #Варианты сборок коллекции модуля RecipeList
-enum RLBuildType {
-    /// Основная при загрузке
-    case main(first: [RecipeViewModel],
-              second: [RecipeViewModel])
-    /// При поиске рецептов
-    case search(models: [RecipeViewModel])
-}
-
 /// #Фабрика настройки коллекции модуля RecipeList
 final class RLFactory {
     
     private let collectionView: UICollectionView
-    private let buildType: RLBuildType
+    private let arrayModelsDictionary: [RecipeModelsDictionary]
     private var cvAdapter: CVAdapter
     
     private weak var delegate: RecipeListPresentation?
@@ -39,10 +30,10 @@ final class RLFactory {
     ///    - buildType: тип сборки
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
-         buildType: RLBuildType,
+         arrayModelsDictionary: [RecipeModelsDictionary],
          delegate: RecipeListPresentation?) {
         self.collectionView = collectionView
-        self.buildType = buildType
+        self.arrayModelsDictionary = arrayModelsDictionary
         self.delegate = delegate
         
         cvAdapter = CVAdapter(collectionView: collectionView)
@@ -83,20 +74,8 @@ final class RLFactory {
 extension RLFactory: CVFactoryProtocol {
     
     var builders: [CVSectionBuilderProtocol] {
-        var builders: [CVSectionBuilderProtocol] = []
-        
-        switch buildType {
-        case let .main(first, second):
-            builders.append(contentsOf: [
-                createBuilder(models: first, type: .recommended),
-                createBuilder(models: second, type: .main)
-            ])
-            
-        case .search(let models):
-            builders.append(contentsOf: [
-                createBuilder(models: models, type: .main)
-            ])
+        arrayModelsDictionary.flatMap {
+            $0.map { createBuilder(models: $0.value, type: $0.key) }
         }
-        return builders
     }
 }

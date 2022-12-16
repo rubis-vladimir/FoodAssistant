@@ -23,6 +23,28 @@ final class UserProfileInteractor {
 
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
+    
+    func fetchFavoriteRecipe(text: String,
+                             completion: @escaping ([RecipeViewModel]) -> Void) {
+        storage.fetchRecipes(for: .isFavorite) { [weak self] recipes in
+            
+            var newRecipes = text == "" ?
+                recipes :
+                recipes.filter { recipe in
+                    let title = recipe.title.lowercased()
+                    let text = text.lowercased()
+                    return title.contains(text)
+                }
+            
+            self?.models = newRecipes
+            
+            let viewModels = newRecipes.map {
+                RecipeViewModel(with: $0)
+            }
+            completion(viewModels)
+        }
+    }
+    
 
     func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
@@ -46,19 +68,8 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
         }
     }
     
-    func fetchRecipeFromDB(completion: @escaping ([RecipeViewModel]) -> Void) {
-        storage.fetchRecipes(for: .favorite) { [weak self] recipes in
-            self?.models = recipes
-            
-            let viewModels = recipes.map {
-                RecipeViewModel(with: $0)
-            }
-            completion(viewModels)
-        }
-    }
-    
     func removeRecipe(id: Int) {
-        storage.remove(id: id, for: .favorite)
+        storage.remove(id: id, for: .isFavorite)
         
         guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
         models.remove(at: index)
@@ -66,6 +77,6 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     
     func addToBasket(id: Int) {
         guard let model = models.first(where: { $0.id == id }) else { return }
-        storage.save(recipe: model, for: .basket)
+        storage.save(recipe: model, for: .inBasket)
     }
 }

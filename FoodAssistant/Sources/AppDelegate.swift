@@ -41,6 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]
         UINavigationBar.appearance().tintColor = .black
         UINavigationBar.appearance().barTintColor = .white
+        UINavigationBar.appearance().shadowImage = UIImage()
         UITableView.appearance().tableHeaderView = .init(frame: CGRect(x: 0, y: 0, width: 0, height: CGFLOAT_MIN))
     }
 }

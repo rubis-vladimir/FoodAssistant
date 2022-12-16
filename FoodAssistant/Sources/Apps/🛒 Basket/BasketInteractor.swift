@@ -48,7 +48,7 @@ extension BasketInteractor: BasketBusinessLogic {
     }
     
     func fetchRecipeInBasket(completion: @escaping ([RecipeProtocol]) -> Void) {
-        storage.fetchRecipes(for: .basket) { [weak self] recipes in
+        storage.fetchRecipes(for: .inBasket) { [weak self] recipes in
             self?.models = recipes
             completion(recipes)
         }
@@ -61,7 +61,7 @@ extension BasketInteractor: BasketBusinessLogic {
     }
     
     func deleteFromBasket(id: Int) {
-        storage.remove(id: id, for: .basket)
+        storage.remove(id: id, for: .inBasket)
         
         guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
         models.remove(at: index)

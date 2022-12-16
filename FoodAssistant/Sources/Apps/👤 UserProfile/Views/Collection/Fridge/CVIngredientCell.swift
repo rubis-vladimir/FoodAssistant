@@ -90,12 +90,11 @@ final class CVIngredientCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
-//            ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
             amountLabel.widthAnchor.constraint(equalToConstant: 50),
             useIngredientButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])

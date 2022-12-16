@@ -163,7 +163,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         recipeImageView.reloadInputViews()
         
         UIView.animate(withDuration: 0.55) {
-            if let image = UIImage(data: data) {
+            if let image = UIImage(data: data){
                 self.recipeImageView.image = image
             } else {
                 self.recipeImageView.image = Icons.basket.image
