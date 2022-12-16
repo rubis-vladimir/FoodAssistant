@@ -82,6 +82,7 @@
 		7D3D19BB294650BF005E3840 /* AddedRecipesItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D19BA294650BF005E3840 /* AddedRecipesItemBuilder.swift */; };
 		7D3D19BE29465DEF005E3840 /* BasketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D19BD29465DEF005E3840 /* BasketFactory.swift */; };
 		7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE372926C4A7002BC96A /* Icons.swift */; };
+		7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B30E294CDA2400D832A0 /* FileManagerService.swift */; };
 		7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */; };
 		7D451C6A293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */; };
 		7D451C6C293B5C5200A4CDC5 /* SecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */; };
@@ -233,6 +234,7 @@
 		7D3D19BA294650BF005E3840 /* AddedRecipesItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedRecipesItemBuilder.swift; sourceTree = "<group>"; };
 		7D3D19BD29465DEF005E3840 /* BasketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketFactory.swift; sourceTree = "<group>"; };
 		7D3EDE372926C4A7002BC96A /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
+		7D40B30E294CDA2400D832A0 /* FileManagerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIActivityIndicatorView + Spinner.swift"; sourceTree = "<group>"; };
 		7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRecipeCell.swift; sourceTree = "<group>"; };
@@ -750,13 +752,6 @@
 			path = StorageManager;
 			sourceTree = "<group>";
 		};
-		7D40B308294CBFCA00D832A0 /* FileManager */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = FileManager;
-			sourceTree = "<group>";
-		};
 		7D451C62293A88C800A4CDC5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -828,7 +823,6 @@
 		7D451C75293F22CB00A4CDC5 /* Locale layer */ = {
 			isa = PBXGroup;
 			children = (
-				7D40B308294CBFCA00D832A0 /* FileManager */,
 				7D40B307294CBFAA00D832A0 /* StorageManager */,
 				7DC1610F292E48830026A072 /* Cache */,
 			);
@@ -910,6 +904,7 @@
 		7DC1610F292E48830026A072 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
+				7D40B30E294CDA2400D832A0 /* FileManagerService.swift */,
 				7DC16110292E49310026A072 /* ImageCacheService.swift */,
 				7DC16112292E4FA20026A072 /* LRUCache.swift */,
 			);
@@ -1285,6 +1280,7 @@
 				7DC16111292E49310026A072 /* ImageCacheService.swift in Sources */,
 				7D3D19A329447782005E3840 /* FridgeItemBuilder.swift in Sources */,
 				7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */,
+				7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

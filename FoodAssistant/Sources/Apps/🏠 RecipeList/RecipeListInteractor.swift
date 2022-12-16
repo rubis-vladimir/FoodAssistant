@@ -87,7 +87,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 }
                 
                 /// Если установленный язык не базовый
-                if self.currentAppleLanguage() == "Base" {
+                if self.currentAppleLanguage() != "Base" {
                     /// Запрашиваем перевод для рецептов в сервисе
                     self.translateService.fetchTranslate(recipes: recipes) { result in
                         
