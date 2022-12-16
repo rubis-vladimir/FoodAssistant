@@ -8,7 +8,7 @@
 import UIKit
 
 /// Типы текстовых ячеек модуля AddEvent
-enum UPModelType {
+enum UPSectionType {
     /// Ячейка для подгрузки фото
     case profile
     //
@@ -17,18 +17,11 @@ enum UPModelType {
     case favorite(_ recipes: [RecipeViewModel])
 }
 
-enum UPBuildType {
-    case profile
-    case fridge(_ ingredients: [IngredientProtocol])
-    case favorite(_ recipes: [RecipeViewModel])
-}
-
-
 /// Фабрика настройки табличного представления модуля AddEvent
 final class UPFactory: NSObject {
     
     private let collectionView: UICollectionView
-    private let buildType: UPBuildType
+    private let orderSections: [UPSectionType]
     private let cvAdapter: CVAdapter
     
     private weak var delegate: UserProfilePresentation?
@@ -39,11 +32,11 @@ final class UPFactory: NSObject {
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
          delegate: UserProfilePresentation?,
-         buildType: UPBuildType) {
+         orderSections: [UPSectionType]) {
         
         self.collectionView = collectionView
         self.delegate = delegate
-        self.buildType = buildType
+        self.orderSections = orderSections
         
         cvAdapter = CVAdapter(collectionView: collectionView)
         
@@ -66,11 +59,9 @@ final class UPFactory: NSObject {
     ///     - model: модель данных
     ///     - type: тип ячейки
     ///   - Return: объект протокола строителя
-    private func createBuilder(type: UPModelType) -> CVSectionBuilderProtocol {
-        
+    private func createBuilder(type: UPSectionType) -> CVSectionBuilderProtocol {
         
         switch type {
-            
         case .profile: 
             return ProfileSectionConfigurator().configure(for: collectionView)
             
@@ -89,27 +80,7 @@ final class UPFactory: NSObject {
 extension UPFactory: CVFactoryProtocol {
     
     var builders: [CVSectionBuilderProtocol] {
-        var builders: [CVSectionBuilderProtocol] = []
-        
-        switch buildType {
-        case .profile:
-            builders.append(contentsOf: [
-                createBuilder(type: .profile)
-            ])
-            
-        case .fridge(let ingredients):
-            builders.append(contentsOf: [
-                createBuilder(type: .fridge(ingredients))
-            ])
-            
-        case .favorite(let recipes):
-            builders.append(contentsOf: [
-                createBuilder(type: .favorite(recipes))
-            ])
-        }
-        
-        
-        return builders
+        orderSections.map { createBuilder(type: $0) }
     }
 }
 

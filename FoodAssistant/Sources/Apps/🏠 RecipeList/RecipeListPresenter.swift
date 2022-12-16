@@ -16,9 +16,9 @@ protocol RecipeListRouting {
 
 /// #Протокол управления View-слоем модуля RecipeList
 protocol RecipeListViewable: AnyObject {
-    /// Обновляет UI
-    /// - Parameter type: тип сборки
-    func updateUI(with type: RLBuildType)
+    /// Обновляет `CollectionView`
+    /// - Parameter array: массив словарей моделей
+    func updateCV(with: [RecipeModelsDictionary])
     
     /// Перезагружает секцию коллекции
     /// - Parameter section: номер секции
@@ -56,6 +56,14 @@ protocol RecipeListBusinessLogic: RecipeReceived,
     func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void)
 }
 
+/// #Варианты сборок коллекции модуля RecipeList
+enum RLBuildType {
+    /// Основная при загрузке
+    case main
+    /// При поиске рецептов
+    case search
+}
+
 typealias RecipeModelsDictionary = [RLSectionType: [RecipeViewModel]]
 
 // MARK: - Presenter
@@ -67,22 +75,14 @@ final class RecipeListPresenter {
     
     weak var view: RecipeListViewable?
     
-    private(set) var viewModels: RecipeModelsDictionary = [:] {
+    /// Флаг варианта загрузки данных коллекции
+    private var buildType: RLBuildType = .main
+    
+    private(set) var viewModelsDictionary: RecipeModelsDictionary = [:] {
         didSet {
-            if isStart {
-                guard let recommended = viewModels[.recommended],
-                      let main = viewModels[.main] else { return }
-                
-                view?.updateUI(with: .main(first: recommended,
-                                           second: main))
-            } else {
-                guard let main = viewModels[.main] else { return }
-                view?.updateUI(with: .search(models: main))
-            }
+            update()
         }
     }
-    /// Флаг варианта загрузки данных коллекции
-    private var isStart: Bool = true
     
     init(interactor: RecipeListBusinessLogic,
          router: RecipeListRouting) {
@@ -98,11 +98,31 @@ final class RecipeListPresenter {
             switch result {
             case .success(let recipeCellModels):
                 
-                self?.viewModels[.main] = recipeCellModels
-                self?.viewModels[.recommended] = recipeCellModels
+                self?.viewModelsDictionary[.main] = recipeCellModels
+                self?.viewModelsDictionary[.recommended] = recipeCellModels
             case .failure(_):
                 break
             }
+        }
+    }
+    
+    private func update() {
+        switch buildType {
+        case .main:
+            let recomendedDictionary = viewModelsDictionary.filter { $0.key == .recommended }
+            let mainDictionary = viewModelsDictionary.filter { $0.key == .main }
+            
+            guard !recomendedDictionary.isEmpty,
+                  !mainDictionary.isEmpty else { return }
+            
+            view?.updateCV(with: [recomendedDictionary, mainDictionary])
+            
+        case .search:
+            let mainDictionary = viewModelsDictionary.filter { $0.key == .main }
+            
+            guard !mainDictionary.isEmpty else { return }
+            
+            view?.updateCV(with: [mainDictionary])
         }
     }
 }
@@ -110,9 +130,6 @@ final class RecipeListPresenter {
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
     func checkFavoriteRecipe() {
-        interactor.checkFavoriteRecipe { [weak self] viewModels in
-            self?.viewModels = viewModels
-        }
     }
     
     func fetchImage(_ imageName: String,
@@ -127,7 +144,7 @@ extension RecipeListPresenter: RecipeListPresentation {
             }
         }
     }
-
+    
     func didTapFavoriteButton(_ isFavorite: Bool,
                               id: Int) {
         if isFavorite {
@@ -153,8 +170,8 @@ extension RecipeListPresenter: RecipeListPresentation {
     func didTapChangeLayoutButton(section: Int) {
         /// Вызываем уведомление изменения layout
         NotificationCenter.default
-                    .post(name: NSNotification.Name("changeLayoutType"),
-                     object: nil)
+            .post(name: NSNotification.Name("changeLayoutType"),
+                  object: nil)
         view?.reloadSection(section)
     }
 }

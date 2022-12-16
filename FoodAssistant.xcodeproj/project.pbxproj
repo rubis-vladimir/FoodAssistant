@@ -734,6 +734,29 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
+		7D40B306294CBF7C00D832A0 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "New Group";
+			sourceTree = "<group>";
+		};
+		7D40B307294CBFAA00D832A0 /* StorageManager */ = {
+			isa = PBXGroup;
+			children = (
+				7D451C76293F22F300A4CDC5 /* StorageManager.swift */,
+				7D2B348829478FF800FF01A2 /* StorageProtocols.swift */,
+			);
+			path = StorageManager;
+			sourceTree = "<group>";
+		};
+		7D40B308294CBFCA00D832A0 /* FileManager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = FileManager;
+			sourceTree = "<group>";
+		};
 		7D451C62293A88C800A4CDC5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -802,13 +825,14 @@
 			path = Translate;
 			sourceTree = "<group>";
 		};
-		7D451C75293F22CB00A4CDC5 /* LocaleDB layer */ = {
+		7D451C75293F22CB00A4CDC5 /* Locale layer */ = {
 			isa = PBXGroup;
 			children = (
-				7D451C76293F22F300A4CDC5 /* StorageManager.swift */,
-				7D2B348829478FF800FF01A2 /* StorageProtocols.swift */,
+				7D40B308294CBFCA00D832A0 /* FileManager */,
+				7D40B307294CBFAA00D832A0 /* StorageManager */,
+				7DC1610F292E48830026A072 /* Cache */,
 			);
-			path = "LocaleDB layer";
+			path = "Locale layer";
 			sourceTree = "<group>";
 		};
 		7D48A9A82927B5F2009EF273 /* Collection */ = {
@@ -883,13 +907,13 @@
 			path = DataFetcher;
 			sourceTree = "<group>";
 		};
-		7DC1610F292E48830026A072 /* Cache layer */ = {
+		7DC1610F292E48830026A072 /* Cache */ = {
 			isa = PBXGroup;
 			children = (
 				7DC16110292E49310026A072 /* ImageCacheService.swift */,
 				7DC16112292E4FA20026A072 /* LRUCache.swift */,
 			);
-			path = "Cache layer";
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		7DC16114292E51D50026A072 /* Constants */ = {
@@ -984,9 +1008,9 @@
 		7DFEB5DC291C2F14008C28FC /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7D40B306294CBF7C00D832A0 /* New Group */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
-				7D451C75293F22CB00A4CDC5 /* LocaleDB layer */,
-				7DC1610F292E48830026A072 /* Cache layer */,
+				7D451C75293F22CB00A4CDC5 /* Locale layer */,
 			);
 			path = Workers;
 			sourceTree = "<group>";

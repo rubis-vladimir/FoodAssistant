@@ -94,7 +94,7 @@ final class UserProfileViewController: UIViewController {
         
         factory = UPFactory(collectionView: collectionView,
                             delegate: presenter,
-                            buildType: .profile)
+                            orderSections: [.profile])
         
         view.backgroundColor = .white
         view.addSubview(collectionView)
@@ -211,13 +211,13 @@ extension UserProfileViewController: UserProfileViewable {
         }
     }
     
-    func updateUI(with type: UPBuildType) {
+    func updateCV(orderSection: [UPSectionType]) {
         
         
         DispatchQueue.main.async {
             self.factory = UPFactory(collectionView: self.collectionView,
                                      delegate: self.presenter,
-                                     buildType: type)
+                                     orderSections: orderSection)
         }
     }
     

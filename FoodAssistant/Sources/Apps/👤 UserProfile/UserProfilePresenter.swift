@@ -10,8 +10,8 @@ import Foundation
 
 /// #Протокол управления View-слоем модуля UserProfile
 protocol UserProfileViewable: AnyObject {
-    /// Обновление UI
-    func updateUI(with type: UPBuildType)
+    /// Обновление `Collection View`
+    func updateCV(orderSection: [UPSectionType])
     /// Скрыть `Search Bar`
     func hideSearchBar(shouldHide: Bool)
     /// Показать ошибку
@@ -59,7 +59,7 @@ final class UserProfilePresenter {
     {
         didSet {
             guard currentSegmentIndex == 2 else { return }
-            view?.updateUI(with: .favorite(viewModels))
+            view?.updateCV(orderSection: [.favorite(viewModels)])
         }
     }
     
@@ -89,16 +89,16 @@ extension UserProfilePresenter: UserProfilePresentation {
         switch index {
         case 0:
             view?.hideSearchBar(shouldHide: true)
-            view?.updateUI(with: .profile)
+            view?.updateCV(orderSection: [.profile])
         case 1:
             let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", amount: 3)
             let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", amount: 5)
             let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", amount: 1, unit: "кг")
             view?.hideSearchBar(shouldHide: true)
-            view?.updateUI(with: .fridge([ingredient1, ingredient2, ingredient3]))
+            view?.updateCV(orderSection: [.fridge([ingredient1, ingredient2, ingredient3])])
         default:
             view?.hideSearchBar(shouldHide: false)
-            view?.updateUI(with: .favorite(viewModels))
+            view?.updateCV(orderSection: [.favorite(viewModels)])
         }
     }
     

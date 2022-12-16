@@ -114,11 +114,11 @@ extension RecipeListViewController: UISearchBarDelegate {
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
-    func updateUI(with type: RLBuildType) {
+    func updateCV(with: [RecipeModelsDictionary]) {
         DispatchQueue.main.async {
             self.factory = RLFactory(collectionView: self.collectionView,
-                                buildType: type,
-                                delegate: self.presenter)
+                                     arrayModelsDictionary: with,
+                                     delegate: self.presenter)
             self.factory?.setupCollectionView()
         }
     }

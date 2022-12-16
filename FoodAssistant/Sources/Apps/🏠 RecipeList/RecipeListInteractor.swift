@@ -32,6 +32,10 @@ final class RecipeListInteractor {
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
+    func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void) {
+        
+    }
+    
     
     func getRecipe(id: Int,
                   completion: @escaping (RecipeProtocol) -> Void) {
