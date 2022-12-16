@@ -12,6 +12,8 @@ import Foundation
 protocol UserProfileViewable: AnyObject {
     /// Обновление UI
     func updateUI(with type: UPBuildType)
+    /// Скрыть `Search Bar`
+    func hideSearchBar(shouldHide: Bool)
     /// Показать ошибку
     func showError()
     
@@ -22,13 +24,14 @@ protocol UserProfileViewable: AnyObject {
 protocol UserProfileBusinessLogic: RecipeReceived,
                                    ImageBusinessLogic {
     
-    func fetchRecipeFromDB(completion: @escaping ([RecipeViewModel]) -> Void)
+    func fetchFavoriteRecipe(text: String,
+                             completion: @escaping ([RecipeViewModel]) -> Void)
     
     /// Удалить рецепт
     /// - Parameter id: идентификатор рецепта
     func removeRecipe(id: Int)
     
-    /// Добавить в корзину 
+    /// Добавить в корзину
     /// - Parameters:
     ///   - id: идентификатор рецепта
     func addToBasket(id: Int)
@@ -74,25 +77,28 @@ final class UserProfilePresenter {
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
     
+    func fetchFavoriteRecipe(text: String) {
+        interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
+            self?.viewModels = models
+        }
+    }
+    
     func didSelectSegment(index: Int) {
         currentSegmentIndex = index
         
         switch index {
         case 0:
+            view?.hideSearchBar(shouldHide: true)
             view?.updateUI(with: .profile)
         case 1:
             let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", amount: 3)
             let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", amount: 5)
             let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", amount: 1, unit: "кг")
+            view?.hideSearchBar(shouldHide: true)
             view?.updateUI(with: .fridge([ingredient1, ingredient2, ingredient3]))
         default:
+            view?.hideSearchBar(shouldHide: false)
             view?.updateUI(with: .favorite(viewModels))
-        }
-    }
-    
-    func fetchRecipe() {
-        interactor.fetchRecipeFromDB { [weak self] models in
-            self?.viewModels = models
         }
     }
     
@@ -122,8 +128,8 @@ extension UserProfilePresenter: UserProfilePresentation {
     
     func didTapChangeLayoutButton(section: Int) {
         NotificationCenter.default
-                    .post(name: NSNotification.Name("changeLayoutType2"),
-                     object: nil)
+            .post(name: NSNotification.Name("changeLayoutType2"),
+                  object: nil)
         
         view?.reloadSection(section)
     }

@@ -30,6 +30,7 @@
 		7D2B34942948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34932948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift */; };
 		7D2B34962948DE2000FF01A2 /* PresentationProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34952948DE2000FF01A2 /* PresentationProtocols.swift */; };
 		7D2B3498294A1EAA00FF01A2 /* BusinessLogicProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B3497294A1EAA00FF01A2 /* BusinessLogicProtocols.swift */; };
+		7D2B349A294B82F200FF01A2 /* UIImage + Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B3499294B82F200FF01A2 /* UIImage + Size.swift */; };
 		7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F76F1291A94D4009D3444 /* AppDelegate.swift */; };
 		7D2F76FC291A94D4009D3444 /* FoodAssistant.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F76FA291A94D4009D3444 /* FoodAssistant.xcdatamodeld */; };
 		7D2F76FE291A94D6009D3444 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D2F76FD291A94D6009D3444 /* Assets.xcassets */; };
@@ -176,6 +177,7 @@
 		7D2B34932948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedIngredientsItemBuilder.swift; sourceTree = "<group>"; };
 		7D2B34952948DE2000FF01A2 /* PresentationProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationProtocols.swift; sourceTree = "<group>"; };
 		7D2B3497294A1EAA00FF01A2 /* BusinessLogicProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicProtocols.swift; sourceTree = "<group>"; };
+		7D2B3499294B82F200FF01A2 /* UIImage + Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Size.swift"; sourceTree = "<group>"; };
 		7D2F76EE291A94D4009D3444 /* FoodAssistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAssistant.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D2F76F1291A94D4009D3444 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D2F76FB291A94D4009D3444 /* FoodAssistant.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAssistant.xcdatamodel; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */,
 				7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */,
 				7D48A9B129291137009EF273 /* UIImage + Alpha.swift */,
+				7D2B3499294B82F200FF01A2 /* UIImage + Size.swift */,
 				7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */,
 				7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */,
 				7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */,
@@ -1178,6 +1181,7 @@
 				7D48A9AE2928EE89009EF273 /* AppConstants.swift in Sources */,
 				7D3D198F294290D3005E3840 /* ModelProtocols.swift in Sources */,
 				7D875DCF292BEBB60033A4C0 /* ThirdRecipeCell.swift in Sources */,
+				7D2B349A294B82F200FF01A2 /* UIImage + Size.swift in Sources */,
 				7DFEB5EA291C3D36008C28FC /* TranslateResponce.swift in Sources */,
 				7D2F7732291A9717009D3444 /* Assemblying.swift in Sources */,
 				7D875DD5292D2A1B0033A4C0 /* ImageDownloaderProxy.swift in Sources */,

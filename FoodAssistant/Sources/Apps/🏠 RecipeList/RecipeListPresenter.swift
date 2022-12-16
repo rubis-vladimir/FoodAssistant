@@ -52,8 +52,11 @@ protocol RecipeListBusinessLogic: RecipeReceived,
     ///   - target: цель сохранения
     func saveRecipe(id: Int,
                     for target: TargetOfSave)
+    
+    func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void)
 }
 
+typealias RecipeModelsDictionary = [RLSectionType: [RecipeViewModel]]
 
 // MARK: - Presenter
 /// #Слой презентации модуля RecipeList
@@ -64,14 +67,14 @@ final class RecipeListPresenter {
     
     weak var view: RecipeListViewable?
     
-    private(set) var viewModels: [RLSectionType: [RecipeViewModel]] = [:] {
+    private(set) var viewModels: RecipeModelsDictionary = [:] {
         didSet {
             if isStart {
                 guard let recommended = viewModels[.recommended],
                       let main = viewModels[.main] else { return }
                 
                 view?.updateUI(with: .main(first: recommended,
-                                               second: main))
+                                           second: main))
             } else {
                 guard let main = viewModels[.main] else { return }
                 view?.updateUI(with: .search(models: main))
@@ -106,6 +109,11 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
+    func checkFavoriteRecipe() {
+        interactor.checkFavoriteRecipe { [weak self] viewModels in
+            self?.viewModels = viewModels
+        }
+    }
     
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
@@ -124,7 +132,7 @@ extension RecipeListPresenter: RecipeListPresentation {
                               id: Int) {
         if isFavorite {
             interactor.saveRecipe(id: id,
-                                  for: .favorite)
+                                  for: .isFavorite)
         } else {
             interactor.removeRecipe(id: id)
         }
@@ -132,7 +140,7 @@ extension RecipeListPresenter: RecipeListPresentation {
     
     func didTapAddInBasketButton(id: Int) {
         interactor.saveRecipe(id: id,
-                              for: .basket)
+                              for: .inBasket)
     }
     
     
