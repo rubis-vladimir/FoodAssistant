@@ -52,7 +52,7 @@ protocol DBRecipeManagement {
 protocol DBIngredientsFridgeManagement {
     /// Получает ингредиенты
     ///   - Parameter completion: захватывает массив ингредиентов
-    func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void)
+    func fetchIngredients(toUse: Bool, completion: @escaping ([IngredientProtocol]) -> Void)
     
     /// Сохраняет ингредиент
     ///  - Parameter ingredient: ингредиент
@@ -61,4 +61,10 @@ protocol DBIngredientsFridgeManagement {
     /// Удаляет ингредиент из БД по идентификатору
     /// - Parameter id: идентификатор рецепта
     func remove(id: Int)
+    
+    /// Обновляет флаг использования ингредиента
+    ///  - Parameters:
+    ///   - id: идентификатор ингредиента
+    ///   - toUse: использовать/нет
+    func update(id: Int, toUse: Bool)
 }

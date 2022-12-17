@@ -204,7 +204,10 @@ extension StorageManager: DBRecipeManagement {
 // MARK: - DBIngredientsFridgeManagement
 extension StorageManager: DBIngredientsFridgeManagement {
     func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void) {
-        let objects = read(model: CDIngredient.self).filter { $0.inFridge == true }
+        
+        let predicate = NSPredicate(format: "inFridge == %@",
+                                    NSNumber(value: true))
+        let objects = read(model: CDIngredient.self, predicate: predicate)
         completion(objects)
     }
     
@@ -221,8 +224,19 @@ extension StorageManager: DBIngredientsFridgeManagement {
     }
     
     func remove(id: Int) {
-        guard let object = read(model: CDIngredient.self).first(where: { $0.inFridge == true && $0.id == id}) else { return }
+        let predicate = NSPredicate(format: "cdId == %@",
+                                    NSNumber(value: id))
+        guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
         viewContext.delete(object)
+        saveContext()
+    }
+    
+    func update(id: Int, toUse: Bool) {
+        let predicate = NSPredicate(format: "cdId == %@",
+                                    NSNumber(value: id))
+        guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
+        object.setValue(toUse, forKey: "toUse")
+        saveContext()
     }
 }
 

@@ -39,7 +39,7 @@ protocol IngredientProtocol {
     /// Название ингредиента
     var name: String { get }
     /// Количество
-    var amount: Float { get }
+    var amount: Float { get set }
     /// Единицы измерения
     var unit: String? { get }
     /// Флаг использования при приготовлении
