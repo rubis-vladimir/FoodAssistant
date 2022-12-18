@@ -13,8 +13,9 @@ struct RecipeResponce: Codable, Hashable {
     var results: [Recipe]?
 }
 
+// MARK: - Recipe
 /// #Модель рецепта
-struct Recipe: Codable, Equatable, Hashable {
+struct Recipe: RecipeProtocol, Codable, Equatable, Hashable {
     /// Идентификатор
     var id: Int
     /// Название рецепта
@@ -41,15 +42,16 @@ struct Recipe: Codable, Equatable, Hashable {
     }
 }
 
-// MARK: - RecipeProtocol
-extension Recipe: RecipeProtocol {
+extension Recipe {
     
     var imageName: String? {
         guard let image = image else { return nil }
         return String(image.dropFirst(37))
     }
     
-    var ingredients: [IngredientProtocol]? { extendedIngredients }
+    var ingredients: [IngredientProtocol]? {
+        combineUnit(ingredients: extendedIngredients)
+    }
     
     var nutrients: [NutrientProtocol]? { nutrition?.nutrients }
     
@@ -66,11 +68,38 @@ extension Recipe: RecipeProtocol {
         ? "\(hours) ч"
         :  "\(minutes) мин"
     }
+    
+    func combineUnit(ingredients: [Ingredient]?) -> [Ingredient]? {
+         
+        guard let ingredients = ingredients else { return nil }
+        
+        var finalArray: [Ingredient] = []
+        let arrayId = ingredients.map { $0.id }
+        let dublicate = Array(Set(arrayId.filter{ (i: Int) in arrayId.filter({ $0 == i }).count > 1}))
+        
+        
+        
+        ingredients.forEach {
+            if dublicate.contains($0.id) {
+                
+            } else {
+                finalArray.append($0)
+            }
+        }
+        
+        dublicate.forEach { id in
+            ingredients.filter{ $0.id == id }
+                
+        }
+        
+        return finalArray
+    }
 }
 
-// Модель ингредиента
+// MARK: - Ingredient
+/// #Модель ингредиента
 struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
-    
+
     /// Идентификатор ингредиента
     var id: Int
     /// Название изображения ингредиента
@@ -78,21 +107,64 @@ struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
     /// Название ингредиента
     var name: String
     /// Количество
-    var amount: Float
+    var dtoAmount: Float?
     /// Единицы измерения
-    var unit: String?
+    var dtoUnit: String?
     /// Флаг использования
     var toUse: Bool { false }
     
-    static func == (lhs: Ingredient, rhs: Ingredient) -> Bool {
-        if lhs.id == rhs.id {
-            return true
-        }
-        return false
+    enum CodingKeys: String, CodingKey {
+        case id, image, name
+        case dtoAmount = "amount"
+        case dtoUnit = "unit"
     }
 }
 
-// Модель инструкции по приготовлению
+extension Ingredient {
+    
+    var unit: String {
+        getUnit()
+    }
+    
+    var amount: Float {
+        getAmount()
+    }
+    
+    func getAmount() -> Float {
+        guard let amount = dtoAmount else { return 0 }
+        
+        if ["ounce", "ounces", "oz"].contains(dtoUnit) {
+            /// Переводим в граммы из тройской унции
+            return 31.1 * amount
+        } else if ["lb", "lbs", "pounds", "pound"].contains(dtoUnit) {
+            /// Переводим в граммы из фунта
+            return 453.6 * amount
+        } else {
+            return amount
+        }
+    }
+    
+    func getUnit() -> String {
+        let unit = dtoUnit?.lowercased()
+        if ["tbsps", "tbs", "tbsp", "tablespoons", "tablespoon"].contains(unit) {
+            return "tbsp"
+        } else if ["tsps", "teaspoons", "teaspoon", "tsp", "t"].contains(unit) {
+            return "tsp"
+        } else if ["cups", "cup", "c"].contains(unit) {
+            return "cup"
+        } else if ["ounce", "ounces", "oz", "g", "lb", "lbs", "pounds", "pound", "grams"].contains(unit) {
+            return "g"
+        } else if ["serving", "servings"].contains(unit) {
+            return "serv"
+        } else {
+            guard let unit = dtoUnit else { return "" }
+            return unit
+        }
+    }
+}
+
+// MARK: - Instruction
+/// #Модель инструкции по приготовлению
 struct Instruction: Codable, Hashable {
     /// Название
     var name: String
@@ -100,7 +172,7 @@ struct Instruction: Codable, Hashable {
     var steps: [InstuctionStep]
 }
 
-// Модель этапа(шага) приготовления
+/// #Модель этапа(шага) приготовления
 struct InstuctionStep: InstructionStepProtocol, Codable, Hashable {
     /// Номер
     var number: Int
@@ -108,7 +180,8 @@ struct InstuctionStep: InstructionStepProtocol, Codable, Hashable {
     var step: String
 }
 
-// Модель питательных веществ
+// MARK: - Nutrition
+/// #Модель питательных веществ
 struct Nutrition: Codable, Hashable {
     /// Массив питателных веществ
     var nutrients: [Nutrient]
@@ -139,7 +212,7 @@ struct Nutrition: Codable, Hashable {
     }
 }
 
-// Модель питательного вещества
+/// #Модель питательного вещества
 struct Nutrient: NutrientProtocol, Codable, Hashable {
     /// Название
     var name: String

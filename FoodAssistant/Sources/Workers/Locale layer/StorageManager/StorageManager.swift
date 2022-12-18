@@ -203,6 +203,16 @@ extension StorageManager: DBRecipeManagement {
 
 // MARK: - DBIngredientsFridgeManagement
 extension StorageManager: DBIngredientsFridgeManagement {
+    func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void) {
+        let predicate = NSPredicate(format: "inFridge == %@",
+                                    NSNumber(value: true))
+        var objects = read(model: CDIngredient.self, predicate: predicate)
+        if let toUse = toUse {
+            objects = objects.filter{ $0.toUse == toUse }
+        }
+        completion(objects)
+    }
+    
     func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void) {
         
         let predicate = NSPredicate(format: "inFridge == %@",

@@ -52,7 +52,7 @@ protocol DBRecipeManagement {
 protocol DBIngredientsFridgeManagement {
     /// Получает ингредиенты
     ///   - Parameter completion: захватывает массив ингредиентов
-    func fetchIngredients(toUse: Bool, completion: @escaping ([IngredientProtocol]) -> Void)
+    func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void)
     
     /// Сохраняет ингредиент
     ///  - Parameter ingredient: ингредиент

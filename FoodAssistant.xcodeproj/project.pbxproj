@@ -121,6 +121,7 @@
 		7DC1611E292E91F80026A072 /* CVSectionHeaderWithButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */; };
 		7DC16125292FBDDA0026A072 /* RLFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16124292FBDDA0026A072 /* RLFactory.swift */; };
 		7DC16127292FC0340026A072 /* CVAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16126292FC0340026A072 /* CVAdapter.swift */; };
+		7DC55088294F6B49001539C5 /* Float + Fraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC55087294F6B49001539C5 /* Float + Fraction.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -274,6 +275,7 @@
 		7DC1611D292E91F80026A072 /* CVSectionHeaderWithButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVSectionHeaderWithButton.swift; sourceTree = "<group>"; };
 		7DC16124292FBDDA0026A072 /* RLFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLFactory.swift; sourceTree = "<group>"; };
 		7DC16126292FC0340026A072 /* CVAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVAdapter.swift; sourceTree = "<group>"; };
+		7DC55087294F6B49001539C5 /* Float + Fraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float + Fraction.swift"; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -470,6 +472,7 @@
 				7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */,
 				7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */,
 				7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */,
+				7DC55087294F6B49001539C5 /* Float + Fraction.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1235,6 +1238,7 @@
 				7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */,
 				7D3D199C2943A65A005E3840 /* FavoriteItemBuilder.swift in Sources */,
 				7DEF8E212923C6580016A207 /* UPFactory.swift in Sources */,
+				7DC55088294F6B49001539C5 /* Float + Fraction.swift in Sources */,
 				7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */,
 				7D3D19A5294477BD005E3840 /* CVIngredientCell.swift in Sources */,
 				7D451C77293F22F300A4CDC5 /* StorageManager.swift in Sources */,
