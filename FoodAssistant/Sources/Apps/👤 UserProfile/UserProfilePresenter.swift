@@ -91,9 +91,10 @@ extension UserProfilePresenter: UserProfilePresentation {
             view?.hideSearchBar(shouldHide: true)
             view?.updateCV(orderSection: [.profile])
         case 1:
-            let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", amount: 3)
-            let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", amount: 5)
-            let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", amount: 1, unit: "кг")
+            let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", dtoAmount: 3)
+            let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", dtoAmount: 5)
+            let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", dtoAmount: 1, dtoUnit: "кг")
+            
             view?.hideSearchBar(shouldHide: true)
             view?.updateCV(orderSection: [.fridge([ingredient1, ingredient2, ingredient3])])
         default:

@@ -41,7 +41,7 @@ protocol IngredientProtocol {
     /// Количество
     var amount: Float { get }
     /// Единицы измерения
-    var unit: String? { get }
+    var unit: String { get }
     /// Флаг использования при приготовлении
     var toUse: Bool { get }
 }

@@ -92,9 +92,9 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 4, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 30, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
                 
