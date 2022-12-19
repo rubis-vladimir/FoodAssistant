@@ -75,23 +75,25 @@ extension Recipe {
         
         var finalArray: [Ingredient] = []
         let arrayId = ingredients.map { $0.id }
-        let dublicate = Array(Set(arrayId.filter{ (i: Int) in arrayId.filter({ $0 == i }).count > 1}))
-        
-        
+        let dublicateId = arrayId.duplicate()
         
         ingredients.forEach {
-            if dublicate.contains($0.id) {
-                
-            } else {
+            if !dublicateId.contains($0.id) {
                 finalArray.append($0)
             }
         }
         
-        dublicate.forEach { id in
-            ingredients.filter{ $0.id == id }
-                
+        dublicateId.forEach { id in
+            let dublicate = ingredients.filter{ $0.id == id }
+            let amount = dublicate.map { $0.amount }.reduce(0, +)
+            let ingredient = Ingredient(id: dublicate[0].id,
+                                        image: dublicate[0].image,
+                                        name: dublicate[0].name,
+                                        dtoAmount: amount,
+                                        dtoUnit: dublicate[0].unit)
+            finalArray.append(ingredient)
         }
-        
+    
         return finalArray
     }
 }
@@ -107,7 +109,7 @@ struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
     /// Название ингредиента
     var name: String
     /// Количество
-    var dtoAmount: Float?
+    var dtoAmount: Float
     /// Единицы измерения
     var dtoUnit: String?
     /// Флаг использования
@@ -131,21 +133,20 @@ extension Ingredient {
     }
     
     func getAmount() -> Float {
-        guard let amount = dtoAmount else { return 0 }
-        
         if ["ounce", "ounces", "oz"].contains(dtoUnit) {
             /// Переводим в граммы из тройской унции
-            return 31.1 * amount
+            return 31.1 * dtoAmount
         } else if ["lb", "lbs", "pounds", "pound"].contains(dtoUnit) {
             /// Переводим в граммы из фунта
-            return 453.6 * amount
+            return 453.6 * dtoAmount
         } else {
-            return amount
+            return dtoAmount
         }
     }
     
     func getUnit() -> String {
         let unit = dtoUnit?.lowercased()
+        
         if ["tbsps", "tbs", "tbsp", "tablespoons", "tablespoon"].contains(unit) {
             return "tbsp"
         } else if ["tsps", "teaspoons", "teaspoon", "tsp", "t"].contains(unit) {
@@ -156,11 +157,22 @@ extension Ingredient {
             return "g"
         } else if ["serving", "servings"].contains(unit) {
             return "serv"
+        } else if ["small", "large", "medium"].contains(unit) {
+            return ""
         } else {
             guard let unit = dtoUnit else { return "" }
             return unit
         }
     }
+    
+//    static func + (lhs: Ingredient,
+//                   rhs: Ingredient) -> Ingredient {
+//        return Ingredient(id: lhs.id,
+//                                    image: lhs.image,
+//                                    name: lhs.name,
+//                                    dtoAmount: lhs.dtoAmount + rhs.dtoAmount,
+//                                    dtoUnit: lhs.unit)
+//    }
 }
 
 // MARK: - Instruction
