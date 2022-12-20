@@ -39,6 +39,7 @@ final class RLFactory {
         cvAdapter = CVAdapter(collectionView: collectionView)
     }
     
+    
     /// Настраивает табличное представление
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter

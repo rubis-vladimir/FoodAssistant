@@ -164,15 +164,6 @@ extension Ingredient {
             return unit
         }
     }
-    
-//    static func + (lhs: Ingredient,
-//                   rhs: Ingredient) -> Ingredient {
-//        return Ingredient(id: lhs.id,
-//                                    image: lhs.image,
-//                                    name: lhs.name,
-//                                    dtoAmount: lhs.dtoAmount + rhs.dtoAmount,
-//                                    dtoUnit: lhs.unit)
-//    }
 }
 
 // MARK: - Instruction

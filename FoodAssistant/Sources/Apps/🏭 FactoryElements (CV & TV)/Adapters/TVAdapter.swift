@@ -7,6 +7,13 @@
 
 import UIKit
 
+/// #Протокол делегата прокрутки экрана
+protocol ScrollDelegate: AnyObject {
+    /// Отслеживает перемещение scrollView
+    /// - Parameter offset: перемещение Y
+    func scrollViewDidScroll(to offset: CGFloat)
+}
+
 /// #Адаптер для TableView
 final class TVAdapter: NSObject {
     

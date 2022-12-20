@@ -19,9 +19,9 @@ enum TypeOfActionButton {
 class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Properties
-    var favoriteDelegate: FavoriteChangable?
-    var deleteDelegate: RecipeRemovable?
-    var basketDelegate: InBasketAdded?
+    weak var favoriteDelegate: FavoriteChangable?
+    weak var deleteDelegate: RecipeRemovable?
+    weak var basketDelegate: InBasketAdded?
     
     /// Идентификатор рецепта
     var id: Int?

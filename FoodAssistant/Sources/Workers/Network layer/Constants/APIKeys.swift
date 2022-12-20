@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Ключи и идентификаторы
+/// Ключи и идентификаторы сетевого слоя
 enum APIKeys: String {
     /// API ключ для загрузки рецептов
     case spoonacular = "fb8cdf8883dc469eb9835049df44cb03"

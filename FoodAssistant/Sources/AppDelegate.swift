@@ -20,22 +20,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupElementAppearence()
         
-        
         /// Создаем NavigationController для TabBarController
         let navigationVC = UINavigationController()
-        /// Устанавливаем зависимости и настраиваем TabBarController
-        let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
-        let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
-        navigationVC.viewControllers = [tabBarController]
+        
+        if UserDefaults.standard.bool(forKey: UserDefaultsKeys.isUserReady.rawValue) {
+            /// Если пользователь уже просматривал экран `Launch`
+            /// Устанавливаем зависимости и настраиваем TabBarController
+            let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
+            let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
+            navigationVC.viewControllers = [tabBarController]
+            window?.rootViewController = navigationVC
+        } else {
+            /// Если нет - настраиваем модуль `Launch`
+            let viewController = LaunchAssembly().assembly()
+            window?.rootViewController = viewController
+        }
         
         /// Определяем rootVC и отображаем на экране
-        window?.rootViewController = navigationVC
-        window?.makeKeyAndVisible()
         
+        window?.makeKeyAndVisible()
         return true
     }
     
-    // Настраиваем свойства по дефолту в приложении
+    /// Настраиваем свойства по дефолту в приложении
     private func setupElementAppearence() {
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor.black]
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor.black]

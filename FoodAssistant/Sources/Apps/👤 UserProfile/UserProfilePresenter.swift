@@ -1,12 +1,11 @@
 //
 //  UserProfilePresenter.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
 import Foundation
-
 
 /// #Протокол управления View-слоем модуля UserProfile
 protocol UserProfileViewable: AnyObject {
@@ -50,6 +49,7 @@ protocol UserProfileRouting {
     func route(to: UserProfileTarget, model: RecipeProtocol)
 }
 
+// MARK: - Presenter
 /// #Слой презентации модуля UserProfile
 final class UserProfilePresenter {
     

@@ -1,6 +1,6 @@
 //
 //  UserProfileViewController.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -58,6 +58,10 @@ final class UserProfileViewController: UIViewController {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        print("DEINIT \(self)")
     }
     
     override func viewDidLoad() {
@@ -196,7 +200,7 @@ extension UserProfileViewController: UISearchBarDelegate {
 }
 
 
-// MARK: - Viewable
+// MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
     func reloadSection(_ section: Int) {
         collectionView.reloadSections(IndexSet(integer: section))
