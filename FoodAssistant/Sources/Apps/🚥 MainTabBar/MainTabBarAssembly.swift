@@ -1,6 +1,6 @@
 //
 //  MainTabBarAssembly.swift
-//  LifeScreen
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 17.08.2022.
 //
@@ -20,6 +20,10 @@ final class MainTabBarAssembly {
         
         /// Скрываю `navigationBar` для `TabBar`
         navigationController.navigationBar.isHidden = true
+    }
+    
+    deinit {
+        print("DEINIT \(self)")
     }
 }
 

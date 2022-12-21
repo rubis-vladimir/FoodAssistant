@@ -22,6 +22,10 @@ final class TabBarConfigurator {
         self.navigationController = navigationController
     }
     
+    deinit {
+        print("DEINIT \(self)")
+    }
+    
     /// Настройка tabBarItem
     /// - Parameters:
     ///  - viewController: Child-VC

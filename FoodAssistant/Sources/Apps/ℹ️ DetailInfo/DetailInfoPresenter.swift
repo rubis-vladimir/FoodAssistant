@@ -1,17 +1,16 @@
 //
 //  DetailInfoPresenter.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
 import Foundation
 
-/// #Протокол делегата прокрутки экрана
-protocol ScrollDelegate: AnyObject {
-    /// Отслеживает перемещение scrollView
-    /// - Parameter offset: перемещение Y
-    func scrollViewDidScroll(to offset: CGFloat)
+/// #Протокол управления слоем навигации модуля DetailInfo
+protocol DetailInfoRouting {
+    /// Возврат назад
+    func routeToBack()
 }
 
 /// #Протокол управления бизнес логикой модуля DetailInfo
@@ -34,6 +33,7 @@ protocol DetailInfoBusinessLogic {
                                completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
+// MARK: - Presenter
 /// #Слой презентации модуля DetailInfo
 final class DetailInfoPresenter {
     private let interactor: DetailInfoBusinessLogic
@@ -50,7 +50,7 @@ final class DetailInfoPresenter {
     }
 }
 
-// MARK: - Presentation
+// MARK: - DetailInfoPresentation
 extension DetailInfoPresenter: DetailInfoPresentation {
     func fetchRecipe(with imageName: String, completion: @escaping (Data) -> Void) {
         interactor.fetchImageRecipe(imageName) { result in

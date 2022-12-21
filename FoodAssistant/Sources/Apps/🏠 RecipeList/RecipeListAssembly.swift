@@ -1,6 +1,6 @@
 //
-//  Assembly.swift
-//  ModuleVIPER
+//  RecipeListAssembly.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -13,6 +13,9 @@ final class RecipeListAssembly {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
+    }
+    deinit {
+        print("DEINIT \(self)")
     }
 }
 

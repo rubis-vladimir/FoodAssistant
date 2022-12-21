@@ -1,6 +1,6 @@
 //
 //  MainTabBarRouter.swift
-//  LifeScreen
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 17.08.2022.
 //
@@ -15,10 +15,14 @@ protocol MainTabBarRoutable {
 
 /// #Слой навигации модуля MainTabBar
 final class MainTabBarRouter {
-    private let navigationController: UINavigationController
+    private weak var navigationController: UINavigationController?
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
+    }
+    
+    deinit {
+        print("DEINIT \(self)")
     }
 }
 
@@ -26,6 +30,7 @@ final class MainTabBarRouter {
 extension MainTabBarRouter: MainTabBarRoutable {
     
     func routeToBasket() {
+        guard let navigationController = navigationController else {return}
         let vc = BasketAssembly(navigationController: navigationController).assembly()
         
         /// Добавляем кастомный переход

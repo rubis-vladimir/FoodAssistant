@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  ModuleVIPER
+//  RecipeListViewController.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -21,7 +21,7 @@ protocol RecipeListPresentation: LayoutChangable,
 final class RecipeListViewController: UIViewController {
 
     // MARK: - Properties
-    private var collectionView: UICollectionView!
+    private var collectionView: UICollectionView?
     private var timer: Timer?
     private var factory: RLFactory?
     
@@ -49,6 +49,10 @@ final class RecipeListViewController: UIViewController {
         presenter.checkFavoriteRecipe()
     }
     
+    deinit {
+        print("DEINIT \(self)")
+    }
+    
     // MARK: - Private func
     private func setupElements() {
         /// Настройка`navigationBar`
@@ -66,7 +70,7 @@ final class RecipeListViewController: UIViewController {
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: getFlowLayout())
-        
+        guard let collectionView = collectionView else { return }
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
@@ -115,8 +119,10 @@ extension RecipeListViewController: UISearchBarDelegate {
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
     func updateCV(with: [RecipeModelsDictionary]) {
+        
+        guard let collectionView = collectionView else {return}
         DispatchQueue.main.async {
-            self.factory = RLFactory(collectionView: self.collectionView,
+            self.factory = RLFactory(collectionView: collectionView,
                                      arrayModelsDictionary: with,
                                      delegate: self.presenter)
             self.factory?.setupCollectionView()
@@ -128,6 +134,7 @@ extension RecipeListViewController: RecipeListViewable {
     }
     
     func reloadSection(_ section: Int) {
+        guard let collectionView = collectionView else {return}
         collectionView.reloadSections(IndexSet(integer: section))
     }
 }

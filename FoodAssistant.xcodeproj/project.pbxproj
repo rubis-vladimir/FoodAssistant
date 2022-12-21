@@ -124,6 +124,15 @@
 		7DC55088294F6B49001539C5 /* Float + Fraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC55087294F6B49001539C5 /* Float + Fraction.swift */; };
 		7DC5508A294F8780001539C5 /* IngredientViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC55089294F8780001539C5 /* IngredientViewModel.swift */; };
 		7DC5508C2950D2FC001539C5 /* Array + Duplicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5508B2950D2FC001539C5 /* Array + Duplicate.swift */; };
+		7DC550942951018B001539C5 /* LaunchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5508F2951018B001539C5 /* LaunchPresenter.swift */; };
+		7DC550952951018B001539C5 /* LaunchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550902951018B001539C5 /* LaunchViewController.swift */; };
+		7DC550962951018B001539C5 /* LaunchAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550912951018B001539C5 /* LaunchAssembly.swift */; };
+		7DC550982951018B001539C5 /* LaunchRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550932951018B001539C5 /* LaunchRouter.swift */; };
+		7DC5509B295103A6001539C5 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509A295103A6001539C5 /* UserDefaultsKeys.swift */; };
+		7DC5509D295104DF001539C5 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509C295104DF001539C5 /* LaunchView.swift */; };
+		7DC5509F295104F1001539C5 /* LaunchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */; };
+		7DC550A229522850001539C5 /* BallSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */; };
+		7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -280,6 +289,15 @@
 		7DC55087294F6B49001539C5 /* Float + Fraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Float + Fraction.swift"; sourceTree = "<group>"; };
 		7DC55089294F8780001539C5 /* IngredientViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientViewModel.swift; sourceTree = "<group>"; };
 		7DC5508B2950D2FC001539C5 /* Array + Duplicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array + Duplicate.swift"; sourceTree = "<group>"; };
+		7DC5508F2951018B001539C5 /* LaunchPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchPresenter.swift; sourceTree = "<group>"; };
+		7DC550902951018B001539C5 /* LaunchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
+		7DC550912951018B001539C5 /* LaunchAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchAssembly.swift; sourceTree = "<group>"; };
+		7DC550932951018B001539C5 /* LaunchRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LaunchRouter.swift; sourceTree = "<group>"; };
+		7DC5509A295103A6001539C5 /* UserDefaultsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKeys.swift; sourceTree = "<group>"; };
+		7DC5509C295104DF001539C5 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
+		7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPageViewController.swift; sourceTree = "<group>"; };
+		7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallSpinFadeLoader.swift; sourceTree = "<group>"; };
+		7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController + NextPage.swift"; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -478,6 +496,7 @@
 				7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */,
 				7DC55087294F6B49001539C5 /* Float + Fraction.swift */,
 				7DC5508B2950D2FC001539C5 /* Array + Duplicate.swift */,
+				7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -485,6 +504,7 @@
 		7D2F7729291A95BD009D3444 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				7DC5508D2950FB71001539C5 /* 🏄Onboarding */,
 				7D451C6F293BA8E200A4CDC5 /* 🌐 Base */,
 				7D2F773C291A98D0009D3444 /* 🏭 FactoryElements (CV & TV) */,
 				7D77FD8A291FBF250085D7FF /* 🚥 MainTabBar */,
@@ -817,6 +837,7 @@
 			isa = PBXGroup;
 			children = (
 				7D451C62293A88C800A4CDC5 /* Protocols */,
+				7DC550A029522832001539C5 /* Views */,
 				7D3D19B829464F19005E3840 /* Cells */,
 				7D3D19B929464F23005E3840 /* Headers */,
 			);
@@ -834,6 +855,7 @@
 		7D451C75293F22CB00A4CDC5 /* Locale layer */ = {
 			isa = PBXGroup;
 			children = (
+				7DC5509929510344001539C5 /* Constants */,
 				7D40B307294CBFAA00D832A0 /* StorageManager */,
 				7DC1610F292E48830026A072 /* Cache */,
 			);
@@ -965,6 +987,51 @@
 				7DC16124292FBDDA0026A072 /* RLFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		7DC5508D2950FB71001539C5 /* 🏄Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				7DC5508E2950FC15001539C5 /* Views */,
+				7DC5508F2951018B001539C5 /* LaunchPresenter.swift */,
+				7DC550932951018B001539C5 /* LaunchRouter.swift */,
+				7DC550912951018B001539C5 /* LaunchAssembly.swift */,
+			);
+			path = "🏄Onboarding";
+			sourceTree = "<group>";
+		};
+		7DC5508E2950FC15001539C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */,
+				7DC550902951018B001539C5 /* LaunchViewController.swift */,
+				7DC5509C295104DF001539C5 /* LaunchView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7DC5509929510344001539C5 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				7DC5509A295103A6001539C5 /* UserDefaultsKeys.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		7DC550A029522832001539C5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7DC550A529535D22001539C5 /* Spinners */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7DC550A529535D22001539C5 /* Spinners */ = {
+			isa = PBXGroup;
+			children = (
+				7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */,
+			);
+			path = Spinners;
 			sourceTree = "<group>";
 		};
 		7DEF8E162923C4CC0016A207 /* Views */ = {
@@ -1191,11 +1258,13 @@
 				7D77FDAD291FC56C0085D7FF /* BasketRouter.swift in Sources */,
 				7D2F76FC291A94D4009D3444 /* FoodAssistant.xcdatamodeld in Sources */,
 				7D451C71293BB3C100A4CDC5 /* HeaderSectionModel.swift in Sources */,
+				7DC550962951018B001539C5 /* LaunchAssembly.swift in Sources */,
 				7DEF8E392925209C0016A207 /* UPCustomSegmentedControl.swift in Sources */,
 				7D3BC94B29312C29001B1B57 /* DetailInfoAssembly.swift in Sources */,
 				7D3D19A129447771005E3840 /* FridgeSectionConfigurator.swift in Sources */,
 				7D3BC9332930D84D001B1B57 /* MainItemBuilder.swift in Sources */,
 				7D2B348929478FF800FF01A2 /* StorageProtocols.swift in Sources */,
+				7DC5509D295104DF001539C5 /* LaunchView.swift in Sources */,
 				7DEF8E152923B03E0016A207 /* Palette.swift in Sources */,
 				7D0F2B802935134900F57E2A /* TVBaseCell.swift in Sources */,
 				7D3BC95629326388001B1B57 /* DetailTitleView.swift in Sources */,
@@ -1204,6 +1273,7 @@
 				7D3D19872942895B005E3840 /* CDInstrutionStep+CoreDataProperties.swift in Sources */,
 				7D2B348C294792C400FF01A2 /* CDIngredient+CoreDataClass.swift in Sources */,
 				7D3D19892942895B005E3840 /* CDInstrutionStep+CoreDataClass.swift in Sources */,
+				7DC550942951018B001539C5 /* LaunchPresenter.swift in Sources */,
 				7D3BC94D29312C29001B1B57 /* DetailInfoViewController.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */,
@@ -1234,6 +1304,7 @@
 				7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */,
 				7D3BC93B2931050D001B1B57 /* RecommendedItemBuilder.swift in Sources */,
 				7D3BC92F2930D665001B1B57 /* CVSectionBuilder.swift in Sources */,
+				7DC5509F295104F1001539C5 /* LaunchPageViewController.swift in Sources */,
 				7D3D19B52946309E005E3840 /* AddedRecipesConfigurator.swift in Sources */,
 				7D3BC94F29312C29001B1B57 /* DetailInfoInteractor.swift in Sources */,
 				7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */,
@@ -1255,7 +1326,9 @@
 				7DC5508C2950D2FC001539C5 /* Array + Duplicate.swift in Sources */,
 				7D2F7730291A9717009D3444 /* RecipeListAssembly.swift in Sources */,
 				7D3BC94C29312C29001B1B57 /* DetailInfoRouter.swift in Sources */,
+				7DC550982951018B001539C5 /* LaunchRouter.swift in Sources */,
 				7D3BC94E29312C29001B1B57 /* DetailInfoPresenter.swift in Sources */,
+				7DC550952951018B001539C5 /* LaunchViewController.swift in Sources */,
 				7D3D198C2942895B005E3840 /* CDNutrient+CoreDataClass.swift in Sources */,
 				7D0F2B88293527A800F57E2A /* IngredientCell.swift in Sources */,
 				7D2F7731291A9717009D3444 /* RecipeListPresenter.swift in Sources */,
@@ -1277,14 +1350,17 @@
 				7D77FDAA291FC56C0085D7FF /* BasketPresenter.swift in Sources */,
 				7D2B348D294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift in Sources */,
 				7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */,
+				7DC550A229522850001539C5 /* BallSpinFadeLoader.swift in Sources */,
 				7D48A9AA2927B5FF009EF273 /* FirstRecipeCell.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
 				7D3D199E2943A677005E3840 /* FavoriteSectionConfigurator.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
 				7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */,
+				7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */,
 				7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */,
 				7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */,
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,
+				7DC5509B295103A6001539C5 /* UserDefaultsKeys.swift in Sources */,
 				7D0F2B762934BCF600F57E2A /* FactoryCollectionViewProtocols.swift in Sources */,
 				7D3D19BE29465DEF005E3840 /* BasketFactory.swift in Sources */,
 				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,

@@ -1,6 +1,6 @@
 //
-//  Interactor.swift
-//  ModuleVIPER
+//  RecipeListInteractor.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -27,6 +27,9 @@ final class RecipeListInteractor {
         self.imageDownloader = imageDownloader
         self.translateService = translateService
         self.storage = storage
+    }
+    deinit {
+        print("DEINIT \(self)")
     }
 }
 

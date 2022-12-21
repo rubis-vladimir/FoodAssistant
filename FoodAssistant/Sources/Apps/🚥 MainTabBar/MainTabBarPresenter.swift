@@ -1,6 +1,6 @@
 //
 //  MainTabBarPresenter.swift
-//  LifeScreen
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 17.08.2022.
 //

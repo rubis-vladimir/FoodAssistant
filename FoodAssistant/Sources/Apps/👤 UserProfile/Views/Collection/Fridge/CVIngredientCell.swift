@@ -56,6 +56,7 @@ final class CVIngredientCell: UICollectionViewCell {
         return stack
     }()
     
+    private lazy var spinner = BallSpinFadeLoader()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,13 +74,24 @@ final class CVIngredientCell: UICollectionViewCell {
     }
     
     func configure(with ingredient: IngredientProtocol) {
+        if ingredient.image != nil {
+            addSubview(spinner)
+            spinner.setupSpinner(loadingImageView: ingredientImageView)
+        }
+        
         titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount) \(ingredient.unit ?? "")"
+        amountLabel.text = "\(ingredient.amount) \(ingredient.unit)"
     }
     
     func updateImage(with imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
-        ingredientImageView.image = image
+        spinner.removeFromSuperview()
+        ingredientImageView.reloadInputViews()
+        
+        if let image = UIImage(data: imageData) {
+            ingredientImageView.image = image
+        } else {
+            ingredientImageView.image = UIImage(named: "defaultIngredient")
+        }
     }
     
     private func setupConstraints() {

@@ -1,6 +1,6 @@
 //
 //  BasketInteractor.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
