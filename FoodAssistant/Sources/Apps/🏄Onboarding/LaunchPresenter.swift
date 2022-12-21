@@ -14,6 +14,12 @@ protocol LaunchRouting {
     func routeToMainScreen()
 }
 
+/// #Протокол управления View-слоем модуля Launch
+protocol LaunchViewable: AnyObject {
+    /// Обновление Страницы
+    func updatePage()
+}
+
 // MARK: - Presenter
 /// #Слой презентации модуля Launch
 final class LaunchPresenter {
@@ -27,9 +33,13 @@ final class LaunchPresenter {
 
 // MARK: - LaunchPresentation
 extension LaunchPresenter: LaunchPresentation {
-    func didTapReadyButton() {
-//        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isUserReady.rawValue)
-        
-        router.routeToMainScreen()
+    func didTapReadyButton(page: LaunchPage) {
+        switch page {
+        case .last:
+            UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isUserReady.rawValue)
+            router.routeToMainScreen()
+        default:
+            view?.updatePage()
+        }
     }
 }

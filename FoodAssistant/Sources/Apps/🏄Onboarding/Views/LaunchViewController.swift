@@ -7,33 +7,50 @@
 
 import UIKit
 
-/// #Протокол управления View-слоем модуля Launch
-protocol LaunchViewable: AnyObject {
-    /// Обновление UI
-    func updateUI()
-    /// Показать ошибку
-    func showError()
+/// #Варианты страницы для модуля Launch
+enum LaunchPage: String, CaseIterable {
+    case first = "firstImage"
+    case second = "secondImage"
+    case third = "thirdImage"
+    case last = "lastImage"
+}
+
+extension LaunchPage {
+    /// Текст заголовка
+    var headerText: String {
+        switch self {
+        case .first: return "Добро пожаловать в FoodAssistant!"
+        case .second: return "Находите вкусное и полезное"
+        case .third: return "Сохраняйте рецепты"
+        case .last: return "Формируйте Шоп-лист"
+        }
+    }
+    /// Текст описания
+    var descriptionText: String {
+        switch self {
+        case .first: return "Это приложение поможет вам в приготовлении вкусной и полезной еды по различным рецептам"
+        case .second: return "Вы быстро можете 🔍 найти сотни полезных и легких в приготовлении рецептов. А мы подскажем, что приготовить из ваших ингредиентов"
+        case .third: return "Понравившиеся рецепты вы можете добавить в ❤Избранные, чтобы они всегда были под рукой"
+        case .last: return "Выберите блюда для приготовления, укажите, какие ингредиенты из имеющихся вы будете использовать ✅ и получите актуальный Шоп-лист из выбранных блюд"
+        }
+    }
 }
 
 /// #Контроллер представления для PageVC модуля Launch
 final class LaunchViewController: UIViewController {
-
-    enum Page: String {
-        case first = "firstImage"
-        case second = "secondImageы"
-        case third = "thirdImageы"
-        case fourth = "fourthImageы"
-    }
     
+    // MARK: - Properties
     private lazy var customView: LaunchView = {
         let view = LaunchView()
+        view.updateView(page: page)
         return view
     }()
     
     weak var delegate: LaunchViewDelegate?
-    private var page: Page!
+    private var page: LaunchPage!
     
-    init(page: Page,
+    // MARK: - Init & Override
+    init(page: LaunchPage,
          delegate: LaunchViewDelegate?) {
         self.page = page
         self.delegate = delegate
@@ -50,45 +67,8 @@ final class LaunchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.backgroundColor = .orange
-        configureView()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        customView.backgroundGradientCover.frame = customView.backgroundImageView.bounds
-    }
-    
-    private func configureView() {
-        customView.backgroundImageView.image = UIImage(named: page.rawValue)
-        customView.backgroundGradientCover.frame = customView.backgroundImageView.bounds
         customView.delegate = delegate
-        switch page {
-        case .first:
-            customView.titleTextLabel.text = "Добро пожаловать в «FoodAssistant»!"
-            customView.bodyTextLabel.text = "Это приложение поможет вам в приготовлении вкусной еды по различным рецептам"
-        case .second:
-            customView.titleTextLabel.text = ""
-            customView.bodyTextLabel.text = "Ищите рецепты с ингредиентами, которые у вас есть, фильтруйте по питательным веществам, калориям или просто введите название блюда."
-        case .third:
-            customView.titleTextLabel.text = ""
-            customView.bodyTextLabel.text = "Понравившиеся вам рецепты добавляйте в «Избранные», чтобы они всегда были под рукой"
-        case .fourth:
-            customView.titleTextLabel.text = ""
-            customView.bodyTextLabel.text = "Используйте ингредиенты из вашего холодильника для составления актуального Шоп-листа из выбранных блюд"
-        default:
-            print("Undefined value")
-        }
     }
 }
 
-// MARK: - LaunchViewable
-extension LaunchViewController: LaunchViewable {
-    func updateUI() {
-    
-    }
-    
-    func showError() {
-        
-    }
-}
+

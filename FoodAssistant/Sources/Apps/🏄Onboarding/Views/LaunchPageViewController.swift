@@ -8,8 +8,7 @@
 import UIKit
 
 /// #Протокол передачи UI-ивентов слою презентации
-protocol LaunchPresentation: LaunchViewDelegate {
-}
+protocol LaunchPresentation: LaunchViewDelegate {}
 
 /// #Контроллер представления Онбординг-экрана
 class LaunchPageViewController: UIPageViewController {
@@ -34,24 +33,15 @@ class LaunchPageViewController: UIPageViewController {
         
         addViewControllers()
         setViewControllers([pages[0]], direction: .forward, animated: true)
-        delegate = self
         dataSource = self
     }
-}
-
-// MARK: - Internal
-private extension LaunchPageViewController {
-    func addViewControllers() {
+    
+    private func addViewControllers() {
         pages.append(LaunchViewController(page: .first, delegate: presenter))
         pages.append(LaunchViewController(page: .second, delegate: presenter))
         pages.append(LaunchViewController(page: .third, delegate: presenter))
-        pages.append(LaunchViewController(page: .fourth, delegate: presenter))
+        pages.append(LaunchViewController(page: .last, delegate: presenter))
     }
-}
-
-// MARK: - UIPageViewControllerDelegate
-extension LaunchPageViewController: UIPageViewControllerDelegate {
-    
 }
 
 // MARK: - UIPageViewControllerDataSource
@@ -82,13 +72,7 @@ extension LaunchPageViewController: UIPageViewControllerDataSource {
 }
 
 extension LaunchPageViewController: LaunchViewable {
-    func updateUI() {
-        
+    func updatePage() {
+        goToNextPage()
     }
-    
-    func showError() {
-        
-    }
-    
-    
 }

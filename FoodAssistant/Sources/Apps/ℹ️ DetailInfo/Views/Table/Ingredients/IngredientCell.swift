@@ -49,6 +49,8 @@ final class IngredientCell: TVBaseCell {
         return stack
     }()
     
+    private lazy var spinner = BallSpinFadeLoader()
+    
     // MARK: - Functions
     override func setupCell() {
         setupConstraints()
@@ -56,6 +58,11 @@ final class IngredientCell: TVBaseCell {
     
     func configure(with ingredient: IngredientProtocol) {
         titleIngredientLabel.text = ingredient.name
+        
+        if ingredient.image != nil {
+            addSubview(spinner)
+            spinner.setupSpinner(loadingImageView: ingredientImageView)
+        }
         
         var amountString = ""
         if ingredient.amount < 1 {
@@ -68,8 +75,14 @@ final class IngredientCell: TVBaseCell {
     }
     
     func updateImage(with imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
-        ingredientImageView.image = image
+        spinner.removeFromSuperview()
+        ingredientImageView.reloadInputViews()
+        
+        if let image = UIImage(data: imageData) {
+            ingredientImageView.image = image
+        } else {
+            ingredientImageView.image = UIImage(named: "defaultIngredient")
+        }
     }
     
     private func setupConstraints() {

@@ -8,14 +8,7 @@
 import UIKit
 
 /// #Компоновщик модуля Launch
-final class LaunchAssembly {
-    
-//    private let navigationController: UINavigationController
-//
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//    }
-}
+final class LaunchAssembly { }
 
 // MARK: - Assemblying
 extension LaunchAssembly: Assemblying {

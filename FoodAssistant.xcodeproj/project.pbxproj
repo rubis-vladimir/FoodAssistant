@@ -132,6 +132,7 @@
 		7DC5509D295104DF001539C5 /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509C295104DF001539C5 /* LaunchView.swift */; };
 		7DC5509F295104F1001539C5 /* LaunchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */; };
 		7DC550A229522850001539C5 /* BallSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */; };
+		7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -296,6 +297,7 @@
 		7DC5509C295104DF001539C5 /* LaunchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchView.swift; sourceTree = "<group>"; };
 		7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPageViewController.swift; sourceTree = "<group>"; };
 		7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallSpinFadeLoader.swift; sourceTree = "<group>"; };
+		7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController + NextPage.swift"; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -494,6 +496,7 @@
 				7D451C69293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift */,
 				7DC55087294F6B49001539C5 /* Float + Fraction.swift */,
 				7DC5508B2950D2FC001539C5 /* Array + Duplicate.swift */,
+				7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1018,9 +1021,17 @@
 		7DC550A029522832001539C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */,
+				7DC550A529535D22001539C5 /* Spinners */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7DC550A529535D22001539C5 /* Spinners */ = {
+			isa = PBXGroup;
+			children = (
+				7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */,
+			);
+			path = Spinners;
 			sourceTree = "<group>";
 		};
 		7DEF8E162923C4CC0016A207 /* Views */ = {
@@ -1345,6 +1356,7 @@
 				7D3D199E2943A677005E3840 /* FavoriteSectionConfigurator.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
 				7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */,
+				7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */,
 				7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */,
 				7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */,
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,

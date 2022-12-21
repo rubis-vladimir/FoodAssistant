@@ -10,11 +10,6 @@ import UIKit
 /// #Слой навигации модуля Launch
 final class LaunchRouter {
     weak var view: UIViewController?
-//    private let navigationController: UINavigationController
-//    
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//    }
 }
 
 // MARK: - LaunchRouting

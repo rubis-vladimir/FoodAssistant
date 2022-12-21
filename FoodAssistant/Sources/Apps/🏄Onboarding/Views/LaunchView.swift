@@ -7,26 +7,24 @@
 
 import UIKit
 
+/// #Протокол делагата LaunchView
 protocol LaunchViewDelegate: AnyObject {
-    
-    func didTapReadyButton()
+    /// Ивент нажатия на кнопку готовности
+    ///  - Parameter page: страница
+    func didTapReadyButton(page: LaunchPage)
 }
 
+/// #Вью для онбординга
 class LaunchView: UIView {
+    
+    // MARK: - Properties
     weak var delegate: LaunchViewDelegate?
     
-    let backgroundGradientCover: CAGradientLayer = {
-        let gradient = CAGradientLayer()
-        let firstColor = UIColor.black.withAlphaComponent(0).cgColor
-        let secondColor = UIColor.black.withAlphaComponent(0.7).cgColor
-        
-        gradient.colors = [firstColor, secondColor]
-        gradient.startPoint = CGPoint(x: 0.5, y: 0)
-        gradient.endPoint = CGPoint(x: 0.5, y: 1)
-        return gradient
-    }()
+    /// Вариант страницы
+    private var page: LaunchPage?
     
-    let backgroundImageView: UIImageView = {
+    /// Вью фона в виде картинки
+    private let backgroundImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.contentMode  = .scaleAspectFill
         imageView.clipsToBounds = true
@@ -34,119 +32,93 @@ class LaunchView: UIView {
         return imageView
     }()
     
-    private let textFrameView: UIView = {
+    /// Контейнер для текстовой информации
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = .black.withAlphaComponent(0.55)
-        view.layer.cornerRadius = 10
+        view.layer.cornerRadius = AppConstants.cornerRadius
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private let imageFrameView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .black.withAlphaComponent(0.55)
-        view.layer.cornerRadius = 10
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
-    let titleTextLabel: UILabel = {
+    /// Лейбл заголовка
+    let headerLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        label.font = Fonts.header
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    /// Лейбл описания
+    let descriptionLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.font = Fonts.selected
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let bodyTextLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .white
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.numberOfLines = 0
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
+    /// Кнопка готовности
     private let readyButton: UIButton = {
         let button = UIButton()
-        button.setTitle("I'm ready!", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 24, weight: .medium)
+        button.titleLabel?.font = Fonts.header
         button.backgroundColor = Palette.darkColor.color
-        button.tintColor = .white
-        
-        button.layer.shadowColor = button.backgroundColor?.cgColor
-        button.layer.shadowOffset = CGSize(width: 2, height: 3)
-        button.layer.shadowRadius = 5
-        button.layer.shadowOpacity = 1
-        button.layer.cornerRadius = 30
-        
+        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
     
-    private lazy var activityView: BallSpinFadeLoader = {
-        let view = BallSpinFadeLoader()
-//        view.frame = frame.inset(by: UIEdgeInsets(top: 30, left: 30, bottom: 30, right: 30))
-        view.translatesAutoresizingMaskIntoConstraints = false
-        return view
-    }()
-    
+    // MARK: - Init & Override
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setView()
+        setupView()
         setupConstraints()
-        
-        
     }
-    
-    
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func addImageStack(for view: UIView) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
         
-        let stack = UIStackView()
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.spacing = 10
-        stack.distribution = .fillEqually
-        
-//        (0...0).forEach {
-            let imageView = UIImageView()
-            imageView.contentMode = .scaleToFill
-            imageView.clipsToBounds = true
-            imageView.layer.cornerRadius = 10
-            imageView.image = UIImage(named: "image\(1)")
-            stack.addArrangedSubview(imageView)
-//        }
-        
-        view.addSubview(stack)
-        
-        NSLayoutConstraint.activate([
-            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            stack.topAnchor.constraint(equalTo: view.topAnchor),
-            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor)])
+        readyButton.layer.cornerRadius = readyButton.frame.height / 2
     }
     
-    func setView() {
-        backgroundImageView.layer.addSublayer(backgroundGradientCover)
-        addSubview(backgroundImageView)
-//        textFrameView.addSubview(titleTextLabel)
-        textFrameView.addSubview(bodyTextLabel)
-        addSubview(textFrameView)
-        addSubview(readyButton)
+    // MARK: - Private func
+    /// Обновляет данны во вью
+    ///  - Parameter page: вариант страницы
+    func updateView(page: LaunchPage?) {
+        guard let page = page else { return }
+        self.page = page
         
-        addImageStack(for: imageFrameView)
-        addSubview(imageFrameView)
+        switch page {
+        case .last:
+            readyButton.setTitle("Начать", for: .normal)
+        default:
+            readyButton.setTitle("Далее", for: .normal)
+        }
         
-        
+        backgroundImageView.image = UIImage(named: page.rawValue)
+        headerLabel.text = page.headerText
+        descriptionLabel.text = page.descriptionText
+    }
+    
+    private func setupView() {
         readyButton.addTarget(self, action: #selector(didTapReadyButton(_:)), for: .touchUpInside)
     }
     
-    func setupConstraints() {
+    private func setupConstraints() {
+        containerView.addSubview(headerLabel)
+        containerView.addSubview(descriptionLabel)
+        
+        addSubview(backgroundImageView)
+        addSubview(containerView)
+        addSubview(readyButton)
         
         let padding = AppConstants.padding
         
@@ -156,34 +128,29 @@ class LaunchView: UIView {
             backgroundImageView.topAnchor.constraint(equalTo: topAnchor),
             backgroundImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-//            titleTextLabel.leadingAnchor.constraint(equalTo: textFrameView.leadingAnchor, constant: padding),
-//            titleTextLabel.trailingAnchor.constraint(equalTo: textFrameView.trailingAnchor, constant: -padding),
-//            titleTextLabel.topAnchor.constraint(equalTo: textFrameView.topAnchor, constant: padding),
+            headerLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            headerLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+            headerLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: padding),
             
-            bodyTextLabel.leadingAnchor.constraint(equalTo: textFrameView.leadingAnchor),
-            bodyTextLabel.trailingAnchor.constraint(equalTo: textFrameView.trailingAnchor),
-            bodyTextLabel.topAnchor.constraint(equalTo: textFrameView.topAnchor, constant: padding),
+            descriptionLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: padding),
+            descriptionLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -padding),
+            descriptionLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor, constant: padding),
             
-            textFrameView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
-            textFrameView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            textFrameView.heightAnchor.constraint(equalToConstant: 100),
-            textFrameView.topAnchor.constraint(equalTo: topAnchor, constant: 60),
-            textFrameView.bottomAnchor.constraint(equalTo: bodyTextLabel.bottomAnchor, constant: padding),
+            containerView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            containerView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            containerView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            containerView.bottomAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: padding),
             
-            readyButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 30),
-            readyButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -30),
-            readyButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding),
-            readyButton.heightAnchor.constraint(equalTo: readyButton.widthAnchor, multiplier: 1/6),
-            
-//            imageFrameView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageFrameView.topAnchor.constraint(equalTo: textFrameView.bottomAnchor, constant: padding * 2),
-            imageFrameView.bottomAnchor.constraint(equalTo: readyButton.topAnchor, constant: -padding * 2),
-            imageFrameView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            imageFrameView.widthAnchor.constraint(equalTo: imageFrameView.heightAnchor, multiplier: 1 / 2)
+            readyButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+            readyButton.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 1 / 2),
+            readyButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -60),
+            readyButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    @objc func didTapReadyButton(_ button: UIButton) {
-        delegate?.didTapReadyButton()
+    /// Нажата кнопка готовности
+    @objc private func didTapReadyButton(_ button: UIButton) {
+        guard let page = page else { return }
+        delegate?.didTapReadyButton(page: page)
     }
 }
