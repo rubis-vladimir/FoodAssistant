@@ -27,6 +27,7 @@ final class IngredientCell: TVBaseCell {
     private lazy var titleIngredientLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.selected
+        label.numberOfLines = 0
         return label
     }()
     
@@ -48,6 +49,8 @@ final class IngredientCell: TVBaseCell {
         return stack
     }()
     
+    private lazy var spinner = BallSpinFadeLoader()
+    
     // MARK: - Functions
     override func setupCell() {
         setupConstraints()
@@ -55,12 +58,31 @@ final class IngredientCell: TVBaseCell {
     
     func configure(with ingredient: IngredientProtocol) {
         titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount) \(ingredient.unit ?? "")"
+        
+        if ingredient.image != nil {
+            addSubview(spinner)
+            spinner.setupSpinner(loadingImageView: ingredientImageView)
+        }
+        
+        var amountString = ""
+        if ingredient.amount < 1 {
+            let amountFraction = ingredient.amount.rationalApproximationOf()
+            amountString = "\(amountFraction.0)/\(amountFraction.1)"
+        } else {
+            amountString = String(format: "%.0f", ingredient.amount)
+        }
+        amountLabel.text = "\(amountString) \(ingredient.unit)"
     }
     
     func updateImage(with imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
-        ingredientImageView.image = image
+        spinner.removeFromSuperview()
+        ingredientImageView.reloadInputViews()
+        
+        if let image = UIImage(data: imageData) {
+            ingredientImageView.image = image
+        } else {
+            ingredientImageView.image = UIImage(named: "defaultIngredient")
+        }
     }
     
     private func setupConstraints() {
@@ -68,7 +90,7 @@ final class IngredientCell: TVBaseCell {
             container.addArrangedSubview($0)
         }
         addSubview(container)
-
+        
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),

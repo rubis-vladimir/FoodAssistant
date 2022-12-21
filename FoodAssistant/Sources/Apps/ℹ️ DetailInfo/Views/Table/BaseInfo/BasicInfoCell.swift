@@ -40,8 +40,11 @@ final class BasicInfoCell: TVBaseCell {
     }
     
     func updateImage(with imageData: Data) {
-        guard let image = UIImage(data: imageData) else { return }
-        recipeImageView.image = image
+        if let image = UIImage(data: imageData) {
+            recipeImageView.image = image
+        } else {
+            recipeImageView.image = UIImage(named: "defaultDish")
+        }
     }
     
     private func setupConstraints() {

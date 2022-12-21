@@ -1,6 +1,6 @@
 //
-//  ViewController.swift
-//  ModuleVIPER
+//  DetailInfoViewController.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -50,6 +50,11 @@ final class DetailInfoViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("DEINIT \(self)")
+    }
+
     
     // MARK: - Override func
     override func viewDidLoad() {

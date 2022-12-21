@@ -21,7 +21,7 @@ extension CDIngredient: IngredientProtocol {
     @NSManaged public var cdId: Int32
     @NSManaged public var image: String?
     @NSManaged public var name: String
-    @NSManaged public var unit: String?
+    @NSManaged public var unit: String
     @NSManaged public var toUse: Bool
     @NSManaged public var inFridge: Bool
     @NSManaged public var recipe: CDRecipe?

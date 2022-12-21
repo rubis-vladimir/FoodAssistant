@@ -1,15 +1,13 @@
 //
 //  DetailInfoInteractor.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
 import Foundation
 
-
-
-/// #Слой бизнес логике модуля
+/// #Слой бизнес логики модуля DetailInfo
 final class DetailInfoInteractor {
     private let imageDownloader: ImageDownloadProtocol
     
@@ -19,7 +17,7 @@ final class DetailInfoInteractor {
     }
 }
 
-// MARK: - BusinessLogic
+// MARK: - DetailInfoBusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
     func fetchImageRecipe(_ imageName: String, 
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {

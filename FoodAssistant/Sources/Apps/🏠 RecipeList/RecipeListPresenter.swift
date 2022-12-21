@@ -1,6 +1,6 @@
 //
-//  Presenter.swift
-//  ModuleVIPER
+//  RecipeListPresenter.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -89,17 +89,20 @@ final class RecipeListPresenter {
         self.interactor = interactor
         self.router = router
     }
+    deinit {
+        print("DEINIT \(self)")
+    }
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: ["meat"], excludeIngredients: [], maxCalories: nil, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
         
         interactor.fetchRecipe(with: filterParameters, number: 4, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
-                
+
                 self?.viewModelsDictionary[.main] = recipeCellModels
-                self?.viewModelsDictionary[.recommended] = recipeCellModels
+                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
             case .failure(_):
                 break
             }

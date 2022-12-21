@@ -1,6 +1,6 @@
 //
 //  MainTabBarController.swift
-//  LifeScreen
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 19.07.2022.
 //
@@ -31,6 +31,10 @@ final class MainTabBarController: UITabBarController {
     init(presenter: MainTabBarPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
+    }
+    
+    deinit {
+        print("DEINIT \(self)")
     }
     
     required init?(coder: NSCoder) {

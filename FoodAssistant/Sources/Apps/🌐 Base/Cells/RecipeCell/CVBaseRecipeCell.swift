@@ -19,9 +19,9 @@ enum TypeOfActionButton {
 class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Properties
-    var favoriteDelegate: FavoriteChangable?
-    var deleteDelegate: RecipeRemovable?
-    var basketDelegate: InBasketAdded?
+    weak var favoriteDelegate: FavoriteChangable?
+    weak var deleteDelegate: RecipeRemovable?
+    weak var basketDelegate: InBasketAdded?
     
     /// Идентификатор рецепта
     var id: Int?
@@ -35,13 +35,9 @@ class CVBaseRecipeCell: UICollectionViewCell {
             }
         }
     }
-    /// Активити индикатор
-    let activity: UIActivityIndicatorView = {
-        var activity = UIActivityIndicatorView()
-        activity.transform = CGAffineTransform(scaleX: 2, y: 2)
-        activity.color = Palette.darkColor.color
-        return activity
-    }()
+    
+    /// Индикатор загрузки
+    let spinner: BallSpinFadeLoader = BallSpinFadeLoader()
     
     /// Вью для изображения рецепта
     let recipeImageView: UIImageView = {
@@ -137,8 +133,8 @@ class CVBaseRecipeCell: UICollectionViewCell {
         id = model.id
         
         if model.imageName != nil {
-            addSubview(activity)
-            activity.setupSpinner(loadingImageView: recipeImageView)
+            addSubview(spinner)
+            spinner.setupSpinner(loadingImageView: recipeImageView)
         }
         
         switch type {
@@ -158,7 +154,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
     /// Обновляет изображение рецепта
     ///  - Parameter data: данные изображения
     func updateImage(data: Data) {
-        activity.removeFromSuperview()
+        spinner.removeFromSuperview()
         recipeImageView.alpha = 0.5
         recipeImageView.reloadInputViews()
         
@@ -166,7 +162,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
             if let image = UIImage(data: data){
                 self.recipeImageView.image = image
             } else {
-                self.recipeImageView.image = Icons.basket.image
+                self.recipeImageView.image = UIImage(named: "defaultDish")
             }
             self.recipeImageView.alpha = 1
         }
@@ -174,7 +170,6 @@ class CVBaseRecipeCell: UICollectionViewCell {
 
     /// Функция для настройки ячейки
     func setupCell() {
-        
         addToBasketButton.addTarget(self,
                                     action: #selector(addToBasketButtonTapped),
                                     for: .touchUpInside)

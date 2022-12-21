@@ -1,6 +1,6 @@
 //
-//  Assembly.swift
-//  ModuleVIPER
+//  BasketAssembly.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //

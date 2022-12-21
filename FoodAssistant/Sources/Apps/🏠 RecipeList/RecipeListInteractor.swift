@@ -1,6 +1,6 @@
 //
-//  Interactor.swift
-//  ModuleVIPER
+//  RecipeListInteractor.swift
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
@@ -27,6 +27,9 @@ final class RecipeListInteractor {
         self.imageDownloader = imageDownloader
         self.translateService = translateService
         self.storage = storage
+    }
+    deinit {
+        print("DEINIT \(self)")
     }
 }
 
@@ -81,13 +84,16 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 
                 /// Изменяем флаг isFavorite, если рецепт записан в избранные
                 for i in 0..<recipes.count {
+                    print(recipes[i].ingredients)
                     if favoriteArrayId.contains(recipes[i].id) {
                         recipes[i].isFavorite = true
                     }
                 }
                 
+               
+                
                 /// Если установленный язык не базовый
-                if self.currentAppleLanguage() != "Base" {
+                if self.currentAppleLanguage() == "Base" {
                     /// Запрашиваем перевод для рецептов в сервисе
                     self.translateService.fetchTranslate(recipes: recipes) { result in
                         

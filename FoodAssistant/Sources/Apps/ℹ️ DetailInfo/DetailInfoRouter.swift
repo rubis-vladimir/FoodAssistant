@@ -1,19 +1,13 @@
 //
 //  DetailInfoRouter.swift
-//  ModuleVIPER
+//  FoodAssistant
 //
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
 import UIKit
 
-/// #Протокол управления слоем навигации модуля
-protocol DetailInfoRouting {
-    /// Возврат назад
-    func routeToBack()
-}
-
-/// #Слой навигации модуля
+/// #Слой навигации модуля DetailInfo
 final class DetailInfoRouter {
     private let navigationController: UINavigationController
     
@@ -22,7 +16,7 @@ final class DetailInfoRouter {
     }
 }
 
-// MARK: - Routing
+// MARK: - DetailInfoRouting
 extension DetailInfoRouter: DetailInfoRouting {
     func routeToBack() {
         navigationController.popViewController(animated: true)
