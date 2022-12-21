@@ -10,11 +10,11 @@ import UIKit
 /// #Строитель ячеек секции RecommendedRecipe
 final class FridgeItemBuilder {
     private let height: CGFloat = 55
-    private let models: [IngredientProtocol]
+    private let models: [IngredientViewModel]
     
     weak var delegate: UserProfilePresentation?
     
-    init(models: [IngredientProtocol],
+    init(models: [IngredientViewModel],
          delegate: UserProfilePresentation?) {
         self.models = models
         self.delegate = delegate
@@ -40,6 +40,7 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
         cell.configure(with: model)
+        cell.delegate = delegate
         
         if let imageName = model.image {
             delegate?.fetchImage(imageName, type: .ingredient) { imageData in

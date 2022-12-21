@@ -107,7 +107,7 @@ final class BasketViewController: UIViewController {
 // MARK: - BasketViewable
 extension BasketViewController: BasketViewable {
     func updateCV(recipes: [RecipeProtocol],
-                  ingredients: [IngredientProtocol]) {
+                  ingredients: [IngredientViewModel]) {
         if recipes.isEmpty {
             factory = nil
             collectionView.reloadData()

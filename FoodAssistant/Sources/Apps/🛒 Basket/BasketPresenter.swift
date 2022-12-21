@@ -29,7 +29,7 @@ protocol BasketViewable: AnyObject {
     ///   - recipes: рецепты
     ///   - ingredients: ингредиенты
     func updateCV(recipes: [RecipeProtocol],
-                  ingredients: [IngredientProtocol])
+                  ingredients: [IngredientViewModel])
     /// Показать ошибку
     func showError()
 }
@@ -44,7 +44,7 @@ protocol BasketBusinessLogic: RecipeReceived,
     /// Получает ингредиенты, из добавленных рецептов
     /// с учетом имеющихся в холодильнике
     ///  - Parameter completion: захватывает массив ингредиентов
-    func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void)
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
     
     /// Удаляет рецепт из корзины
     ///  - Parameter id: идентификатор рецепта

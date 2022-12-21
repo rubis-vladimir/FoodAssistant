@@ -131,7 +131,9 @@ extension StorageManager: DBRecipeManagement {
     }
     
     func checkRecipes(id: [Int]) -> [Int] {
-        let objects = read(model: CDRecipe.self, predicate: nil)
+        let predicate = NSPredicate(format: "isFavorite == %@",
+                                    NSNumber(value: true))
+        let objects = read(model: CDRecipe.self, predicate: predicate)
         let cdId = objects.map { $0.id }
         return id.filter { cdId.contains($0) }
     }
@@ -233,7 +235,7 @@ extension StorageManager: DBIngredientsFridgeManagement {
         saveContext()
     }
     
-    func remove(id: Int) {
+    func removeIngredient(id: Int) {
         let predicate = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
@@ -241,10 +243,13 @@ extension StorageManager: DBIngredientsFridgeManagement {
         saveContext()
     }
     
-    func update(id: Int, toUse: Bool) {
+    func updateIngredient(id: Int, toUse: Bool) {
         let predicate = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
+        
+        print(object.id, object.toUse)
+        
         object.setValue(toUse, forKey: "toUse")
         saveContext()
     }

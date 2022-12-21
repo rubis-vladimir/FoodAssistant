@@ -20,7 +20,7 @@ final class BasketFactory: NSObject {
     
     private let collectionView: UICollectionView
     private let recipes: [RecipeProtocol]
-    private let ingredients: [IngredientProtocol]
+    private let ingredients: [IngredientViewModel]
     private let cvAdapter: CVAdapter
     
     private weak var delegate: BasketPresentation?
@@ -31,7 +31,7 @@ final class BasketFactory: NSObject {
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
          recipes: [RecipeProtocol],
-         ingredients: [IngredientProtocol],
+         ingredients: [IngredientViewModel],
          delegate: BasketPresentation?) {
         self.collectionView = collectionView
         self.recipes = recipes

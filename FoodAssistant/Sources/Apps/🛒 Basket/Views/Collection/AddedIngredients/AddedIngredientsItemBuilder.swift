@@ -10,11 +10,11 @@ import UIKit
 /// #Строитель ячеек секции RecommendedRecipe
 final class AddedIngredientsItemBuilder {
     private let height: CGFloat = 55
-    private let models: [IngredientProtocol]
+    private let models: [IngredientViewModel]
     
     weak var delegate: BasketPresentation?
     
-    init(models: [IngredientProtocol],
+    init(models: [IngredientViewModel],
          delegate: BasketPresentation?) {
         self.models = models
         self.delegate = delegate

@@ -10,12 +10,12 @@ import UIKit
 /// #Конфигуратор секции AddedRecipes в коллекции
 final class AddedIngredientsConfigurator {
     
-    private let models: [IngredientProtocol]
+    private let models: [IngredientViewModel]
     private let title: String
     
     private weak var delegate: BasketPresentation?
     
-    init(models: [IngredientProtocol],
+    init(models: [IngredientViewModel],
          title: String,
          delegate: BasketPresentation?) {
         self.models = models

@@ -12,10 +12,10 @@ final class UserProfileInteractor {
     private var models: [RecipeProtocol] = []
 
     private let imageDownloader: ImageDownloadProtocol
-    private let storage: DBRecipeManagement
+    private let storage: DBRecipeManagement & DBIngredientsFridgeManagement
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBRecipeManagement) {
+         storage: DBRecipeManagement & DBIngredientsFridgeManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
     }
@@ -23,7 +23,31 @@ final class UserProfileInteractor {
 
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
+    // RecipeReceived
+    func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
+        guard let model = models.first(where: { $0.id == id }) else { return }
+        completion(model)
+    }
     
+    //ImageBusinessLogic
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        switch type {
+        case .recipe:
+            ImageRequest
+                .recipe(imageName: imageName)
+                .download(with: imageDownloader,
+                          completion: completion)
+        case .ingredient:
+            ImageRequest
+                .ingredient(imageName: imageName, size: .mini)
+                .download(with: imageDownloader,
+                          completion: completion)
+        }
+    }
+    
+    // UserProfileRecipeBL
     func fetchFavoriteRecipe(text: String,
                              completion: @escaping ([RecipeViewModel]) -> Void) {
         storage.fetchRecipes(for: .isFavorite) { [weak self] recipes in
@@ -45,29 +69,6 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
         }
     }
     
-
-    func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
-        guard let model = models.first(where: { $0.id == id }) else { return }
-        completion(model)
-    }
-    
-    func fetchImage(_ imageName: String,
-                    type: TypeOfImage,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        switch type {
-        case .recipe:
-            ImageRequest
-                .recipe(imageName: imageName)
-                .download(with: imageDownloader,
-                          completion: completion)
-        case .ingredient:
-            ImageRequest
-                .ingredient(imageName: imageName, size: .mini)
-                .download(with: imageDownloader,
-                          completion: completion)
-        }
-    }
-    
     func removeRecipe(id: Int) {
         storage.remove(id: id, for: .isFavorite)
         
@@ -78,5 +79,18 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     func addToBasket(id: Int) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         storage.save(recipe: model, for: .inBasket)
+    }
+    
+    // UserProfileIngredientBL
+    func changeToUse(id: Int, flag: Bool) {
+        storage.updateIngredient(id: id, toUse: flag)
+    }
+    
+    func save(ingredient: IngredientProtocol) {
+        storage.save(ingredient: ingredient)
+    }
+    
+    func deleteIngredient(id: Int) {
+        storage.removeIngredient(id: id)
     }
 }

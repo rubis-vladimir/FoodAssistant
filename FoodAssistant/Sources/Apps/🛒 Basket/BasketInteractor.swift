@@ -20,20 +20,19 @@ final class BasketInteractor {
     
     weak var presenter: BasketBusinessLogicDelegate?
     
-    private var models: [RecipeProtocol] = [] {
-        didSet {
-            
-            
-        }
-    }
+    private var models: [RecipeProtocol] = []
+    private var ingredients: [IngredientProtocol] = []
 
     private let imageDownloader: ImageDownloadProtocol
     private let storage: DBRecipeManagement
+    private let ingredientManager: ShopListCalculatable
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBRecipeManagement) {
+         storage: DBRecipeManagement,
+         ingredientManager: ShopListCalculatable) {
         self.imageDownloader = imageDownloader
         self.storage = storage
+        self.ingredientManager = ingredientManager
     }
 }
 
@@ -54,10 +53,9 @@ extension BasketInteractor: BasketBusinessLogic {
         }
     }
     
-    func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void) {
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void) {
         guard !models.isEmpty else { return }
-        let arrayIngredients = getIngredients()
-        completion(arrayIngredients)
+        getIngredients(complection: completion)
     }
     
     func deleteFromBasket(id: Int) {
@@ -86,11 +84,12 @@ extension BasketInteractor: BasketBusinessLogic {
 }
 
 extension BasketInteractor {
-    private func getIngredients() -> [IngredientProtocol] {
+    private func getIngredients(complection: @escaping ([IngredientViewModel]) -> Void) {
         let ingredients = models.map {
             $0.ingredients ?? []
         }.reduce([], +)
         
-        return ingredients.sorted(by: {$0.name > $1.name})
+        ingredientManager.getShopList(ingredients: ingredients,
+                                      complection: complection)
     }
 }

@@ -26,10 +26,12 @@ extension BasketAssembly: Assemblying {
                                                         imageCache: imageCacheService)
         
         let storage = StorageManager.shared
+        let ingredientManager = IngredientCalculateManager(storage: storage)
         
         let router = BasketRouter(navigationController: navigationController)
         let interactor = BasketInteractor(imageDownloader: imageDownloaderProxy,
-                                          storage: storage)
+                                          storage: storage,
+                                          ingredientManager: ingredientManager)
         let presenter = BasketPresenter(interactor: interactor,
                                   router: router)
         let viewController = BasketViewController(presenter: presenter)

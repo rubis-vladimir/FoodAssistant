@@ -16,7 +16,7 @@
 		7D0F2B802935134900F57E2A /* TVBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B7F2935134900F57E2A /* TVBaseCell.swift */; };
 		7D0F2B832935151D00F57E2A /* NutrientsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B822935151D00F57E2A /* NutrientsCell.swift */; };
 		7D0F2B852935152B00F57E2A /* NutrientsCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B842935152B00F57E2A /* NutrientsCellBuilder.swift */; };
-		7D0F2B88293527A800F57E2A /* IngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B87293527A800F57E2A /* IngredientCell.swift */; };
+		7D0F2B88293527A800F57E2A /* TVIngredientCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B87293527A800F57E2A /* TVIngredientCell.swift */; };
 		7D0F2B8A293527B900F57E2A /* IngredientsCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */; };
 		7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */; };
 		7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */; };
@@ -133,6 +133,7 @@
 		7DC5509F295104F1001539C5 /* LaunchPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */; };
 		7DC550A229522850001539C5 /* BallSpinFadeLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */; };
 		7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */; };
+		7DC550A8295380A4001539C5 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A7295380A4001539C5 /* IngredientView.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -177,7 +178,7 @@
 		7D0F2B7F2935134900F57E2A /* TVBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVBaseCell.swift; sourceTree = "<group>"; };
 		7D0F2B822935151D00F57E2A /* NutrientsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsCell.swift; sourceTree = "<group>"; };
 		7D0F2B842935152B00F57E2A /* NutrientsCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientsCellBuilder.swift; sourceTree = "<group>"; };
-		7D0F2B87293527A800F57E2A /* IngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCell.swift; sourceTree = "<group>"; };
+		7D0F2B87293527A800F57E2A /* TVIngredientCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TVIngredientCell.swift; sourceTree = "<group>"; };
 		7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsCellBuilder.swift; sourceTree = "<group>"; };
 		7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCell.swift; sourceTree = "<group>"; };
 		7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCellBuilder.swift; sourceTree = "<group>"; };
@@ -298,6 +299,7 @@
 		7DC5509E295104F1001539C5 /* LaunchPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchPageViewController.swift; sourceTree = "<group>"; };
 		7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BallSpinFadeLoader.swift; sourceTree = "<group>"; };
 		7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController + NextPage.swift"; sourceTree = "<group>"; };
+		7DC550A7295380A4001539C5 /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -370,7 +372,7 @@
 		7D0F2B862935270100F57E2A /* Ingredients */ = {
 			isa = PBXGroup;
 			children = (
-				7D0F2B87293527A800F57E2A /* IngredientCell.swift */,
+				7D0F2B87293527A800F57E2A /* TVIngredientCell.swift */,
 				7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */,
 			);
 			path = Ingredients;
@@ -1021,6 +1023,7 @@
 		7DC550A029522832001539C5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7DC550A929538325001539C5 /* Ingredient */,
 				7DC550A529535D22001539C5 /* Spinners */,
 			);
 			path = Views;
@@ -1032,6 +1035,14 @@
 				7DC550A129522850001539C5 /* BallSpinFadeLoader.swift */,
 			);
 			path = Spinners;
+			sourceTree = "<group>";
+		};
+		7DC550A929538325001539C5 /* Ingredient */ = {
+			isa = PBXGroup;
+			children = (
+				7DC550A7295380A4001539C5 /* IngredientView.swift */,
+			);
+			path = Ingredient;
 			sourceTree = "<group>";
 		};
 		7DEF8E162923C4CC0016A207 /* Views */ = {
@@ -1319,6 +1330,7 @@
 				7DC55088294F6B49001539C5 /* Float + Fraction.swift in Sources */,
 				7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */,
 				7D3D19A5294477BD005E3840 /* CVIngredientCell.swift in Sources */,
+				7DC550A8295380A4001539C5 /* IngredientView.swift in Sources */,
 				7D451C77293F22F300A4CDC5 /* StorageManager.swift in Sources */,
 				7D2F7746291A9C47009D3444 /* DataFetcherError.swift in Sources */,
 				7DC16113292E4FA20026A072 /* LRUCache.swift in Sources */,
@@ -1330,7 +1342,7 @@
 				7D3BC94E29312C29001B1B57 /* DetailInfoPresenter.swift in Sources */,
 				7DC550952951018B001539C5 /* LaunchViewController.swift in Sources */,
 				7D3D198C2942895B005E3840 /* CDNutrient+CoreDataClass.swift in Sources */,
-				7D0F2B88293527A800F57E2A /* IngredientCell.swift in Sources */,
+				7D0F2B88293527A800F57E2A /* TVIngredientCell.swift in Sources */,
 				7D2F7731291A9717009D3444 /* RecipeListPresenter.swift in Sources */,
 				7D875DD3292C1FD40033A4C0 /* ImageSize.swift in Sources */,
 				7D3BC93D2931064F001B1B57 /* RecommendedSectionConfigurator.swift in Sources */,

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
-      "filename" : "checkmark.circle.fill.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "checkmark.circle.fill.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
