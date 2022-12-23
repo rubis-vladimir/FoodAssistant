@@ -70,7 +70,7 @@ final class BasketFactory: NSObject {
         case .ingredients:
             
             return AddedIngredientsConfigurator(models: ingredients,
-                                                title: "Необходимо приобрести",
+                                                title: "Шоп-лист",
                                                 delegate: delegate).configure(for: collectionView)
         }
     }

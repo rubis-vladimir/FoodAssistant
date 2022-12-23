@@ -7,6 +7,11 @@
 
 import UIKit
 
+enum IngredientFlag {
+    case toUse(_ flag: Bool)
+    case isCheck(_ flag: Bool)
+}
+
 /// #Протокол изменения флага подтверждения
 protocol CheckChangable: AnyObject {
     /// Ивент при нажатии на чек-кнопку
@@ -18,7 +23,7 @@ protocol CheckChangable: AnyObject {
 }
 
 /// #Ячейка отображения ингредиента с чек-кнопкой
-final class CVIngredientCell: UICollectionViewCell {
+class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Properties
     weak var delegate: CheckChangable?
@@ -74,10 +79,19 @@ final class CVIngredientCell: UICollectionViewCell {
         setupConstraints()
     }
     
-    func configure(with ingredient: IngredientViewModel) {
+    func configure(with ingredient: IngredientViewModel,
+                   flag: Bool) {
         id = ingredient.id
-        isCheck = ingredient.toUse
         ingredientView.configure(with: ingredient)
+        
+//        switch flag {
+//        case .toUse(let flag):
+//            isCheck = flag
+//        case .isCheck(let flag):
+//            isCheck = flag
+//        }
+        
+        isCheck = flag
     }
     
     func updateImage(with imageData: Data) {

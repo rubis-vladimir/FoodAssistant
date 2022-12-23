@@ -12,10 +12,10 @@ final class UserProfileInteractor {
     private var models: [RecipeProtocol] = []
 
     private let imageDownloader: ImageDownloadProtocol
-    private let storage: DBRecipeManagement & DBIngredientsFridgeManagement
+    private let storage: DBRecipeManagement & DBIngredientsManagement
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBRecipeManagement & DBIngredientsFridgeManagement) {
+         storage: DBRecipeManagement & DBIngredientsManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
     }
@@ -23,6 +23,7 @@ final class UserProfileInteractor {
 
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
+    
     // RecipeReceived
     func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
@@ -52,7 +53,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
                              completion: @escaping ([RecipeViewModel]) -> Void) {
         storage.fetchRecipes(for: .isFavorite) { [weak self] recipes in
             
-            var newRecipes = text == "" ?
+            let newRecipes = text == "" ?
                 recipes :
                 recipes.filter { recipe in
                     let title = recipe.title.lowercased()
@@ -82,12 +83,19 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     }
     
     // UserProfileIngredientBL
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void) {
+        storage.fetchIngredients(toUse: nil) { ingredients in
+            let viewModels = ingredients.map { IngredientViewModel(ingredient: $0)}
+            completion(viewModels)
+        }
+    }
+    
     func changeToUse(id: Int, flag: Bool) {
         storage.updateIngredient(id: id, toUse: flag)
     }
     
     func save(ingredient: IngredientProtocol) {
-        storage.save(ingredient: ingredient)
+        storage.save(ingredients: [ingredient])
     }
     
     func deleteIngredient(id: Int) {

@@ -20,9 +20,9 @@ protocol ShopListCalculatable {
 /// #Менеджер для рассчета ингредиентов
 final class IngredientCalculateManager {
     
-    private let storage: DBIngredientsFridgeManagement
+    private let storage: DBIngredientsManagement
     
-    init(storage: DBIngredientsFridgeManagement) {
+    init(storage: DBIngredientsManagement) {
         self.storage = storage
     }
 }
@@ -47,8 +47,8 @@ extension IngredientCalculateManager: ShopListCalculatable {
         
         var finalArray: [IngredientViewModel] = []
         /// Получаем все идентификаторы ингредиентов и которые дублируются
-        var arrayId = array.map{$0.id}
-        var arrayIdDuplicates = arrayId.duplicate()
+        let arrayId = array.map{$0.id}
+        let arrayIdDuplicates = arrayId.duplicate()
         
         /// Для неповторяющихся ингредиентов - добавляем сразу в результирующий массив
         array.forEach {
@@ -85,7 +85,6 @@ extension IngredientCalculateManager: ShopListCalculatable {
         let available = available.map { IngredientViewModel(ingredient: $0) }
         /// Объединяем повторяющиеся необходимые ингредиенты
         let unitNessesary = unitIngredients(necessary)
-        
         /// Создаем результирующий массив и добавляем в него ингредиенты с учетом имеющихся
         var ingredients: [IngredientViewModel] = []
         
@@ -97,13 +96,21 @@ extension IngredientCalculateManager: ShopListCalculatable {
             
             if !availableIngredients.isEmpty {
                 /// Если нашли - в зависимости от единиц измерения указываем количество
-                if IngredientUnit.contains(ingredient.unit) {
+                if IngredientUnit.contains(ingredient.unit){
                     /// для штук и граммов
+                   
                     amount = ingredient.amount - availableIngredients.map{$0.amount}.reduce(0, +)
                 } else if !IngredientVolume.contains(ingredient.unit) {
+                    
                     /// для всего, кроме единиц объема
                     amount = ingredient.amount
+                    availableIngredients.forEach {
+                        if ingredient.unit == $0.unit {
+                            amount -= $0.amount
+                        }
+                    }
                 }
+                print(ingredient)
             } else {
                 /// Если не нашли
                 amount = ingredient.amount

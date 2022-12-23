@@ -39,7 +39,9 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(CVIngredientCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.configure(with: model)
+        let flag = model.toUse
+        
+        cell.configure(with: model, flag: flag)
         cell.delegate = delegate
         
         if let imageName = model.image {

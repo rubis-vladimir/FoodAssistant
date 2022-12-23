@@ -54,6 +54,9 @@ protocol UserProfileRecipeBL {
 
 /// #Протокол управления ингредиентами
 protocol UserProfileIngredientBL {
+    
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
+    
     /// Изменить флаг использования ингредиента
     /// - Parameters:
     ///  - id: идентификатор ингредиента
@@ -105,6 +108,7 @@ extension UserProfilePresenter: UserProfilePresentation {
         }
     }
     
+    // SegmentedViewDelegate
     func didSelectSegment(index: Int) {
         currentSegmentIndex = index
         
@@ -116,12 +120,19 @@ extension UserProfilePresenter: UserProfilePresentation {
             let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", dtoAmount: 3)
             let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", dtoAmount: 5)
             let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", dtoAmount: 1, dtoUnit: "кг")
+            let ingredient4 = Ingredient(id: 22222, image: "tomatoes", name: "tomatoes", dtoAmount: 9, dtoUnit: "")
+            let ingredient5 = Ingredient(id: 50064, image: "chicken", name: "chicken", dtoAmount: 200, dtoUnit: "g")
+//            
+//            interactor.save(ingredient: ingredient1)
+//            interactor.save(ingredient: ingredient2)
+//            interactor.save(ingredient: ingredient3)
+//            interactor.save(ingredient: ingredient4)
+//            interactor.save(ingredient: ingredient5)
             
-            interactor.save(ingredient: ingredient1)
-            interactor.save(ingredient: ingredient2)
-            interactor.save(ingredient: ingredient3)
-            
-            let array = [ingredient1, ingredient2, ingredient3].map { IngredientViewModel(ingredient: $0)}
+            var array: [IngredientViewModel] = []
+            interactor.fetchIngredients { ingredients in
+                array += ingredients
+            }
             
             view?.hideSearchBar(shouldHide: true)
             view?.updateCV(orderSection: [.fridge(array)])
@@ -131,6 +142,7 @@ extension UserProfilePresenter: UserProfilePresentation {
         }
     }
     
+    // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
@@ -144,6 +156,7 @@ extension UserProfilePresenter: UserProfilePresentation {
         }
     }
     
+    // RecipeRemovable
     func didTapDeleteButton(id: Int) {
         interactor.removeRecipe(id: id)
         
@@ -151,10 +164,12 @@ extension UserProfilePresenter: UserProfilePresentation {
         viewModels.remove(at: index)
     }
     
+    // InBasketAdded
     func didTapAddInBasketButton(id: Int) {
         interactor.addToBasket(id: id)
     }
     
+    // LayoutChangable
     func didTapChangeLayoutButton(section: Int) {
         NotificationCenter.default
             .post(name: NSNotification.Name("changeLayoutType2"),
@@ -163,12 +178,14 @@ extension UserProfilePresenter: UserProfilePresentation {
         view?.reloadSection(section)
     }
     
+    // SelectedCellDelegate
     func didSelectItem(id: Int) {
         interactor.getRecipe(id: id) { [weak self] model in
             self?.router.route(to: .detailInfo, model: model)
         }
     }
     
+    // CheckChangable
     func didTapCheckButton(id: Int, flag: Bool) {
         interactor.changeToUse(id: id, flag: flag)
     }

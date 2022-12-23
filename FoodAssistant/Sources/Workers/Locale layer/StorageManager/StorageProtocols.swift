@@ -47,14 +47,14 @@ protocol DBRecipeManagement {
 }
 
 /// #Протокол управления менеджером хранения данных для ингредиентов в твоем холодильнике
-protocol DBIngredientsFridgeManagement {
+protocol DBIngredientsManagement {
     /// Получает ингредиенты
     ///   - Parameter completion: захватывает массив ингредиентов
     func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void)
     
     /// Сохраняет ингредиент
     ///  - Parameter ingredient: ингредиент
-    func save(ingredient: IngredientProtocol)
+    func save(ingredients: [IngredientProtocol])
     
     /// Удаляет ингредиент из БД по идентификатору
     /// - Parameter id: идентификатор рецепта

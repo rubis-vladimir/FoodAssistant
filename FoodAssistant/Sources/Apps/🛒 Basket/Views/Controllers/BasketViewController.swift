@@ -11,19 +11,40 @@ import UIKit
 protocol BasketPresentation: RecipeRemovable,
                              ImagePresentation,
                              SelectedCellDelegate,
+                             CheckChangable,
                              AnyObject {
+    
     func fetchAddedRecipe()
     
+    func didTapAddFridgeButton()
+    
+    func checkFlag(id: Int) -> Bool
+        
+    /// Ивент перехода
+    /// - Parameter to: цель перехода
     func route(to: BasketTarget)
 }
 
 /// #Контроллер представления Корзины
 final class BasketViewController: UIViewController {
-
+    
     // MARK: - Properties
     private let presenter: BasketPresentation
     private var factory: CVFactoryProtocol?
     private var collectionView: UICollectionView!
+    
+    private lazy var addInFridgeButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("  Добавить", for: .normal)
+        
+        button.layer.cornerRadius = 25
+        button.tintColor = .white
+        button.setImage(Icons.fridge.image, for: .normal)
+        button.backgroundColor = Palette.darkColor.color
+        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
     // MARK: - Init & ViewDidLoad
     init(presenter: BasketPresentation) {
@@ -39,7 +60,6 @@ final class BasketViewController: UIViewController {
         print("DEINIT \(self)")
     }
 
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -51,6 +71,10 @@ final class BasketViewController: UIViewController {
     
     // MARK: - Private func
     private func setupElements() {
+        
+        addInFridgeButton.addTarget(self, action: #selector(didTapAddFridgeButton), for: .touchUpInside)
+        addInFridgeButton.isHidden = true
+        
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: getFlowLayout())
@@ -61,12 +85,18 @@ final class BasketViewController: UIViewController {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(collectionView)
+        view.addSubview(addInFridgeButton)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            addInFridgeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            addInFridgeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 2),
+            addInFridgeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
+            addInFridgeButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -102,10 +132,15 @@ final class BasketViewController: UIViewController {
     @objc private func dismissButtonTapped() {
         presenter.route(to: .back)
     }
+    
+    @objc private func didTapAddFridgeButton() {
+        presenter.didTapAddFridgeButton()
+    }
 }
 
 // MARK: - BasketViewable
 extension BasketViewController: BasketViewable {
+    
     func updateCV(recipes: [RecipeProtocol],
                   ingredients: [IngredientViewModel]) {
         if recipes.isEmpty {
@@ -116,7 +151,12 @@ extension BasketViewController: BasketViewable {
                                     recipes: recipes,
                                     ingredients: ingredients,
                                     delegate: presenter)
+            collectionView.reloadData()
         }
+    }
+    
+    func showAddButton(_ flag: Bool) {
+        addInFridgeButton.isHidden = !flag
     }
     
     

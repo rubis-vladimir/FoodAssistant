@@ -39,7 +39,10 @@ extension AddedIngredientsItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(CVIngredientCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.configure(with: model)
+        let isCheck = delegate?.checkFlag(id: model.id) ?? false
+        
+        cell.delegate = delegate
+        cell.configure(with: model, flag: isCheck)
         
         if let imageName = model.image {
             delegate?.fetchImage(imageName, type: .ingredient) { imageData in

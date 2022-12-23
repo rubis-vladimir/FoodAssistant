@@ -36,6 +36,7 @@ extension BasketAssembly: Assemblying {
                                   router: router)
         let viewController = BasketViewController(presenter: presenter)
         presenter.view = viewController
+        interactor.presenter = presenter
     
         return viewController
     }

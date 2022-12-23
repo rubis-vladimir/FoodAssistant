@@ -204,7 +204,7 @@ extension StorageManager: DBRecipeManagement {
 }
 
 // MARK: - DBIngredientsFridgeManagement
-extension StorageManager: DBIngredientsFridgeManagement {
+extension StorageManager: DBIngredientsManagement {
     func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void) {
         let predicate = NSPredicate(format: "inFridge == %@",
                                     NSNumber(value: true))
@@ -223,15 +223,10 @@ extension StorageManager: DBIngredientsFridgeManagement {
         completion(objects)
     }
     
-    func save(ingredient: IngredientProtocol) {
-        let cdIngredient = CDIngredient(context: viewContext)
-        cdIngredient.cdId = Int32(ingredient.id)
-        cdIngredient.name = ingredient.name
-        cdIngredient.image = ingredient.image
-        cdIngredient.amount = ingredient.amount
-        cdIngredient.unit = ingredient.unit
-        cdIngredient.toUse = ingredient.toUse
-        cdIngredient.inFridge = true
+    func save(ingredients: [IngredientProtocol]) {
+        ingredients.forEach {
+            createCDIngredient(ingredient: $0)
+        }
         saveContext()
     }
     
@@ -252,6 +247,18 @@ extension StorageManager: DBIngredientsFridgeManagement {
         
         object.setValue(toUse, forKey: "toUse")
         saveContext()
+    }
+    
+    private func createCDIngredient(ingredient: IngredientProtocol) {
+        let cdIngredient = CDIngredient(context: viewContext)
+        cdIngredient.cdId = Int32(ingredient.id)
+        cdIngredient.name = ingredient.name
+        cdIngredient.image = ingredient.image
+        cdIngredient.amount = ingredient.amount
+        cdIngredient.unit = ingredient.unit
+        cdIngredient.toUse = ingredient.toUse
+        cdIngredient.inFridge = true
+        
     }
 }
 

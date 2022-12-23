@@ -79,7 +79,11 @@ final class IngredientView: UIView {
             let amountFraction = ingredient.amount.rationalApproximationOf()
             amountString = "\(amountFraction.0)/\(amountFraction.1)"
         } else {
-            amountString = String(format: "%.0f", ingredient.amount)
+            if (ingredient.amount - Float(Int(ingredient.amount))) == 0 {
+                amountString = String(format: "%.0f", ingredient.amount)
+            } else {
+                amountString = String(format: "%.1f", ingredient.amount)
+            }
         }
         
         var text = "\(amountString)"
