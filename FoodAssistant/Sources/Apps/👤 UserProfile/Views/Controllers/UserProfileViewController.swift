@@ -22,6 +22,7 @@ protocol UserProfilePresentation: RecipeRemovable,
                                   SelectedCellDelegate,
                                   SegmentedViewDelegate,
                                   ImagePresentation,
+                                  CheckChangable,
                                   AnyObject {
     func fetchFavoriteRecipe(text: String)
 }

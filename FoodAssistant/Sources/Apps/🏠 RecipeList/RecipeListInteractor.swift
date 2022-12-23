@@ -81,10 +81,10 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 /// Фильтруем и получаем id рецептов, записанных в избранные
                 let arrayId = recipes.map { $0.id }
                 let favoriteArrayId = self.storage.checkRecipes(id: arrayId)
+                print(favoriteArrayId)
                 
                 /// Изменяем флаг isFavorite, если рецепт записан в избранные
                 for i in 0..<recipes.count {
-                    print(recipes[i].ingredients)
                     if favoriteArrayId.contains(recipes[i].id) {
                         recipes[i].isFavorite = true
                     }

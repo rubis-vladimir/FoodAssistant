@@ -10,11 +10,11 @@ import UIKit
 /// #Строитель ячеек секции RecommendedRecipe
 final class AddedIngredientsItemBuilder {
     private let height: CGFloat = 55
-    private let models: [IngredientProtocol]
+    private let models: [IngredientViewModel]
     
     weak var delegate: BasketPresentation?
     
-    init(models: [IngredientProtocol],
+    init(models: [IngredientViewModel],
          delegate: BasketPresentation?) {
         self.models = models
         self.delegate = delegate
@@ -39,7 +39,10 @@ extension AddedIngredientsItemBuilder: CVItemBuilderProtocol {
         let cell = collectionView.dequeueReusableCell(CVIngredientCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
-        cell.configure(with: model)
+        let isCheck = delegate?.checkFlag(id: model.id) ?? false
+        
+        cell.delegate = delegate
+        cell.configure(with: model, flag: isCheck)
         
         if let imageName = model.image {
             delegate?.fetchImage(imageName, type: .ingredient) { imageData in

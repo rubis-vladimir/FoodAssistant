@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct IngredientViewModel: Equatable, Hashable {
+struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
     /// Идентификатор ингредиента
     var id: Int
     /// Название изображения ингредиента
@@ -18,6 +18,8 @@ struct IngredientViewModel: Equatable, Hashable {
     var amount: Float
     /// Единицы измерения
     var unit: String
+    /// Флаг использования
+    var toUse: Bool
     /// Для Шоп-листа
     var isCheck: Bool = false
     
@@ -27,6 +29,7 @@ struct IngredientViewModel: Equatable, Hashable {
         self.name = ingredient.name
         self.amount = ingredient.amount
         self.unit = ingredient.unit
+        self.toUse = ingredient.toUse
     }
     
     init(id: Int,
@@ -39,9 +42,10 @@ struct IngredientViewModel: Equatable, Hashable {
         self.name = name
         self.amount = amount
         self.unit = unit
+        self.toUse = true
     }
     
     static func ==(lhs: IngredientViewModel, rhs: IngredientViewModel) -> Bool {
-        return lhs.id == rhs.id
+        return lhs.id == rhs.id || lhs.name == rhs.name
     }
 }

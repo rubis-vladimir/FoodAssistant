@@ -24,8 +24,6 @@ protocol DBRecipeManagement {
     func fetchRecipes(for target: TargetOfSave,
                       completion: @escaping ([RecipeProtocol]) -> Void)
     
-//    func fetchRecipesWithPredicates(name: String, completion: @escaping ([RecipeProtocol]) -> Void) 
-    
     /// Сохраняет рецепт
     ///  - Parameters:
     ///   - recipe: рецепт
@@ -49,22 +47,22 @@ protocol DBRecipeManagement {
 }
 
 /// #Протокол управления менеджером хранения данных для ингредиентов в твоем холодильнике
-protocol DBIngredientsFridgeManagement {
+protocol DBIngredientsManagement {
     /// Получает ингредиенты
     ///   - Parameter completion: захватывает массив ингредиентов
     func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void)
     
     /// Сохраняет ингредиент
     ///  - Parameter ingredient: ингредиент
-    func save(ingredient: IngredientProtocol)
+    func save(ingredients: [IngredientProtocol])
     
     /// Удаляет ингредиент из БД по идентификатору
     /// - Parameter id: идентификатор рецепта
-    func remove(id: Int)
+    func removeIngredient(id: Int)
     
     /// Обновляет флаг использования ингредиента
     ///  - Parameters:
     ///   - id: идентификатор ингредиента
     ///   - toUse: использовать/нет
-    func update(id: Int, toUse: Bool)
+    func updateIngredient(id: Int, toUse: Bool)
 }

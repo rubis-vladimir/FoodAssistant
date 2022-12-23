@@ -12,10 +12,10 @@ final class UserProfileInteractor {
     private var models: [RecipeProtocol] = []
 
     private let imageDownloader: ImageDownloadProtocol
-    private let storage: DBRecipeManagement
+    private let storage: DBRecipeManagement & DBIngredientsManagement
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBRecipeManagement) {
+         storage: DBRecipeManagement & DBIngredientsManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
     }
@@ -24,33 +24,13 @@ final class UserProfileInteractor {
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
     
-    func fetchFavoriteRecipe(text: String,
-                             completion: @escaping ([RecipeViewModel]) -> Void) {
-        storage.fetchRecipes(for: .isFavorite) { [weak self] recipes in
-            
-            var newRecipes = text == "" ?
-                recipes :
-                recipes.filter { recipe in
-                    let title = recipe.title.lowercased()
-                    let text = text.lowercased()
-                    return title.contains(text)
-                }
-            
-            self?.models = newRecipes
-            
-            let viewModels = newRecipes.map {
-                RecipeViewModel(with: $0)
-            }
-            completion(viewModels)
-        }
-    }
-    
-
+    // RecipeReceived
     func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         completion(model)
     }
     
+    //ImageBusinessLogic
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
@@ -68,6 +48,28 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
         }
     }
     
+    // UserProfileRecipeBL
+    func fetchFavoriteRecipe(text: String,
+                             completion: @escaping ([RecipeViewModel]) -> Void) {
+        storage.fetchRecipes(for: .isFavorite) { [weak self] recipes in
+            
+            let newRecipes = text == "" ?
+                recipes :
+                recipes.filter { recipe in
+                    let title = recipe.title.lowercased()
+                    let text = text.lowercased()
+                    return title.contains(text)
+                }
+            
+            self?.models = newRecipes
+            
+            let viewModels = newRecipes.map {
+                RecipeViewModel(with: $0)
+            }
+            completion(viewModels)
+        }
+    }
+    
     func removeRecipe(id: Int) {
         storage.remove(id: id, for: .isFavorite)
         
@@ -78,5 +80,25 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     func addToBasket(id: Int) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         storage.save(recipe: model, for: .inBasket)
+    }
+    
+    // UserProfileIngredientBL
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void) {
+        storage.fetchIngredients(toUse: nil) { ingredients in
+            let viewModels = ingredients.map { IngredientViewModel(ingredient: $0)}
+            completion(viewModels)
+        }
+    }
+    
+    func changeToUse(id: Int, flag: Bool) {
+        storage.updateIngredient(id: id, toUse: flag)
+    }
+    
+    func save(ingredient: IngredientProtocol) {
+        storage.save(ingredients: [ingredient])
+    }
+    
+    func deleteIngredient(id: Int) {
+        storage.removeIngredient(id: id)
     }
 }

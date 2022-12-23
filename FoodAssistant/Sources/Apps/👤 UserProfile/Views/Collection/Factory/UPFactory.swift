@@ -12,7 +12,7 @@ enum UPSectionType {
     /// Ячейка для подгрузки фото
     case profile
     //
-    case fridge(_ ingredients: [IngredientProtocol])
+    case fridge(_ ingredients: [IngredientViewModel])
     /// Ячейка с описанием события
     case favorite(_ recipes: [RecipeViewModel])
 }

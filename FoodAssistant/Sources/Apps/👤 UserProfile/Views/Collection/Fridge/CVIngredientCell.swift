@@ -7,40 +7,44 @@
 
 import UIKit
 
-final class CVIngredientCell: UICollectionViewCell {
+enum IngredientFlag {
+    case toUse(_ flag: Bool)
+    case isCheck(_ flag: Bool)
+}
+
+/// #Протокол изменения флага подтверждения
+protocol CheckChangable: AnyObject {
+    /// Ивент при нажатии на чек-кнопку
+    /// - Parameters:
+    ///  - id: идентификатор
+    ///  - flag: флаг подтверждения
+    func didTapCheckButton(id: Int,
+                           flag: Bool)
+}
+
+/// #Ячейка отображения ингредиента с чек-кнопкой
+class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Properties
-    /// Вью под изображение ингредиента
-    private lazy var ingredientImageView: UIImageView = {
-        let width: CGFloat = 50
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: width))
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-        view.contentMode = .scaleToFill
-        view.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        return view
-    }()
+    weak var delegate: CheckChangable?
     
-    /// Лейбл под название ингредиента
-    private lazy var titleIngredientLabel: UILabel = {
-        let label = UILabel()
-        label.numberOfLines = 2
-        label.font = Fonts.selected
-        return label
-    }()
+    private var isCheck: Bool = false {
+        didSet {
+            let image = isCheck ? Icons.checkFill.image : Icons.circle.image
+            checkButton.setImage(image, for: .normal)
+            
+            guard let id = id else { return }
+            delegate?.didTapCheckButton(id: id, flag: isCheck)
+        }
+    }
     
-    /// Лейбл под количество ингредиента
-    private lazy var amountLabel: UILabel = {
-        let label = UILabel()
-        label.font = Fonts.main
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    private var id: Int?
     
-    private lazy var useIngredientButton: UIButton = {
+    private lazy var ingredientView = IngredientView()
+
+    /// Чек-кнопка
+    private lazy var checkButton: UIButton = {
         let button = UIButton()
-        button.setImage(Icons.circle.image, for: .normal)
         button.tintColor = Palette.darkColor.color
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -56,8 +60,6 @@ final class CVIngredientCell: UICollectionViewCell {
         return stack
     }()
     
-    private lazy var spinner = BallSpinFadeLoader()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -70,32 +72,34 @@ final class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Functions
     func setupCell() {
+        
+        checkButton.addTarget(self,
+                              action: #selector(didTapCheckButton),
+                              for: .touchUpInside)
         setupConstraints()
     }
     
-    func configure(with ingredient: IngredientProtocol) {
-        if ingredient.image != nil {
-            addSubview(spinner)
-            spinner.setupSpinner(loadingImageView: ingredientImageView)
-        }
+    func configure(with ingredient: IngredientViewModel,
+                   flag: Bool) {
+        id = ingredient.id
+        ingredientView.configure(with: ingredient)
         
-        titleIngredientLabel.text = ingredient.name
-        amountLabel.text = "\(ingredient.amount) \(ingredient.unit)"
+//        switch flag {
+//        case .toUse(let flag):
+//            isCheck = flag
+//        case .isCheck(let flag):
+//            isCheck = flag
+//        }
+        
+        isCheck = flag
     }
     
     func updateImage(with imageData: Data) {
-        spinner.removeFromSuperview()
-        ingredientImageView.reloadInputViews()
-        
-        if let image = UIImage(data: imageData) {
-            ingredientImageView.image = image
-        } else {
-            ingredientImageView.image = UIImage(named: "defaultIngredient")
-        }
+        ingredientView.updateImage(with: imageData)
     }
     
     private func setupConstraints() {
-        [ingredientImageView, amountLabel, titleIngredientLabel, useIngredientButton].forEach {
+        [ingredientView, checkButton].forEach {
             container.addArrangedSubview($0)
         }
         addSubview(container)
@@ -105,10 +109,12 @@ final class CVIngredientCell: UICollectionViewCell {
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
-            ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
-            amountLabel.widthAnchor.constraint(equalToConstant: 50),
-            useIngredientButton.widthAnchor.constraint(equalTo: container.heightAnchor)
+        
+            checkButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])
+    }
+    
+    @objc private func didTapCheckButton() {
+        isCheck.toggle()
     }
 }

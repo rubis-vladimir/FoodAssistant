@@ -15,11 +15,11 @@ final class FridgeSectionConfigurator {
         static let image = Icons.plusFill.image
     }
     
-    private let models: [IngredientProtocol]
+    private let models: [IngredientViewModel]
     
     private weak var delegate: UserProfilePresentation?
     
-    init(models: [IngredientProtocol],
+    init(models: [IngredientViewModel],
          delegate: UserProfilePresentation?) {
         self.models = models
         self.delegate = delegate

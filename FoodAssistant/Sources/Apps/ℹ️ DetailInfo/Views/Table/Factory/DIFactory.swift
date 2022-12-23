@@ -14,7 +14,7 @@ enum DISectionType {
     /// Секция с питательными веществами
     case nutrients(_ nutrients: [NutrientProtocol])
     /// Секция с ингредиентами
-    case ingredients(_ ingredients: [IngredientProtocol])
+    case ingredients(_ ingredients: [IngredientViewModel])
     /// Секция с инструкциями по приготовлению
     case instructions(_ instructions: [InstructionStepProtocol])
 }
@@ -98,16 +98,6 @@ final class DIFactory: NSObject {
             return sectionBuilder
         }
     }
-    
-    /// Отслеживание повторяющихся ингредиентов
-    func getRepeatElement<T: Equatable>(from array: [T]) {
-        
-        for index in 0..<array.count - 1 {
-            if let index = array.dropFirst(index + 1).first(where: { $0 == array[index] }) {
-                print("ПОВТОРЯЮЩИЙСЯ - \(index)")
-            }
-        }
-    }
 }
 
 // MARK: - TVFactoryProtocol
@@ -126,7 +116,8 @@ extension DIFactory: TVCFactoryProtocol {
         
         /// Добавляем секцию с ингредиентами
         if let ingredients = model.ingredients, !ingredients.isEmpty {
-            builders.append(createBuilder(type: .ingredients(ingredients)))
+            let viewModels = ingredients.map {IngredientViewModel(ingredient: $0)}
+            builders.append(createBuilder(type: .ingredients(viewModels)))
         }
         
         /// Добавляем секцию с инструкцией по приготовлению
