@@ -29,6 +29,14 @@ final class RecipeListViewController: UIViewController {
     
     private let presenter: RecipeListPresentation
     
+    let navLabel: UILabel = {
+        let label = UILabel()
+        label.text = "FoodAssistant"
+        label.font = Fonts.navTitle
+        
+        return label
+    }()
+    
     // MARK: - Init & ViewDidLoad
     init(presenter: RecipeListPresentation) {
         self.presenter = presenter
@@ -42,6 +50,7 @@ final class RecipeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureSearchController()
         setupElements()
     }
     
@@ -55,19 +64,28 @@ final class RecipeListViewController: UIViewController {
         print("DEINIT \(self)")
     }
     
+    func configureSearchController() {
+        let searchController = RecipeListSearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+        navigationItem.searchController = searchController
+    }
+    
     // MARK: - Private func
     private func setupElements() {
         /// Настройка`navigationBar`
-        navigationItem.title = "Food Assistant"
+        navigationItem.titleView = navLabel
         navigationController?.navigationBar.shadowImage = UIImage()
         
         /// Настройка `searchBar`
-        let seacrhController = UISearchController(searchResultsController: nil)
-        seacrhController.hidesNavigationBarDuringPresentation = false
-        seacrhController.obscuresBackgroundDuringPresentation = false
-        seacrhController.searchBar.delegate = self
-        
-        navigationItem.searchController = seacrhController
+//        let seacrhController = UISearchController(searchResultsController: nil)
+//        seacrhController.hidesNavigationBarDuringPresentation = false
+//        seacrhController.obscuresBackgroundDuringPresentation = false
+//        seacrhController.searchBar.delegate = self
+//
+//        navigationItem.searchController = seacrhController
         
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
