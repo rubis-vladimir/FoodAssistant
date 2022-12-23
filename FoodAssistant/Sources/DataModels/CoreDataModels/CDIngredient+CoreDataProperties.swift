@@ -25,5 +25,4 @@ extension CDIngredient: IngredientProtocol {
     @NSManaged public var toUse: Bool
     @NSManaged public var inFridge: Bool
     @NSManaged public var recipe: CDRecipe?
-
 }

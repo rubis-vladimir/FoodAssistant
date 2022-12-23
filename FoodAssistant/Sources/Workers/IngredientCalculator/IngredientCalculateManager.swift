@@ -34,6 +34,7 @@ extension IngredientCalculateManager: ShopListCalculatable {
                      complection: @escaping ([IngredientViewModel]) -> Void) {
         
         storage.fetchIngredients(toUse: true) { [weak self] available in
+            
             guard let self = self else { return }
             let result = self.calculateIngredients(necessary: ingredients, available: available)
             complection(result)

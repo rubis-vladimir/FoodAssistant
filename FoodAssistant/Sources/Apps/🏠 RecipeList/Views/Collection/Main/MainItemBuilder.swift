@@ -75,7 +75,9 @@ extension MainItemBuilder: CVSelectableItemBuilderProtocol {
                                                       indexPath: indexPath)
         cell.basketDelegate = delegate
         cell.favoriteDelegate = delegate
-        cell.configure(with: model, type: .favorite)
+        
+        let favorite = delegate?.checkFavorite(id: model.id) ?? false
+        cell.configure(with: model, type: .favorite(favorite))
         
         if let imageName = model.imageName {
             /// Загрузка изображения
@@ -88,8 +90,6 @@ extension MainItemBuilder: CVSelectableItemBuilderProtocol {
         }
         return cell
     }
-    
-    
     
     func didSelectItem(indexPath: IndexPath) {
         let model = models[indexPath.item]

@@ -62,7 +62,7 @@ final class RLFactory {
                                                               delegate: delegate)
             return SingleCellSectionConfigurator(title: "Рекомендации",
                                                  configurators: [configurator],
-                                                 height: 320).configure(for: collectionView)
+                                                 height: 360).configure(for: collectionView)
             
         case .main:
             return MainSectionConfigurator(models: models,

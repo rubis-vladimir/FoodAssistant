@@ -129,6 +129,7 @@ extension BasketPresenter: BasketPresentation {
         guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
         models.remove(at: index)
         interactor.deleteFromBasket(id: id)
+        updateShopList()
     }
     
     // SelectedCellDelegate

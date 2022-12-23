@@ -14,9 +14,6 @@ final class RecipeListRouter {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    deinit {
-        print("DEINIT \(self)")
-    }
 }
 
 // MARK: - RecipeListRouting

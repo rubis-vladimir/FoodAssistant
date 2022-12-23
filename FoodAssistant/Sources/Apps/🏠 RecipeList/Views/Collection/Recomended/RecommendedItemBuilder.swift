@@ -30,7 +30,7 @@ extension RecommendedItemBuilder: CVSelectableItemBuilderProtocol {
     func itemCount() -> Int { models.count }
     
     func itemSize(collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.width * 0.6,
+        CGSize(width: collectionView.bounds.width * 0.7,
                height: collectionView.bounds.height)
     }
     
@@ -41,7 +41,9 @@ extension RecommendedItemBuilder: CVSelectableItemBuilderProtocol {
         let model = models[indexPath.item]
         cell.favoriteDelegate = delegate
         cell.basketDelegate = delegate
-        cell.configure(with: model, type: .favorite)
+        
+        let favorite = delegate?.checkFavorite(id: model.id) ?? false
+        cell.configure(with: model, type: .favorite(favorite))
         
         if let imageName = model.imageName {
             delegate?.fetchImage(imageName, type: .recipe) { imageData in

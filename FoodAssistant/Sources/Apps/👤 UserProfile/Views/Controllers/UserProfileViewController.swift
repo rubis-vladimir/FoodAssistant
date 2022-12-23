@@ -24,7 +24,9 @@ protocol UserProfilePresentation: RecipeRemovable,
                                   ImagePresentation,
                                   CheckChangable,
                                   AnyObject {
+    func checkFlag(id: Int) -> Bool
     func fetchFavoriteRecipe(text: String)
+    func getNewData()
 }
 
 /// #Протокол управления UI-ивентами сегмент-вью
@@ -77,6 +79,7 @@ final class UserProfileViewController: UIViewController {
         
         guard let text = searchBar.text else { return }
         presenter.fetchFavoriteRecipe(text: text)
+        presenter.getNewData()
     }
     
     

@@ -67,6 +67,7 @@ extension BasketInteractor: BasketBusinessLogic {
         guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
         models.remove(at: index)
         storage.remove(id: id, for: .inBasket)
+        
     }
     
     func fetchImage(_ imageName: String,

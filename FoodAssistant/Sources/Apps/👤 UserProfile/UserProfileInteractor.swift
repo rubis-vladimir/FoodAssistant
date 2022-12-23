@@ -9,7 +9,9 @@ import Foundation
 
 /// #Слой бизнес логики модуля UserProfile
 final class UserProfileInteractor {
+
     private var models: [RecipeProtocol] = []
+    private var ingredients: [IngredientViewModel] = []
 
     private let imageDownloader: ImageDownloadProtocol
     private let storage: DBRecipeManagement & DBIngredientsManagement
@@ -84,13 +86,16 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     
     // UserProfileIngredientBL
     func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void) {
-        storage.fetchIngredients(toUse: nil) { ingredients in
+        storage.fetchIngredients(toUse: false) { [weak self] ingredients in
             let viewModels = ingredients.map { IngredientViewModel(ingredient: $0)}
+            self?.ingredients = viewModels
             completion(viewModels)
         }
     }
     
     func changeToUse(id: Int, flag: Bool) {
+        guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { return }
+        ingredients[index].isCheck = flag
         storage.updateIngredient(id: id, toUse: flag)
     }
     

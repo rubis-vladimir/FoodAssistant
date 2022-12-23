@@ -22,7 +22,6 @@ extension UserProfileAssembly: Assemblying {
         
         let imageDownloader = ImageDownloader()
         let imageCacheService = ImageCacheService()
-//        let fileManager = FileManagerService.shared
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
         

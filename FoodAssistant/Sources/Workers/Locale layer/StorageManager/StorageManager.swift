@@ -120,6 +120,7 @@ extension StorageManager: DBRecipeManagement {
             } else {
                 viewContext.delete(object)
             }
+            
         case .inBasket:
             if object.isFavorite {
                 object.setValue(false, forKey: target.rawValue)
@@ -128,6 +129,14 @@ extension StorageManager: DBRecipeManagement {
             }
         }
         saveContext()
+    }
+    
+    func fetchFavoriteId(completion: @escaping ([Int]) -> Void) {
+        let predicate = NSPredicate(format: "isFavorite == %@",
+                                    NSNumber(value: true))
+        let objects = read(model: CDRecipe.self, predicate: predicate)
+        let arrayId = objects.map { $0.id }
+        completion(arrayId)
     }
     
     func checkRecipes(id: [Int]) -> [Int] {
@@ -205,13 +214,14 @@ extension StorageManager: DBRecipeManagement {
 
 // MARK: - DBIngredientsFridgeManagement
 extension StorageManager: DBIngredientsManagement {
-    func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void) {
-        let predicate = NSPredicate(format: "inFridge == %@",
+    func fetchIngredients(toUse: Bool, completion: @escaping ([IngredientProtocol]) -> Void) {
+        let predicate1 = NSPredicate(format: "inFridge == %@",
                                     NSNumber(value: true))
-        var objects = read(model: CDIngredient.self, predicate: predicate)
-        if let toUse = toUse {
-            objects = objects.filter{ $0.toUse == toUse }
-        }
+        let predicate2 = NSPredicate(format: "toUse == %@",
+                                    NSNumber(value: true))
+        let predicate = toUse ? NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] ) : predicate1
+        
+        let objects = read(model: CDIngredient.self, predicate: predicate)
         completion(objects)
     }
     
@@ -239,11 +249,12 @@ extension StorageManager: DBIngredientsManagement {
     }
     
     func updateIngredient(id: Int, toUse: Bool) {
-        let predicate = NSPredicate(format: "cdId == %@",
+        let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
+        let predicate2 = NSPredicate(format: "inFridge == %@",
+                                    NSNumber(value: true))
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
-        
-        print(object.id, object.toUse)
         
         object.setValue(toUse, forKey: "toUse")
         saveContext()

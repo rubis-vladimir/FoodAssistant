@@ -12,6 +12,7 @@ import Foundation
 final class RecipeListInteractor {
     
     private var models: [RecipeProtocol] = []
+    private var favoriteArrayId: [Int] = []
 
     private let dataFetcher: DataFetcherProtocol
     private let imageDownloader: ImageDownloadProtocol
@@ -28,17 +29,19 @@ final class RecipeListInteractor {
         self.translateService = translateService
         self.storage = storage
     }
-    deinit {
-        print("DEINIT \(self)")
-    }
 }
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
-    func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void) {
-        
+    func checkFavorite(id: Int) -> Bool {
+        favoriteArrayId.contains(id) ? true : false
     }
     
+    func updateFavoriteId() {
+        storage.fetchFavoriteId { [weak self] arrayId in
+            self?.favoriteArrayId = arrayId
+        }
+    }
     
     func getRecipe(id: Int,
                   completion: @escaping (RecipeProtocol) -> Void) {
@@ -80,20 +83,16 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 
                 /// Фильтруем и получаем id рецептов, записанных в избранные
                 let arrayId = recipes.map { $0.id }
-                let favoriteArrayId = self.storage.checkRecipes(id: arrayId)
-                print(favoriteArrayId)
                 
                 /// Изменяем флаг isFavorite, если рецепт записан в избранные
                 for i in 0..<recipes.count {
-                    if favoriteArrayId.contains(recipes[i].id) {
+                    if self.favoriteArrayId.contains(recipes[i].id) {
                         recipes[i].isFavorite = true
                     }
                 }
                 
-               
-                
                 /// Если установленный язык не базовый
-                if self.currentAppleLanguage() == "Base" {
+                if self.currentAppleLanguage() != "Base" {
                     /// Запрашиваем перевод для рецептов в сервисе
                     self.translateService.fetchTranslate(recipes: recipes) { result in
                         

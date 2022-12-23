@@ -14,7 +14,9 @@ protocol RecipeListPresentation: LayoutChangable,
                                  InBasketAdded,
                                  ImagePresentation,
                                  AnyObject {
-    func checkFavoriteRecipe()
+    
+    func checkFavorite(id: Int) -> Bool
+    func updateNewData()
 }
 
 /// #Контроллер представления списка рецептов
@@ -46,7 +48,7 @@ final class RecipeListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        presenter.checkFavoriteRecipe()
+        presenter.updateNewData()
     }
     
     deinit {

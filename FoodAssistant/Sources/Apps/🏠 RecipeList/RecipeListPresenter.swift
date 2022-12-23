@@ -53,7 +53,9 @@ protocol RecipeListBusinessLogic: RecipeReceived,
     func saveRecipe(id: Int,
                     for target: TargetOfSave)
     
-    func checkFavoriteRecipe(completion: @escaping ([RecipeViewModel]) -> Void)
+    func updateFavoriteId()
+    
+    func checkFavorite(id: Int) -> Bool
 }
 
 /// #Варианты сборок коллекции модуля RecipeList
@@ -88,9 +90,6 @@ final class RecipeListPresenter {
          router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
-    }
-    deinit {
-        print("DEINIT \(self)")
     }
     
     /// Загрузка данных при начальной загрузке приложения
@@ -132,7 +131,13 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
-    func checkFavoriteRecipe() {
+    
+    func updateNewData() {
+        interactor.updateFavoriteId()
+    }
+    
+    func checkFavorite(id: Int) -> Bool {
+        interactor.checkFavorite(id: id)
     }
     
     func fetchImage(_ imageName: String,

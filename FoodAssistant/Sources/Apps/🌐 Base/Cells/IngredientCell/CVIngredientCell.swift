@@ -84,13 +84,6 @@ class CVIngredientCell: UICollectionViewCell {
         id = ingredient.id
         ingredientView.configure(with: ingredient)
         
-//        switch flag {
-//        case .toUse(let flag):
-//            isCheck = flag
-//        case .isCheck(let flag):
-//            isCheck = flag
-//        }
-        
         isCheck = flag
     }
     

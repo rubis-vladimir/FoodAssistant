@@ -10,7 +10,7 @@ import UIKit
 /// Варианты действия кнопки
 enum TypeOfActionButton {
     /// Добавление в избранные
-    case favorite
+    case favorite(_ flag: Bool)
     /// Удаление рецепта
     case delete
 }

@@ -43,14 +43,14 @@ protocol DBRecipeManagement {
     /// - Returns: да/нет
     func check(id: Int) -> Bool
     
-    func checkRecipes(id: [Int]) -> [Int]
+    func fetchFavoriteId(completion: @escaping ([Int]) -> Void)
 }
 
 /// #Протокол управления менеджером хранения данных для ингредиентов в твоем холодильнике
 protocol DBIngredientsManagement {
     /// Получает ингредиенты
     ///   - Parameter completion: захватывает массив ингредиентов
-    func fetchIngredients(toUse: Bool?, completion: @escaping ([IngredientProtocol]) -> Void)
+    func fetchIngredients(toUse: Bool, completion: @escaping ([IngredientProtocol]) -> Void)
     
     /// Сохраняет ингредиент
     ///  - Parameter ingredient: ингредиент

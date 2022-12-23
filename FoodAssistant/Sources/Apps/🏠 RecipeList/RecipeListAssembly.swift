@@ -14,9 +14,6 @@ final class RecipeListAssembly {
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    deinit {
-        print("DEINIT \(self)")
-    }
 }
 
 // MARK: - Assemblying
@@ -32,9 +29,8 @@ extension RecipeListAssembly: Assemblying {
         let imageDownloader = ImageDownloader()
         /// Сервис кеширования изображений
         let imageCacheService = ImageCacheService()
-        let fileManager = FileManagerService.shared
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
-                                                        imageCache: fileManager)
+                                                        imageCache: imageCacheService)
         /// Менеджер работы с БД
         let storage = StorageManager.shared
         

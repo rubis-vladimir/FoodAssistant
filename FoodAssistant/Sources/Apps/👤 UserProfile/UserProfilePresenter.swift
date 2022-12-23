@@ -15,7 +15,7 @@ enum UserProfileTarget {
 
 /// #Протокол управления слоем навигации модуля UserProfile
 protocol UserProfileRouting {
-    /// Переход к следующему экрану
+    /// Перейти к следующему экрану
     ///  - Parameter to: вариант перехода
     func route(to: UserProfileTarget, model: RecipeProtocol)
 }
@@ -28,7 +28,7 @@ protocol UserProfileViewable: AnyObject {
     func hideSearchBar(shouldHide: Bool)
     /// Показать ошибку
     func showError()
-    
+    /// Перезагрузить секцию
     func reloadSection(_ section: Int)
 }
 
@@ -40,6 +40,10 @@ protocol UserProfileBusinessLogic: RecipeReceived,
 
 /// #Протокол управления рецептами
 protocol UserProfileRecipeBL {
+    /// Получить ингредиенты
+    /// - Parameters:
+    ///  - text: текст в поисковом баре
+    ///  - completion: захватывает вьюмодели рецептов
     func fetchFavoriteRecipe(text: String,
                              completion: @escaping ([RecipeViewModel]) -> Void)
     
@@ -55,6 +59,8 @@ protocol UserProfileRecipeBL {
 /// #Протокол управления ингредиентами
 protocol UserProfileIngredientBL {
     
+    /// Получить ингредиенты
+    /// - Parameter completion: захватывает вьюмодели ингредиентов
     func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
     
     /// Изменить флаг использования ингредиента
@@ -79,13 +85,15 @@ final class UserProfilePresenter {
     
     private var currentSegmentIndex = 0
     
-    var viewModels: [RecipeViewModel] = []
+    private(set) var viewModels: [RecipeViewModel] = []
     {
         didSet {
             guard currentSegmentIndex == 2 else { return }
             view?.updateCV(orderSection: [.favorite(viewModels)])
         }
     }
+    
+    private(set) var ingredients: [IngredientViewModel] = [] 
     
     weak var view: UserProfileViewable?
     private let interactor: UserProfileBusinessLogic
@@ -102,10 +110,21 @@ final class UserProfilePresenter {
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
     
+    
+    func checkFlag(id: Int) -> Bool {
+        guard let index = ingredients.firstIndex(where: { $0.id == id }) else { return false }
+        return ingredients[index].toUse
+    }
+    
+    
     func fetchFavoriteRecipe(text: String) {
         interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
             self?.viewModels = models
         }
+    }
+    
+    func getNewData() {
+        didSelectSegment(index: currentSegmentIndex)
     }
     
     // SegmentedViewDelegate
@@ -113,29 +132,21 @@ extension UserProfilePresenter: UserProfilePresentation {
         currentSegmentIndex = index
         
         switch index {
+        /// вкладка профиля
         case 0:
             view?.hideSearchBar(shouldHide: true)
             view?.updateCV(orderSection: [.profile])
-        case 1:
-            let ingredient1 = Ingredient(id: 12312, image: "cinnamon.jpg", name: "cinnamon", dtoAmount: 3)
-            let ingredient2 = Ingredient(id: 23233, image: "egg", name: "egg", dtoAmount: 5)
-            let ingredient3 = Ingredient(id: 4552, image: "red-delicious-apples.jpg", name: "red delicious apples", dtoAmount: 1, dtoUnit: "кг")
-            let ingredient4 = Ingredient(id: 22222, image: "tomatoes", name: "tomatoes", dtoAmount: 9, dtoUnit: "")
-            let ingredient5 = Ingredient(id: 50064, image: "chicken", name: "chicken", dtoAmount: 200, dtoUnit: "g")
-//            
-//            interactor.save(ingredient: ingredient1)
-//            interactor.save(ingredient: ingredient2)
-//            interactor.save(ingredient: ingredient3)
-//            interactor.save(ingredient: ingredient4)
-//            interactor.save(ingredient: ingredient5)
             
-            var array: [IngredientViewModel] = []
+        /// вкладка холодильника
+        case 1:
             interactor.fetchIngredients { ingredients in
-                array += ingredients
+                self.ingredients = ingredients
             }
             
             view?.hideSearchBar(shouldHide: true)
-            view?.updateCV(orderSection: [.fridge(array)])
+            view?.updateCV(orderSection: [.fridge(ingredients)])
+        
+        /// вкладка избранных рецептов
         default:
             view?.hideSearchBar(shouldHide: false)
             view?.updateCV(orderSection: [.favorite(viewModels)])

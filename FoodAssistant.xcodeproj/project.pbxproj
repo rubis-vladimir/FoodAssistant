@@ -506,6 +506,7 @@
 		7D2F7729291A95BD009D3444 /* Apps */ = {
 			isa = PBXGroup;
 			children = (
+				7DF53EEE29562CC300C4BA66 /* Filter */,
 				7DC5508D2950FB71001539C5 /* 🏄Onboarding */,
 				7D451C6F293BA8E200A4CDC5 /* 🌐 Base */,
 				7D2F773C291A98D0009D3444 /* 🏭 FactoryElements (CV & TV) */,
@@ -668,7 +669,6 @@
 			children = (
 				7D3D19A029447771005E3840 /* FridgeSectionConfigurator.swift */,
 				7D3D19A229447782005E3840 /* FridgeItemBuilder.swift */,
-				7D3D19A4294477BD005E3840 /* CVIngredientCell.swift */,
 			);
 			path = Fridge;
 			sourceTree = "<group>";
@@ -720,6 +720,7 @@
 		7D3D19B829464F19005E3840 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				7DF53EED2956010D00C4BA66 /* IngredientCell */,
 				7D2B348E2948AC7800FF01A2 /* SingleCell */,
 				7D3D19BC294650FC005E3840 /* RecipeCell */,
 				7D2B348F2948AEDB00FF01A2 /* TVCell */,
@@ -1088,6 +1089,21 @@
 				7DEF8E202923C6580016A207 /* UPFactory.swift */,
 			);
 			path = Factory;
+			sourceTree = "<group>";
+		};
+		7DF53EED2956010D00C4BA66 /* IngredientCell */ = {
+			isa = PBXGroup;
+			children = (
+				7D3D19A4294477BD005E3840 /* CVIngredientCell.swift */,
+			);
+			path = IngredientCell;
+			sourceTree = "<group>";
+		};
+		7DF53EEE29562CC300C4BA66 /* Filter */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Filter;
 			sourceTree = "<group>";
 		};
 		7DFEB5DC291C2F14008C28FC /* Workers */ = {
