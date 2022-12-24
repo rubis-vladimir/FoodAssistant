@@ -26,4 +26,12 @@ extension RecipeListRouter: RecipeListRouting {
         navigationController.navigationBar.isTranslucent = true
         navigationController.pushViewController(vc, animated: true)
     }
+    
+    func routeTest() {
+        guard let navigationController = navigationController else { return }
+        let filterViewController = RecipeFilterAssembly(navigationController: navigationController).assembly()
+        filterViewController.hidesBottomBarWhenPushed = true
+//        filterViewController.navigationItem.searchController = searchController
+        navigationController.pushViewController(filterViewController, animated: true)
+    }
 }

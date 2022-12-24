@@ -17,6 +17,7 @@ protocol RecipeListPresentation: LayoutChangable,
     
     func checkFavorite(id: Int) -> Bool
     func updateNewData()
+    func didTapFilterButton()
 }
 
 /// #Контроллер представления списка рецептов
@@ -24,10 +25,17 @@ final class RecipeListViewController: UIViewController {
 
     // MARK: - Properties
     private var collectionView: UICollectionView?
+    var searchController: RecipeListSearchController!
     private var timer: Timer?
     private var factory: RLFactory?
     
     private let presenter: RecipeListPresentation
+    
+    private var filterVC: UIViewController?
+    
+    private var isSearching: Bool = false
+    private var isChangingFilters: Bool = false
+    private var selectedSegment: Int = 0
     
     let navLabel: UILabel = {
         let label = UILabel()
@@ -52,6 +60,9 @@ final class RecipeListViewController: UIViewController {
         
         configureSearchController()
         setupElements()
+        
+        guard let navigationController = navigationController else { return }
+        filterVC = RecipeFilterAssembly(navigationController: navigationController).assembly()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -65,8 +76,9 @@ final class RecipeListViewController: UIViewController {
     }
     
     func configureSearchController() {
-        let searchController = RecipeListSearchController(searchResultsController: nil)
+        searchController = RecipeListSearchController(searchResultsController: nil)
         searchController.searchBar.delegate = self
+        searchController.searchBar.filterDelegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
@@ -129,11 +141,17 @@ final class RecipeListViewController: UIViewController {
         return CGSize(width: availableWidth,
                       height: availableWidth + padding + 40)
     }
-}
-
-// MARK: - UISearchBarDelegate
-extension RecipeListViewController: UISearchBarDelegate {
     
+    func changeFilterButtonAppearance(with firstColor: UIColor, and secondColor: UIColor) {
+        let button: UIButton = searchController.searchBar.filterButton
+        // TODO: Animate here
+        let animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn) {
+            button.tintColor = firstColor
+            button.backgroundColor = secondColor
+        }
+        animator.startAnimation()
+        
+    }
 }
 
 // MARK: - RecipeListViewable
@@ -153,8 +171,53 @@ extension RecipeListViewController: RecipeListViewable {
         
     }
     
-    func reloadSection(_ section: Int) {
+    func reload(items: [IndexPath]) {
         guard let collectionView = collectionView else {return}
-        collectionView.reloadSections(IndexSet(integer: section))
+        collectionView.reloadItems(at: items)
+    }
+    
+}
+
+extension RecipeListViewController: UISearchBarFilterDelegate {
+    func toggleFilterView() {
+//        if isChangingFilters {
+//            changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
+//            navigationController?.popViewController(animated: true)
+//        } else {
+            changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
+            
+            
+//        }
+        
+        presenter.didTapFilterButton()
+//        searchController.searchBar.setShowsScope(!isChangingFilters, animated: true)
+        isChangingFilters.toggle()
+    }
+}
+
+extension RecipeListViewController: UISearchBarDelegate {
+    // Presents searched recipes
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let text = searchBar.text ?? ""
+//        fetchRecipesForSearchText(text.lowercased())
+        if isChangingFilters {
+            toggleFilterView()
+        }
+        isSearching = true
+    }
+    
+    // Presents default recipes
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        // Updates the table view only if the text field is empty and default recipes don't already present.
+        if let text = searchBar.text, text.isEmpty && isSearching {
+            isSearching = false
+//            tableView?.reloadData()
+//            let topRow = IndexPath(row: 0, section: 0)
+//            tableView.scrollToRow(at: topRow, at: .top, animated: false)
+        }
+    }
+    
+    func searchBar(_ searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        selectedSegment = selectedScope
     }
 }

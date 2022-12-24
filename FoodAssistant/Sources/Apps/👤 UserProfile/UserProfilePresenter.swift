@@ -28,8 +28,8 @@ protocol UserProfileViewable: AnyObject {
     func hideSearchBar(shouldHide: Bool)
     /// Показать ошибку
     func showError()
-    /// Перезагрузить секцию
-    func reloadSection(_ section: Int)
+    /// Перезагрузить элементы
+    func reload(items: [IndexPath])
 }
 
 /// #Протокол управления бизнес логикой модуля UserProfile
@@ -110,7 +110,6 @@ final class UserProfilePresenter {
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
     
-    
     func checkFlag(id: Int) -> Bool {
         guard let index = ingredients.firstIndex(where: { $0.id == id }) else { return false }
         return ingredients[index].toUse
@@ -182,11 +181,13 @@ extension UserProfilePresenter: UserProfilePresentation {
     
     // LayoutChangable
     func didTapChangeLayoutButton(section: Int) {
+        /// Вызываем уведомление изменения layout
         NotificationCenter.default
             .post(name: NSNotification.Name("changeLayoutType2"),
                   object: nil)
         
-        view?.reloadSection(section)
+        let indexPath = (0...viewModels.count-1).map { IndexPath(item: $0, section: section) }
+        view?.reload(items: indexPath)
     }
     
     // SelectedCellDelegate

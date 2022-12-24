@@ -206,8 +206,8 @@ extension UserProfileViewController: UISearchBarDelegate {
 
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
-    func reloadSection(_ section: Int) {
-        collectionView.reloadSections(IndexSet(integer: section))
+    func reload(items: [IndexPath]) {
+        collectionView.reloadItems(at: items)
     }
     
     func hideSearchBar(shouldHide: Bool) {

@@ -35,8 +35,8 @@ extension FavoriteSectionConfigurator: CVSectionConfiguration {
         let action: ((Int) -> Void)? = { section in self.delegate?.didTapChangeLayoutButton(section: section) }
         /// Модель заголовка
         let headerModel = HeaderSectionModel(title: Constants.title,
-                                             firstImage: Constants.firstImage,
-                                             secondImage: Constants.secondImage,
+                                             firstImage: Constants.secondImage,
+                                             secondImage: Constants.firstImage,
                                              action: action )
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))

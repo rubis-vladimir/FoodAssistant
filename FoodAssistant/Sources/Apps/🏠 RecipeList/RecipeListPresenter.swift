@@ -12,6 +12,8 @@ protocol RecipeListRouting {
     /// Переход к экрану детальной информации
     ///  - Parameter model: модель рецепта
     func routeToDetail(model: RecipeProtocol)
+    
+    func routeTest()
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -22,7 +24,7 @@ protocol RecipeListViewable: AnyObject {
     
     /// Перезагружает секцию коллекции
     /// - Parameter section: номер секции
-    func reloadSection(_ section: Int)
+    func reload(items: [IndexPath])
     
     /// Показывает ошибку
     func showError()
@@ -131,6 +133,10 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
+    func didTapFilterButton() {
+        router.routeTest()
+    }
+    
     
     func updateNewData() {
         interactor.updateFavoriteId()
@@ -176,10 +182,14 @@ extension RecipeListPresenter: RecipeListPresentation {
     }
     
     func didTapChangeLayoutButton(section: Int) {
+        
+        guard let count = viewModelsDictionary[.main]?.count else { return }
         /// Вызываем уведомление изменения layout
         NotificationCenter.default
             .post(name: NSNotification.Name("changeLayoutType"),
                   object: nil)
-        view?.reloadSection(section)
+        
+        let indexPath = (0...count-1).map { IndexPath(item: $0, section: section) }
+        view?.reload(items: indexPath)
     }
 }
