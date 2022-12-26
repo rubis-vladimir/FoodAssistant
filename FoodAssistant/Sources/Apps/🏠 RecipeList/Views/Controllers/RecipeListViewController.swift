@@ -17,7 +17,7 @@ protocol RecipeListPresentation: LayoutChangable,
     
     func checkFavorite(id: Int) -> Bool
     func updateNewData()
-    func didTapFilterButton()
+    func didTapFilterButton(search: UISearchController)
 }
 
 /// #Контроллер представления списка рецептов
@@ -80,9 +80,10 @@ final class RecipeListViewController: UIViewController {
         searchController.searchBar.delegate = self
         searchController.searchBar.filterDelegate = self
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = searchController
+        
         navigationItem.hidesSearchBarWhenScrolling = true
-        navigationItem.searchController = searchController
     }
     
     // MARK: - Private func
@@ -180,16 +181,18 @@ extension RecipeListViewController: RecipeListViewable {
 
 extension RecipeListViewController: UISearchBarFilterDelegate {
     func toggleFilterView() {
-//        if isChangingFilters {
-//            changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
-//            navigationController?.popViewController(animated: true)
-//        } else {
+        print("@@@@@ \(isChangingFilters) @@@@@ \( navigationController?.navigationBar.isTranslucent)")
+        if isChangingFilters {
+            changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
+//            navigationController?.navigationBar.isTranslucent = false
+            navigationController?.popToRootViewController(animated: true)
+        } else {
             changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
-            
-            
-//        }
+//            navigationController?.navigationBar.isTranslucent = true
+            presenter.didTapFilterButton(search: searchController)
+        }
         
-        presenter.didTapFilterButton()
+        
 //        searchController.searchBar.setShowsScope(!isChangingFilters, animated: true)
         isChangingFilters.toggle()
     }

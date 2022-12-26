@@ -17,6 +17,13 @@ final class RecipeFilterViewController: UIViewController {
 
     private let presenter: RecipeFilterPresentation
     
+    let navLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Фильтр"
+        label.font = Fonts.navTitle
+        
+        return label
+    }()
     
     override func loadView() {
         view = filterView
@@ -36,7 +43,9 @@ final class RecipeFilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 //        setupConstraints()
-        view.backgroundColor = .orange
+        view.backgroundColor = .white
+        navigationController?.navigationItem.titleView = navLabel
+        navigationController?.navigationItem.hidesBackButton = true
     }
     
     func setupConstraints() {

@@ -41,36 +41,9 @@ class RecipeFilterView: UIView {
         createLabel(with: "Непереносимость")
     }()
     
-//    let intolerancesView: TagListView = {
-//        let tagList = TagListView()
-//        // Change properties here
-//        tagList.textFont = UIFont.preferredFont(forTextStyle: .body)
-//
-//        tagList.tagBackgroundColor = UIColor.theme.tagViewBackground
-//        tagList.tagSelectedBackgroundColor = UIColor.theme.tagViewBackgroundSelected
-//        tagList.textColor = UIColor.systemGray
-//        tagList.selectedTextColor = .label
-//
-//        tagList.paddingX = 8
-//        tagList.paddingY = 8
-//        tagList.alignment = .leading
-//
-//        tagList.addTags(["Dairy","Egg","Gluten","Grain","Peanut",
-//                         "Seafood","Sesame","Shellfish","Soy",
-//                         "Sulfite","Tree Nut","Wheat"])
-//
-//        for tag in tagList.tagViews {
-//            tag.layer.cornerRadius = 5
-//        }
-//        tagList.translatesAutoresizingMaskIntoConstraints = false
-//        return tagList
-//    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        
-//        backgroundColor = .orange
         setViews()
         setupConstrains()
     }

@@ -153,6 +153,7 @@
 		7DF53EFD2956DC8900C4BA66 /* RecipeFilterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF82956DC8900C4BA66 /* RecipeFilterInteractor.swift */; };
 		7DF53F022956E02800C4BA66 /* RecipeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F012956E02800C4BA66 /* RecipeFilterView.swift */; };
 		7DF53F0429570D6A00C4BA66 /* FilterTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F0329570D6A00C4BA66 /* FilterTextField.swift */; };
+		7DF53F072959CEEE00C4BA66 /* RFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F062959CEEE00C4BA66 /* RFFactory.swift */; };
 		7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */; };
 		7DFEB5E2291C32F0008C28FC /* RecipeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */; };
 		7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */; };
@@ -328,6 +329,7 @@
 		7DF53EF82956DC8900C4BA66 /* RecipeFilterInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFilterInteractor.swift; sourceTree = "<group>"; };
 		7DF53F012956E02800C4BA66 /* RecipeFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFilterView.swift; sourceTree = "<group>"; };
 		7DF53F0329570D6A00C4BA66 /* FilterTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTextField.swift; sourceTree = "<group>"; };
+		7DF53F062959CEEE00C4BA66 /* RFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFactory.swift; sourceTree = "<group>"; };
 		7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
 		7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModels.swift; sourceTree = "<group>"; };
 		7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateParameters.swift; sourceTree = "<group>"; };
@@ -1142,6 +1144,7 @@
 		7DF53EFE2956DFEA00C4BA66 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				7DF53F052959CEDA00C4BA66 /* Factory */,
 				7DF53F002956E01200C4BA66 /* Views */,
 				7DF53EFF2956DFFD00C4BA66 /* Controllers */,
 			);
@@ -1163,6 +1166,14 @@
 				7DF53F0329570D6A00C4BA66 /* FilterTextField.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7DF53F052959CEDA00C4BA66 /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				7DF53F062959CEEE00C4BA66 /* RFFactory.swift */,
+			);
+			path = Factory;
 			sourceTree = "<group>";
 		};
 		7DFEB5DC291C2F14008C28FC /* Workers */ = {
@@ -1415,6 +1426,7 @@
 				7D2F7746291A9C47009D3444 /* DataFetcherError.swift in Sources */,
 				7DC16113292E4FA20026A072 /* LRUCache.swift in Sources */,
 				7D2F774F291BA0E8009D3444 /* [String] + String.swift in Sources */,
+				7DF53F072959CEEE00C4BA66 /* RFFactory.swift in Sources */,
 				7DF53F0429570D6A00C4BA66 /* FilterTextField.swift in Sources */,
 				7DC5508C2950D2FC001539C5 /* Array + Duplicate.swift in Sources */,
 				7D2F7730291A9717009D3444 /* RecipeListAssembly.swift in Sources */,

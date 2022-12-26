@@ -1,22 +1,19 @@
 //
-//  RLFactory.swift
+//  RFFactory.swift
 //  FoodAssistant
 //
-//  Created by Владимир Рубис on 24.11.2022.
+//  Created by Владимир Рубис on 26.12.2022.
 //
 
 import UIKit
 
-/// #Варианты секций модуля RecipeList
-enum RLSectionType {
-    /// Рекомендованные
-    case recommended
-    /// Основные
-    case main
+
+enum RFSectionType {
+    case tag
 }
 
-/// #Фабрика настройки коллекции модуля RecipeList
-final class RLFactory {
+/// #Фабрика настройки коллекции модуля RecipeFilter
+final class RFFactory {
     
     private let collectionView: UICollectionView
     private let arrayModelsDictionary: [RecipeModelsDictionary]
@@ -26,8 +23,7 @@ final class RLFactory {
     
     /// Инициализатор
     ///  - Parameters:
-    ///    - collectionView: настраиваемая коллекция
-    ///    - buildType: тип сборки
+    ///    - tableView: настраиваемая таблица
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
          arrayModelsDictionary: [RecipeModelsDictionary],
@@ -40,13 +36,13 @@ final class RLFactory {
     }
     
     
-    /// Настраивает представление коллекции
+    /// Настраивает табличное представление
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         
         /// Обновление данных в коллекции
-        cvAdapter.configure(with: builders)
+//        cvAdapter.configure(with: builders)
     }
     
     /// Создает строителя ячеек
@@ -72,7 +68,7 @@ final class RLFactory {
 }
 
 //MARK: - TVFactoryProtocol
-extension RLFactory: CVFactoryProtocol {
+extension RFFactory: CVFactoryProtocol {
     
     var builders: [CVSectionBuilderProtocol] {
         arrayModelsDictionary.flatMap {
@@ -80,3 +76,4 @@ extension RLFactory: CVFactoryProtocol {
         }
     }
 }
+

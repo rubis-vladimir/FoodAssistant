@@ -19,6 +19,8 @@ final class DetailInfoRouter {
 // MARK: - DetailInfoRouting
 extension DetailInfoRouter: DetailInfoRouting {
     func routeToBack() {
-        navigationController.popViewController(animated: true)
+        navigationController.navigationBar.isTranslucent = false
+        navigationController.createCustomTransition(with: .fade)
+        navigationController.popToRootViewController(animated: true)
     }
 }

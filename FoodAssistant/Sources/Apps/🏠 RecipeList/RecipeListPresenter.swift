@@ -5,7 +5,7 @@
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
-import Foundation
+import UIKit
 
 /// #Протокол управления слоем навигации модуля RecipeList
 protocol RecipeListRouting {
@@ -13,7 +13,7 @@ protocol RecipeListRouting {
     ///  - Parameter model: модель рецепта
     func routeToDetail(model: RecipeProtocol)
     
-    func routeTest()
+    func routeTest(search: UISearchController)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -96,9 +96,9 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "main course", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
+        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 4, query: nil) { [weak self] result in
+        interactor.fetchRecipe(with: filterParameters, number: 14, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):
 
@@ -133,9 +133,13 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
-    func didTapFilterButton() {
-        router.routeTest()
+    func didTapFilterButton(search: UISearchController) {
+        router.routeTest(search: search)
     }
+    
+//    func didTapFilterButton() {
+//        router.routeTest()
+//    }
     
     
     func updateNewData() {

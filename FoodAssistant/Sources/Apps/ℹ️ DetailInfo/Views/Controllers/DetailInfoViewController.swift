@@ -51,11 +51,6 @@ final class DetailInfoViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("DEINIT \(self)")
-    }
-
-    
     // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,8 +110,6 @@ final class DetailInfoViewController: UIViewController {
     
     /// Возврат к корневому экрану
     @objc private func backButtonTapped() {
-        /// Убираем прозрачность navBar
-        navigationController?.navigationBar.isTranslucent = false
         presenter.didTapBackButton()
     }
 }
