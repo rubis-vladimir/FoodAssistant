@@ -7,6 +7,12 @@
 
 import Foundation
 
+protocol SeachRecipesRequested: AnyObject {
+    
+    func search(with parameters: RecipeFilterParameters)
+}
+
+
 /// #Протокол управления слоем навигации модуля RecipeFilter
 protocol RecipeFilterRouting {
     /// Перейти на предыдущий экран
@@ -31,6 +37,8 @@ protocol RecipeFilterBusinessLogic {
     
     func fetchText(with parameter: RecipeFilterParameter, completion: @escaping (String) -> Void)
     
+    func getParameters(completion: @escaping (RecipeFilterParameters) -> Void)
+    
     func checkFlag(indexPath: IndexPath) -> Bool
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath)
@@ -45,6 +53,7 @@ protocol RecipeFilterBusinessLogic {
 final class RecipeFilterPresenter {
     
     weak var view: RecipeFilterViewable?
+    weak var rootPresenter: SeachRecipesRequested?
     
     private let interactor: RecipeFilterBusinessLogic
     private let router: RecipeFilterRouting
@@ -64,6 +73,14 @@ final class RecipeFilterPresenter {
 
 // MARK: - RecipeFilterPresentation
 extension RecipeFilterPresenter: RecipeFilterPresentation {
+    func didTapShowResultButton() {
+        
+        interactor.getParameters { [weak self] parameters in
+            self?.rootPresenter?.search(with: parameters)
+            self?.router.routeToBack()
+        }
+    }
+    
     func update(parameter: RecipeFilterParameter,
                 text: String) {
         interactor.update(parameter: parameter,

@@ -13,7 +13,9 @@ protocol RecipeListRouting {
     ///  - Parameter model: модель рецепта
     func routeToDetail(model: RecipeProtocol)
     
-    func routeTest(search: UISearchController)
+    func routeToFilter(_ flag: Bool,
+                       search: UISearchController,
+                       searchDelegate: SeachRecipesRequested)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -96,18 +98,18 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
-//
-//        interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
-//            switch result {
-//            case .success(let recipeCellModels):
-//
-//                self?.viewModelsDictionary[.main] = recipeCellModels
-//                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
-//            case .failure(_):
-//                break
-//            }
-//        }
+        let filterParameters = RecipeFilterParameters(time: nil, cuisine: [], diet: nil, type: ["salad", "side dish", "drink"], intolerances: [], includeIngredients: [], excludeIngredients: [], minCalories: nil, maxCalories: nil, sort: nil)
+        
+        interactor.fetchRecipe(with: filterParameters, number: 5, query: nil) { [weak self] result in
+            switch result {
+            case .success(let recipeCellModels):
+
+                self?.viewModelsDictionary[.main] = recipeCellModels
+                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
+            case .failure(_):
+                break
+            }
+        }
     }
     
     private func update() {
@@ -133,14 +135,11 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
-    func didTapFilterButton(search: UISearchController) {
-        router.routeTest(search: search)
+    func didTapFilterButton(_ flag: Bool, search: UISearchController) {
+        router.routeToFilter(flag,
+                             search: search,
+                             searchDelegate: self)
     }
-    
-//    func didTapFilterButton() {
-//        router.routeTest()
-//    }
-    
     
     func updateNewData() {
         interactor.updateFavoriteId()
@@ -195,5 +194,21 @@ extension RecipeListPresenter: RecipeListPresentation {
         
         let indexPath = (0...count-1).map { IndexPath(item: $0, section: section) }
         view?.reload(items: indexPath)
+    }
+}
+
+// MARK: - SeachRecipesRequested
+extension RecipeListPresenter: SeachRecipesRequested {
+    func search(with parameters: RecipeFilterParameters) {
+        interactor.fetchRecipe(with: parameters, number: 6, query: nil) { [weak self] result in
+            switch result {
+            case .success(let recipeCellModels):
+                self?.buildType = .search
+                self?.viewModelsDictionary[.main] = recipeCellModels
+                
+            case .failure(_):
+                break
+            }
+        }
     }
 }

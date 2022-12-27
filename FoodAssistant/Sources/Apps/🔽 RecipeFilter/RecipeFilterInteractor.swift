@@ -29,10 +29,50 @@ final class RecipeFilterInteractor {
         let separators = CharacterSet(charactersIn: ",; ")
         return str.components(separatedBy: separators).filter{ $0 != "" }
     }
+    
+    func number(fromString str: String?,
+                inOrder: Int) -> Int? {
+        guard let str = str else { return nil }
+        switch inOrder {
+        case 1: return values(fromCSVString: str).compactMap(Int.init).last
+        default:  return values(fromCSVString: str).compactMap(Int.init).first
+        }
+    }
+    
+    func getSelectedParameters(_ parameter: RecipeFilterParameter) -> [String] {
+        dict[parameter]?.filter { $0.isSelected == true }.map { $0.title } ?? []
+    }
 }
 
 // MARK: - RecipeFilterBusinessLogic
 extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
+    
+    func getParameters(completion: @escaping (RecipeFilterParameters) -> Void) {
+        
+        let selectedTime = getSelectedParameters(.time).first
+        let selectedСalories = getSelectedParameters(.calories).first
+        let selectedCuisines = getSelectedParameters(.region)
+        let selectedDiet = getSelectedParameters(.diet).first
+        let selectedType = getSelectedParameters(.dishType)
+        let selectedIncludeIngredients = getSelectedParameters(.includeIngredients)
+        let selectedExcludeIngredients = getSelectedParameters(.excludeIngredients)
+        
+        let filterParameters = RecipeFilterParameters(
+            time: number(fromString: selectedTime, inOrder: 0),
+            cuisine: selectedCuisines,
+            diet: selectedDiet,
+            type: selectedType,
+            intolerances: [],
+            includeIngredients: selectedIncludeIngredients,
+            excludeIngredients: selectedExcludeIngredients,
+            minCalories: number(fromString: selectedСalories, inOrder: 0),
+            maxCalories: number(fromString: selectedСalories, inOrder: 1),
+            sort: nil
+        )
+        print(filterParameters)
+        completion(filterParameters)
+    }
+    
     func fetchText(with parameter: RecipeFilterParameter,
                    completion: @escaping (String) -> Void) {
         guard let models = dict[parameter] else {

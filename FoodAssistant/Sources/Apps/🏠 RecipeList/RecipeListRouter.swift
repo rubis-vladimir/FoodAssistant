@@ -18,6 +18,28 @@ final class RecipeListRouter {
 
 // MARK: - RecipeListRouting
 extension RecipeListRouter: RecipeListRouting {
+    func routeToFilter(_ flag: Bool,
+                       search: UISearchController,
+                       searchDelegate: SeachRecipesRequested) {
+        guard let navigationController = navigationController else { return }
+        
+        if flag {
+            let filterViewController = RecipeFilterAssembly(navigationController: navigationController,
+                                                            searchDelegate: searchDelegate).assembly()
+            
+            filterViewController.hidesBottomBarWhenPushed = true
+            filterViewController.navigationItem.searchController = search
+            filterViewController.navigationItem.hidesBackButton = true
+            filterViewController.navigationItem.title = "Фильтр"
+            filterViewController.navigationController?.navigationBar.backgroundColor = .clear
+            navigationController.createCustomTransition(with: .fade)
+            navigationController.navigationBar.isTranslucent = true
+            navigationController.pushViewController(filterViewController, animated: false)
+        } else {
+            navigationController.popToRootViewController(animated: true)
+        }
+    }
+    
     
     func routeToDetail(model: RecipeProtocol) {
         guard let navigationController = navigationController else { return }
@@ -28,16 +50,8 @@ extension RecipeListRouter: RecipeListRouting {
         
     }
     
-    func routeTest(search: UISearchController) {
-        guard let navigationController = navigationController else { return }
-        let filterViewController = RecipeFilterAssembly(navigationController: navigationController).assembly()
-        filterViewController.hidesBottomBarWhenPushed = true
-//        navigationController.navigationBar.isTranslucent = true
-        filterViewController.navigationItem.searchController = search
-        filterViewController.navigationItem.hidesBackButton = true
-        filterViewController.navigationItem.title = "Фильтр"
-        filterViewController.navigationController?.navigationBar.backgroundColor = .clear
-        navigationController.createCustomTransition(with: .fade)
-        navigationController.pushViewController(filterViewController, animated: false)
+    func routeTest(search: UISearchController,
+                   searchDelegate: SeachRecipesRequested) {
+        
     }
 }

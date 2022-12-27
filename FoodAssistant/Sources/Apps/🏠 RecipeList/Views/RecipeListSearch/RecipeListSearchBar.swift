@@ -8,12 +8,22 @@
 import UIKit
 
 protocol UISearchBarFilterDelegate: AnyObject {
-    func toggleFilterView()
+    func changeFilterView(isFilter: Bool)
 }
 
 class RecipesSearchBar: UISearchBar {
     
     weak var filterDelegate: UISearchBarFilterDelegate?
+    
+    var isFilter: Bool = false {
+        didSet {
+            if isFilter {
+                changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
+            } else {
+                changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
+            }
+        }
+    }
     
     private lazy var textField: UITextField? = {
         guard let textField = value(forKey: "searchField") as? UITextField else {
@@ -70,9 +80,7 @@ class RecipesSearchBar: UISearchBar {
     }
     
     func layoutViews() {
-        guard let textField = textField else {
-            return
-        }
+        guard let textField = textField else { return }
         
         NSLayoutConstraint.activate([
             textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AppConstants.padding),
@@ -85,11 +93,20 @@ class RecipesSearchBar: UISearchBar {
             filterButton.widthAnchor.constraint(equalTo: filterButton.heightAnchor),
         ])
     }
+    
+    func changeFilterButtonAppearance(with firstColor: UIColor, and secondColor: UIColor) {
+        let animator = UIViewPropertyAnimator(duration: 0.3, curve: .easeIn) {
+            self.filterButton.tintColor = firstColor
+            self.filterButton.backgroundColor = secondColor
+        }
+        animator.startAnimation()
+    }
 }
 
 private extension RecipesSearchBar {
     @objc func didTapFilterButton() {
-        filterDelegate?.toggleFilterView()
+        isFilter.toggle()
+        filterDelegate?.changeFilterView(isFilter: isFilter)
     }
 }
 

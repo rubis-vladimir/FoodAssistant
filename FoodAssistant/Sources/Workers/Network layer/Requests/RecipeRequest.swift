@@ -67,20 +67,22 @@ extension RecipeRequest: RequestBuilding {
     var queryItems: [URLQueryItem]? {
         switch self {
         case let .complexSearch(parameters, number, query):
-            let maxCalories = parameters.maxCalories == nil ? "10000" : String(parameters.maxCalories!)
+            
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
                 URLQueryItem(name: "addRecipeNutrition", value: "true"),
                 URLQueryItem(name: "fillIngredients", value: "true"),
                 URLQueryItem(name: "query", value: query),
                 URLQueryItem(name: "number", value: String(number)),
-                URLQueryItem(name: "type", value: parameters.type),
-                URLQueryItem(name: "cuisine", value: parameters.cuisine),
+                URLQueryItem(name: "maxReadyTime", value: String(parameters.time ?? 1000)),
+                URLQueryItem(name: "type", value: parameters.type.convertStringArrayToString()),
+                URLQueryItem(name: "cuisine", value: parameters.cuisine.convertStringArrayToString()),
                 URLQueryItem(name: "diet", value: parameters.diet),
                 URLQueryItem(name: "intolerances", value: parameters.intolerances.convertStringArrayToString()),
                 URLQueryItem(name: "includeIngredients", value: parameters.includeIngredients.convertStringArrayToString()),
                 URLQueryItem(name: "excludeIngredients", value: parameters.excludeIngredients.convertStringArrayToString()),
-                URLQueryItem(name: "maxCalories", value: maxCalories),
+                URLQueryItem(name: "minCalories", value: String(parameters.minCalories ?? 0)),
+                URLQueryItem(name: "maxCalories", value: String(parameters.maxCalories ?? 10000)),
                 URLQueryItem(name: "sort", value: parameters.sort)
             ]
         case let .findByIngredients(ingredients, number):

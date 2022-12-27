@@ -7,6 +7,8 @@
 
 import UIKit
 
+
+
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeFilter
 protocol RecipeFilterPresentation: CellTapable,
                                    RecipeFilterSelectedIngredientsChangable,
@@ -15,6 +17,8 @@ protocol RecipeFilterPresentation: CellTapable,
     
     func update(parameter: RecipeFilterParameter,
                 text: String)
+    
+    func didTapShowResultButton()
 }
 
 /// #Контроллер представления фильтра рецептов
@@ -31,13 +35,8 @@ final class RecipeFilterViewController: UIViewController {
     
     private lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero,
                                                                          collectionViewLayout: getFlowLayout())
-    private lazy var filterView = FilterView()
     private var factory: RFFactory?
     
-//    override func loadView() {
-//        view = collectionView
-//    }
-    private lazy var rfilterView = RecipeFilterView()
     private lazy var showResultsButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = Fonts.subtitle
@@ -65,6 +64,10 @@ final class RecipeFilterViewController: UIViewController {
         collectionView.backgroundColor = .white
         navigationController?.navigationItem.titleView = navLabel
         navigationController?.navigationItem.hidesBackButton = true
+        
+        showResultsButton.addTarget(self,
+                                    action: #selector(didTapShowResultsButton),
+                                    for: .touchUpInside)
         
         setupConstraints()
     }
@@ -98,6 +101,13 @@ final class RecipeFilterViewController: UIViewController {
             showResultsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             showResultsButton.heightAnchor.constraint(equalToConstant: 50)
         ])
+    }
+    
+    @objc private func didTapShowResultsButton() {
+        
+//        navigationItem.searchController.
+        presenter.didTapShowResultButton()
+
     }
 }
 
