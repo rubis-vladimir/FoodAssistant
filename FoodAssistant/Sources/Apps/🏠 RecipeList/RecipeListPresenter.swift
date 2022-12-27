@@ -97,17 +97,17 @@ final class RecipeListPresenter {
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
         let filterParameters = RecipeFilterParameters(cuisine: nil, diet: nil, type: "salad", intolerances: [], includeIngredients: [], excludeIngredients: [], maxCalories: nil, sort: nil)
-        
-        interactor.fetchRecipe(with: filterParameters, number: 14, query: nil) { [weak self] result in
-            switch result {
-            case .success(let recipeCellModels):
-
-                self?.viewModelsDictionary[.main] = recipeCellModels
-                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
-            case .failure(_):
-                break
-            }
-        }
+//
+//        interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
+//            switch result {
+//            case .success(let recipeCellModels):
+//
+//                self?.viewModelsDictionary[.main] = recipeCellModels
+//                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
+//            case .failure(_):
+//                break
+//            }
+//        }
     }
     
     private func update() {

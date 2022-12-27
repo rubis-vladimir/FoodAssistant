@@ -23,13 +23,14 @@ final class FridgeItemBuilder {
 
 // MARK: - RecommendedRecipeItemBuilder
 extension FridgeItemBuilder: CVItemBuilderProtocol {
+    
     func register(collectionView: UICollectionView) {
         collectionView.register(CVIngredientCell.self)
     }
     
     func itemCount() -> Int { models.count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.width,
                height: height)
     }

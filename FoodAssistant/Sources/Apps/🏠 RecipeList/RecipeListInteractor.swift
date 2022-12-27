@@ -81,9 +81,6 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 /// Получили рецепты из запроса
                 guard var recipes = responce.results else { return }
                 
-                /// Фильтруем и получаем id рецептов, записанных в избранные
-                let arrayId = recipes.map { $0.id }
-                
                 /// Изменяем флаг isFavorite, если рецепт записан в избранные
                 for i in 0..<recipes.count {
                     if self.favoriteArrayId.contains(recipes[i].id) {
@@ -92,7 +89,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 }
                 
                 /// Если установленный язык не базовый
-                if self.currentAppleLanguage() != "Base" {
+                if self.currentAppleLanguage() == "Base" {
                     /// Запрашиваем перевод для рецептов в сервисе
                     self.translateService.fetchTranslate(recipes: recipes) { result in
                         

@@ -19,13 +19,18 @@ final class RecipeFilterAssembly {
 // MARK: - Assemblying
 extension RecipeFilterAssembly: Assemblying {
     func assembly() -> UIViewController {
+        
+        let filterManager = FilterManager()
+        
         let router = RecipeFilterRouter(navigationController: navigationController)
-        let interactor = RecipeFilterInteractor()
+        let interactor = RecipeFilterInteractor(filterManager: filterManager)
         let presenter = RecipeFilterPresenter(interactor: interactor,
                                   router: router)
         let viewController = RecipeFilterViewController(presenter: presenter)
-        presenter.delegate = viewController
-    
+        presenter.view = viewController
+        interactor.presenter = presenter
+        
+        presenter.getStartData()
         return viewController
     }
 }

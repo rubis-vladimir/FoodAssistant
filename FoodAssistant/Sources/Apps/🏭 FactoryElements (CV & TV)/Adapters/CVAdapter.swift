@@ -76,7 +76,8 @@ extension CVAdapter: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         builders[indexPath.section]
             .itemBuilder
-            .itemSize(collectionView: collectionView)
+            .itemSize(indexPath: indexPath,
+                      collectionView: collectionView)
     }
 
     func collectionView(_ collectionView: UICollectionView,

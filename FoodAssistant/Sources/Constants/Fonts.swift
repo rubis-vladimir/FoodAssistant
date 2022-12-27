@@ -14,4 +14,5 @@ struct Fonts {
     static let subtitle = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 22)
     static let selected = UIFont(name: "AppleSDGothicNeo-SemiBold", size: 18)
     static let main = UIFont(name: "AppleSDGothicNeo-Medium", size: 16)
+    static let annotation = UIFont(name: "AvenirNext-Italic", size: 14)
 }

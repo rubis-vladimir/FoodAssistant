@@ -51,7 +51,7 @@ final class MainItemBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension MainItemBuilder: CVSelectableItemBuilderProtocol {
-
+    
     func register(collectionView: UICollectionView) {
         collectionView.register(FirstRecipeCell.self)
         collectionView.register(SecondRecipeCell.self)
@@ -59,7 +59,7 @@ extension MainItemBuilder: CVSelectableItemBuilderProtocol {
     
     func itemCount() -> Int { models.count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         calculateItemSize(width: collectionView.bounds.width)
     }
     

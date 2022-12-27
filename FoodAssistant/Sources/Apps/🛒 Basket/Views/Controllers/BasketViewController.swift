@@ -35,8 +35,8 @@ final class BasketViewController: UIViewController {
     
     private lazy var addInFridgeButton: UIButton = {
         let button = UIButton()
-        button.setTitle("  Добавить", for: .normal)
-        
+        button.setTitle(" Добавить", for: .normal)
+        button.titleLabel?.font = Fonts.subtitle
         button.layer.cornerRadius = 25
         button.tintColor = .white
         button.setImage(Icons.fridge.image, for: .normal)
@@ -45,6 +45,21 @@ final class BasketViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private lazy var orderDeliveryButton: UIButton = {
+        let button = UIButton()
+        button.setTitle(" Заказать", for: .normal)
+        button.titleLabel?.font = Fonts.subtitle
+        button.layer.cornerRadius = 25
+        button.tintColor = .white
+        button.setImage(Icons.fridge.image, for: .normal)
+        button.backgroundColor = Palette.darkColor.color
+        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+    
+    let stack = UIStackView()
     
     // MARK: - Init & ViewDidLoad
     init(presenter: BasketPresentation) {
@@ -55,11 +70,6 @@ final class BasketViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        print("DEINIT \(self)")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.navigationBar.isHidden = false
@@ -73,8 +83,7 @@ final class BasketViewController: UIViewController {
     private func setupElements() {
         
         addInFridgeButton.addTarget(self, action: #selector(didTapAddFridgeButton), for: .touchUpInside)
-        addInFridgeButton.isHidden = true
-        
+                
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
                                           collectionViewLayout: getFlowLayout())
@@ -84,19 +93,30 @@ final class BasketViewController: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
+        
+        stack.spacing = 20
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.isHidden = true
+        
+        stack.addArrangedSubview(addInFridgeButton)
+        stack.addArrangedSubview(orderDeliveryButton)
+        
         view.addSubview(collectionView)
-        view.addSubview(addInFridgeButton)
+//        view.addSubview(addInFridgeButton)
+        view.addSubview(stack)
         
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             
-            addInFridgeButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            addInFridgeButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 2),
-            addInFridgeButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -60),
-            addInFridgeButton.heightAnchor.constraint(equalToConstant: 50)
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+//            stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 2),
+            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            stack.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
@@ -156,7 +176,7 @@ extension BasketViewController: BasketViewable {
     }
     
     func showAddButton(_ flag: Bool) {
-        addInFridgeButton.isHidden = !flag
+        stack.isHidden = !flag
     }
     
     

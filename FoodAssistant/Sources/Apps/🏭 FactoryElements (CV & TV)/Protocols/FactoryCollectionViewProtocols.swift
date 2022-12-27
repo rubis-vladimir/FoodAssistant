@@ -38,7 +38,8 @@ protocol CVItemBuilderProtocol {
     /// Возвращает высоту ячейки
     func itemCount() -> Int
     /// Возвращает размеры ячейки
-    func itemSize(collectionView: UICollectionView) -> CGSize
+    func itemSize(indexPath: IndexPath,
+                  collectionView: UICollectionView) -> CGSize
     /// Создает ячейку по indexPath
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell
@@ -52,6 +53,8 @@ protocol CVSelectableItemBuilderProtocol: CVItemBuilderProtocol {
 
 /// #Протокол строителя заголовка коллекции
 protocol CVHeaderBuilderProtocol {
+    /// Регистрирует заголовок 
+    func register(collectionView: UICollectionView)
     /// Возвращает размеры заголовка
     func headerSize(collectionView: UICollectionView) -> CGSize
     /// Просматривает доп. элементы коллекции и возвращает их (заголовок)

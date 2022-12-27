@@ -133,16 +133,7 @@ final class RecipeListViewController: UIViewController {
         return layout
     }
     
-    /// Рассчитывает размер Item
-    private func calculateItemSize() -> CGSize {
-        let padding: CGFloat = AppConstants.padding
-        let itemPerRow: CGFloat = 2
-        let paddingWidht = padding * (itemPerRow + 1)
-        let availableWidth = (view.bounds.width - paddingWidht) / itemPerRow
-        return CGSize(width: availableWidth,
-                      height: availableWidth + padding + 40)
-    }
-    
+    //
     func changeFilterButtonAppearance(with firstColor: UIColor, and secondColor: UIColor) {
         let button: UIButton = searchController.searchBar.filterButton
         // TODO: Animate here
@@ -188,7 +179,7 @@ extension RecipeListViewController: UISearchBarFilterDelegate {
             navigationController?.popToRootViewController(animated: true)
         } else {
             changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
-//            navigationController?.navigationBar.isTranslucent = true
+            navigationController?.navigationBar.isTranslucent = true
             presenter.didTapFilterButton(search: searchController)
         }
         
