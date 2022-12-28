@@ -30,7 +30,7 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
     
     func itemCount() -> Int { models.count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.height - 50,
                height: collectionView.bounds.height)
     }

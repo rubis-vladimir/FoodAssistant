@@ -51,7 +51,7 @@ final class NetworkDataFetcher {
             let decodedObject = try JSONDecoder().decode(T.self, from: data)
             completion(.success(decodedObject))
         } catch {
-            completion(.failure(.failedToDecode))
+            completion(.failure(.decodingError))
         }
     }
 }

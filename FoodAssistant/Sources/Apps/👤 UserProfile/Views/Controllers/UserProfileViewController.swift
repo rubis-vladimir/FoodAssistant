@@ -24,6 +24,7 @@ protocol UserProfilePresentation: RecipeRemovable,
                                   ImagePresentation,
                                   CheckChangable,
                                   AnyObject {
+    func didTapAddIngredientButton()
     func checkFlag(id: Int) -> Bool
     func fetchFavoriteRecipe(text: String)
     func getNewData()
@@ -206,8 +207,13 @@ extension UserProfileViewController: UISearchBarDelegate {
 
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
-    func reloadSection(_ section: Int) {
-        collectionView.reloadSections(IndexSet(integer: section))
+    
+    func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
+        showAddIngredientAlert(completion: completion)
+    }
+    
+    func reload(items: [IndexPath]) {
+        collectionView.reloadItems(at: items)
     }
     
     func hideSearchBar(shouldHide: Bool) {

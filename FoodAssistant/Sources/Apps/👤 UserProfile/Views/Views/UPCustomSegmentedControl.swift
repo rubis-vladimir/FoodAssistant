@@ -11,8 +11,8 @@ class UPCustomSegmentedControl: UIView {
     
     var delegate: SegmentedViewDelegate?
     
-    private lazy var buttonImages: [UIImage?] = [Icons.card.image, Icons.fridge.image, Icons.heart.image]
-    private lazy var buttonSelectImages: [UIImage?] = [Icons.cardFill.image, Icons.fridgeFill.image, Icons.heartFill.image]
+    private lazy var buttonImages: [UIImage?] = [Icons.personCard.image, Icons.fridge.image, Icons.heart.image]
+    private lazy var buttonSelectImages: [UIImage?] = [Icons.personCardFill.image, Icons.fridgeFill.image, Icons.heartFill.image]
     
     struct SelfConstants {
         static let bgColor = Palette.bgColor.color
@@ -68,6 +68,7 @@ class UPCustomSegmentedControl: UIView {
             button.setTitle("", for: .normal)
             button.setTitleColor(.white, for: .normal)
             button.tintColor = color
+            button.titleLabel?.font = Fonts.selected
             button.setImage(image, for: .normal)
             button.addTarget(self,
                              action: #selector(buttonTapped),

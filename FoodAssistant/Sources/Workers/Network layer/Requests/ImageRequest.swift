@@ -29,7 +29,7 @@ extension ImageRequest {
     func download(with service: ImageDownloadProtocol,
                   completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         guard let url = url else {
-            completion(.failure(.wrongUrl))
+            completion(.failure(.invalidUrl))
             return
         }
         service.fetchImage(url: url, completion: completion)

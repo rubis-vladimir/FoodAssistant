@@ -23,13 +23,14 @@ final class RecommendedItemBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension RecommendedItemBuilder: CVSelectableItemBuilderProtocol {
+    
     func register(collectionView: UICollectionView) {
         collectionView.register(ThirdRecipeCell.self)
     }
     
     func itemCount() -> Int { models.count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.width * 0.7,
                height: collectionView.bounds.height)
     }

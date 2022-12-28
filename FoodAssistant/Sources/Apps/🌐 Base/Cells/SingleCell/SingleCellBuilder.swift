@@ -22,13 +22,15 @@ final class SingleCellBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension SingleCellBuilder: CVItemBuilderProtocol {
+    
+    
     func register(collectionView: UICollectionView) {
         collectionView.register(SingleCell.self)
     }
     
     func itemCount() -> Int { count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.width,
                height: height)
     }

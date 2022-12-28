@@ -28,6 +28,8 @@ protocol DetailInfoPresentation: AnyObject {
                           size: ImageSize,
                           completion: @escaping (Data) -> Void)
     
+    func checkFor(ingredient: IngredientViewModel) -> Bool
+    
     /// Нажата кнопка назад
     func didTapBackButton()
 }
@@ -50,11 +52,6 @@ final class DetailInfoViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    deinit {
-        print("DEINIT \(self)")
-    }
-
     
     // MARK: - Override func
     override func viewDidLoad() {
@@ -115,8 +112,6 @@ final class DetailInfoViewController: UIViewController {
     
     /// Возврат к корневому экрану
     @objc private func backButtonTapped() {
-        /// Убираем прозрачность navBar
-        navigationController?.navigationBar.isTranslucent = false
         presenter.didTapBackButton()
     }
 }

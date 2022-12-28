@@ -18,8 +18,24 @@ final class TVIngredientCell: TVBaseCell {
         setupConstraints()
     }
     
-    func configure(with ingredient: IngredientViewModel) {
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        ingredientView.layer.cornerRadius = ingredientView.frame.height / 2
+    }
+    
+    func configure(with ingredient: IngredientViewModel, flag: Bool) {
         ingredientView.configure(with: ingredient)
+        if flag {
+            
+            ingredientView.backgroundColor = Palette.bgColor.color
+            ingredientView.layer.borderWidth = 0.5
+            ingredientView.layer.borderColor = UIColor.lightGray.cgColor
+            ingredientView.layoutSubviews()
+        } else {
+            ingredientView.layer.borderColor = UIColor.clear.cgColor
+            ingredientView.backgroundColor = .clear
+        }
     }
     
     func updateImage(with imageData: Data) {

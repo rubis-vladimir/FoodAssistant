@@ -21,7 +21,7 @@ extension ProfileItemBuilder: CVItemBuilderProtocol {
     
     func itemCount() -> Int { 1 }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.width,
                height: height)
     }

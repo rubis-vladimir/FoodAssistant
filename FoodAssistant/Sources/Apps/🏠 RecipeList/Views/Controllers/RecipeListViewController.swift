@@ -17,6 +17,7 @@ protocol RecipeListPresentation: LayoutChangable,
     
     func checkFavorite(id: Int) -> Bool
     func updateNewData()
+    func didTapFilterButton(_ flag: Bool, search: UISearchController)
 }
 
 /// #Контроллер представления списка рецептов
@@ -24,10 +25,23 @@ final class RecipeListViewController: UIViewController {
 
     // MARK: - Properties
     private var collectionView: UICollectionView?
+    var searchController: RecipeListSearchController!
     private var timer: Timer?
     private var factory: RLFactory?
     
     private let presenter: RecipeListPresentation
+    
+    private var isSearching: Bool = false
+    private var isChangingFilters: Bool = false
+    private var selectedSegment: Int = 0
+    
+    let navLabel: UILabel = {
+        let label = UILabel()
+        label.text = "FoodAssistant"
+        label.font = Fonts.navTitle
+        
+        return label
+    }()
     
     // MARK: - Init & ViewDidLoad
     init(presenter: RecipeListPresentation) {
@@ -42,6 +56,7 @@ final class RecipeListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        configureSearchController()
         setupElements()
     }
     
@@ -49,25 +64,37 @@ final class RecipeListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         presenter.updateNewData()
+       
     }
     
     deinit {
         print("DEINIT \(self)")
     }
     
+    func configureSearchController() {
+        searchController = RecipeListSearchController(searchResultsController: nil)
+        searchController.searchBar.delegate = self
+        searchController.searchBar.filterDelegate = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false
+        navigationItem.searchController = searchController
+        
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
+    
     // MARK: - Private func
     private func setupElements() {
         /// Настройка`navigationBar`
-        navigationItem.title = "Food Assistant"
+        navigationItem.titleView = navLabel
         navigationController?.navigationBar.shadowImage = UIImage()
         
         /// Настройка `searchBar`
-        let seacrhController = UISearchController(searchResultsController: nil)
-        seacrhController.hidesNavigationBarDuringPresentation = false
-        seacrhController.obscuresBackgroundDuringPresentation = false
-        seacrhController.searchBar.delegate = self
-        
-        navigationItem.searchController = seacrhController
+//        let seacrhController = UISearchController(searchResultsController: nil)
+//        seacrhController.hidesNavigationBarDuringPresentation = false
+//        seacrhController.obscuresBackgroundDuringPresentation = false
+//        seacrhController.searchBar.delegate = self
+//
+//        navigationItem.searchController = seacrhController
         
         /// Настройка `CollectionView`
         collectionView = UICollectionView(frame: CGRect.zero,
@@ -101,25 +128,15 @@ final class RecipeListViewController: UIViewController {
         layout.minimumLineSpacing = padding
         return layout
     }
-    
-    /// Рассчитывает размер Item
-    private func calculateItemSize() -> CGSize {
-        let padding: CGFloat = AppConstants.padding
-        let itemPerRow: CGFloat = 2
-        let paddingWidht = padding * (itemPerRow + 1)
-        let availableWidth = (view.bounds.width - paddingWidht) / itemPerRow
-        return CGSize(width: availableWidth,
-                      height: availableWidth + padding + 40)
-    }
-}
 
-// MARK: - UISearchBarDelegate
-extension RecipeListViewController: UISearchBarDelegate {
-    
 }
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
+    func updateFilterButton() {
+        searchController.searchBar.isFilter = false
+    }
+    
     func updateCV(with: [RecipeModelsDictionary]) {
         
         guard let collectionView = collectionView else {return}
@@ -131,12 +148,56 @@ extension RecipeListViewController: RecipeListViewable {
         }
     }
     
-    func showError() {
+    func showError(_ error: Error) {
         
     }
     
-    func reloadSection(_ section: Int) {
+    func reload(items: [IndexPath]) {
         guard let collectionView = collectionView else {return}
-        collectionView.reloadSections(IndexSet(integer: section))
+        collectionView.reloadItems(at: items)
+    }
+    
+}
+
+extension RecipeListViewController: UISearchBarFilterDelegate {
+    func changeFilterView(isFilter: Bool) {
+        presenter.didTapFilterButton(isFilter, search: searchController)
+    }
+    
+//    func toggleFilterView() {
+//        print("@@@@@ \(isChangingFilters) @@@@@ \( navigationController?.navigationBar.isTranslucent)")
+//
+////        if isChangingFilters {
+////            changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
+////            navigationController?.popToRootViewController(animated: true)
+////        } else {
+//            navigationController?.navigationBar.isTranslucent = true
+//            presenter.didTapFilterButton(search: searchController)
+////        }
+//
+////        isChangingFilters.toggle()
+//    }
+}
+
+extension RecipeListViewController: UISearchBarDelegate {
+    
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let text = searchBar.text ?? ""
+//        fetchRecipesForSearchText(text.lowercased())
+        if isChangingFilters {
+//            toggleFilterView()
+        }
+        isSearching = true
+    }
+    
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        if let text = searchBar.text, text.isEmpty && isSearching {
+            isSearching = false
+//            let topRow = IndexPath(row: 0, section: 0)
+//            tableView.scrollToRow(at: topRow, at: .top, animated: false)
+        }
     }
 }

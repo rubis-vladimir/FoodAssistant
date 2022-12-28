@@ -59,7 +59,7 @@ extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
     
     func itemCount() -> Int { models.count }
     
-    func itemSize(collectionView: UICollectionView) -> CGSize {
+    func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         calculateItemSize(width: collectionView.bounds.width)
     }
     

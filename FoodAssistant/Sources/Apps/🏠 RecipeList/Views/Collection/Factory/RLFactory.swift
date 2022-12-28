@@ -26,7 +26,7 @@ final class RLFactory {
     
     /// Инициализатор
     ///  - Parameters:
-    ///    - tableView: настраиваемая таблица
+    ///    - collectionView: настраиваемая коллекция
     ///    - buildType: тип сборки
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
@@ -40,7 +40,7 @@ final class RLFactory {
     }
     
     
-    /// Настраивает табличное представление
+    /// Настраивает представление коллекции
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter

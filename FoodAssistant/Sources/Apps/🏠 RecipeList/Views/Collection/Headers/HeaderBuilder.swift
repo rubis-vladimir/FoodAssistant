@@ -20,7 +20,7 @@ final class HeaderBuilder {
     private let height: CGFloat = 45
     private let type: HeaderType
     
-    init( type: HeaderType) {
+    init(type: HeaderType) {
         self.type = type
     }
 }
@@ -40,6 +40,11 @@ extension HeaderBuilder: CVHeaderBuilderProtocol {
                                   indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
+            
+//            let headerModel = HeaderSectionModel(title: Constants.titleOne,
+//                                                 firstImage: Constants.firstImage,
+//                                                 secondImage: Constants.secondImage,
+//                                                 action: action )
             
             switch type {
             case .base(let title):

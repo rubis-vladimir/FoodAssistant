@@ -62,7 +62,8 @@ extension CVAdapter: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension CVAdapter: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    func collectionView(_ collectionView: UICollectionView,
+                        didSelectItemAt indexPath: IndexPath) {
         
         /// Для ячеек с расширенной функциональностью
         if let itemBuilder = builders[indexPath.section].itemBuilder as? CVSelectableItemBuilderProtocol {
@@ -75,10 +76,13 @@ extension CVAdapter: UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         builders[indexPath.section]
             .itemBuilder
-            .itemSize(collectionView: collectionView)
+            .itemSize(indexPath: indexPath,
+                      collectionView: collectionView)
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         builders[section]
             .headerBuilder?
             .headerSize(collectionView: collectionView) ?? CGSize.zero

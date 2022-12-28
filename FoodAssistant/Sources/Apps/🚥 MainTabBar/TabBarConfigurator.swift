@@ -49,7 +49,7 @@ extension TabBarConfigurator: TabBarConfiguration {
         let navigationControllerOne = UINavigationController()
         let recipeListVC = RecipeListAssembly(navigationController: navigationControllerOne).assembly()
         navigationControllerOne.viewControllers = [recipeListVC]
-        navigationControllerOne.navigationBar.isTranslucent = false
+//        navigationControllerOne.navigationBar.isTranslucent = false
         
         /// Конфигурируем модуль для второй вкладки
         let navigationControllerTwo = UINavigationController()
