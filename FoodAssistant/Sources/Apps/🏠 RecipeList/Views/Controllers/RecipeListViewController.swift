@@ -64,7 +64,7 @@ final class RecipeListViewController: UIViewController {
         super.viewWillAppear(animated)
         
         presenter.updateNewData()
-        searchController.searchBar.isFilter = false
+       
     }
     
     deinit {
@@ -133,6 +133,10 @@ final class RecipeListViewController: UIViewController {
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
+    func updateFilterButton() {
+        searchController.searchBar.isFilter = false
+    }
+    
     func updateCV(with: [RecipeModelsDictionary]) {
         
         guard let collectionView = collectionView else {return}

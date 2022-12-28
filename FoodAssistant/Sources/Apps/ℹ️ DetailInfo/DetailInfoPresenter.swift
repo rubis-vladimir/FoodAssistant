@@ -31,6 +31,8 @@ protocol DetailInfoBusinessLogic {
     func fetchImageIngredients(_ imageName: String,
                                size: ImageSize,
                                completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+    
+    func checkFor(ingredient: IngredientViewModel) -> Bool
 }
 
 // MARK: - Presenter
@@ -52,6 +54,10 @@ final class DetailInfoPresenter {
 
 // MARK: - DetailInfoPresentation
 extension DetailInfoPresenter: DetailInfoPresentation {
+    func checkFor(ingredient: IngredientViewModel) -> Bool {
+        interactor.checkFor(ingredient: ingredient)
+    }
+    
     func fetchRecipe(with imageName: String, completion: @escaping (Data) -> Void) {
         interactor.fetchImageRecipe(imageName) { result in
             switch result {

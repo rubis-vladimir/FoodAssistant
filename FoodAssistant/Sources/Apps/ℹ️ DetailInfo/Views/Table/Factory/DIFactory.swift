@@ -116,7 +116,14 @@ extension DIFactory: TVCFactoryProtocol {
         
         /// Добавляем секцию с ингредиентами
         if let ingredients = model.ingredients, !ingredients.isEmpty {
-            let viewModels = ingredients.map {IngredientViewModel(ingredient: $0)}
+            let viewModels = ingredients.map {
+                var model = IngredientViewModel(ingredient: $0)
+                model.isCheck = delegate?.checkFor(ingredient: model) ?? false
+                
+                print(model.isCheck)
+                return model
+            }
+            print(viewModels)
             builders.append(createBuilder(type: .ingredients(viewModels)))
         }
         

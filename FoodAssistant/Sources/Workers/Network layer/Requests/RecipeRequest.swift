@@ -22,8 +22,7 @@ enum RecipeRequest {
     ///  - Parameters:
     ///   - ingridients: массив ингредиентов
     ///   - number: количество рецептов
-    case findByIngredients(_ ingridients: [String],
-                           _ number: Int)
+    case findIngredient(_ query: String?)
     
     /// Запрос случайных рецептов
     ///  - Parameters:
@@ -38,8 +37,18 @@ extension RecipeRequest {
     ///  - Parameters:
     ///   - service: используемый сервис для запроса из сети
     ///   - completion: захватывает модель ответ с рецептами / ошибку
-    func download(with service: DataFetcherProtocol,
-                  completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
+    func downloadRecipes(with service: DataFetcherProtocol,
+                         completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
+        do {
+            service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
+        } catch {
+            guard let error = error as? DataFetcherError else { return }
+            completion(.failure(error))
+        }
+    }
+    
+    func downloadIngredient(with service: DataFetcherProtocol,
+                            completion: @escaping (Result<DTOIngredientResponce, DataFetcherError>) -> Void) {
         do {
             service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
         } catch {
@@ -57,8 +66,8 @@ extension RecipeRequest: RequestBuilding {
         switch self {
         case .complexSearch:
             return "/recipes/complexSearch"
-        case .findByIngredients:
-            return "/recipes/findByIngredients"
+        case .findIngredient:
+            return "/food/ingredients/search"
         case .random:
             return "/recipes/random"
         }
@@ -85,11 +94,12 @@ extension RecipeRequest: RequestBuilding {
                 URLQueryItem(name: "maxCalories", value: String(parameters.maxCalories ?? 10000)),
                 URLQueryItem(name: "sort", value: parameters.sort)
             ]
-        case let .findByIngredients(ingredients, number):
+        case let .findIngredient(query):
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
-                URLQueryItem(name: "number", value: String(number)),
-                URLQueryItem(name: "ingredients", value: ingredients.convertStringArrayToString())
+                URLQueryItem(name: "query", value: query),
+                URLQueryItem(name: "number", value: "1"),
+                URLQueryItem(name: "language", value: "ru")
             ]
         case let .random(number, tags):
             return [

@@ -24,6 +24,8 @@ protocol RecipeListViewable: AnyObject {
     /// - Parameter array: массив словарей моделей
     func updateCV(with: [RecipeModelsDictionary])
     
+    func updateFilterButton()
+    
     /// Перезагружает секцию коллекции
     /// - Parameter section: номер секции
     func reload(items: [IndexPath])
@@ -100,16 +102,16 @@ final class RecipeListPresenter {
     func getStartData() {
         let filterParameters = RecipeFilterParameters(time: nil, cuisine: [], diet: nil, type: ["salad", "side dish", "drink"], intolerances: [], includeIngredients: [], excludeIngredients: [], minCalories: nil, maxCalories: nil, sort: nil)
         
-        interactor.fetchRecipe(with: filterParameters, number: 5, query: nil) { [weak self] result in
-            switch result {
-            case .success(let recipeCellModels):
-
-                self?.viewModelsDictionary[.main] = recipeCellModels
-                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
-            case .failure(_):
-                break
-            }
-        }
+//        interactor.fetchRecipe(with: filterParameters, number: 3, query: nil) { [weak self] result in
+//            switch result {
+//            case .success(let recipeCellModels):
+//
+//                self?.viewModelsDictionary[.main] = recipeCellModels
+//                self?.viewModelsDictionary[.recommended] = recipeCellModels.reversed()
+//            case .failure(_):
+//                break
+//            }
+//        }
     }
     
     private func update() {
@@ -200,6 +202,9 @@ extension RecipeListPresenter: RecipeListPresentation {
 // MARK: - SeachRecipesRequested
 extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
+        
+        view?.updateFilterButton()
+        
         interactor.fetchRecipe(with: parameters, number: 6, query: nil) { [weak self] result in
             switch result {
             case .success(let recipeCellModels):

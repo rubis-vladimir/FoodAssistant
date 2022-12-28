@@ -26,6 +26,8 @@ protocol UserProfileViewable: AnyObject {
     func updateCV(orderSection: [UPSectionType])
     /// Скрыть `Search Bar`
     func hideSearchBar(shouldHide: Bool)
+    
+    func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
     /// Показать ошибку
     func showError()
     /// Перезагрузить элементы
@@ -47,6 +49,8 @@ protocol UserProfileRecipeBL {
     func fetchFavoriteRecipe(text: String,
                              completion: @escaping ([RecipeViewModel]) -> Void)
     
+    
+    
     /// Удалить рецепт
     /// - Parameter id: идентификатор рецепта
     func removeRecipe(id: Int)
@@ -63,6 +67,9 @@ protocol UserProfileIngredientBL {
     /// - Parameter completion: захватывает вьюмодели ингредиентов
     func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
     
+    
+    func find(ingredient: IngredientViewModel,
+              completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
     /// Изменить флаг использования ингредиента
     /// - Parameters:
     ///  - id: идентификатор ингредиента
@@ -109,6 +116,31 @@ final class UserProfilePresenter {
 
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
+    
+    func didTapAddIngredientButton() {
+        view?.showAlert(completion: { [weak self] result in
+            guard let self = self else { return }
+            
+            switch result {
+            case .success(let ingredient):
+                self.interactor.find(ingredient: ingredient) { result in
+                    
+                    switch result {
+                        
+                    case .success(let newViewModel):
+                        self.ingredients.append(newViewModel)
+                        self.view?.updateCV(orderSection: [.fridge(self.ingredients)])
+                    case .failure(_):
+                        break
+                    }
+                    
+                }
+                
+            case .failure(let error):
+                print(error)
+            }
+        })
+    }
     
     func checkFlag(id: Int) -> Bool {
         guard let index = ingredients.firstIndex(where: { $0.id == id }) else { return false }

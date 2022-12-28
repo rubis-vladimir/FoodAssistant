@@ -135,7 +135,9 @@
 		7DC550A429532E51001539C5 /* UIPageViewController + NextPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */; };
 		7DC550A8295380A4001539C5 /* IngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC550A7295380A4001539C5 /* IngredientView.swift */; };
 		7DE6BA95295B18C500711FB4 /* FilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA94295B18C500711FB4 /* FilterManager.swift */; };
-		7DE6BA97295B29D700711FB4 /* UIViewController + TFAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA96295B29D700711FB4 /* UIViewController + TFAlert.swift */; };
+		7DE6BA97295B29D700711FB4 /* UIViewController + Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */; };
+		7DE6BA9A295C6B7500711FB4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA99295C6B7500711FB4 /* TextField.swift */; };
+		7DE6BA9C295C7A5200711FB4 /* DTOIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -314,7 +316,9 @@
 		7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIPageViewController + NextPage.swift"; sourceTree = "<group>"; };
 		7DC550A7295380A4001539C5 /* IngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientView.swift; sourceTree = "<group>"; };
 		7DE6BA94295B18C500711FB4 /* FilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManager.swift; sourceTree = "<group>"; };
-		7DE6BA96295B29D700711FB4 /* UIViewController + TFAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + TFAlert.swift"; sourceTree = "<group>"; };
+		7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Alert.swift"; sourceTree = "<group>"; };
+		7DE6BA99295C6B7500711FB4 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
+		7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOIngredient.swift; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -525,7 +529,7 @@
 				7DC55087294F6B49001539C5 /* Float + Fraction.swift */,
 				7DC5508B2950D2FC001539C5 /* Array + Duplicate.swift */,
 				7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */,
-				7DE6BA96295B29D700711FB4 /* UIViewController + TFAlert.swift */,
+				7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -867,6 +871,7 @@
 		7D451C6F293BA8E200A4CDC5 /* 🌐 Base */ = {
 			isa = PBXGroup;
 			children = (
+				7DE6BA98295C6B6300711FB4 /* TextFields */,
 				7D451C62293A88C800A4CDC5 /* Protocols */,
 				7DC550A029522832001539C5 /* Views */,
 				7D3D19B829464F19005E3840 /* Cells */,
@@ -1074,6 +1079,14 @@
 			path = Ingredient;
 			sourceTree = "<group>";
 		};
+		7DE6BA98295C6B6300711FB4 /* TextFields */ = {
+			isa = PBXGroup;
+			children = (
+				7DE6BA99295C6B7500711FB4 /* TextField.swift */,
+			);
+			path = TextFields;
+			sourceTree = "<group>";
+		};
 		7DEF8E162923C4CC0016A207 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1208,6 +1221,7 @@
 			isa = PBXGroup;
 			children = (
 				7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */,
+				7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */,
 				7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */,
 			);
 			path = DTOModels;
@@ -1428,7 +1442,7 @@
 				7D3D199C2943A65A005E3840 /* FavoriteItemBuilder.swift in Sources */,
 				7DEF8E212923C6580016A207 /* UPFactory.swift in Sources */,
 				7DC55088294F6B49001539C5 /* Float + Fraction.swift in Sources */,
-				7DE6BA97295B29D700711FB4 /* UIViewController + TFAlert.swift in Sources */,
+				7DE6BA97295B29D700711FB4 /* UIViewController + Alert.swift in Sources */,
 				7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */,
 				7D3D19A5294477BD005E3840 /* CVIngredientCell.swift in Sources */,
 				7DC550A8295380A4001539C5 /* IngredientView.swift in Sources */,
@@ -1461,6 +1475,7 @@
 				7D451C6A293B451800A4CDC5 /* UIActivityIndicatorView + Spinner.swift in Sources */,
 				7DFEB5E2291C32F0008C28FC /* RecipeModels.swift in Sources */,
 				7D3D19B129462F88005E3840 /* SingleCell.swift in Sources */,
+				7DE6BA9C295C7A5200711FB4 /* DTOIngredient.swift in Sources */,
 				7D77FD92291FBFAD0085D7FF /* MainTabBarAssembly.swift in Sources */,
 				7D77FDAA291FC56C0085D7FF /* BasketPresenter.swift in Sources */,
 				7D2B348D294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift in Sources */,
@@ -1469,6 +1484,7 @@
 				7D48A9AA2927B5FF009EF273 /* FirstRecipeCell.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
 				7DF53F102959F5F600C4BA66 /* TagSectionConfigurator.swift in Sources */,
+				7DE6BA9A295C6B7500711FB4 /* TextField.swift in Sources */,
 				7D3D199E2943A677005E3840 /* FavoriteSectionConfigurator.swift in Sources */,
 				7D77FD91291FBFAD0085D7FF /* MainTabbarController.swift in Sources */,
 				7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */,

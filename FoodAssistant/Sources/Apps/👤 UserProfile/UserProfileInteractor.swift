@@ -14,17 +14,47 @@ final class UserProfileInteractor {
     private var ingredients: [IngredientViewModel] = []
 
     private let imageDownloader: ImageDownloadProtocol
+    private let dataFetcher: DataFetcherProtocol
     private let storage: DBRecipeManagement & DBIngredientsManagement
     
     init(imageDownloader: ImageDownloadProtocol,
+         dataFetcher: DataFetcherProtocol,
          storage: DBRecipeManagement & DBIngredientsManagement) {
         self.imageDownloader = imageDownloader
+        self.dataFetcher = dataFetcher
         self.storage = storage
     }
 }
 
 // MARK: - UserProfileBusinessLogic
 extension UserProfileInteractor: UserProfileBusinessLogic {
+    func find(ingredient: IngredientViewModel, completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
+        RecipeRequest
+            .findIngredient(ingredient.name)
+            .downloadIngredient(with: dataFetcher) { [weak self] result in
+                switch result {
+                    
+                case .success(let responce):
+                    
+                    print(responce)
+                    guard let dtoIngredient = responce.results.first else {
+                        /// Ошибка
+                        return }
+                    
+                    var newModel = ingredient
+                    newModel.id = dtoIngredient.id
+                    newModel.image = dtoIngredient.image
+                    
+                    self?.ingredients.append(newModel)
+                    self?.storage.save(ingredients: [newModel])
+                    completion(.success(newModel))
+                    
+                case .failure(_):
+                    break                    
+                }
+            }
+    }
+    
     
     // RecipeReceived
     func getRecipe(id: Int, completion: @escaping (RecipeProtocol) -> Void) {

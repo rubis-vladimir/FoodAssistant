@@ -17,6 +17,7 @@ enum DataFetcherError: Error {
     case wrongUrl
     case wrongStatusCode
     case notInternet
+    case noCorrectNumber
 }
 
 // MARK: - LocalizedError
@@ -34,4 +35,6 @@ extension DataFetcherError: LocalizedError {
     }
 }
 
+
+//enum
 

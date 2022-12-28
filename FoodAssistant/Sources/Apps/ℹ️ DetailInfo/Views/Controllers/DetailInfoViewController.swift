@@ -28,6 +28,8 @@ protocol DetailInfoPresentation: AnyObject {
                           size: ImageSize,
                           completion: @escaping (Data) -> Void)
     
+    func checkFor(ingredient: IngredientViewModel) -> Bool
+    
     /// Нажата кнопка назад
     func didTapBackButton()
 }

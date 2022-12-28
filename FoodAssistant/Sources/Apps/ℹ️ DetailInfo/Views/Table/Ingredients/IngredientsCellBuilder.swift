@@ -36,7 +36,8 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
         let cell = tableView.dequeueReusableCell(TVIngredientCell.self,
                                                  indexPath: indexPath)
         let ingredient = ingredients[indexPath.row]
-        cell.configure(with: ingredient)
+//        print(ingredient.isCheck)
+        cell.configure(with: ingredient, flag: ingredient.isCheck)
         
         delegate?.fetchIngredients(with: ingredient.image ?? "", size: .mini) { imageData in
             DispatchQueue.main.async {

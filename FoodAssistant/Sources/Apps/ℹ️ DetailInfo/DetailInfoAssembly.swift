@@ -27,9 +27,11 @@ extension DetailInfoAssembly: Assemblying {
         let imageDownloader = ImageDownloader()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCache)
+        let storage = StorageManager.shared
         
         let router = DetailInfoRouter(navigationController: navigationController)
-        let interactor = DetailInfoInteractor(imageDownloader: imageDownloaderProxy)
+        let interactor = DetailInfoInteractor(imageDownloader: imageDownloaderProxy,
+                                              storage: storage)
         let presenter = DetailInfoPresenter(interactor: interactor,
                                             router: router,
                                             model: model)

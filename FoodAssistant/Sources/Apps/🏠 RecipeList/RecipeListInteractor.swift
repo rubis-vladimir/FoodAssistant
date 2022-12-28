@@ -73,7 +73,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         
         RecipeRequest
             .complexSearch(parameters, number, query)
-            .download(with: dataFetcher) { [weak self] result in
+            .downloadRecipes(with: dataFetcher) { [weak self] result in
             guard let self = self else { return }
             
             switch result {

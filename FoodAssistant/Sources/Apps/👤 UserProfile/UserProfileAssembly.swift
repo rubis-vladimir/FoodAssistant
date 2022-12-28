@@ -24,11 +24,12 @@ extension UserProfileAssembly: Assemblying {
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
-        
+        let dataFetcher = NetworkDataFetcher()
         let storage = StorageManager.shared
         
         let router = UserProfileRouter(navigationController: navigationController)
         let interactor = UserProfileInteractor(imageDownloader: imageDownloaderProxy,
+                                               dataFetcher: dataFetcher,
                                                storage: storage)
         let presenter = UserProfilePresenter(interactor: interactor,
                                   router: router)
