@@ -31,7 +31,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     func find(ingredient: IngredientViewModel, completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
         RecipeRequest
             .findIngredient(ingredient.name)
-            .downloadIngredient(with: dataFetcher) { [weak self] result in
+            .findIngredient(with: dataFetcher) { [weak self] result in
                 switch result {
                     
                 case .success(let responce):

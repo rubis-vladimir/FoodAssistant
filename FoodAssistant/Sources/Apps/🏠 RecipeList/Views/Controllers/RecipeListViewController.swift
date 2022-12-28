@@ -148,7 +148,7 @@ extension RecipeListViewController: RecipeListViewable {
         }
     }
     
-    func showError() {
+    func showError(_ error: Error) {
         
     }
     

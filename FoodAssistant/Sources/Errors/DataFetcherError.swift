@@ -9,12 +9,15 @@ import Foundation
 
 /// #Варианты ошибок сетевого слоя
 enum DataFetcherError: Error {
-    case failedToEncode
-    case failedToDecode
+    case invalidUrl
+    case invalidResponseCode
+    case encodingError
+    case decodingError
+    
     case failedToLoadData
     case failedToLoadImage
     case failedToTranslate
-    case wrongUrl
+    
     case wrongStatusCode
     case notInternet
     case noCorrectNumber

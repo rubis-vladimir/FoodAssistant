@@ -138,6 +138,7 @@
 		7DE6BA97295B29D700711FB4 /* UIViewController + Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */; };
 		7DE6BA9A295C6B7500711FB4 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA99295C6B7500711FB4 /* TextField.swift */; };
 		7DE6BA9C295C7A5200711FB4 /* DTOIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */; };
+		7DE6BA9E295CC42900711FB4 /* DTORecipeId.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BA9D295CC42900711FB4 /* DTORecipeId.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* UIView + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */; };
@@ -319,6 +320,7 @@
 		7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Alert.swift"; sourceTree = "<group>"; };
 		7DE6BA99295C6B7500711FB4 /* TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextField.swift; sourceTree = "<group>"; };
 		7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTOIngredient.swift; sourceTree = "<group>"; };
+		7DE6BA9D295CC42900711FB4 /* DTORecipeId.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DTORecipeId.swift; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* UIView + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -1222,6 +1224,7 @@
 			children = (
 				7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */,
 				7DE6BA9B295C7A5100711FB4 /* DTOIngredient.swift */,
+				7DE6BA9D295CC42900711FB4 /* DTORecipeId.swift */,
 				7D2F774C291B9FA8009D3444 /* RecipeFilterParameters.swift */,
 			);
 			path = DTOModels;
@@ -1454,6 +1457,7 @@
 				7DC5508C2950D2FC001539C5 /* Array + Duplicate.swift in Sources */,
 				7D2F7730291A9717009D3444 /* RecipeListAssembly.swift in Sources */,
 				7D3BC94C29312C29001B1B57 /* DetailInfoRouter.swift in Sources */,
+				7DE6BA9E295CC42900711FB4 /* DTORecipeId.swift in Sources */,
 				7DC550982951018B001539C5 /* LaunchRouter.swift in Sources */,
 				7D3BC94E29312C29001B1B57 /* DetailInfoPresenter.swift in Sources */,
 				7DC550952951018B001539C5 /* LaunchViewController.swift in Sources */,
