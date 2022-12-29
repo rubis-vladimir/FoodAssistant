@@ -27,7 +27,6 @@ extension RecipeListRouter: RecipeListRouting {
             let filterViewController = RecipeFilterAssembly(navigationController: navigationController,
                                                             searchDelegate: searchDelegate).assembly()
             
-            filterViewController.hidesBottomBarWhenPushed = true
             filterViewController.navigationItem.searchController = search
             filterViewController.navigationItem.hidesBackButton = true
             filterViewController.navigationItem.title = "Фильтр"
@@ -36,14 +35,18 @@ extension RecipeListRouter: RecipeListRouting {
             navigationController.navigationBar.isTranslucent = true
             navigationController.pushViewController(filterViewController, animated: false)
         } else {
-            navigationController.popToRootViewController(animated: true)
+//            navigationController.navigationBar.isTranslucent = false
+            navigationController.navigationItem.hidesSearchBarWhenScrolling = false
+            navigationController.hidesBottomBarWhenPushed = false
+            navigationController.popViewController(animated: true)
         }
     }
     
     
     func routeToDetail(model: RecipeProtocol) {
         guard let navigationController = navigationController else { return }
-        let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
+        let vc = DetailInfoAssembly(navigationController: navigationController,
+                                    recipe: model).assembly()
         vc.hidesBottomBarWhenPushed = true
         navigationController.navigationBar.isTranslucent = true
         navigationController.pushViewController(vc, animated: true)

@@ -11,11 +11,11 @@ import UIKit
 
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeFilter
 protocol RecipeFilterPresentation: CellTapable,
-                                   RecipeFilterSelectedIngredientsChangable,
+                                   RFSelectedIngredientsChangable,
                                    AnyObject {
     func checkFlag(indexPath: IndexPath) -> Bool
     
-    func update(parameter: RecipeFilterParameter,
+    func update(parameter: FilterParameter,
                 text: String)
     
     func didTapShowResultButton()
@@ -63,7 +63,7 @@ final class RecipeFilterViewController: UIViewController {
         
         collectionView.backgroundColor = .white
         navigationController?.navigationItem.titleView = navLabel
-        navigationController?.navigationItem.hidesBackButton = true
+//        navigationController?.navigationItem.hidesBackButton = true
         
         showResultsButton.addTarget(self,
                                     action: #selector(didTapShowResultsButton),
@@ -118,7 +118,7 @@ extension RecipeFilterViewController: RecipeFilterViewable {
         collectionView.reloadSections(IndexSet(integer: section))
     }
     
-    func updateCV(models: [RecipeFilterParameter : [TagModel]]) {
+    func updateCV(models: [FilterParameter : [TagModel]]) {
         DispatchQueue.main.async {
             self.factory = RFFactory(collectionView: self.collectionView,
                                      dictModels: models,
@@ -127,7 +127,7 @@ extension RecipeFilterViewController: RecipeFilterViewable {
         }
     }
     
-    func showTFAlert(parameter: RecipeFilterParameter, text: String) {
+    func showTFAlert(parameter: FilterParameter, text: String) {
         showTFAlert(title: parameter.title,
                     text: text,
                     note: "Введите названия через\nзапятую и/или пробел") { [weak self] text in

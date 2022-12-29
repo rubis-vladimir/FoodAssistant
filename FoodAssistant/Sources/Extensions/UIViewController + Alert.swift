@@ -66,7 +66,7 @@ extension UIViewController {
     }
     
     
-    func showAddIngredientAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
+    func showAddIngredientAlert(completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void) {
         
         let alert = UIAlertController(title: nil,
                                       message: "\n\n\n\n\n\n\n",

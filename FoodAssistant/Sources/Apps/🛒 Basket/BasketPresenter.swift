@@ -23,7 +23,8 @@ protocol BasketRouting {
 }
 
 /// #Протокол управления View-слоем модуля Basket
-protocol BasketViewable: AnyObject {
+protocol BasketViewable: ErrorShowable,
+                         AnyObject {
     /// Обновление Collection View
     ///  - Parameters:
     ///   - recipes: рецепты
@@ -34,8 +35,6 @@ protocol BasketViewable: AnyObject {
     /// Показывает / скрывает кнопку добавления ингредиентов в холодильник
     ///  - Parameter flag: да/нет
     func showAddButton(_ flag: Bool)
-    /// Показать ошибку
-    func showError()
 }
 
 /// #Протокол управления бизнес логикой модуля Basket
@@ -60,7 +59,7 @@ protocol BasketBusinessLogic: RecipeReceived,
     ///  - flag: флаг подтверждения
     func changeIsCheck(id: Int, flag: Bool)
     
-    /// Приобретенные ингредиенты добавить в холодильник
+    /// Добавить указанные ингредиенты  в холодильник
     func addIngredientsInFridge()
 }
 
@@ -85,6 +84,14 @@ final class BasketPresenter {
          router: BasketRouting) {
         self.interactor = interactor
         self.router = router
+        
+        getStart()
+    }
+    
+    private func getStart() {
+        interactor.fetchRecipeInBasket { [weak self] recipes in
+            self?.models = recipes
+        }
     }
     
     private func updateShopList() {
@@ -104,24 +111,18 @@ final class BasketPresenter {
 // MARK: - BasketPresentation
 extension BasketPresenter: BasketPresentation {
     
-    func fetchAddedRecipe() {
-        interactor.fetchRecipeInBasket { [weak self] recipes in
-            self?.models = recipes
-        }
-    }
-    
-    func checkFlag(id: Int) -> Bool {
-        guard let ingredient = ingredients.first(where: {$0.id == id} ) else { return false }
-        return ingredient.isCheck
-    }
-    
     func didTapAddFridgeButton() {
         interactor.addIngredientsInFridge()
         updateShopList()
     }
     
-    func route(to: BasketTarget) {
-        router.route(to: to)
+    func didTapDismissButton() {
+        router.route(to: .back)
+    }
+    
+    func checkFlag(id: Int) -> Bool {
+        guard let ingredient = ingredients.first(where: {$0.id == id} ) else { return false }
+        return ingredient.isCheck
     }
     
     // RecipeRemovable

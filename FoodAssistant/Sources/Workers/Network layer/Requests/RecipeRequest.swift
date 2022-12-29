@@ -31,36 +31,40 @@ enum RecipeRequest {
 }
 
 extension RecipeRequest {
+    /// Для запроса `complex`
     func downloadRecipes(with service: DataFetcherProtocol,
-                         completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
+                         completion: @escaping (Result<RecipeResponce, NetworkFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
     
+    /// Для запроса `byIngredients`
     func downloadIds(with service: DataFetcherProtocol,
-                     completion: @escaping (Result<[DTORecipeId], DataFetcherError>) -> Void) {
+                     completion: @escaping (Result<[DTORecipeId], NetworkFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
     
+    /// Для запроса `byId`
     func downloadById(with service: DataFetcherProtocol,
-                      completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void) {
+                      completion: @escaping (Result<[Recipe], NetworkFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
     
+    /// Для запроса `findIngredient`
     func findIngredient(with service: DataFetcherProtocol,
-                        completion: @escaping (Result<DTOIngredientResponce, DataFetcherError>) -> Void) {
+                        completion: @escaping (Result<DTOIngredientResponce, NetworkFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
     
-    /// Обращается к сетевому сервису для загрузки рецептов
+    /// Создает запрос и обращается к сервису для загрузки данных
     ///  - Parameters:
-    ///   - service: используемый сервис для запроса из сети
-    ///   - completion: захватывает модель ответ с рецептами / ошибку
+    ///   - service: используемый сервис для загрузки данных
+    ///   - completion: захватывает полученные данные / ошибку
     private func fetchObject<T: Codable>(with service: DataFetcherProtocol,
-                                         completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+                                         completion: @escaping (Result<T, NetworkFetcherError>) -> Void) {
         do {
             service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
         } catch {
-            guard let error = error as? DataFetcherError else { return }
+            guard let error = error as? NetworkFetcherError else { return }
             completion(.failure(error))
         }
     }

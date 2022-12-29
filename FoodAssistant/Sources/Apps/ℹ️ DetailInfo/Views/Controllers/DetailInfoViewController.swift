@@ -8,33 +8,18 @@
 import UIKit
 
 /// #Протокол передачи UI-ивентов слою презентации
-protocol DetailInfoPresentation: AnyObject {
+protocol DetailInfoPresentation: ImagePresentation,
+                                 BackTapable,
+                                 AnyObject {
     /// Модель рецепта
-    var model: RecipeProtocol { get }
-    
-    /// Запрошена загрузка изображения
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchRecipe(with imageName: String,
-                     completion: @escaping (Data) -> Void)
-    
-    /// Запрошена загрузка изображения
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - size: размер изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchIngredients(with imageName: String,
-                          size: ImageSize,
-                          completion: @escaping (Data) -> Void)
-    
+    var recipe: RecipeProtocol { get }
+    /// Нажата кнопка изменения флага избранного рецепта
+    func didTapChangeFavoriteButton(_ flag: Bool)
+    /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
-    
-    /// Нажата кнопка назад
-    func didTapBackButton()
 }
 
-/// #Контроллер представления детальной информации
+/// #Контроллер представления детальной информации рецепта
 final class DetailInfoViewController: UIViewController {
     
     // MARK: - Properties
@@ -43,7 +28,16 @@ final class DetailInfoViewController: UIViewController {
     private let presenter: DetailInfoPresentation
     private var factory: DIFactory?
     
-    // MARK: - Init
+    private var isFavorite: Bool = false {
+        didSet {
+            faivoriteRightButton?.customView?.tintColor = isFavorite ? Palette.darkColor.color : .black
+            presenter.didTapChangeFavoriteButton(isFavorite)
+        }
+    }
+    
+    private var faivoriteRightButton: UIBarButtonItem?
+    
+    // MARK: - Init & Override func
     init(presenter: DetailInfoPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -53,7 +47,6 @@ final class DetailInfoViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - Override func
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -68,7 +61,7 @@ final class DetailInfoViewController: UIViewController {
     
     // MARK: - Private func
     private func setupNavigationBar() {
-        let faivoriteRightButton = createCustomBarButton(
+        faivoriteRightButton = createCustomBarButton(
             icon: .heartLargeFill, 
             selector: #selector(changeFaivoriteButtonTapped)
         )
@@ -78,20 +71,23 @@ final class DetailInfoViewController: UIViewController {
             selector: #selector(backButtonTapped)
         )
         
-        navigationItem.rightBarButtonItems = [faivoriteRightButton]
+        if let button = faivoriteRightButton {
+            navigationItem.rightBarButtonItems = [button]
+        }
         navigationItem.leftBarButtonItems = [backLeftButton]
     }
     
     private func setupView() {
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        let model = presenter.model
+        
+        let recipe = presenter.recipe
+        isFavorite = recipe.isFavorite
         
         /// Создаем фабрику для конфигурации таблицы
         factory = DIFactory(tableView: tableView,
                             delegate: presenter,
                             scrollDelegate: self,
-                            model: model)
-        factory?.setupTableView()
+                            recipe: recipe)
     }
     
     private func setupConstraints() {
@@ -105,9 +101,9 @@ final class DetailInfoViewController: UIViewController {
         ])
     }
     
-    /// Добавляет/убирает рецепт к любимым рецептам
+    /// Изменяет флаг избранного рецепта
     @objc private func changeFaivoriteButtonTapped() {
-        print("changeFaivoriteButtonTapped")
+        isFavorite.toggle()
     }
     
     /// Возврат к корневому экрану
@@ -119,6 +115,7 @@ final class DetailInfoViewController: UIViewController {
 // MARK: - ScrollDelegate
 extension DetailInfoViewController: ScrollDelegate {
     func scrollViewDidScroll(to offset: CGFloat) {
+        /// Меняем прозрачность изображения-подложки в NavBar
         let alpha = offset * 0.005
         navigationController?
             .navigationBar

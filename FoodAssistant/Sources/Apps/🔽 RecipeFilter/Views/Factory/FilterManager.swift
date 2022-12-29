@@ -9,9 +9,9 @@ import UIKit
 
 protocol FilterManagement {
     
-    func getRecipeParameters() -> [RecipeFilterParameter: [String]]
+    func getRecipeParameters() -> [FilterParameter: [String]]
     
-    func overWrite(parameter: RecipeFilterParameter, value: [String])
+    func overWrite(parameter: FilterParameter, value: [String])
 }
 
 
@@ -31,22 +31,22 @@ final class FilterManager {
 
 extension FilterManager: FilterManagement {
     
-    func getRecipeParameters() -> [RecipeFilterParameter: [String]] {
-        var dict = [RecipeFilterParameter: [String]]()
+    func getRecipeParameters() -> [FilterParameter: [String]] {
+        var dict = [FilterParameter: [String]]()
         dict[.time] = RecipeFilterTagTitles.time
         dict[.dishType] = RecipeFilterTagTitles.dishType
         dict[.region] = RecipeFilterTagTitles.regions
         dict[.diet] = RecipeFilterTagTitles.diets
         dict[.calories] = RecipeFilterTagTitles.calories
         
-        let key1 = RecipeFilterParameter.includeIngredients.title
+        let key1 = FilterParameter.includeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key1) {
             dict[.includeIngredients] = titles as? [String]
         } else {
             UserDefaults.standard.set(RecipeFilterTagTitles.includeIngredients, forKey: key1)
         }
         
-        let key2 = RecipeFilterParameter.excludeIngredients.title
+        let key2 = FilterParameter.excludeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key2) {
             dict[.excludeIngredients] = titles as? [String]
         } else {
@@ -56,7 +56,7 @@ extension FilterManager: FilterManagement {
         return dict
     }
     
-    func overWrite(parameter: RecipeFilterParameter, value: [String]) {
+    func overWrite(parameter: FilterParameter, value: [String]) {
         UserDefaults.standard.set(value, forKey: parameter.title)
     }
 }

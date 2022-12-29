@@ -10,12 +10,12 @@ import UIKit
 /// #Компоновщик модуля DetailInfo
 final class DetailInfoAssembly {
     private let navigationController: UINavigationController
-    private let model: RecipeProtocol
+    private let recipe: RecipeProtocol
     
     init(navigationController: UINavigationController,
-         model: RecipeProtocol) {
+         recipe: RecipeProtocol) {
         self.navigationController = navigationController
-        self.model = model
+        self.recipe = recipe
     }
 }
 
@@ -24,7 +24,7 @@ extension DetailInfoAssembly: Assemblying {
     func assembly() -> UIViewController {
         
         let imageCache = ImageCacheService()
-        let imageDownloader = ImageDownloader()
+        let imageDownloader = ImageDownloader.shared
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCache)
         let storage = StorageManager.shared
@@ -34,7 +34,7 @@ extension DetailInfoAssembly: Assemblying {
                                               storage: storage)
         let presenter = DetailInfoPresenter(interactor: interactor,
                                             router: router,
-                                            model: model)
+                                            recipe: recipe)
         let viewController = DetailInfoViewController(presenter: presenter)
         return viewController
     }

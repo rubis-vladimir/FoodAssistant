@@ -72,7 +72,7 @@ extension BasketInteractor: BasketBusinessLogic {
     
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
         switch type {
         case .recipe:
             ImageRequest

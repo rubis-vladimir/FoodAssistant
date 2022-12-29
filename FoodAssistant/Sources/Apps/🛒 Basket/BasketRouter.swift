@@ -27,7 +27,7 @@ extension BasketRouter: BasketRouting {
             
         case .detailInfo(let model):
             let vc = DetailInfoAssembly(navigationController: navigationController,
-                                        model: model).assembly()
+                                        recipe: model).assembly()
             vc.hidesBottomBarWhenPushed = true
             navigationController.navigationBar.isTranslucent = true
             navigationController.pushViewController(vc, animated: true)

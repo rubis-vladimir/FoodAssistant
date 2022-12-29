@@ -8,7 +8,7 @@
 import Foundation
 
 extension Array where Element: Equatable & Hashable {
-    
+    /// Возвращает массив дублирующихся значений
     func duplicate() -> [Element] {
        Array(Set(self.filter{ i in self.filter({ $0 == i }).count > 1}))
     }

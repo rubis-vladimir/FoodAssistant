@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Протокол передачи UI-ивента при нажатии на ячейку
-protocol SelectedCellDelegate: AnyObject {
+protocol CellSelectable: AnyObject {
     /// Ивент нажатия ячейку коллекции
     ///  - Parameters:
     ///   - type: тип модели
@@ -17,13 +17,21 @@ protocol SelectedCellDelegate: AnyObject {
 }
 
 /// #Протокол передачи UI-ивента при нажатии на кнопку добавления в корзину
-protocol InBasketAdded: AnyObject {
+protocol InBasketTapable: AnyObject {
     /// Ивент нажатия на кнопку добавления элементов в корзину
     ///  - Parameter id: идентификатор рецепта
     func didTapAddInBasketButton(id: Int)
 }
 
-/// #Протокол изменения флага любимого рецепта
+/// #Протокол передачи UI-ивента при нажатии на кнопку удаления
+protocol DeleteTapable: AnyObject {
+    /// Ивент нажатия на кнопку удаления рецепта
+    ///  - Parameters:
+    ///   - id: идентификатор рецепта
+    func didTapDeleteButton(id: Int)
+}
+
+/// #Протокол изменения флага избранного рецепта
 protocol FavoriteChangable: AnyObject {
     /// Ивент нажатия на кнопку изменения флага любимого рецепта
     ///  - Parameters:
@@ -33,12 +41,11 @@ protocol FavoriteChangable: AnyObject {
                               id: Int)
 }
 
-/// #Протокол изменения флага любимого рецепта
-protocol RecipeRemovable: AnyObject {
-    /// Ивент нажатия на кнопку удаления рецепта
-    ///  - Parameters:
-    ///   - id: идентификатор рецепта
-    func didTapDeleteButton(id: Int)
+/// #Протокол изменения `Layout` секции коллекции
+protocol LayoutChangable: AnyObject {
+    /// Ивент нажатия на кнопку изменения `Layout`
+    ///  - Parameter section: номер секции
+    func didTapChangeLayoutButton(section: Int)
 }
 
 /// #Варианты Layout
@@ -47,11 +54,4 @@ enum LayoutType {
     case split2xN
     /// Одна в ряду
     case split1xN
-}
-
-/// #Протокол изменения `Layout` секции коллекции
-protocol LayoutChangable: AnyObject {
-    /// Ивент нажатия на кнопку изменения `Layout`
-    ///  - Parameter section: номер секции
-    func didTapChangeLayoutButton(section: Int)
 }

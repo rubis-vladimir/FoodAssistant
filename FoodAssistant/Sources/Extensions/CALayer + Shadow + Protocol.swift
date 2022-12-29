@@ -1,5 +1,5 @@
 //
-//  UIView + Shadow + Protocol.swift
+//  CALayer + Shadow + Protocol.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 14.11.2022.

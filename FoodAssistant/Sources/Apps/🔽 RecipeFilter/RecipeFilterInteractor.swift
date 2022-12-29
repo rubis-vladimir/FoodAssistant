@@ -17,7 +17,7 @@ final class RecipeFilterInteractor {
     
     weak var presenter: RecipeFilterBusinessLogicDelegate?
     
-    private var dict: [RecipeFilterParameter : [TagModel]] = [:]
+    private var dict: [FilterParameter : [TagModel]] = [:]
     
     private let filterManager: FilterManagement
     
@@ -39,7 +39,7 @@ final class RecipeFilterInteractor {
         }
     }
     
-    func getSelectedParameters(_ parameter: RecipeFilterParameter) -> [String] {
+    func getSelectedParameters(_ parameter: FilterParameter) -> [String] {
         dict[parameter]?.filter { $0.isSelected == true }.map { $0.title } ?? []
     }
 }
@@ -73,7 +73,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
         completion(filterParameters)
     }
     
-    func fetchText(with parameter: RecipeFilterParameter,
+    func fetchText(with parameter: FilterParameter,
                    completion: @escaping (String) -> Void) {
         guard let models = dict[parameter] else {
             completion("")
@@ -85,9 +85,9 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
         completion(text)
     }
     
-    func update(parameter: RecipeFilterParameter,
+    func update(parameter: FilterParameter,
                 text: String,
-                completion: @escaping ([RecipeFilterParameter : [TagModel]]) -> Void) {
+                completion: @escaping ([FilterParameter : [TagModel]]) -> Void) {
         
         let titles = values(fromCSVString: text)
         filterManager.overWrite(parameter: parameter,
@@ -98,13 +98,13 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     }
     
     func checkFlag(indexPath: IndexPath) -> Bool {
-        guard let parameter = RecipeFilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }),
+        guard let parameter = FilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }),
               let model = dict[parameter]?[indexPath.item] else { return false }
         return model.isSelected
     }
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath) {
-        guard let parameter = RecipeFilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
+        guard let parameter = FilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
         guard var models = dict[parameter] else { return }
         
         switch parameter {
@@ -121,8 +121,8 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
         }
     }
     
-    func fetchFilterParameters(completion: @escaping ([RecipeFilterParameter : [TagModel]]) -> Void) {
-        var dict = [RecipeFilterParameter : [TagModel]]()
+    func fetchFilterParameters(completion: @escaping ([FilterParameter : [TagModel]]) -> Void) {
+        var dict = [FilterParameter : [TagModel]]()
         
         filterManager.getRecipeParameters().forEach {
             let tagModel = $0.value.map { TagModel(title: $0, isSelected: false)  }

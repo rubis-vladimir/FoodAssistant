@@ -20,5 +20,4 @@ extension CDNutrient: NutrientProtocol {
     @NSManaged public var name: String
     @NSManaged public var unit: String
     @NSManaged public var recipe: CDRecipe?
-
 }

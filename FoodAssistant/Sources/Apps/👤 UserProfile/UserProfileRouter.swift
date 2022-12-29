@@ -18,11 +18,12 @@ final class UserProfileRouter {
 
 // MARK: - UserProfileRouting
 extension UserProfileRouter: UserProfileRouting {
-    func route(to: UserProfileTarget, model: RecipeProtocol) {
+    func route(to: UserProfileTarget) {
         switch to {
-        case .detailInfo:
+        case .detailInfo(let recipe):
             guard let navigationController = navigationController else { return }
-            let vc = DetailInfoAssembly(navigationController: navigationController, model: model).assembly()
+            let vc = DetailInfoAssembly(navigationController: navigationController,
+                                        recipe: recipe).assembly()
             vc.hidesBottomBarWhenPushed = true
             navigationController.navigationBar.isTranslucent = true
             navigationController.pushViewController(vc, animated: true)

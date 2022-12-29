@@ -22,20 +22,20 @@ protocol RecipeFilterRouting {
 /// #Протокол управления View-слоем модуля RecipeFilter
 protocol RecipeFilterViewable: AnyObject {
     /// Обновление UI
-    func updateCV(models: [RecipeFilterParameter: [TagModel]])
+    func updateCV(models: [FilterParameter: [TagModel]])
     
     func update(section: Int)
     
-    func showTFAlert(parameter: RecipeFilterParameter, text: String)
+    func showTFAlert(parameter: FilterParameter, text: String)
     /// Показать ошибку
     func showError()
 }
 
 /// #Протокол управления бизнес логикой модуля RecipeFilter
 protocol RecipeFilterBusinessLogic {
-    func fetchFilterParameters(completion: @escaping ([RecipeFilterParameter: [TagModel]]) -> Void)
+    func fetchFilterParameters(completion: @escaping ([FilterParameter: [TagModel]]) -> Void)
     
-    func fetchText(with parameter: RecipeFilterParameter, completion: @escaping (String) -> Void)
+    func fetchText(with parameter: FilterParameter, completion: @escaping (String) -> Void)
     
     func getParameters(completion: @escaping (RecipeFilterParameters) -> Void)
     
@@ -43,9 +43,9 @@ protocol RecipeFilterBusinessLogic {
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath)
     
-    func update(parameter: RecipeFilterParameter,
+    func update(parameter: FilterParameter,
                 text: String,
-                completion: @escaping ([RecipeFilterParameter : [TagModel]]) -> Void)
+                completion: @escaping ([FilterParameter : [TagModel]]) -> Void)
 }
 
 // MARK: - Presenter
@@ -81,7 +81,7 @@ extension RecipeFilterPresenter: RecipeFilterPresentation {
         }
     }
     
-    func update(parameter: RecipeFilterParameter,
+    func update(parameter: FilterParameter,
                 text: String) {
         interactor.update(parameter: parameter,
                           text: text) { [weak self] parameters in
@@ -96,7 +96,7 @@ extension RecipeFilterPresenter: RecipeFilterPresentation {
     func changeSelectedIngredients(section: Int) {
         print("changeSelectedIngredients \(section)")
         
-        guard let parameter = RecipeFilterParameter.allCases.first(where: { $0.rawValue == section }) else { return }
+        guard let parameter = FilterParameter.allCases.first(where: { $0.rawValue == section }) else { return }
         
         interactor.fetchText(with: parameter) { [weak self] text in
             self?.view?.showTFAlert(parameter: parameter, text: text)

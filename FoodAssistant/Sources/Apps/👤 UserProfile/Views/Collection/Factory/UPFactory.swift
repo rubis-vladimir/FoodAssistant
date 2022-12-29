@@ -18,7 +18,7 @@ enum UPSectionType {
 }
 
 /// Фабрика настройки табличного представления модуля AddEvent
-final class UPFactory: NSObject {
+final class UPFactory {
     
     private let collectionView: UICollectionView
     private let orderSections: [UPSectionType]
@@ -40,8 +40,6 @@ final class UPFactory: NSObject {
         
         cvAdapter = CVAdapter(collectionView: collectionView)
         
-        super.init()
-        
         setupCollectionView()
     }
     
@@ -50,6 +48,8 @@ final class UPFactory: NSObject {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         
         cvAdapter.configure(with: builders)
     }

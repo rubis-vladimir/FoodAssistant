@@ -14,25 +14,34 @@ protocol ImageDownloadProtocol {
     ///   - url: url
     ///   - completion: захватывает данные / ошибку
     func fetchImage(url: URL,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
+                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void)
 }
 
 /// #Сервис загрузки изображений
-final class ImageDownloader { }
+final class ImageDownloader {
+    
+    static let shared = ImageDownloader()
+    
+    private init() {}
+}
 
 // MARK: - ImageDownloadProtocol
 extension ImageDownloader: ImageDownloadProtocol {
     func fetchImage(url: URL,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
         
         URLSession.shared.dataTask(with: url) { (data, responce, error) in
-            guard responce != nil else {
-                completion(.failure(.notInternet))
-                return
+            
+            if let httpResponse = responce as? HTTPURLResponse {
+                guard (200..<300) ~= httpResponse.statusCode else {
+                    completion(.failure(.invalidResponseCode(httpResponse.statusCode)))
+                    return
+                }
             }
+            
             guard let data = data,
-                    error == nil else {
-                completion(.failure(.failedToLoadData))
+                  error == nil else {
+                completion(.failure(.dataLoadingError))
                 return
             }
             completion(.success(data))

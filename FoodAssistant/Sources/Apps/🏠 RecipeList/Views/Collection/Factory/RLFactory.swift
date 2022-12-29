@@ -37,6 +37,8 @@ final class RLFactory {
         self.delegate = delegate
         
         cvAdapter = CVAdapter(collectionView: collectionView)
+        
+        setupCollectionView()
     }
     
     
@@ -44,6 +46,8 @@ final class RLFactory {
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         
         /// Обновление данных в коллекции
         cvAdapter.configure(with: builders)

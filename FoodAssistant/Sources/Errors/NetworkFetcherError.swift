@@ -8,23 +8,21 @@
 import Foundation
 
 /// #Варианты ошибок сетевого слоя
-enum DataFetcherError: Error {
+enum NetworkFetcherError: Error {
     case invalidUrl
-    case invalidResponseCode
+    case invalidResponseCode(Int)
     case encodingError
     case decodingError
+    case dataLoadingError
+    case imageLoadingError
+    case translateError
     
-    case failedToLoadData
-    case failedToLoadImage
-    case failedToTranslate
-    
-    case wrongStatusCode
-    case notInternet
     case noCorrectNumber
+    case noResults
 }
 
 // MARK: - LocalizedError
-extension DataFetcherError: LocalizedError {
+extension NetworkFetcherError: LocalizedError {
     var errorTitle: String? {
         ""
     }

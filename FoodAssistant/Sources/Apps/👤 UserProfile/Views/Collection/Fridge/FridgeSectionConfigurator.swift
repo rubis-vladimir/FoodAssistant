@@ -24,10 +24,6 @@ final class FridgeSectionConfigurator {
         self.models = models
         self.delegate = delegate
     }
-    
-    deinit {
-        print("DEINIT \(self)")
-    }
 }
     
 // MARK: - CVSectionConfiguration
@@ -35,9 +31,8 @@ extension FridgeSectionConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
         
-        /// Создаем действие по изменению `Layout`
-        let action: ((Int) -> Void)? = { _ in print("Добавить ингредиент")
-            
+        /// Создаем действие по добавлению ингредиента
+        let action: ((Int) -> Void)? = { _ in
             self.delegate?.didTapAddIngredientButton()
         }
         /// Модель заголовка

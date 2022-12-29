@@ -20,11 +20,11 @@ enum DISectionType {
 }
 
 /// #Фабрика для настройки представления коллекции модуля DetailInfo
-final class DIFactory: NSObject {
+final class DIFactory {
     
     // MARK: - Properties
     private let tableView: UITableView
-    private let model: RecipeProtocol
+    private let recipe: RecipeProtocol
     private let tvAdapter: TVAdapter?
     
     private weak var delegate: DetailInfoPresentation?
@@ -37,19 +37,20 @@ final class DIFactory: NSObject {
     init(tableView: UITableView,
          delegate: DetailInfoPresentation?,
          scrollDelegate: ScrollDelegate?,
-         model: RecipeProtocol) {
+         recipe: RecipeProtocol) {
         self.tableView = tableView
         self.delegate = delegate
-        self.model = model
+        self.recipe = recipe
         
         /// Определяем адаптер для tableView
         tvAdapter = TVAdapter(tableView: tableView,
                               scrollDelegate: scrollDelegate)
+        setupTableView()
     }
     
-    // MARK: - Public func
+    // MARK: - Private func
     /// Настраивает табличное представление
-    func setupTableView() {
+    private func setupTableView() {
         tableView.dataSource = tvAdapter
         tableView.delegate = tvAdapter
         tableView.separatorStyle = .none
@@ -58,7 +59,6 @@ final class DIFactory: NSObject {
         tvAdapter?.configure(with: builders)
     }
     
-    // MARK: - Private func
     /// Создает строитель секции
     ///  - Parameters:
     ///     - type: тип секции
@@ -67,7 +67,7 @@ final class DIFactory: NSObject {
         switch type {
             
         case .baseInfo:
-            let cellBuilder = BasicInfoCellBuilder(model: model,
+            let cellBuilder = BasicInfoCellBuilder(model: recipe,
                                                   delegate: delegate)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: nil,
@@ -110,12 +110,12 @@ extension DIFactory: TVCFactoryProtocol {
         builders.append(createBuilder(type: .baseInfo))
         
         /// Добавляем секцию с питательными веществами
-        if let nutrients = model.nutrients {
+        if let nutrients = recipe.nutrients {
             builders.append(createBuilder(type: .nutrients(nutrients)))
         }
         
         /// Добавляем секцию с ингредиентами
-        if let ingredients = model.ingredients, !ingredients.isEmpty {
+        if let ingredients = recipe.ingredients, !ingredients.isEmpty {
             let viewModels = ingredients.map {
                 var model = IngredientViewModel(ingredient: $0)
                 model.isCheck = delegate?.checkFor(ingredient: model) ?? false
@@ -128,7 +128,7 @@ extension DIFactory: TVCFactoryProtocol {
         }
         
         /// Добавляем секцию с инструкцией по приготовлению
-        if let instructions = model.instructions, !instructions.isEmpty {
+        if let instructions = recipe.instructions, !instructions.isEmpty {
             builders.append(createBuilder(type: .instructions(instructions)))
         }
                             

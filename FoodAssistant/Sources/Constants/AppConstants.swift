@@ -26,6 +26,18 @@ struct AppConstants {
         var opacity: Float { 0.65 }
         var offset: CGSize { CGSize(width: 0.0, height: 1.0) }
     }
+    
+    /// Получаем дефолтный CVLayout
+    static func getFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0,
+                                           left: padding,
+                                           bottom: padding,
+                                           right: padding)
+        layout.minimumInteritemSpacing = padding
+        layout.minimumLineSpacing = padding
+        return layout
+    }
 }
 
 

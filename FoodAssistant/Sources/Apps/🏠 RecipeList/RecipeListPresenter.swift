@@ -20,16 +20,16 @@ protocol RecipeListRouting {
 
 /// #Протокол управления View-слоем модуля RecipeList
 protocol RecipeListViewable: AnyObject {
-    /// Обновляет `CollectionView`
+    /// Обновить `CollectionView`
     /// - Parameter array: массив словарей моделей
     func updateCV(with: [RecipeModelsDictionary])
     
-    /// Обновляет UI кнопки фильтра
+    /// Обновить кнопку фильтра
     func updateFilterButton()
     
-    /// Перезагружает секцию коллекции
-    /// - Parameter section: номер секции
-    func reload(items: [IndexPath])
+    /// Обновить элементы коллекции
+    /// - Parameter indexPaths: массив `IndexPath`
+    func updateItems(indexPaths: [IndexPath])
     
     /// Показывает ошибку
     func showError(_ error: Error)
@@ -52,7 +52,7 @@ protocol RLNetworkBusinessLogic {
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,
                      query: String?,
-                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
+                     completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void)
     
     /// Получить рекомендованные рецепты
     ///  - Parameters:
@@ -60,7 +60,7 @@ protocol RLNetworkBusinessLogic {
     ///   - query: поиск по названию
     ///   - completion: захватывает вью модель рецепта / ошибку
     func fetchRecommended(number: Int,
-                          completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
+                          completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void)
 }
 
 /// #Протокол взаимодействия с ДБ модуля RecipeList
@@ -115,25 +115,27 @@ final class RecipeListPresenter {
          router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
+        
+        getStartData()
     }
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        var filterParameters = RecipeFilterParameters()
+        let filterParameters = RecipeFilterParameters()
         
-        interactor.fetchRecommended(number: 5) { [weak self] result in
-            switch result {
-            case .success(let recipeModels):
-                self?.viewModelsDictionary[.recommended] = recipeModels
-            case .failure(let error):
-                self?.view?.showError(error)
-            }
-        }
-        
-        fetchRecipe(with: filterParameters,
-                    number: 4,
-                    query: nil,
-                    type: .main)
+//        interactor.fetchRecommended(number: 5) { [weak self] result in
+//            switch result {
+//            case .success(let recipeModels):
+//                self?.viewModelsDictionary[.recommended] = recipeModels
+//            case .failure(let error):
+//                self?.view?.showError(error)
+//            }
+//        }
+//        
+//        fetchRecipe(with: filterParameters,
+//                    number: 4,
+//                    query: nil,
+//                    type: .main)
     }
     
     /// Получает рецепты
@@ -237,8 +239,9 @@ extension RecipeListPresenter: RecipeListPresentation {
             .post(name: NSNotification.Name("changeLayoutType"),
                   object: nil)
         
-        let indexPath = (0...count-1).map { IndexPath(item: $0, section: section) }
-        view?.reload(items: indexPath)
+        guard count > 0 else { return }
+        let indexPaths = (0...count-1).map { IndexPath(item: $0, section: section) }
+        view?.updateItems(indexPaths: indexPaths)
     }
 }
 

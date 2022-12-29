@@ -23,7 +23,7 @@ final class ImageDownloaderProxy {
 // MARK: - ImageDownloadProtocol
 extension ImageDownloaderProxy: ImageDownloadProtocol {
     func fetchImage(url: URL,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
         if let imageData = imageCache[url] {
             /// Загрузка из кэша
             completion(.success(imageData))

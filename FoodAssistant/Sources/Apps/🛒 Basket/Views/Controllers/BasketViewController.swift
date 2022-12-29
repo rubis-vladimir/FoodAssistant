@@ -8,21 +8,17 @@
 import UIKit
 
 /// #Протокол передачи UI-ивентов слою презентации модуля Basket
-protocol BasketPresentation: RecipeRemovable,
+protocol BasketPresentation: DeleteTapable,
                              ImagePresentation,
-                             SelectedCellDelegate,
+                             CellSelectable,
                              CheckChangable,
+                             BackTapable,
                              AnyObject {
-    
-    func fetchAddedRecipe()
-    
+    /// Была нажата кнопка добавления в холодильник
     func didTapAddFridgeButton()
-    
+    /// Проверяет флаг ингредиента
+    /// - Parameter id: идентификатор ингредиента
     func checkFlag(id: Int) -> Bool
-        
-    /// Ивент перехода
-    /// - Parameter to: цель перехода
-    func route(to: BasketTarget)
 }
 
 /// #Контроллер представления Корзины
@@ -31,7 +27,9 @@ final class BasketViewController: UIViewController {
     // MARK: - Properties
     private let presenter: BasketPresentation
     private var factory: CVFactoryProtocol?
-    private var collectionView: UICollectionView!
+    
+    private lazy var collectionView = UICollectionView(frame: CGRect.zero,
+                                                       collectionViewLayout: AppConstants.getFlowLayout())
     
     private lazy var addInFridgeButton: UIButton = {
         let button = UIButton()
@@ -70,27 +68,23 @@ final class BasketViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        setupNavigitionBarViews()
-        setupElements()
         
-        presenter.fetchAddedRecipe()
+        setupNavigitionBar()
+        setupElements()
     }
     
     // MARK: - Private func
     private func setupElements() {
         
-        addInFridgeButton.addTarget(self, action: #selector(didTapAddFridgeButton), for: .touchUpInside)
+        addInFridgeButton.addTarget(self,
+                                    action: #selector(addFridgeButtonTapped),
+                                    for: .touchUpInside)
                 
         /// Настройка `CollectionView`
-        collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: getFlowLayout())
         
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         
@@ -103,7 +97,6 @@ final class BasketViewController: UIViewController {
         stack.addArrangedSubview(orderDeliveryButton)
         
         view.addSubview(collectionView)
-//        view.addSubview(addInFridgeButton)
         view.addSubview(stack)
         
         NSLayoutConstraint.activate([
@@ -114,46 +107,32 @@ final class BasketViewController: UIViewController {
             
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 2),
             stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             stack.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    /// Возвращает настроенный `FlowLayout`
-    private func getFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let padding = AppConstants.padding
-        layout.sectionInset = UIEdgeInsets(top: 0,
-                                           left: padding,
-                                           bottom: padding,
-                                           right: padding)
-        layout.minimumInteritemSpacing = padding
-        layout.minimumLineSpacing = padding
-        return layout
-    }
-    
-    /// Настраивает кастомный NavigitionBar
-    private func setupNavigitionBarViews() {
+    /// Настраивает NavigitionBar
+    private func setupNavigitionBar() {
+        navigationController?.navigationBar.isHidden = false
         
-        let dismissButton = createCustomBarButton(
+        let backButton = createCustomBarButton(
             icon: .xmark,
-            selector: #selector(dismissButtonTapped)
+            selector: #selector(backButtonTapped)
         )
         
         let label = UILabel()
         label.text = "Корзина"
         
-        navigationItem.leftBarButtonItems = [dismissButton]
+        navigationItem.leftBarButtonItems = [backButton]
         navigationItem.titleView = label
     }
 
-    /// Скрывает экран
-    @objc private func dismissButtonTapped() {
-        presenter.route(to: .back)
+    @objc private func backButtonTapped() {
+        presenter.didTapBackButton()
     }
     
-    @objc private func didTapAddFridgeButton() {
+    @objc private func addFridgeButtonTapped() {
         presenter.didTapAddFridgeButton()
     }
 }
@@ -180,7 +159,7 @@ extension BasketViewController: BasketViewable {
     }
     
     
-    func showError() {
+    func show(error: Error) {
         
     }
 }

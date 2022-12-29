@@ -15,26 +15,34 @@ protocol DataFetcherProtocol {
     ///     - requestBuilder: конструктор запроса
     ///     - responce: замыкание для захвата данных/ошибки
     func fetchObject<T: Decodable>(urlRequest: URLRequest,
-                                 completion: @escaping (Result<T, DataFetcherError>) -> Void)
+                                   completion: @escaping (Result<T, NetworkFetcherError>) -> Void)
 }
 
 /// #Сервис работы с сетью
 final class NetworkDataFetcher {
+    
+    static let shared = NetworkDataFetcher()
+    
+    private init() { }
     
     /// Запрос данных из сети
     ///  - Parameters:
     ///   - request: http-запрос
     ///   - response: ответ, захватывает данные/ошибку
     private func fetchData(request: URLRequest,
-                           completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+                           completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
         URLSession.shared.dataTask(with: request) { (data, responce, error) in
-            guard responce != nil else {
-                completion(.failure(.notInternet))
-                return
+            
+            if let httpResponse = responce as? HTTPURLResponse {
+                guard (200..<300) ~= httpResponse.statusCode else {
+                    completion(.failure(.invalidResponseCode(httpResponse.statusCode)))
+                    return
+                }
             }
+            
             guard let data = data,
-                    error == nil else {
-                completion(.failure(.failedToLoadData))
+                  error == nil  else {
+                completion(.failure(.dataLoadingError))
                 return
             }
             completion(.success(data))
@@ -46,7 +54,7 @@ final class NetworkDataFetcher {
     ///   - data: json-данные
     ///   - response: ответ, захватывает модель данных/ошибку
     private func decode<T: Decodable>(data: Data,
-                                      completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+                                      completion: @escaping (Result<T, NetworkFetcherError>) -> Void) {
         do {
             let decodedObject = try JSONDecoder().decode(T.self, from: data)
             completion(.success(decodedObject))
@@ -59,7 +67,7 @@ final class NetworkDataFetcher {
 // MARK: - DataFetcherProtocol
 extension NetworkDataFetcher: DataFetcherProtocol {
     func fetchObject<T: Decodable>(urlRequest: URLRequest,
-                                   completion: @escaping (Result<T, DataFetcherError>) -> Void) {
+                                   completion: @escaping (Result<T, NetworkFetcherError>) -> Void) {
         fetchData(request: urlRequest) { [weak self] result in
             switch result {
             case .success(let data):

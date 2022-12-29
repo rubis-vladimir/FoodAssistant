@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Модель параметров перевода
+/// #Модель параметров перевода
 struct TranslateParameters: Codable {
     /// Идентификатор сервисного аккаунта
     var folderId: String
@@ -20,8 +20,6 @@ struct TranslateParameters: Codable {
     
     enum CodingKeys: String, CodingKey {
         case folderId = "folder id"
-        case texts = "texts"
-        case sourceLanguageCode = "sourceLanguageCode"
-        case targetLanguageCode = "targetLanguageCode"
+        case texts, sourceLanguageCode, targetLanguageCode
     }
 }

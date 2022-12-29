@@ -20,7 +20,7 @@ final class BasketAssembly {
 extension BasketAssembly: Assemblying {
     func assembly() -> UIViewController {
         
-        let imageDownloader = ImageDownloader()
+        let imageDownloader = ImageDownloader.shared
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
@@ -38,6 +38,7 @@ extension BasketAssembly: Assemblying {
         presenter.view = viewController
         interactor.presenter = presenter
     
+        presenter.getStart()
         return viewController
     }
 }

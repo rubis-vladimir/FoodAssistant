@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(CDRecipe)
-public class CDRecipe: NSManagedObject {
-
-}
+public class CDRecipe: NSManagedObject { }

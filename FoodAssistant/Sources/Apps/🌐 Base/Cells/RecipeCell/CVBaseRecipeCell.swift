@@ -20,8 +20,8 @@ class CVBaseRecipeCell: UICollectionViewCell {
     
     // MARK: - Properties
     weak var favoriteDelegate: FavoriteChangable?
-    weak var deleteDelegate: RecipeRemovable?
-    weak var basketDelegate: InBasketAdded?
+    weak var deleteDelegate: DeleteTapable?
+    weak var basketDelegate: InBasketTapable?
     
     /// Идентификатор рецепта
     var id: Int?

@@ -16,7 +16,7 @@ enum BasketSectionType {
 }
 
 /// #Фабрика настройки коллекции модуля Basket
-final class BasketFactory: NSObject {
+final class BasketFactory {
     
     private let collectionView: UICollectionView
     private let recipes: [RecipeProtocol]
@@ -40,7 +40,6 @@ final class BasketFactory: NSObject {
         
         cvAdapter = CVAdapter(collectionView: collectionView)
         
-        super.init()
         setupCollectionView()
     }
     
@@ -48,6 +47,8 @@ final class BasketFactory: NSObject {
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.backgroundColor = .clear
         
         cvAdapter.configure(with: builders)

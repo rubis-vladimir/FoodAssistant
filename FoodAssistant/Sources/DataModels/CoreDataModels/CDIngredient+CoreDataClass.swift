@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(CDIngredient)
-public class CDIngredient: NSManagedObject {
-
-}
+public class CDIngredient: NSManagedObject { }

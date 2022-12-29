@@ -10,7 +10,6 @@ import UIKit
 /// #Строитель ячеек секции Favorite
 final class FavoriteItemBuilder {
     
-    private var layoutType: LayoutType = .split1xN
     private let models: [RecipeViewModel]
     
     weak var delegate: UserProfilePresentation?
@@ -19,33 +18,18 @@ final class FavoriteItemBuilder {
          delegate: UserProfilePresentation?) {
         self.models = models
         self.delegate = delegate
-        
-        signInNotification()
     }
     
     /// Рассчитывает размер ячеек
     private func calculateItemSize(width: CGFloat) -> CGSize {
         let padding: CGFloat = AppConstants.padding
-        let itemPerRow: CGFloat = layoutType == .split1xN ? 1 : 2
+        let itemPerRow: CGFloat = 1
         let paddingWidht = padding * (itemPerRow + 1)
         let availableWidth = (width - paddingWidht) / itemPerRow
-        let availableHeight = layoutType == .split1xN ? 125 : availableWidth + padding + 100
+        let availableHeight: CGFloat = 125
         
         return CGSize(width: availableWidth,
                       height: availableHeight)
-    }
-    
-    /// Подписываем на класс на нотификацию
-    private func signInNotification() {
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(changeLayoutType),
-                                               name: NSNotification.Name ("changeLayoutType2"),
-                                               object: nil)
-    }
-    
-    /// Изменение
-    @objc private func changeLayoutType() {
-        layoutType = layoutType == .split2xN ? .split1xN : .split2xN
     }
 }
 
@@ -68,11 +52,9 @@ extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
         
         /// Получаем модель для ячейки
         let model = models[indexPath.item]
-        /// Получаем вариант исполнения ячейки в зависимости от типа `Layout`
-        let typeCell = layoutType == .split2xN ? ThirdRecipeCell.self : SecondRecipeCell.self
         
         /// Создаем и настраиваем ячейку
-        let cell = collectionView.dequeueReusableCell(typeCell,
+        let cell = collectionView.dequeueReusableCell(SecondRecipeCell.self,
                                                       indexPath: indexPath)
         cell.deleteDelegate = delegate
         cell.basketDelegate = delegate

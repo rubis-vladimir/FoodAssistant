@@ -42,11 +42,13 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
         let model = models[indexPath.item]
         let flag = model.toUse
         
-        cell.configure(with: model, flag: flag)
+        cell.configure(with: model,
+                       flag: flag)
         cell.delegate = delegate
         
         if let imageName = model.image {
-            delegate?.fetchImage(imageName, type: .ingredient) { imageData in
+            delegate?.fetchImage(imageName,
+                                 type: .ingredient) { imageData in
                 DispatchQueue.main.async {
                     cell.updateImage(with: imageData)
                 }

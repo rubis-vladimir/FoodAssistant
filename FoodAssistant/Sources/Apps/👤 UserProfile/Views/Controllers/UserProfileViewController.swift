@@ -7,35 +7,25 @@
 
 import UIKit
 
-/// #Варианты запроса избранных рецептов
-enum FavoriteRecipeQuery {
-    /// Основной
-    case base
-    /// Запрос с поиском по названию
-    case search(text: String)
-}
-
 /// #Протокол передачи UI-ивентов слою презентации
-protocol UserProfilePresentation: RecipeRemovable,
-                                  InBasketAdded,
-                                  LayoutChangable,
-                                  SelectedCellDelegate,
+protocol UserProfilePresentation: DeleteTapable,
+                                  InBasketTapable,
+                                  CellSelectable,
                                   SegmentedViewDelegate,
                                   ImagePresentation,
                                   CheckChangable,
+                                  ViewAppearable,
                                   AnyObject {
+    /// Была нажата кнопка добавления ингредиента
     func didTapAddIngredientButton()
+    /// Ивент после ввода текста в поисковой бар
+    func textEntered(_ text: String)
+    /// Проверить флаг ингредиента
+    /// - Parameter id: идентификатор
     func checkFlag(id: Int) -> Bool
-    func fetchFavoriteRecipe(text: String)
-    func getNewData()
 }
 
-/// #Протокол управления UI-ивентами сегмент-вью
-protocol SegmentedViewDelegate {
-    /// Ивент при выборе элемента
-    ///  - Parameter index: индекс элемента
-    func didSelectSegment(index: Int)
-}
+
 
 /// #Контроллер представления профиля пользователя
 final class UserProfileViewController: UIViewController {
@@ -45,14 +35,17 @@ final class UserProfileViewController: UIViewController {
     private let presenter: UserProfilePresentation
     /// Поисковый бар
     private let searchBar = UISearchBar()
+    /// Сегмент вью
+    private let segmentView = CustomSegmentedControl()
     /// Фабрика настройки табличного представления
     private var factory: CVFactoryProtocol?
-    /// Коллекция
-    private var collectionView: UICollectionView!
     /// Таймер
     private var timer: Timer?
-    
+    /// Флаг отображения поискового бара
     private var searchBarShown: Bool = false
+    /// Коллекция
+    private lazy var collectionView = UICollectionView(frame: CGRect.zero,
+                                                  collectionViewLayout: AppConstants.getFlowLayout())
     
     // MARK: - Init & Override func
     init(presenter: UserProfilePresentation) {
@@ -64,86 +57,57 @@ final class UserProfileViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    deinit {
-        print("DEINIT \(self)")
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupNavigationBar()
         setupElements()
+        setupConstraints()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        presenter.viewAppeared()
+        
         guard let text = searchBar.text else { return }
-        presenter.fetchFavoriteRecipe(text: text)
-        presenter.getNewData()
+        presenter.textEntered(text)
     }
     
-    
     // MARK: - Private func
+    private func setupNavigationBar() {
+        navigationItem.title = "Мой помощник"
+    }
+    
     func setupElements() {
+        view.backgroundColor = .white
         
-        /// Настройка `CollectionView`
-        collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: getFlowLayout())
-        
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .blue
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        segmentView.translatesAutoresizingMaskIntoConstraints = false
         
         searchBar.delegate = self
-        
-        let titleView = UPCustomSegmentedControl()
-        titleView.delegate = presenter
+        segmentView.delegate = presenter
         
         factory = UPFactory(collectionView: collectionView,
                             delegate: presenter,
                             orderSections: [.profile])
-        
-        view.backgroundColor = .white
+    }
+    
+    private func setupConstraints() {
         view.addSubview(collectionView)
-        view.addSubview(titleView)
-        titleView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(segmentView)
         
         NSLayoutConstraint.activate([
-            titleView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            titleView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            titleView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-            titleView.heightAnchor.constraint(equalToConstant: 42),
+            segmentView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            segmentView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            segmentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            segmentView.heightAnchor.constraint(equalToConstant: 42),
             
-            collectionView.topAnchor.constraint(equalTo: titleView.bottomAnchor, constant: 12),
+            collectionView.topAnchor.constraint(equalTo: segmentView.bottomAnchor, constant: 12),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
         ])
-    }
-    
-    /// Возвращает настроенный `FlowLayout`
-    private func getFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let padding = AppConstants.padding
-        layout.sectionInset = UIEdgeInsets(top: padding / 2,
-                                           left: padding,
-                                           bottom: padding,
-                                           right: padding)
-        layout.minimumInteritemSpacing = padding
-        layout.minimumLineSpacing = padding
-        return layout
-    }
-    
-    func setupNavigationBar() {
-        let settingsButton = createCustomBarButton(
-            icon:.gearshape,
-            selector: #selector(settingsButtonTapped)
-        )
-        
-        navigationItem.title = "Мой помощник"
-        navigationItem.rightBarButtonItems = [settingsButton]
     }
     
     /// Устанавливает/скрывает кнопку поиска
@@ -159,7 +123,10 @@ final class UserProfileViewController: UIViewController {
     /// Устанавливает/скрывает searchBar
     private func search(shouldShow: Bool) {
         showSearchBarButton(shouldShow: !shouldShow)
+        
+        
         searchBar.showsCancelButton = shouldShow
+        
         searchBar.becomeFirstResponder()
         navigationItem.titleView = shouldShow ? searchBar : nil
         searchBarShown = shouldShow
@@ -169,21 +136,6 @@ final class UserProfileViewController: UIViewController {
         search(shouldShow: true)
         
     }
-    
-    /// Сохраняет событие и скрывает экран
-    @objc private func settingsButtonTapped() {
-        
-    }
-    
-    struct Constants {
-        static let titleFont: UIFont? = UIFont(name: "MarkerFelt-Thin", size: 24)
-        static let font: UIFont? = UIFont(name: "MarkerFelt-Thin", size: 18)
-        static let textColor: UIColor = .white
-        static let cornerRadius: CGFloat = 20
-        static let borderWidth: CGFloat = 2
-        static let borderColor: CGColor = UIColor.white.cgColor
-    }
-
 }
 
 // MARK: - UISearchBarDelegate
@@ -198,8 +150,7 @@ extension UserProfileViewController: UISearchBarDelegate {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: 1.0,
                                      repeats: false) { [weak self] _ in
-            print(searchText)
-            self?.presenter.fetchFavoriteRecipe(text: searchText)
+            self?.presenter.textEntered(searchText)
         }
     }
 }
@@ -208,7 +159,7 @@ extension UserProfileViewController: UISearchBarDelegate {
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
     
-    func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
+    func showAlert(completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void) {
         showAddIngredientAlert(completion: completion)
     }
     
@@ -226,8 +177,6 @@ extension UserProfileViewController: UserProfileViewable {
     }
     
     func updateCV(orderSection: [UPSectionType]) {
-        
-        
         DispatchQueue.main.async {
             self.factory = UPFactory(collectionView: self.collectionView,
                                      delegate: self.presenter,
@@ -235,8 +184,7 @@ extension UserProfileViewController: UserProfileViewable {
         }
     }
     
-    
-    func showError() {
+    func show(error: Error) {
         
     }
 }

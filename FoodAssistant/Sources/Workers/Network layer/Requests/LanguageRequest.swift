@@ -19,11 +19,11 @@ extension LanguageRequest {
     ///   - service: сетевой сервис
     ///   - completion: захватывает ответ с переводом / ошибку
     func download(with service: DataFetcherProtocol,
-                  completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
+                  completion: @escaping (Result<TranslateResponce, NetworkFetcherError>) -> Void) {
         do {
             service.fetchObject(urlRequest: try asURLRequest(), completion: completion)
         } catch {
-            guard let error = error as? DataFetcherError else { return }
+            guard let error = error as? NetworkFetcherError else { return }
             completion(.failure(error))
         }
     }

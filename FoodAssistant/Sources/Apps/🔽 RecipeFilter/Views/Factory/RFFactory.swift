@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol RecipeFilterSelectedIngredientsChangable {
+protocol RFSelectedIngredientsChangable {
     
     func changeSelectedIngredients(section: Int)
 }
@@ -20,7 +20,7 @@ enum RFSectionType {
 final class RFFactory {
     
     private let collectionView: UICollectionView
-    private let dictModels: [RecipeFilterParameter: [TagModel]]
+    private let dictModels: [FilterParameter: [TagModel]]
     private var cvAdapter: CVAdapter
     
     private weak var delegate: RecipeFilterPresentation?
@@ -30,7 +30,7 @@ final class RFFactory {
     ///    - tableView: настраиваемая таблица
     ///    - delegate: делегат для передачи UIEvent (VC)
     init(collectionView: UICollectionView,
-         dictModels: [RecipeFilterParameter: [TagModel]],
+         dictModels: [FilterParameter: [TagModel]],
          delegate: RecipeFilterPresentation?) {
         self.collectionView = collectionView
         self.dictModels = dictModels
@@ -74,7 +74,7 @@ extension RFFactory: CVFactoryProtocol {
         let action: ((Int) -> Void)? = { section in
             self.delegate?.changeSelectedIngredients(section: section)
         }
-        let parameters = RecipeFilterParameter.allCases.sorted {$0.rawValue < $1.rawValue}
+        let parameters = FilterParameter.allCases.sorted {$0.rawValue < $1.rawValue}
         
         let builders = parameters.compactMap {
             if let models = dictModels[$0] {
@@ -113,7 +113,7 @@ extension RFFactory {
                                                
         ]
         
-        static var dict2: [RecipeFilterParameter: [TagModel]] = [:]
+        static var dict2: [FilterParameter: [TagModel]] = [:]
                                                                
         
     }
@@ -126,11 +126,11 @@ struct TagModel {
     var isSelected: Bool
 }
 
-enum RecipeFilterParameter: Int, CaseIterable {
+enum FilterParameter: Int, CaseIterable {
     case time, dishType, region, diet, calories, includeIngredients, excludeIngredients
 }
 
-extension RecipeFilterParameter {
+extension FilterParameter {
     var title: String {
         switch self {
         case .time: return "Время"

@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum IngredientFlag {
-    case toUse(_ flag: Bool)
-    case isCheck(_ flag: Bool)
-}
-
 /// #Протокол изменения флага подтверждения
 protocol CheckChangable: AnyObject {
     /// Ивент при нажатии на чек-кнопку

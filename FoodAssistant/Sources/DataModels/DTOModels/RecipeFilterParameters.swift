@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Параметры для запроса рецептов
+/// #Параметры для запроса рецептов
 struct RecipeFilterParameters {
     
     /// Время

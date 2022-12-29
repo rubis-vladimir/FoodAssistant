@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(CDNutrient)
-public class CDNutrient: NSManagedObject {
-
-}
+public class CDNutrient: NSManagedObject { }
