@@ -14,7 +14,7 @@ protocol ImageDownloadProtocol {
     ///   - url: url
     ///   - completion: захватывает данные / ошибку
     func fetchImage(url: URL,
-                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void)
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
 /// #Сервис загрузки изображений
@@ -28,13 +28,13 @@ final class ImageDownloader {
 // MARK: - ImageDownloadProtocol
 extension ImageDownloader: ImageDownloadProtocol {
     func fetchImage(url: URL,
-                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         
         URLSession.shared.dataTask(with: url) { (data, responce, error) in
             
             if let httpResponse = responce as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
-                    completion(.failure(.invalidResponseCode(httpResponse.statusCode)))
+                    completion(.failure(.invalidResponceCode(httpResponse.statusCode)))
                     return
                 }
             }

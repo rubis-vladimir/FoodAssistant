@@ -34,7 +34,7 @@ final class DetailInfoInteractor {
 // MARK: - DetailInfoBusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
     
-    func fetchImage(_ imageName: String, type: TypeOfImage, completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+    func fetchImage(_ imageName: String, type: TypeOfImage, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         switch type {
         case .recipe:
             ImageRequest

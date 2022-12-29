@@ -15,7 +15,7 @@ protocol DataFetcherProtocol {
     ///     - requestBuilder: конструктор запроса
     ///     - responce: замыкание для захвата данных/ошибки
     func fetchObject<T: Decodable>(urlRequest: URLRequest,
-                                   completion: @escaping (Result<T, NetworkFetcherError>) -> Void)
+                                   completion: @escaping (Result<T, DataFetcherError>) -> Void)
 }
 
 /// #Сервис работы с сетью
@@ -30,12 +30,12 @@ final class NetworkDataFetcher {
     ///   - request: http-запрос
     ///   - response: ответ, захватывает данные/ошибку
     private func fetchData(request: URLRequest,
-                           completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+                           completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         URLSession.shared.dataTask(with: request) { (data, responce, error) in
             
             if let httpResponse = responce as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
-                    completion(.failure(.invalidResponseCode(httpResponse.statusCode)))
+                    completion(.failure(.invalidResponceCode(httpResponse.statusCode)))
                     return
                 }
             }
@@ -54,7 +54,7 @@ final class NetworkDataFetcher {
     ///   - data: json-данные
     ///   - response: ответ, захватывает модель данных/ошибку
     private func decode<T: Decodable>(data: Data,
-                                      completion: @escaping (Result<T, NetworkFetcherError>) -> Void) {
+                                      completion: @escaping (Result<T, DataFetcherError>) -> Void) {
         do {
             let decodedObject = try JSONDecoder().decode(T.self, from: data)
             completion(.success(decodedObject))
@@ -67,7 +67,7 @@ final class NetworkDataFetcher {
 // MARK: - DataFetcherProtocol
 extension NetworkDataFetcher: DataFetcherProtocol {
     func fetchObject<T: Decodable>(urlRequest: URLRequest,
-                                   completion: @escaping (Result<T, NetworkFetcherError>) -> Void) {
+                                   completion: @escaping (Result<T, DataFetcherError>) -> Void) {
         fetchData(request: urlRequest) { [weak self] result in
             switch result {
             case .success(let data):

@@ -16,7 +16,7 @@ protocol ImageBusinessLogic {
     ///   - completion: захватывает данные изображения / ошибку
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
-                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void)
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
 }
 
 /// #Протокол получения рецепта

@@ -43,7 +43,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     
     // MARK: - RLNetworkBusinessLogic
     func fetchRecommended(number: Int,
-                          completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+                          completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         /// Получаем названия имеющихся ингредиентов
         var ingredientTitles: [String] = []
         storage.fetchIngredients(toUse: false) { ingredients in
@@ -62,7 +62,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,
                      query: String?,
-                     completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         
         RecipeRequest
             .complex(parameters, number, query)
@@ -84,7 +84,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     
     private func fetchRecipe(ingredientTitles: [String],
                              number: Int,
-                             completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+                             completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         RecipeRequest
             .byIngredients(ingredientTitles, number)
             .downloadIds(with: self.dataFetcher) { result in
@@ -102,7 +102,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
-                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         ImageRequest
             .recipe(imageName: imageName)
             .download(with: imageDownloader, completion: completion)
@@ -133,7 +133,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
 /// #Вспомогательные приватные функции
 extension RecipeListInteractor {
     
-    private func fetchRecipes(by ids: [Int], completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+    private func fetchRecipes(by ids: [Int], completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         RecipeRequest.byId(ids).downloadById(with: dataFetcher) { [weak self] result in
             switch result {
             case .success(let recipes):
@@ -146,7 +146,7 @@ extension RecipeListInteractor {
     }
     
     private func convert(recipes: [Recipe],
-                         completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+                         completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         var recipes = recipes
         
         /// Изменяем флаг isFavorite, если рецепт записан в избранные
@@ -175,7 +175,7 @@ extension RecipeListInteractor {
     
     /// Добавляет и захватывает рецепты
     private func addModels(recipes: [Recipe],
-                           completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void) {
+                           completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         self.models.append(contentsOf: recipes)
         
         let viewModels = recipes.map {

@@ -52,7 +52,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
         }
     }
     
-    func find(ingredient: IngredientViewModel, completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void) {
+    func find(ingredient: IngredientViewModel, completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
         RecipeRequest
             .findIngredient(ingredient.name)
             .findIngredient(with: dataFetcher) { [weak self] result in
@@ -101,7 +101,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
     // ImageBusinessLogic
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
-                    completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         switch type {
         case .recipe:
             ImageRequest

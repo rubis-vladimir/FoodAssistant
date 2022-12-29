@@ -57,7 +57,14 @@ final class BasketViewController: UIViewController {
         return button
     }()
     
-    let stack = UIStackView()
+    let stack: UIStackView = {
+        let stack = UIStackView()
+        stack.spacing = 20
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.isHidden = true
+        return stack
+    }()
     
     // MARK: - Init & ViewDidLoad
     init(presenter: BasketPresentation) {
@@ -83,15 +90,7 @@ final class BasketViewController: UIViewController {
                                     action: #selector(addFridgeButtonTapped),
                                     for: .touchUpInside)
                 
-        /// Настройка `CollectionView`
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        stack.spacing = 20
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.isHidden = true
         
         stack.addArrangedSubview(addInFridgeButton)
         stack.addArrangedSubview(orderDeliveryButton)

@@ -28,7 +28,7 @@ protocol UserProfileViewable: ErrorShowable,
     /// Скрыть `Search Bar`
     func hideSearchBar(shouldHide: Bool)
     /// Показать алерт добавления ингредиента
-    func showAlert(completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void)
+    func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
     /// Перезагрузить элементы
     func reload(items: [IndexPath])
 }
@@ -52,7 +52,7 @@ protocol UserProfileBusinessLogic: RecipeReceived,
     ///  - ingredient: вью-модель ингредиента
     ///  - flag: флаг использования
     func find(ingredient: IngredientViewModel,
-              completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void)
+              completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
     
     /// Изменить флаг использования ингредиента
     /// - Parameters:

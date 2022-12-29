@@ -52,7 +52,7 @@ protocol RLNetworkBusinessLogic {
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,
                      query: String?,
-                     completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void)
+                     completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
     
     /// Получить рекомендованные рецепты
     ///  - Parameters:
@@ -60,7 +60,7 @@ protocol RLNetworkBusinessLogic {
     ///   - query: поиск по названию
     ///   - completion: захватывает вью модель рецепта / ошибку
     func fetchRecommended(number: Int,
-                          completion: @escaping (Result<[RecipeViewModel], NetworkFetcherError>) -> Void)
+                          completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
 }
 
 /// #Протокол взаимодействия с ДБ модуля RecipeList

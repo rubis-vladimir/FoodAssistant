@@ -27,7 +27,7 @@ extension ImageRequest {
     ///   - service: используемый сервис для загрузки изображений
     ///   - completion: захватывает данные изображения / ошибку
     func download(with service: ImageDownloadProtocol,
-                  completion: @escaping (Result<Data, NetworkFetcherError>) -> Void) {
+                  completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         guard let url = url else {
             completion(.failure(.invalidUrl))
             return

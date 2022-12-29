@@ -14,7 +14,7 @@ protocol RecipeTranslatable {
     ///   - recipes: рецепты до перевода
     ///   - completion: захватывает рецепты с переводом / ошибку
     func fetchTranslate(recipes: [Recipe],
-                        completion: @escaping (Result<[Recipe], NetworkFetcherError>) -> Void)
+                        completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void)
 }
 
 /// #Сервис перевода
@@ -33,7 +33,7 @@ final class TranslateService {
 extension TranslateService: RecipeTranslatable {
     
     func fetchTranslate(recipes: [Recipe],
-                        completion: @escaping (Result<[Recipe], NetworkFetcherError>) -> Void) {
+                        completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void) {
         var newRecipes: [Recipe] = []
         
         let dispatchGroup = DispatchGroup() /// Создаем диспатч-группу
@@ -86,7 +86,7 @@ private extension TranslateService {
     ///   - texts: строки для перевода
     ///   - completion: захватывает ответ с переводом / ошибку
     private func translate(with texts: [String],
-                           completion: @escaping (Result<TranslateResponce, NetworkFetcherError>) -> Void) {
+                           completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
         let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
                                              texts: texts,
                                              sourceLanguageCode: "en",

@@ -67,18 +67,18 @@ protocol BasketBusinessLogic: RecipeReceived,
 /// #Слой презентации модуля Basket
 final class BasketPresenter {
     
+    weak var view: BasketViewable?
     private let interactor: BasketBusinessLogic
     private let router: BasketRouting
     
-    weak var view: BasketViewable?
-    
-    private(set) var models: [RecipeProtocol] = [] {
+    /// Модели рецептов
+    private var models: [RecipeProtocol] = [] {
         didSet {
             updateShopList()
         }
     }
-    
-    private(set) var ingredients: [IngredientViewModel] = []
+    /// Вью-модели ингредиентов
+    private var ingredients: [IngredientViewModel] = []
     
     init(interactor: BasketBusinessLogic,
          router: BasketRouting) {
@@ -110,14 +110,13 @@ final class BasketPresenter {
 
 // MARK: - BasketPresentation
 extension BasketPresenter: BasketPresentation {
+    func didTapBackButton() {
+        router.route(to: .back)
+    }
     
     func didTapAddFridgeButton() {
         interactor.addIngredientsInFridge()
         updateShopList()
-    }
-    
-    func didTapDismissButton() {
-        router.route(to: .back)
     }
     
     func checkFlag(id: Int) -> Bool {
@@ -146,10 +145,11 @@ extension BasketPresenter: BasketPresentation {
                     completion: @escaping (Data) -> Void) {
         interactor.fetchImage(imageName, type: type) { result in
             switch result {
+                
             case .success(let data):
-                completion(data)
+                
             case .failure(let error):
-                print(error)
+                <#code#>
             }
         }
     }

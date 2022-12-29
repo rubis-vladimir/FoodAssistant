@@ -159,7 +159,7 @@ extension UserProfileViewController: UISearchBarDelegate {
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
     
-    func showAlert(completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void) {
+    func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
         showAddIngredientAlert(completion: completion)
     }
     

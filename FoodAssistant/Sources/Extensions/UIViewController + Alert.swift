@@ -66,7 +66,7 @@ extension UIViewController {
     }
     
     
-    func showAddIngredientAlert(completion: @escaping (Result<IngredientViewModel, NetworkFetcherError>) -> Void) {
+    func showAddIngredientAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
         
         let alert = UIAlertController(title: nil,
                                       message: "\n\n\n\n\n\n\n",
@@ -137,10 +137,22 @@ extension UIViewController {
                                                 unit: unitTF.text.lowercased())
                 completion(.success(model))
             } else {
-                completion(.failure(.noCorrectNumber))
+                completion(.failure(.invalidNumber))
             }
         }))
         
         present(alert, animated: true)
+    }
+    
+    /// Показывает информационный алерт (заглушка)
+    /// - Parameters:
+    ///  - title: заголовок
+    ///  - text: описание
+    func showInformationAlert(title: String,
+                              text: String) {
+        let alert = UIAlertController(title: title,
+                                      message: text,
+                                      preferredStyle: .alert)
+        
     }
 }
