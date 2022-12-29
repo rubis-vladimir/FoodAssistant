@@ -62,10 +62,9 @@ final class AvatarCell: UICollectionViewCell {
     }
     
     func setupCell() {
-        let parameterLabels = ["Возраст", "Рост", "Вес"]
         let valueLabels = ["30", "172", "75"]
         
-        for index in 0..<parameterLabels.count {
+        for index in 0..<Constants.parameterLabels.count {
             let stack = UIStackView()
             stack.axis = .vertical
             stack.spacing = 5
@@ -76,7 +75,7 @@ final class AvatarCell: UICollectionViewCell {
             valueLabel.font = valueLabel.font.withSize(30)
             
             let parameterLabel = UILabel()
-            parameterLabel.text = parameterLabels[index]
+            parameterLabel.text = Constants.parameterLabels[index]
             
             stack.addArrangedSubview(valueLabel)
             stack.addArrangedSubview(parameterLabel)
@@ -92,12 +91,6 @@ final class AvatarCell: UICollectionViewCell {
         stack.spacing = 20
         stack.addArrangedSubview(avatarView)
         stack.addArrangedSubview(fullnameLabel)
-        
-//
-//        stack.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: 5).isActive = true
-//        stack.centerXAnchor.constraint(equalTo: userContainer.centerXAnchor).isActive = true
-//        stack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: 20).isActive = true
-//        stack.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         parametersStack.spacing = 20
         parametersStack.distribution = .fillEqually
@@ -119,12 +112,20 @@ final class AvatarCell: UICollectionViewCell {
         
         avatarView.widthAnchor.constraint(equalToConstant: 130).isActive = true
         avatarView.heightAnchor.constraint(equalToConstant: 130).isActive = true
-//
+
         NSLayoutConstraint.activate([
             userContainer.topAnchor.constraint(equalTo: topAnchor, constant: 20),
             userContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
             userContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             userContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
         ])
+    }
+}
+
+extension AvatarCell {
+    struct Constants {
+        static let parameterLabels = ["Age".localize(),
+                                      "Height".localize(),
+                                      "Weight".localize()]
     }
 }

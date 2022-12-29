@@ -22,7 +22,7 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
     ///  - recipe: рецепт
     func updateFavotite(_ flag: Bool,
                         recipe: RecipeProtocol)
-    
+    /// Проверяет ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
 }
 

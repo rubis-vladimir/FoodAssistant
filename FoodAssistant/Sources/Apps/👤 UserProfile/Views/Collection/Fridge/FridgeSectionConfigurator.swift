@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// #Конфигуратор секции Main в коллекции
+/// #Конфигуратор секции Fridge в коллекции
 final class FridgeSectionConfigurator {
     
     private struct Constants {
-        static let title = "В моем холодильнике"
+        static let title = "In my fridge".localize()
         static let image = Icons.plusFill.image
     }
     

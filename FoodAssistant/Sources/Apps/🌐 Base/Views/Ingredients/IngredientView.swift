@@ -87,8 +87,10 @@ final class IngredientView: UIView {
         }
         
         var text = "\(amountString)"
-        if ingredient.unit != "" {
-            text += "\n\(ingredient.unit)"
+        let unit = ingredient.unit.localize()
+        print(ingredient.unit)
+        if unit != "" {
+            text += "\n\(unit)"
         }
         amountLabel.text = text
     }
@@ -118,7 +120,7 @@ final class IngredientView: UIView {
             
             ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
             ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
-            amountLabel.widthAnchor.constraint(equalToConstant: 45)
+            amountLabel.widthAnchor.constraint(equalToConstant: 50)
         ])
     }
 }

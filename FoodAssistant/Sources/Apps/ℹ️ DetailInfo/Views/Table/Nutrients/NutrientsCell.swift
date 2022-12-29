@@ -32,20 +32,24 @@ final class NutrientsCell: TVBaseCell {
     // MARK: - Function
     func configure(with nutrients: [NutrientProtocol]) {
         
-        if let calories = nutrients.first(where: {$0.name == "Calories"}) {
-            let stack = createStack(title: Nutrients.calories.rawValue, number: "\(calories.amount)")
+        if let calories = nutrients.first(where: {$0.name == Nutrients.calories.rawValue}) {
+            let stack = createStack(title: Nutrients.calories.rawValue.localize(),
+                                    number: "\(calories.amount)")
             container.addArrangedSubview(stack)
         }
-        if let protein = nutrients.first(where: {$0.name == "Protein"}) {
-            let stack = createStack(title: Nutrients.protein.rawValue, number: "\(protein.amount)")
+        if let protein = nutrients.first(where: {$0.name == Nutrients.protein.rawValue}) {
+            let stack = createStack(title: Nutrients.protein.rawValue.localize(),
+                                    number: "\(protein.amount)")
             container.addArrangedSubview(stack)
         }
-        if let fats = nutrients.first(where: {$0.name == "Fat"}) {
-            let stack = createStack(title: Nutrients.fats.rawValue, number: "\(fats.amount)")
+        if let fats = nutrients.first(where: {$0.name == Nutrients.fats.rawValue}) {
+            let stack = createStack(title: Nutrients.fats.rawValue.localize(),
+                                    number: "\(fats.amount)")
             container.addArrangedSubview(stack)
         }
-        if let carbohydrates = nutrients.first(where: {$0.name == "Carbohydrates"}) {
-            let stack = createStack(title: Nutrients.carbohydrates.rawValue, number: "\(carbohydrates.amount)")
+        if let carbohydrates = nutrients.first(where: {$0.name == Nutrients.carbohydrates.rawValue}) {
+            let stack = createStack(title: Nutrients.carbohydrates.rawValue.localize(),
+                                    number: "\(carbohydrates.amount)")
             container.addArrangedSubview(stack)
         }
     }
@@ -98,10 +102,10 @@ final class NutrientsCell: TVBaseCell {
 /// #Константы
 extension NutrientsCell {
     private enum Nutrients: String {
-        case calories = "Калории"
-        case protein = "Белки"
-        case fats = "Жиры"
-        case carbohydrates = "Углеводы"
+        case calories = "Calories"
+        case protein = "Protein"
+        case fats = "Fat"
+        case carbohydrates = "Carbohydrates"
     }
 }
 

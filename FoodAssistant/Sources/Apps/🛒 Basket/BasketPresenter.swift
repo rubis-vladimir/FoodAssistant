@@ -143,13 +143,13 @@ extension BasketPresenter: BasketPresentation {
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName, type: type) { result in
+        interactor.fetchImage(imageName, type: type) { [weak self] result in
             switch result {
-                
             case .success(let data):
+                completion(data)
                 
             case .failure(let error):
-                <#code#>
+                self?.view?.show(error: error)
             }
         }
     }

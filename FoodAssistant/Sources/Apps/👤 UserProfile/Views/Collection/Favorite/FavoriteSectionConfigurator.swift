@@ -10,7 +10,7 @@ import UIKit
 /// #Конфигуратор секции Favorite в коллекции
 final class FavoriteSectionConfigurator {
     
-    private let title = "Любимые блюда"
+    private let title = "Favorite Dishes".localize()
     
     private let models: [RecipeViewModel]
     

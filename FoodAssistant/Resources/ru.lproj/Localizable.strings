@@ -1,0 +1,40 @@
+/* 
+  Localizable.strings
+  FoodAssistant
+
+  Created by Владимир Рубис on 30.12.2022.
+  
+*/
+
+// MARK: - DetailInfo
+"Step" = "Шаг";
+"Calories" = "Калории";
+"Protein" = "Белки";
+"Fat" = "Жиры";
+"Carbohydrates" = "Углеводы";
+"RECIPE" = "РЕЦЕПТ";
+"Servings" = "Порции";
+"Nutrients" = "Питательные вещества";
+"Ingredients" = "Ингредиенты";
+"Instructions" = "Инструкция по приготовлению";
+
+// MARK: - UserProfile
+"Favorite Dishes" = "Любимые блюда";
+"In my fridge" = "В моем холодильнике";
+"Age" = "Возраст";
+"Height" = "Рост";
+"Weight" = "Вес";
+"My data" = "Мои данные";
+"Profile" = "Профиль";
+"Fridge" = "Холодильник";
+"Recipes" = "Рецепты";
+"g" = "гр";
+"tbsp" = "ст.л";
+"tsp" = "ч.л";
+"cup" = "чаш";
+"serv" = "порц";
+"handful" = "горсть";
+"h" = "ч";
+"min" = "мин";
+"pinch" = "щеп"
+"leaves" = "лист"

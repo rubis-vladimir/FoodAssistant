@@ -7,17 +7,17 @@
 
 import UIKit
 
-/// Типы текстовых ячеек модуля AddEvent
+/// #Типы секций модуля UserProfile
 enum UPSectionType {
-    /// Ячейка для подгрузки фото
+    /// Секция профиля
     case profile
-    //
+    /// Секция холодильника
     case fridge(_ ingredients: [IngredientViewModel])
-    /// Ячейка с описанием события
+    /// Секция с избранными рецептами
     case favorite(_ recipes: [RecipeViewModel])
 }
 
-/// Фабрика настройки табличного представления модуля AddEvent
+/// #Фабрика настройки представления коллекции модуля UserProfile
 final class UPFactory {
     
     private let collectionView: UICollectionView
@@ -28,8 +28,9 @@ final class UPFactory {
     
     /// Инициализатор
     ///  - Parameters:
-    ///    - tableView: настраиваемая таблица
-    ///    - delegate: делегат для передачи UIEvent (VC)
+    ///    - collectionView: настраиваемая коллекция
+    ///    - delegate: делегат для передачи UIEvent
+    ///    - orderSections: массив секций по порядку
     init(collectionView: UICollectionView,
          delegate: UserProfilePresentation?,
          orderSections: [UPSectionType]) {
@@ -43,7 +44,7 @@ final class UPFactory {
         setupCollectionView()
     }
     
-    /// Настраивает табличное представление
+    /// Настраивает  коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter

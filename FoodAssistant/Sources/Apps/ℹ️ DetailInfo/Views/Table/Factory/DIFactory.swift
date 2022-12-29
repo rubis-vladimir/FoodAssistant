@@ -33,7 +33,8 @@ final class DIFactory {
     ///  - Parameters:
     ///    - tableView: настраиваемая таблица
     ///    - delegate: делегат для передачи UIEvent (VC)
-    ///    - model: модель рецепта
+    ///    - scrollDelegate: делегат скролла таблицы
+    ///    - recipe: модель рецепта
     init(tableView: UITableView,
          delegate: DetailInfoPresentation?,
          scrollDelegate: ScrollDelegate?,
@@ -139,9 +140,9 @@ extension DIFactory: TVCFactoryProtocol {
 // MARK: - Константы
 extension DIFactory {
     private struct HeaderConstants {
-        static let titleNutrition = "Питательные вещества"
-        static let titleIngredients = "Ингредиенты"
-        static let titleInstructions = "Инструкция по приготовлению"
+        static let titleNutrition = "Nutrients".localize()
+        static let titleIngredients = "Ingredients".localize()
+        static let titleInstructions = "Instructions".localize()
     }
 }
 

@@ -76,7 +76,7 @@ final class UserProfileViewController: UIViewController {
     
     // MARK: - Private func
     private func setupNavigationBar() {
-        navigationItem.title = "Мой помощник"
+        navigationItem.title = "FoodAssistant"
     }
     
     func setupElements() {

@@ -7,12 +7,12 @@
 
 import UIKit
 
-/// #Строитель ячеек секции RecommendedRecipe
+/// #Строитель ячеек секции Profile
 final class ProfileItemBuilder {
     private let height: CGFloat = 300
 }
 
-// MARK: - RecommendedRecipeItemBuilder
+// MARK: - CVItemBuilderProtocol
 extension ProfileItemBuilder: CVItemBuilderProtocol {
     
     func register(collectionView: UICollectionView) {

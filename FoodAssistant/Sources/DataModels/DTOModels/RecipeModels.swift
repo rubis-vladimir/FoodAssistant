@@ -59,14 +59,17 @@ extension Recipe {
     
     /// Время приготовления в часах и минутах
     var cookingTime: String {
+        let hourText = "h".localize()
+        let minText = "min".localize()
+        
         let hours = readyInMinutes / 60
         let minutes = readyInMinutes % 60
         
         return hours > 0 && minutes > 0 // Условие 1
-        ? "\(hours) ч \(minutes) мин" :
+        ? "\(hours) \(hourText) \(minutes) \(minText)" :
         hours > 0 // Условие 2
-        ? "\(hours) ч"
-        :  "\(minutes) мин"
+        ? "\(hours) \(hourText)"
+        :  "\(minutes) \(minText)"
     }
     
     /// Объединяет ингредиенты если они повторяются в рецепте
@@ -157,10 +160,13 @@ extension Ingredient {
             return "cup" // Чашка
         } else if ["ounce", "ounces", "oz", "g", "lb", "lbs", "pounds", "pound", "grams"].contains(unit) {
             return "g" // Грамм
-        } else if ["serving", "servings"].contains(unit) {
+        } else if ["serving", "servings", "dash"].contains(unit) {
             return "serv" // Порция
         } else if ["small", "large", "medium"].contains(unit) {
             return ""
+        } else if ["handfuls", "handful", "medium"].contains(unit) {
+            return "handful"
+            
         } else {
             guard let unit = dtoUnit else { return "" }
             return unit

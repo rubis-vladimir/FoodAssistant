@@ -178,7 +178,9 @@ extension CustomSegmentedControl {
                                                      Icons.fridgeFill.image,
                                                      Icons.heartFill.image]
         
-        static let buttonTitles: [String] = ["Профиль", "Холодильник", "Рецепты"]
+        static let buttonTitles: [String] = ["Profile".localize(),
+                                             "Fridge".localize(),
+                                             "Recipes".localize()]
     }
 }
 

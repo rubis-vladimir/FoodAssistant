@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// #Строитель ячеек секции RecommendedRecipe
+/// #Строитель ячеек секции Fridge
 final class FridgeItemBuilder {
     private let height: CGFloat = 55
     private let models: [IngredientViewModel]
@@ -21,7 +21,7 @@ final class FridgeItemBuilder {
     }
 }
 
-// MARK: - RecommendedRecipeItemBuilder
+// MARK: - CVItemBuilderProtocol
 extension FridgeItemBuilder: CVItemBuilderProtocol {
     
     func register(collectionView: UICollectionView) {

@@ -131,7 +131,7 @@ final class RecipeListPresenter {
 //                self?.view?.showError(error)
 //            }
 //        }
-//        
+//
 //        fetchRecipe(with: filterParameters,
 //                    number: 4,
 //                    query: nil,

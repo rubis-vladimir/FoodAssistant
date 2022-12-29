@@ -26,8 +26,8 @@ final class TVIngredientCell: TVBaseCell {
     
     func configure(with ingredient: IngredientViewModel, flag: Bool) {
         ingredientView.configure(with: ingredient)
+        
         if flag {
-            
             ingredientView.backgroundColor = Palette.bgColor.color
             ingredientView.layer.borderWidth = 0.5
             ingredientView.layer.borderColor = UIColor.lightGray.cgColor

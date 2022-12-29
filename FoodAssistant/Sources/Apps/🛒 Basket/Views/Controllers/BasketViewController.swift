@@ -134,6 +134,11 @@ final class BasketViewController: UIViewController {
     @objc private func addFridgeButtonTapped() {
         presenter.didTapAddFridgeButton()
     }
+    
+    @objc private func orderDeliveryButtonTapped() {
+        self.showInformationAlert(title: "Заказ отправлен",
+                                  text: "")
+    }
 }
 
 // MARK: - BasketViewable

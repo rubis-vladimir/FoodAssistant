@@ -11,6 +11,8 @@ import UIKit
 final class BasicInfoCell: TVBaseCell {
     
     // MARK: - Properties
+    let servingsText = "Servings".localize()
+    
     /// Изображение рецепта
     private lazy var recipeImageView: UIImageView = {
         let iv = UIImageView()
@@ -35,7 +37,7 @@ final class BasicInfoCell: TVBaseCell {
     func configure(with model: RecipeProtocol) {
         detailTitleView.titleRecipeLabel.text = model.title
         detailTitleView.cookingTimeLabel.text = model.cookingTime
-        detailTitleView.numberServingsLabel.text = "\(model.servings) Порций"
+        detailTitleView.numberServingsLabel.text = "\(model.servings) \(servingsText)"
         detailTitleView.layoutSubviews()
     }
     
