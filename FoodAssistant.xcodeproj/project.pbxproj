@@ -89,6 +89,8 @@
 		7D451C71293BB3C100A4CDC5 /* HeaderSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */; };
 		7D451C73293E1B7F00A4CDC5 /* TranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */; };
 		7D451C77293F22F300A4CDC5 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C76293F22F300A4CDC5 /* StorageManager.swift */; };
+		7D485DA8295F64DB00BBA21A /* TagModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D485DA7295F64DB00BBA21A /* TagModel.swift */; };
+		7D485DAA295F652300BBA21A /* FilterParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D485DA9295F652300BBA21A /* FilterParameters.swift */; };
 		7D48A9AA2927B5FF009EF273 /* FirstRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9A92927B5FF009EF273 /* FirstRecipeCell.swift */; };
 		7D48A9AE2928EE89009EF273 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9AD2928EE89009EF273 /* AppConstants.swift */; };
 		7D48A9B229291137009EF273 /* UIImage + Alpha.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D48A9B129291137009EF273 /* UIImage + Alpha.swift */; };
@@ -162,7 +164,7 @@
 		7DF53EFC2956DC8900C4BA66 /* RecipeFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF72956DC8900C4BA66 /* RecipeFilterViewController.swift */; };
 		7DF53EFD2956DC8900C4BA66 /* RecipeFilterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF82956DC8900C4BA66 /* RecipeFilterInteractor.swift */; };
 		7DF53F072959CEEE00C4BA66 /* RFFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F062959CEEE00C4BA66 /* RFFactory.swift */; };
-		7DF53F0C2959D8CD00C4BA66 /* CVTagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F0B2959D8CD00C4BA66 /* CVTagCell.swift */; };
+		7DF53F0C2959D8CD00C4BA66 /* TagCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F0B2959D8CD00C4BA66 /* TagCell.swift */; };
 		7DF53F0E2959EC4000C4BA66 /* TagCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F0D2959EC4000C4BA66 /* TagCellBuilder.swift */; };
 		7DF53F102959F5F600C4BA66 /* TagSectionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53F0F2959F5F600C4BA66 /* TagSectionConfigurator.swift */; };
 		7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */; };
@@ -217,7 +219,6 @@
 		7D2F76F1291A94D4009D3444 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D2F76FB291A94D4009D3444 /* FoodAssistant.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FoodAssistant.xcdatamodel; sourceTree = "<group>"; };
 		7D2F76FD291A94D6009D3444 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		7D2F7700291A94D6009D3444 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D2F7702291A94D6009D3444 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D2F7707291A94D6009D3444 /* FoodAssistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodAssistantTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D2F770B291A94D6009D3444 /* FoodAssistantTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAssistantTests.swift; sourceTree = "<group>"; };
@@ -276,6 +277,9 @@
 		7D451C70293BB3C100A4CDC5 /* HeaderSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderSectionModel.swift; sourceTree = "<group>"; };
 		7D451C72293E1B7F00A4CDC5 /* TranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateService.swift; sourceTree = "<group>"; };
 		7D451C76293F22F300A4CDC5 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
+		7D485DA7295F64DB00BBA21A /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
+		7D485DA9295F652300BBA21A /* FilterParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameters.swift; sourceTree = "<group>"; };
+		7D485DAB295F8F4400BBA21A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D48A9A92927B5FF009EF273 /* FirstRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRecipeCell.swift; sourceTree = "<group>"; };
 		7D48A9AD2928EE89009EF273 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		7D48A9B129291137009EF273 /* UIImage + Alpha.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage + Alpha.swift"; sourceTree = "<group>"; };
@@ -350,7 +354,7 @@
 		7DF53EF72956DC8900C4BA66 /* RecipeFilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFilterViewController.swift; sourceTree = "<group>"; };
 		7DF53EF82956DC8900C4BA66 /* RecipeFilterInteractor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFilterInteractor.swift; sourceTree = "<group>"; };
 		7DF53F062959CEEE00C4BA66 /* RFFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RFFactory.swift; sourceTree = "<group>"; };
-		7DF53F0B2959D8CD00C4BA66 /* CVTagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVTagCell.swift; sourceTree = "<group>"; };
+		7DF53F0B2959D8CD00C4BA66 /* TagCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCell.swift; sourceTree = "<group>"; };
 		7DF53F0D2959EC4000C4BA66 /* TagCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagCellBuilder.swift; sourceTree = "<group>"; };
 		7DF53F0F2959F5F600C4BA66 /* TagSectionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagSectionConfigurator.swift; sourceTree = "<group>"; };
 		7DFEB5DD291C2F9D008C28FC /* NetworkDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataFetcher.swift; sourceTree = "<group>"; };
@@ -580,8 +584,8 @@
 		7D2F7738291A9752009D3444 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7DF53EF1295631F100C4BA66 /* RecipeListSearch */,
 				7D2F773B291A9763009D3444 /* Controllers */,
+				7DF53EF1295631F100C4BA66 /* RecipeListSearch */,
 				7D48A9A82927B5F2009EF273 /* Collection */,
 			);
 			path = Views;
@@ -633,7 +637,8 @@
 				7D3D199829434F34005E3840 /* CoreDataModels */,
 				7D48A9B5292A14E2009EF273 /* ViewModels */,
 				7DFEB5EC291C3DA1008C28FC /* DTOModels */,
-				7DFEB5EB291C3D85008C28FC /* Translate */,
+				7DFEB5EB291C3D85008C28FC /* TranslateModels */,
+				7D485DA6295F64AB00BBA21A /* FilterModels */,
 			);
 			path = DataModels;
 			sourceTree = "<group>";
@@ -912,6 +917,23 @@
 				7DC1610F292E48830026A072 /* Cache */,
 			);
 			path = "Locale layer";
+			sourceTree = "<group>";
+		};
+		7D485DA5295F583500BBA21A /* FilterManager */ = {
+			isa = PBXGroup;
+			children = (
+				7DE6BA94295B18C500711FB4 /* FilterManager.swift */,
+				7D485DA9295F652300BBA21A /* FilterParameters.swift */,
+			);
+			path = FilterManager;
+			sourceTree = "<group>";
+		};
+		7D485DA6295F64AB00BBA21A /* FilterModels */ = {
+			isa = PBXGroup;
+			children = (
+				7D485DA7295F64DB00BBA21A /* TagModel.swift */,
+			);
+			path = FilterModels;
 			sourceTree = "<group>";
 		};
 		7D48A9A82927B5F2009EF273 /* Collection */ = {
@@ -1206,9 +1228,9 @@
 		7DF53EFE2956DFEA00C4BA66 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7DF53F082959D2F800C4BA66 /* Tag */,
-				7DF53F052959CEDA00C4BA66 /* Factory */,
 				7DF53EFF2956DFFD00C4BA66 /* Controllers */,
+				7DF53F052959CEDA00C4BA66 /* Factory */,
+				7DF53F082959D2F800C4BA66 /* Tag */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1225,7 +1247,6 @@
 			isa = PBXGroup;
 			children = (
 				7DF53F062959CEEE00C4BA66 /* RFFactory.swift */,
-				7DE6BA94295B18C500711FB4 /* FilterManager.swift */,
 			);
 			path = Factory;
 			sourceTree = "<group>";
@@ -1233,7 +1254,7 @@
 		7DF53F082959D2F800C4BA66 /* Tag */ = {
 			isa = PBXGroup;
 			children = (
-				7DF53F0B2959D8CD00C4BA66 /* CVTagCell.swift */,
+				7DF53F0B2959D8CD00C4BA66 /* TagCell.swift */,
 				7DF53F0D2959EC4000C4BA66 /* TagCellBuilder.swift */,
 				7DF53F0F2959F5F600C4BA66 /* TagSectionConfigurator.swift */,
 			);
@@ -1243,6 +1264,7 @@
 		7DFEB5DC291C2F14008C28FC /* Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7D485DA5295F583500BBA21A /* FilterManager */,
 				7D40B306294CBF7C00D832A0 /* IngredientCalculator */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
 				7D451C75293F22CB00A4CDC5 /* Locale layer */,
@@ -1250,13 +1272,13 @@
 			path = Workers;
 			sourceTree = "<group>";
 		};
-		7DFEB5EB291C3D85008C28FC /* Translate */ = {
+		7DFEB5EB291C3D85008C28FC /* TranslateModels */ = {
 			isa = PBXGroup;
 			children = (
 				7DFEB5E9291C3D36008C28FC /* TranslateResponce.swift */,
 				7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */,
 			);
-			path = Translate;
+			path = TranslateModels;
 			sourceTree = "<group>";
 		};
 		7DFEB5EC291C3DA1008C28FC /* DTOModels */ = {
@@ -1355,8 +1377,8 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				ru,
+				Base,
 			);
 			mainGroup = 7D2F76E5291A94D4009D3444;
 			productRefGroup = 7D2F76EF291A94D4009D3444 /* Products */;
@@ -1483,6 +1505,7 @@
 				7D3BC94F29312C29001B1B57 /* DetailInfoInteractor.swift in Sources */,
 				7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */,
 				7D0F2B852935152B00F57E2A /* NutrientsCellBuilder.swift in Sources */,
+				7D485DAA295F652300BBA21A /* FilterParameters.swift in Sources */,
 				7D77FDA9291FC56C0085D7FF /* BasketInteractor.swift in Sources */,
 				7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */,
 				7D48A9B9292A31AF009EF273 /* ImageDownloader.swift in Sources */,
@@ -1516,6 +1539,7 @@
 				7D2B34862947611100FF01A2 /* CDRecipe+CoreDataClass.swift in Sources */,
 				7DE6BAA7295E2D1400711FB4 /* UIViewController + AlertError.swift in Sources */,
 				7D4BA4272922AD2100A4393B /* UserProfileRouter.swift in Sources */,
+				7D485DA8295F64DB00BBA21A /* TagModel.swift in Sources */,
 				7D3D19AA29460E8C005E3840 /* ProfileItemBuilder.swift in Sources */,
 				7D2F773F291A99B6009D3444 /* RecipeRequest.swift in Sources */,
 				7D0F2B832935151D00F57E2A /* NutrientsCell.swift in Sources */,
@@ -1548,7 +1572,7 @@
 				7D3D19BE29465DEF005E3840 /* BasketFactory.swift in Sources */,
 				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,
 				7D77FD94291FBFAD0085D7FF /* TabBarConfigurator.swift in Sources */,
-				7DF53F0C2959D8CD00C4BA66 /* CVTagCell.swift in Sources */,
+				7DF53F0C2959D8CD00C4BA66 /* TagCell.swift in Sources */,
 				7DC16125292FBDDA0026A072 /* RLFactory.swift in Sources */,
 				7D2B34872947611100FF01A2 /* CDRecipe+CoreDataProperties.swift in Sources */,
 				7DF53F0E2959EC4000C4BA66 /* TagCellBuilder.swift in Sources */,
@@ -1598,7 +1622,7 @@
 		7D2F76FF291A94D6009D3444 /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				7D2F7700291A94D6009D3444 /* Base */,
+				7D485DAB295F8F4400BBA21A /* ru */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";

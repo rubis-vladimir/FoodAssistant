@@ -32,13 +32,13 @@ final class BasketViewController: UIViewController {
                                                        collectionViewLayout: AppConstants.getFlowLayout())
     
     private lazy var addInFridgeButton = BaseRedButton(title: Constracts.addFridgeTitle,
-                                                       image: Constracts.addFridgeImage) {
-        self.presenter.didTapAddFridgeButton()
+                                                       image: Constracts.addFridgeImage) { [weak self] in
+        self?.presenter.didTapAddFridgeButton()
     }
     
     private lazy var orderDeliveryButton = BaseRedButton(title: Constracts.orderButtonTitle,
-                                                       image: Constracts.orderBurronImage) {
-        self.showInformationAlert(title: "Order".localize(),
+                                                       image: Constracts.orderBurronImage) { [weak self] in
+        self?.showInformationAlert(title: "Order".localize(),
                                   text: "Go to checkout screen".localize())
     }
     

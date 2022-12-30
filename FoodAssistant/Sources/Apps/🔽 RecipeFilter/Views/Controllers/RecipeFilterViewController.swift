@@ -7,47 +7,39 @@
 
 import UIKit
 
-
-
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeFilter
 protocol RecipeFilterPresentation: CellTapable,
-                                   RFSelectedIngredientsChangable,
+                                   SelectedIngredientsChangable,
                                    AnyObject {
-    func checkFlag(indexPath: IndexPath) -> Bool
-    
-    func update(parameter: FilterParameter,
-                text: String)
-    
+    /// Ивент нажатия на изменение данных параметра
+    /// - Parameters:
+    ///  - parameter: параметр
+    ///  - text: текст
+    func didTapChange(parameter: FilterParameters,
+                      text: String)
+    /// Ивент нажатия на кнопку показать результаты
     func didTapShowResultButton()
+    /// Проверка флага выбора
+    func checkFlag(indexPath: IndexPath) -> Bool
 }
 
 /// #Контроллер представления фильтра рецептов
 final class RecipeFilterViewController: UIViewController {
 
+    // MARK: - Properties
     private let presenter: RecipeFilterPresentation
     
-    let navLabel: UILabel = {
-        let label = UILabel()
-        label.text = "Фильтр"
-        label.font = Fonts.navTitle
-        return label
-    }()
-    
     private lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero,
-                                                                         collectionViewLayout: getFlowLayout())
+                                                                         collectionViewLayout: AppConstants.getFlowLayout())
     private var factory: RFFactory?
     
-    private lazy var showResultsButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = Fonts.subtitle
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.setTitle("Показать результаты", for: .normal)
-        button.layer.cornerRadius = 25
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    /// Кнопка показать результаты
+    private lazy var showResultsButton = BaseRedButton(title: Constants.showResultsButtonTitle,
+                                                       image: nil) { [weak self] in
+        self?.presenter.didTapShowResultButton()
+    }
     
+    // MARK: - Init & Override
     init(presenter: RecipeFilterPresentation) {
         self.presenter = presenter
         super.init(nibName: nil, bundle: nil)
@@ -57,37 +49,23 @@ final class RecipeFilterViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        collectionView.backgroundColor = .white
-        navigationController?.navigationItem.titleView = navLabel
-        
-//        navigationController?.navigationItem.hidesBackButton = true
-        
-        showResultsButton.addTarget(self,
-                                    action: #selector(didTapShowResultsButton),
-                                    for: .touchUpInside)
-        
+        setupElements()
         setupConstraints()
     }
     
-    private func getFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let padding = AppConstants.padding
-        layout.sectionInset = UIEdgeInsets(top: 0,
-                                           left: padding,
-                                           bottom: padding,
-                                           right: padding)
-        layout.minimumInteritemSpacing = padding
-        layout.minimumLineSpacing = padding
-        return layout
+    // MARK: - Private func
+    private func setupElements() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        
+        navigationItem.titleView = createNavTitle(title: "Filter".localize())
+        navigationItem.hidesBackButton = true
     }
     
-    func setupConstraints() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+    private func setupConstraints() {
         view.addSubview(collectionView)
         view.addSubview(showResultsButton)
         
@@ -99,16 +77,9 @@ final class RecipeFilterViewController: UIViewController {
             
             showResultsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             showResultsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),
-            showResultsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            showResultsButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -AppConstants.padding),
             showResultsButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    @objc private func didTapShowResultsButton() {
-        
-//        navigationItem.searchController.
-        presenter.didTapShowResultButton()
-
     }
 }
 
@@ -119,24 +90,27 @@ extension RecipeFilterViewController: RecipeFilterViewable {
         collectionView.reloadSections(IndexSet(integer: section))
     }
     
-    func updateCV(models: [FilterParameter : [TagModel]]) {
+    func updateCV(dictModels: [FilterParameters : [TagModel]]) {
         DispatchQueue.main.async {
             self.factory = RFFactory(collectionView: self.collectionView,
-                                     dictModels: models,
+                                     dictModels: dictModels,
                                      delegate: self.presenter)
-            self.factory?.setupCollectionView()
         }
     }
     
-    func showTFAlert(parameter: FilterParameter, text: String) {
+    func showTFAlert(parameter: FilterParameters, text: String) {
         showTFAlert(title: parameter.title,
                     text: text,
-                    note: "Введите названия через\nзапятую и/или пробел") { [weak self] text in
-            self?.presenter.update(parameter: parameter, text: text)
+                    note: Constants.noteText) { [weak self] text in
+            self?.presenter.didTapChange(parameter: parameter, text: text)
         }
     }
-    
-    func showError() {
-        
+}
+
+// MARK: - Constants
+extension RecipeFilterViewController {
+    private struct Constants {
+        static let showResultsButtonTitle = "Show results".localize()
+        static let noteText = "Enter titles separated\nby commas and/or spaces".localize()
     }
 }

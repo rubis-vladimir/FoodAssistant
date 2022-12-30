@@ -63,14 +63,20 @@ class LaunchView: UIView {
     }()
     
     /// Кнопка готовности
-    private let readyButton: UIButton = {
-        let button = UIButton()
-        button.titleLabel?.font = Fonts.header
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+//    private let readyButton: UIButton = {
+//        let button = UIButton()
+//        button.titleLabel?.font = Fonts.header
+//        button.backgroundColor = Palette.darkColor.color
+//        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
+//        button.translatesAutoresizingMaskIntoConstraints = false
+//        return button
+//    }()
+    
+    private lazy var readyButton = BaseRedButton(title: nil,
+                                                 image: nil) { [weak self] in
+        guard let page = self?.page else { return }
+        self?.delegate?.didTapReadyButton(page: page)
+    }
     
     // MARK: - Init & Override
     override init(frame: CGRect) {
@@ -98,9 +104,13 @@ class LaunchView: UIView {
         
         switch page {
         case .last:
-            readyButton.setTitle("Начать", for: .normal)
+            let title = Constants.startTitle
+            print(title)
+            readyButton.setTitle(Constants.startTitle.localize(), for: .normal)
         default:
-            readyButton.setTitle("Далее", for: .normal)
+            let title = Constants.nextTitle
+            print(title)
+            readyButton.setTitle(Constants.nextTitle.localize(), for: .normal)
         }
         
         backgroundImageView.image = UIImage(named: page.rawValue)
@@ -152,5 +162,13 @@ class LaunchView: UIView {
     @objc private func didTapReadyButton(_ button: UIButton) {
         guard let page = page else { return }
         delegate?.didTapReadyButton(page: page)
+    }
+}
+
+// MARK: - Constants
+extension LaunchView {
+    private struct Constants {
+        static let startTitle = "Start".localize()
+        static let nextTitle = "Next".localize()
     }
 }

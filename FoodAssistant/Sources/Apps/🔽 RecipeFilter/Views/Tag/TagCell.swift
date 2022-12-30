@@ -1,5 +1,5 @@
 //
-//  CVTagCell.swift
+//  TagCell.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 26.12.2022.
@@ -7,14 +7,20 @@
 
 import UIKit
 
+/// #Протокол передачи UI-ивента касания(тапа)
 protocol CellTapable: AnyObject {
-    
+    /// Нажата ячейка
+    /// - Parameters:
+    ///  - flag: флаг выбора
+    ///  - indexPath: индекс в коллекции
     func didTapElementCell(_ flag: Bool,
                            indexPath: IndexPath)
 }
 
-class CVTagCell: UICollectionViewCell {
+/// #Ячейка с тэгом
+class TagCell: UICollectionViewCell {
     
+    // MARK: - Properties
     weak var delegate: CellTapable?
     
     private let singleTapGestureRecognizer = UITapGestureRecognizer()
@@ -41,6 +47,7 @@ class CVTagCell: UICollectionViewCell {
         return label
     }()
     
+    // MARK: - Init & Override
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupCell()
@@ -52,23 +59,31 @@ class CVTagCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        layer.cornerRadius = frame.height / 2
+    }
+    
+    // MARK: - Function
+    /// Конфигурирует ячейку
+    /// - Parameters:
+    ///  - flag: флаг выбора
+    ///  - title: текст
+    ///  - indexPath: индекс в коллекции
+    ///  - height: высота
     func configure(flag: Bool,
                    title: String,
-                   indexPath: IndexPath,
-                   height: CGFloat) {
+                   indexPath: IndexPath) {
         titleLabel.text = title
         self.indexPath = indexPath
         isSelected = flag
-        clipsToBounds = true
-        layer.cornerRadius = height / 2
     }
     
     private func setupCell() {
         singleTapGestureRecognizer.delegate = self
         layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 0.5
-        layer.cornerRadius = frame.size.height / 2
-        layer.add(shadow: AppConstants.Shadow.defaultOne)
     }
     
     /// Настройка отработки касаний экрана
@@ -90,15 +105,17 @@ class CVTagCell: UICollectionViewCell {
         ])
     }
     
+    /// Обработка одного касания
     @objc private func handleSingleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
         isSelected.toggle()
         guard let indexPath = indexPath else { return }
-        delegate?.didTapElementCell(isSelected, indexPath: indexPath)
+        delegate?.didTapElementCell(isSelected,
+                                    indexPath: indexPath)
     }
 }
 
 // MARK: - UIGestureRecognizerDelegate
-extension CVTagCell: UIGestureRecognizerDelegate {
+extension TagCell: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
                            shouldRequireFailureOf otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return gestureRecognizer === singleTapGestureRecognizer

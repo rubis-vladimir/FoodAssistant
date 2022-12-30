@@ -196,6 +196,7 @@ extension RecipeListPresenter: RecipeListPresentation {
         interactor.checkFavorite(id: id)
     }
     
+    // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
@@ -208,7 +209,8 @@ extension RecipeListPresenter: RecipeListPresentation {
             }
         }
     }
-    
+     
+    // FavoriteChangable
     func didTapFavoriteButton(_ isFavorite: Bool,
                               id: Int) {
         if isFavorite {
@@ -219,18 +221,20 @@ extension RecipeListPresenter: RecipeListPresentation {
         }
     }
     
+    // InBasketTapable
     func didTapAddInBasketButton(id: Int) {
         interactor.saveRecipe(id: id,
                               for: .inBasket)
     }
     
-    
+    // CellSelectable
     func didSelectItem(id: Int) {
         interactor.getRecipe(id: id) { [weak self] model in
             self?.router.routeToDetail(model: model)
         }
     }
     
+    // LayoutChangable
     func didTapChangeLayoutButton(section: Int) {
         
         guard let count = viewModelsDictionary[.main]?.count else { return }

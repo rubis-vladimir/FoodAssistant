@@ -14,10 +14,16 @@ protocol RecipeListPresentation: LayoutChangable,
                                  InBasketTapable,
                                  ImagePresentation,
                                  AnyObject {
-    
-    func checkFavorite(id: Int) -> Bool
+    /// Ивент нажатия на кнопку фильтр
+    /// - Parameters:
+    ///  - flag: флаг
+    ///  - search: поисковой контроллер
+    func didTapFilterButton(_ flag: Bool,
+                            search: UISearchController)
+    /// Обновить новые данные
     func updateNewData()
-    func didTapFilterButton(_ flag: Bool, search: UISearchController)
+    /// Проверить избранный ли рецепт
+    func checkFavorite(id: Int) -> Bool
 }
 
 /// #Контроллер представления списка рецептов
@@ -117,7 +123,6 @@ extension RecipeListViewController: RecipeListViewable {
 
 extension RecipeListViewController: UISearchBarFilterDelegate {
     func changeFilterView(isFilter: Bool) {
-//        navigationController?.hidesBottomBarWhenPushed = true
         presenter.didTapFilterButton(isFilter,
                                      search: searchController)
     }

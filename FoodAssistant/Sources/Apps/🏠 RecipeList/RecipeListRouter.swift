@@ -24,39 +24,29 @@ extension RecipeListRouter: RecipeListRouting {
         guard let navigationController = navigationController else { return }
         
         if flag {
-            let filterViewController = RecipeFilterAssembly(navigationController: navigationController,
-                                                            searchDelegate: searchDelegate).assembly()
-            
-            filterViewController.navigationItem.searchController = search
-            filterViewController.navigationItem.hidesBackButton = true
-            
-            filterViewController.navigationItem.title = "Фильтр"
-            filterViewController.navigationController?.navigationBar.backgroundColor = .clear
+            let filterVC = RecipeFilterAssembly(navigationController: navigationController,
+                                                searchDelegate: searchDelegate).assembly()
+            filterVC.hidesBottomBarWhenPushed = true
+            filterVC.navigationItem.searchController = search
+            filterVC.navigationController?.navigationBar.backgroundColor = .clear
             
             navigationController.createCustomTransition(with: .fade)
             navigationController.navigationBar.isTranslucent = true
             
-            navigationController.pushViewController(filterViewController, animated: false)
+            navigationController.pushViewController(filterVC, animated: false)
         } else {
             navigationController.navigationItem.hidesSearchBarWhenScrolling = false
-            navigationController.hidesBottomBarWhenPushed = false
             navigationController.popViewController(animated: true)
         }
     }
     
-    
     func routeToDetail(model: RecipeProtocol) {
         guard let navigationController = navigationController else { return }
-        let vc = DetailInfoAssembly(navigationController: navigationController,
-                                    recipe: model).assembly()
-        vc.hidesBottomBarWhenPushed = true
+        let detailInfoVC = DetailInfoAssembly(navigationController: navigationController,
+                                              recipe: model).assembly()
+        detailInfoVC.hidesBottomBarWhenPushed = true
         navigationController.navigationBar.isTranslucent = true
-        navigationController.pushViewController(vc, animated: true)
-        
-    }
-    
-    func routeTest(search: UISearchController,
-                   searchDelegate: SeachRecipesRequested) {
+        navigationController.pushViewController(detailInfoVC, animated: true)
         
     }
 }

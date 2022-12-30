@@ -41,11 +41,6 @@ extension HeaderBuilder: CVHeaderBuilderProtocol {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
             
-//            let headerModel = HeaderSectionModel(title: Constants.titleOne,
-//                                                 firstImage: Constants.firstImage,
-//                                                 secondImage: Constants.secondImage,
-//                                                 action: action )
-            
             switch type {
             case .base(let title):
                 let headerView = collectionView.dequeueReusableView(CVBaseSectionHeader.self,

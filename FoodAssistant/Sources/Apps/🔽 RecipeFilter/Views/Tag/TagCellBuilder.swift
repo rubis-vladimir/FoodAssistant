@@ -26,7 +26,7 @@ final class TagCellBuilder {
         let title = tagModels[index].title
         let size: CGSize = title.size(withAttributes: [NSAttributedString.Key.font: Fonts.subtitle?.withSize(25) ?? UIFont.systemFont(ofSize: 25)])
         
-        let availableWidth = size.width > width ? width - 20 : size.width
+        let availableWidth = size.width > width ? width - 20 : size.width - 5
         let availableHeight = size.height
 
         return CGSize(width: availableWidth,
@@ -38,7 +38,7 @@ final class TagCellBuilder {
 extension TagCellBuilder: CVItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
-        collectionView.register(CVTagCell.self)
+        collectionView.register(TagCell.self)
     }
     
     func itemCount() -> Int { tagModels.count }
@@ -53,15 +53,17 @@ extension TagCellBuilder: CVItemBuilderProtocol {
                 collectionView: UICollectionView) -> UICollectionViewCell {
         /// Название
         let title = tagModels[indexPath.item].title
-        ///
+        /// Размер текста при указанном шрифте
         let size = title.size(withAttributes: [NSAttributedString.Key.font: Fonts.subtitle?.withSize(25) ?? UIFont.systemFont(ofSize: 25)])
-        
+        /// Проверяем установлен ли флаг
         let isCheck = delegate?.checkFlag(indexPath: indexPath) ?? false
         
-        let cell = collectionView.dequeueReusableCell(CVTagCell.self,
+        let cell = collectionView.dequeueReusableCell(TagCell.self,
                                                       indexPath: indexPath)
         cell.delegate = delegate
-        cell.configure(flag: isCheck, title: title, indexPath: indexPath, height: size.height)
+        cell.configure(flag: isCheck,
+                       title: title,
+                       indexPath: indexPath)
         
         return cell
     }

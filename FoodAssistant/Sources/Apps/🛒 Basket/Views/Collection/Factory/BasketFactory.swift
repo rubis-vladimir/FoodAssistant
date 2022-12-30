@@ -58,7 +58,7 @@ final class BasketFactory {
     
     /// Создает строителя ячеек
     ///  - Parameter type: тип секции
-    ///   - Return: объект протокола строителя
+    ///  - Returns: объект протокола строителя
     private func createBuilder(type: BasketSectionType) -> CVSectionBuilderProtocol {
         switch type {
         case .addedRecipe:

@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Базовая красная кнопка =D
+/// #Базовая красная кнопка =D
 class BaseRedButton: UIButton {
     /// Действие
     private var action: (() -> ())?

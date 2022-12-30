@@ -7,8 +7,9 @@
 
 import UIKit
 
+/// #Кастомный поисковой контроллер
 final class RecipeListSearchController: UISearchController, UISearchBarDelegate {
-
+    /// Кастомный `SearchBar`
     private let customSearchBar = RecipesSearchBar()
     
     override var searchBar: RecipesSearchBar {
@@ -17,6 +18,7 @@ final class RecipeListSearchController: UISearchController, UISearchBarDelegate 
     
     override init(searchResultsController: UIViewController?) {
         super.init(searchResultsController: searchResultsController)
+        /// Настройка
         searchBar.showsCancelButton = false
         obscuresBackgroundDuringPresentation = false
         customSearchBar.delegate = self

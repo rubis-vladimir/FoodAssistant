@@ -9,9 +9,9 @@ import UIKit
 
 /// #Варианты секций модуля RecipeList
 enum RLSectionType {
-    /// Рекомендованные
+    /// Рекомендации
     case recommended
-    /// Основные
+    /// Основная
     case main
 }
 
@@ -27,8 +27,8 @@ final class RLFactory {
     /// Инициализатор
     ///  - Parameters:
     ///    - collectionView: настраиваемая коллекция
-    ///    - buildType: тип сборки
-    ///    - delegate: делегат для передачи UIEvent (VC)
+    ///    - arrayModelsDictionary: массив моделей словарей
+    ///    - delegate: делегат для передачи UIEvent
     init(collectionView: UICollectionView,
          arrayModelsDictionary: [RecipeModelsDictionary],
          delegate: RecipeListPresentation?) {
@@ -36,6 +36,7 @@ final class RLFactory {
         self.arrayModelsDictionary = arrayModelsDictionary
         self.delegate = delegate
         
+        /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
         
         setupCollectionView()
@@ -55,8 +56,8 @@ final class RLFactory {
     
     /// Создает строителя ячеек
     ///  - Parameters:
-    ///     - model: модель данных
-    ///     - type: тип ячейки
+    ///     - models: модели рецептов
+    ///     - type: тип секции
     ///   - Return: объект протокола строителя
     private func createBuilder(models: [RecipeViewModel],
                                type: RLSectionType) -> CVSectionBuilderProtocol {
@@ -64,9 +65,9 @@ final class RLFactory {
         case .recommended:
             let configurator = RecommendedSectionConfigurator(models: models,
                                                               delegate: delegate)
-            return SingleCellSectionConfigurator(title: "Рекомендации",
+            return SingleCellSectionConfigurator(title: Constants.recommendedTitle,
                                                  configurators: [configurator],
-                                                 height: 360).configure(for: collectionView)
+                                                 height: Constants.reccomendedHeight).configure(for: collectionView)
             
         case .main:
             return MainSectionConfigurator(models: models,
@@ -82,5 +83,13 @@ extension RLFactory: CVFactoryProtocol {
         arrayModelsDictionary.flatMap {
             $0.map { createBuilder(models: $0.value, type: $0.key) }
         }
+    }
+}
+
+// MARK: - Constants
+extension RLFactory {
+    private struct Constants {
+        static let recommendedTitle = "Recommendations".localize()
+        static let reccomendedHeight: CGFloat = 360
     }
 }

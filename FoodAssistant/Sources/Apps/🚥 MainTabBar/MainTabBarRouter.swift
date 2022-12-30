@@ -20,10 +20,6 @@ final class MainTabBarRouter {
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
-    
-    deinit {
-        print("DEINIT \(self)")
-    }
 }
 
 // MARK: - MainTabBarRoutable
