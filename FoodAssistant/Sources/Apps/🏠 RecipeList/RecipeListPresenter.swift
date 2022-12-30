@@ -38,11 +38,7 @@ protocol RecipeListViewable: AnyObject {
 /// #Протокол управления бизнес логикой модуля RecipeList
 protocol RecipeListBusinessLogic: RecipeReceived,
                                   ImageBusinessLogic,
-                                  RLNetworkBusinessLogic,
-                                  RLLocalStorageBusinessLogic { }
-
-/// #Протокол взаимодействия с сетью модуля RecipeList
-protocol RLNetworkBusinessLogic {
+                                  RecipeRemovable {
     /// Получить рецепт из сети по параметрам
     ///  - Parameters:
     ///   - parameters: установленные параметры
@@ -61,25 +57,19 @@ protocol RLNetworkBusinessLogic {
     ///   - completion: захватывает вью модель рецепта / ошибку
     func fetchRecommended(number: Int,
                           completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
-}
-
-/// #Протокол взаимодействия с ДБ модуля RecipeList
-protocol RLLocalStorageBusinessLogic {
+    
     /// Сохранить рецепт
     /// - Parameters:
     ///   - id: идентификатор рецепта
     ///   - target: цель сохранения
     func saveRecipe(id: Int,
                     for target: TargetOfSave)
-    
-    /// Удалить рецепт
-    /// - Parameter id: идентификатор рецепта
-    func removeRecipe(id: Int)
-    
+
     /// Обновляет информацию об избранных рецептах
     func updateFavoriteId()
     
     /// Проверяет находится ли рецепт в избранных
+    /// - Parameter id: идентификатор рецепта
     func checkFavorite(id: Int) -> Bool
 }
 
