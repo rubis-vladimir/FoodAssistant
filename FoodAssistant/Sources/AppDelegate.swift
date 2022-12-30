@@ -52,7 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UITableView.appearance().tableHeaderView = .init(frame: CGRect(x: 0, y: 0, width: 0, height: CGFLOAT_MIN))
         UINavigationBar.appearance().isTranslucent = false
         
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Отмена"
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Отмена".localize()
     }
 }
 

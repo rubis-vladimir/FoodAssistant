@@ -142,6 +142,8 @@
 		7DE6BAA9295E2EC600711FB4 /* RecoverableError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BAA8295E2EC600711FB4 /* RecoverableError.swift */; };
 		7DE6BAAB295E2FFC00711FB4 /* String + Localizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BAAA295E2FFC00711FB4 /* String + Localizable.swift */; };
 		7DE6BAB5295E387D00711FB4 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7DE6BAB7295E387D00711FB4 /* Localizable.strings */; };
+		7DE6BABA295EFB1C00711FB4 /* UIViewController + CustomNavTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BAB9295EFB1B00711FB4 /* UIViewController + CustomNavTitle.swift */; };
+		7DE6BABD295F3CAD00711FB4 /* BaseRedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DE6BABC295F3CAD00711FB4 /* BaseRedButton.swift */; };
 		7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */; };
 		7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */; };
 		7DEF8E132922CB390016A207 /* CALayer + Shadow + Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E122922CB390016A207 /* CALayer + Shadow + Protocol.swift */; };
@@ -328,6 +330,8 @@
 		7DE6BAAA295E2FFC00711FB4 /* String + Localizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String + Localizable.swift"; sourceTree = "<group>"; };
 		7DE6BAB6295E387D00711FB4 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7DE6BAB8295E38AC00711FB4 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		7DE6BAB9295EFB1B00711FB4 /* UIViewController + CustomNavTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomNavTitle.swift"; sourceTree = "<group>"; };
+		7DE6BABC295F3CAD00711FB4 /* BaseRedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRedButton.swift; sourceTree = "<group>"; };
 		7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController + Transition.swift"; sourceTree = "<group>"; };
 		7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + CustomBarButton.swift"; sourceTree = "<group>"; };
 		7DEF8E122922CB390016A207 /* CALayer + Shadow + Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer + Shadow + Protocol.swift"; sourceTree = "<group>"; };
@@ -534,6 +538,7 @@
 				7DEF8E122922CB390016A207 /* CALayer + Shadow + Protocol.swift */,
 				7D48A9B129291137009EF273 /* UIImage + Alpha.swift */,
 				7DEF8E102922B41B0016A207 /* UIViewController + CustomBarButton.swift */,
+				7DE6BAB9295EFB1B00711FB4 /* UIViewController + CustomNavTitle.swift */,
 				7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */,
 				7DE6BAA6295E2D1400711FB4 /* UIViewController + AlertError.swift */,
 				7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */,
@@ -884,6 +889,7 @@
 			children = (
 				7D451C62293A88C800A4CDC5 /* Protocols */,
 				7DC550A029522832001539C5 /* Views */,
+				7DE6BABB295F3C7F00711FB4 /* Buttons */,
 				7D3D19B829464F19005E3840 /* Cells */,
 				7D3D19B929464F23005E3840 /* Headers */,
 			);
@@ -1112,6 +1118,14 @@
 				7DE6BA9F295D7C2200711FB4 /* ViewableProtocols.swift */,
 			);
 			path = ViewableProtocols;
+			sourceTree = "<group>";
+		};
+		7DE6BABB295F3C7F00711FB4 /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				7DE6BABC295F3CAD00711FB4 /* BaseRedButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		7DEF8E162923C4CC0016A207 /* Views */ = {
@@ -1433,6 +1447,7 @@
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */,
 				7DEF8E1A2923C4FE0016A207 /* FactoryTableViewProtocols.swift in Sources */,
+				7DE6BABD295F3CAD00711FB4 /* BaseRedButton.swift in Sources */,
 				7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */,
 				7DE6BAA5295DEF9600711FB4 /* SearchBarAdapter.swift in Sources */,
 				7D48A9AE2928EE89009EF273 /* AppConstants.swift in Sources */,
@@ -1526,6 +1541,7 @@
 				7DF53EFC2956DC8900C4BA66 /* RecipeFilterViewController.swift in Sources */,
 				7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */,
 				7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */,
+				7DE6BABA295EFB1C00711FB4 /* UIViewController + CustomNavTitle.swift in Sources */,
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,
 				7DC5509B295103A6001539C5 /* UserDefaultsKeys.swift in Sources */,
 				7D0F2B762934BCF600F57E2A /* FactoryCollectionViewProtocols.swift in Sources */,

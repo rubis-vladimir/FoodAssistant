@@ -9,7 +9,7 @@ import Foundation
 
 /// #Навигация в модуле Basket
 enum BasketTarget {
-    /// Возврат на предыдущий экран
+    /// Предыдущий экран
     case back
     /// Детальная информация рецепта
     case detailInfo(_ recipe: RecipeProtocol)
@@ -25,35 +25,32 @@ protocol BasketRouting {
 /// #Протокол управления View-слоем модуля Basket
 protocol BasketViewable: ErrorShowable,
                          AnyObject {
-    /// Обновление Collection View
+    /// Обновить Collection View
     ///  - Parameters:
     ///   - recipes: рецепты
     ///   - ingredients: ингредиенты
-    func updateCV(recipes: [RecipeProtocol],
+    func updateCV(recipes: [RecipeViewModel],
                   ingredients: [IngredientViewModel])
     
-    /// Показывает / скрывает кнопку добавления ингредиентов в холодильник
+    /// Показать / скрыть кнопку добавления ингредиентов в холодильник
     ///  - Parameter flag: да/нет
     func showAddButton(_ flag: Bool)
 }
 
 /// #Протокол управления бизнес логикой модуля Basket
 protocol BasketBusinessLogic: RecipeReceived,
+                              RecipeRemovable,
                               ImageBusinessLogic{
-    /// Получает рецепты, добавленные в корзину
+    /// Получит рецепты, добавленные в корзину
     ///  - Parameter completion: захватывает массив рецептов
-    func fetchRecipeInBasket(completion: @escaping ([RecipeProtocol]) -> Void)
+    func fetchRecipeFromBasket(completion: @escaping ([RecipeViewModel]) -> Void)
     
-    /// Получает ингредиенты, из добавленных рецептов
+    /// Получить ингредиенты, из добавленных рецептов
     /// с учетом имеющихся в холодильнике
     ///  - Parameter completion: захватывает массив ингредиентов
     func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
     
-    /// Удаляет рецепт из корзины
-    ///  - Parameter id: идентификатор рецепта
-    func deleteFromBasket(id: Int)
-    
-    /// Изменяет чек-флаг в шоп-листе
+    /// Изменить чек-флаг в шоп-листе
     /// - Parameters:
     ///  - id: идентификатор ингредиента
     ///  - flag: флаг подтверждения
@@ -71,8 +68,8 @@ final class BasketPresenter {
     private let interactor: BasketBusinessLogic
     private let router: BasketRouting
     
-    /// Модели рецептов
-    private var models: [RecipeProtocol] = [] {
+    /// Вью-модели рецептов
+    private var recipes: [RecipeViewModel] = [] {
         didSet {
             updateShopList()
         }
@@ -84,25 +81,20 @@ final class BasketPresenter {
          router: BasketRouting) {
         self.interactor = interactor
         self.router = router
-        
-        getStart()
     }
     
-    private func getStart() {
-        interactor.fetchRecipeInBasket { [weak self] recipes in
-            self?.models = recipes
+    /// Стартовая функция для подгрузки рецептов
+    func getStart() {
+        interactor.fetchRecipeFromBasket { [weak self] recipes in
+            self?.recipes = recipes
         }
     }
     
+    /// Обновляет Шоп-лист
     private func updateShopList() {
-        guard !models.isEmpty else {
-            view?.updateCV(recipes: [], ingredients: [])
-            return
-        }
-        
         interactor.fetchIngredients { [weak self] ingredients in
             guard let self = self else { return }
-            self.view?.updateCV(recipes: self.models,
+            self.view?.updateCV(recipes: self.recipes,
                                 ingredients: ingredients)
         }
     }
@@ -110,9 +102,6 @@ final class BasketPresenter {
 
 // MARK: - BasketPresentation
 extension BasketPresenter: BasketPresentation {
-    func didTapBackButton() {
-        router.route(to: .back)
-    }
     
     func didTapAddFridgeButton() {
         interactor.addIngredientsInFridge()
@@ -124,11 +113,16 @@ extension BasketPresenter: BasketPresentation {
         return ingredient.isCheck
     }
     
+    // BackTapable
+    func didTapBackButton() {
+        router.route(to: .back)
+    }
+    
     // RecipeRemovable
     func didTapDeleteButton(id: Int) {
-        guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
-        models.remove(at: index)
-        interactor.deleteFromBasket(id: id)
+        guard let index = recipes.firstIndex(where: {$0.id == id} ) else { return }
+        recipes.remove(at: index)
+        interactor.removeRecipe(id: id)
         updateShopList()
     }
     

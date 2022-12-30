@@ -29,13 +29,15 @@ extension RecipeListRouter: RecipeListRouting {
             
             filterViewController.navigationItem.searchController = search
             filterViewController.navigationItem.hidesBackButton = true
+            
             filterViewController.navigationItem.title = "Фильтр"
             filterViewController.navigationController?.navigationBar.backgroundColor = .clear
+            
             navigationController.createCustomTransition(with: .fade)
             navigationController.navigationBar.isTranslucent = true
+            
             navigationController.pushViewController(filterViewController, animated: false)
         } else {
-//            navigationController.navigationBar.isTranslucent = false
             navigationController.navigationItem.hidesSearchBarWhenScrolling = false
             navigationController.hidesBottomBarWhenPushed = false
             navigationController.popViewController(animated: true)

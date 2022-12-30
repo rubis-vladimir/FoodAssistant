@@ -9,7 +9,7 @@ import Foundation
 
 /// #Протокол управления слоем навигации модуля DetailInfo
 protocol DetailInfoRouting {
-    /// Возврат назад
+    /// Вернуться назад
     func routeToBack()
 }
 
@@ -22,7 +22,7 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
     ///  - recipe: рецепт
     func updateFavotite(_ flag: Bool,
                         recipe: RecipeProtocol)
-    /// Проверяет ингредиент
+    /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
 }
 

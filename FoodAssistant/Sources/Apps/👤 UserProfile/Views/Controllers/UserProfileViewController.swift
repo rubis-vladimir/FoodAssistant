@@ -41,6 +41,8 @@ final class UserProfileViewController: UIViewController {
     private var factory: CVFactoryProtocol?
     /// Таймер
     private var timer: Timer?
+    /// Лебл для `NavBar`
+    private lazy var navTitle = createNavTitle(title: "FoodAssistant")
     /// Флаг отображения поискового бара
     private var searchBarShown: Bool = false
     /// Коллекция
@@ -76,7 +78,7 @@ final class UserProfileViewController: UIViewController {
     
     // MARK: - Private func
     private func setupNavigationBar() {
-        navigationItem.title = "FoodAssistant"
+        navigationItem.titleView = navTitle
     }
     
     func setupElements() {
@@ -124,17 +126,15 @@ final class UserProfileViewController: UIViewController {
     private func search(shouldShow: Bool) {
         showSearchBarButton(shouldShow: !shouldShow)
         
-        
         searchBar.showsCancelButton = shouldShow
         
         searchBar.becomeFirstResponder()
-        navigationItem.titleView = shouldShow ? searchBar : nil
+        navigationItem.titleView = shouldShow ? searchBar : navTitle
         searchBarShown = shouldShow
     }
     
     @objc private func leftBarButtonPressed() {
         search(shouldShow: true)
-        
     }
 }
 
@@ -143,7 +143,6 @@ extension UserProfileViewController: UISearchBarDelegate {
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         search(shouldShow: false)
-        
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
@@ -169,7 +168,7 @@ extension UserProfileViewController: UserProfileViewable {
     
     func hideSearchBar(shouldHide: Bool) {
         if shouldHide {
-            navigationItem.titleView = nil
+            navigationItem.titleView = navTitle
             navigationItem.leftBarButtonItem = nil
         } else {
             searchBarShown ? search(shouldShow: true) : search(shouldShow: false)

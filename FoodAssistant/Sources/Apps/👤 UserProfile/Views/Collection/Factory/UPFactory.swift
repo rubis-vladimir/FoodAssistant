@@ -39,6 +39,7 @@ final class UPFactory {
         self.delegate = delegate
         self.orderSections = orderSections
         
+        /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
         
         setupCollectionView()
@@ -56,9 +57,7 @@ final class UPFactory {
     }
     
     /// Создает строителя ячеек
-    ///  - Parameters:
-    ///     - model: модель данных
-    ///     - type: тип ячейки
+    ///  - Parameter type: тип ячейки
     ///   - Return: объект протокола строителя
     private func createBuilder(type: UPSectionType) -> CVSectionBuilderProtocol {
         

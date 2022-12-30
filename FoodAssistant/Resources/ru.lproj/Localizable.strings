@@ -28,6 +28,8 @@
 "Profile" = "Профиль";
 "Fridge" = "Холодильник";
 "Recipes" = "Рецепты";
+
+// MARK: - Ingredient
 "g" = "гр";
 "tbsp" = "ст.л";
 "tsp" = "ч.л";
@@ -36,5 +38,14 @@
 "handful" = "горсть";
 "h" = "ч";
 "min" = "мин";
-"pinch" = "щеп"
-"leaves" = "лист"
+"pinch" = "щеп";
+"leaves" = "лист";
+"cloves" = "зубч";
+
+// MARK: - Basket
+"Added recipes" = "Добавленные рецепты";
+"Shop-list" = "Шоп-лист";
+"Order" = "Заказать";
+"Add" = "Добавить";
+"Go to checkout screen" = "Переход к экрану оформления заказа";
+"Basket" = "Корзина";

@@ -10,13 +10,13 @@ import UIKit
 /// #Конфигуратор секции AddedRecipes в коллекции
 final class AddedRecipesConfigurator {
     
-    private let models: [RecipeViewModel]
+    private let recipes: [RecipeViewModel]
     
     private weak var delegate: BasketPresentation?
     
-    init(models: [RecipeViewModel],
+    init(recipes: [RecipeViewModel],
          delegate: BasketPresentation?) {
-        self.models = models
+        self.recipes = recipes
         self.delegate = delegate
     }
 }
@@ -27,7 +27,7 @@ extension AddedRecipesConfigurator: CVSectionConfiguration {
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
         
         /// Конфигурируем билдер и регистрируем ячейки
-        let itemBuilder = AddedRecipesItemBuilder(models: models,
+        let itemBuilder = AddedRecipesItemBuilder(recipes: recipes,
                                                   delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

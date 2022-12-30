@@ -36,13 +36,7 @@ final class RecipeListViewController: UIViewController {
     private var isChangingFilters: Bool = false
     private var selectedSegment: Int = 0
     
-    let navLabel: UILabel = {
-        let label = UILabel()
-        label.text = "FoodAssistant"
-        label.font = Fonts.navTitle
-        
-        return label
-    }()
+    private lazy var navLabel = createNavTitle(title: "FoodAssistant")
     
     // MARK: - Init & ViewDidLoad
     init(presenter: RecipeListPresentation) {
@@ -80,7 +74,6 @@ final class RecipeListViewController: UIViewController {
     
     // MARK: - Private func
     private func setupElements() {
-        /// Настройка`navigationBar`
         navigationItem.titleView = navLabel
         navigationController?.navigationBar.shadowImage = UIImage()
         
@@ -114,7 +107,6 @@ extension RecipeListViewController: RecipeListViewable {
             self.factory = RLFactory(collectionView: self.collectionView,
                                      arrayModelsDictionary: with,
                                      delegate: self.presenter)
-            self.factory?.setupCollectionView()
         }
     }
     
@@ -125,13 +117,14 @@ extension RecipeListViewController: RecipeListViewable {
 
 extension RecipeListViewController: UISearchBarFilterDelegate {
     func changeFilterView(isFilter: Bool) {
-        presenter.didTapFilterButton(isFilter, search: searchController)
+//        navigationController?.hidesBottomBarWhenPushed = true
+        presenter.didTapFilterButton(isFilter,
+                                     search: searchController)
     }
 }
 
 extension RecipeListViewController: UISearchBarDelegate {
-    
-    
+
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let text = searchBar.text ?? ""
 //        fetchRecipesForSearchText(text.lowercased())

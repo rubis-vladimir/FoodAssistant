@@ -31,31 +31,16 @@ final class BasketViewController: UIViewController {
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
                                                        collectionViewLayout: AppConstants.getFlowLayout())
     
-    private lazy var addInFridgeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(" Добавить", for: .normal)
-        button.titleLabel?.font = Fonts.subtitle
-        button.layer.cornerRadius = 25
-        button.tintColor = .white
-        button.setImage(Icons.fridge.image, for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    private lazy var addInFridgeButton = BaseRedButton(title: Constracts.addFridgeTitle,
+                                                       image: Constracts.addFridgeImage) {
+        self.presenter.didTapAddFridgeButton()
+    }
     
-    private lazy var orderDeliveryButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(" Заказать", for: .normal)
-        button.titleLabel?.font = Fonts.subtitle
-        button.layer.cornerRadius = 25
-        button.tintColor = .white
-        button.setImage(Icons.fridge.image, for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
+    private lazy var orderDeliveryButton = BaseRedButton(title: Constracts.orderButtonTitle,
+                                                       image: Constracts.orderBurronImage) {
+        self.showInformationAlert(title: "Order".localize(),
+                                  text: "Go to checkout screen".localize())
+    }
     
     let stack: UIStackView = {
         let stack = UIStackView()
@@ -86,11 +71,8 @@ final class BasketViewController: UIViewController {
     // MARK: - Private func
     private func setupElements() {
         
-        addInFridgeButton.addTarget(self,
-                                    action: #selector(addFridgeButtonTapped),
-                                    for: .touchUpInside)
-                
         collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .clear
         
         stack.addArrangedSubview(addInFridgeButton)
         stack.addArrangedSubview(orderDeliveryButton)
@@ -120,31 +102,19 @@ final class BasketViewController: UIViewController {
             selector: #selector(backButtonTapped)
         )
         
-        let label = UILabel()
-        label.text = "Корзина"
-        
         navigationItem.leftBarButtonItems = [backButton]
-        navigationItem.titleView = label
+        navigationItem.titleView = createNavTitle(title: "Basket".localize())
     }
 
     @objc private func backButtonTapped() {
         presenter.didTapBackButton()
-    }
-    
-    @objc private func addFridgeButtonTapped() {
-        presenter.didTapAddFridgeButton()
-    }
-    
-    @objc private func orderDeliveryButtonTapped() {
-        self.showInformationAlert(title: "Заказ отправлен",
-                                  text: "")
     }
 }
 
 // MARK: - BasketViewable
 extension BasketViewController: BasketViewable {
     
-    func updateCV(recipes: [RecipeProtocol],
+    func updateCV(recipes: [RecipeViewModel],
                   ingredients: [IngredientViewModel]) {
         if recipes.isEmpty {
             factory = nil
@@ -154,7 +124,6 @@ extension BasketViewController: BasketViewable {
                                     recipes: recipes,
                                     ingredients: ingredients,
                                     delegate: presenter)
-            collectionView.reloadData()
         }
     }
     
@@ -164,6 +133,17 @@ extension BasketViewController: BasketViewable {
     
     
     func show(error: Error) {
+        
+    }
+}
+
+// MARK: - Constants
+extension BasketViewController {
+    private struct Constracts {
+        static let orderButtonTitle = "Order".localize()
+        static let orderBurronImage = Icons.fridge.image
+        static let addFridgeTitle = "Add".localize()
+        static let addFridgeImage = Icons.cart.image
         
     }
 }

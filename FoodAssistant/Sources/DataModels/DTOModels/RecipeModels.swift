@@ -162,7 +162,7 @@ extension Ingredient {
             return "g" // Грамм
         } else if ["serving", "servings", "dash"].contains(unit) {
             return "serv" // Порция
-        } else if ["small", "large", "medium"].contains(unit) {
+        } else if ["small", "large", "medium", "container", "head"].contains(unit) {
             return ""
         } else if ["handfuls", "handful", "medium"].contains(unit) {
             return "handful"

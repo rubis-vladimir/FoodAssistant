@@ -63,6 +63,7 @@ final class RecipeFilterViewController: UIViewController {
         
         collectionView.backgroundColor = .white
         navigationController?.navigationItem.titleView = navLabel
+        
 //        navigationController?.navigationItem.hidesBackButton = true
         
         showResultsButton.addTarget(self,

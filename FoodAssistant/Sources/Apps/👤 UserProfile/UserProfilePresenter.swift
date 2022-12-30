@@ -23,7 +23,7 @@ protocol UserProfileRouting {
 /// #Протокол управления View-слоем модуля UserProfile
 protocol UserProfileViewable: ErrorShowable,
                               AnyObject {
-    /// Обновление `Collection View`
+    /// Обновить `Collection View`
     func updateCV(orderSection: [UPSectionType])
     /// Скрыть `Search Bar`
     func hideSearchBar(shouldHide: Bool)

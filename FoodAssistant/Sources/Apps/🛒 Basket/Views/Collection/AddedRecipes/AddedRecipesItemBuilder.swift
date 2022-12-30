@@ -10,13 +10,13 @@ import UIKit
 /// #Строитель ячеек секции AddedRecipes
 final class AddedRecipesItemBuilder {
     
-    private let models: [RecipeViewModel]
+    private let recipes: [RecipeViewModel]
     
     weak var delegate: BasketPresentation?
     
-    init(models: [RecipeViewModel],
+    init(recipes: [RecipeViewModel],
          delegate: BasketPresentation?) {
-        self.models = models
+        self.recipes = recipes
         self.delegate = delegate
     }
 }
@@ -28,7 +28,7 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
         collectionView.register(FirstRecipeCell.self)
     }
     
-    func itemCount() -> Int { models.count }
+    func itemCount() -> Int { recipes.count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.height - 50,
@@ -39,11 +39,11 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
                 collectionView: UICollectionView) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
                                                       indexPath: indexPath)
-        let model = models[indexPath.item]
+        let recipe = recipes[indexPath.item]
         cell.deleteDelegate = delegate
-        cell.configure(with: model, type: .delete)
+        cell.configure(with: recipe, type: .delete)
         
-        if let imageName = model.imageName {
+        if let imageName = recipe.imageName {
             delegate?.fetchImage(imageName,
                                  type: .recipe) { imageData in
                 DispatchQueue.main.async {
@@ -55,7 +55,7 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
     }
     
     func didSelectItem(indexPath: IndexPath) {
-        let id = models[indexPath.row].id
+        let id = recipes[indexPath.row].id
         delegate?.didSelectItem(id: id)
     }
 }
