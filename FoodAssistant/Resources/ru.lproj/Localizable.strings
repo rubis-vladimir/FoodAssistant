@@ -39,8 +39,9 @@
 "h" = "ч";
 "min" = "мин";
 "pinch" = "щеп";
-"leaves" = "лист";
+"leaf" = "лист";
 "cloves" = "зубч";
+"slices" = "ломтик";
 
 // MARK: - Basket
 "Added recipes" = "Добавленные рецепты";

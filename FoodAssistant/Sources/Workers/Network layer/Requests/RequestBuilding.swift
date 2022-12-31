@@ -44,7 +44,7 @@ extension RequestBuilding {
 
     func asURLRequest() throws -> URLRequest {
         guard let url = url else { throw DataFetcherError.invalidUrl }
-        
+        print(url)
         var request = URLRequest (url: url)
         request.httpMethod = method.rawValue
         

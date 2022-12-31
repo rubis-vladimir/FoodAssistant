@@ -24,8 +24,8 @@ protocol RecipeListViewable: AnyObject {
     /// - Parameter array: массив словарей моделей
     func updateCV(with: [RecipeModelsDictionary])
     
-    /// Обновить кнопку фильтра
-    func updateFilterButton()
+    /// Получить текст из поиска
+    func getSearchText() -> String?
     
     /// Обновить элементы коллекции
     /// - Parameter indexPaths: массив `IndexPath`
@@ -242,9 +242,13 @@ extension RecipeListPresenter: RecipeListPresentation {
 // MARK: - SeachRecipesRequested
 extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
-        
-        view?.updateFilterButton()
+        let text = view?.getSearchText()
         buildType = .search
-        fetchRecipe(with: parameters, number: 6, query: nil, type: .main)
+        
+        print(parameters)
+        fetchRecipe(with: parameters,
+                    number: 6,
+                    query: nil,
+                    type: .main)
     }
 }

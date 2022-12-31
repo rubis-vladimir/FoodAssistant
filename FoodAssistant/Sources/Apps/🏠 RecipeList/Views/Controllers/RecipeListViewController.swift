@@ -104,8 +104,9 @@ extension RecipeListViewController: RecipeListViewable {
         collectionView.reloadItems(at: indexPaths)
     }
     
-    func updateFilterButton() {
+    func getSearchText() -> String? {
         searchController.searchBar.isFilter = false
+        return searchController.searchBar.text
     }
     
     func updateCV(with: [RecipeModelsDictionary]) {
@@ -132,6 +133,7 @@ extension RecipeListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         let text = searchBar.text ?? ""
+        print(text)
 //        fetchRecipesForSearchText(text.lowercased())
         if isChangingFilters {
 //            toggleFilterView()
@@ -144,6 +146,7 @@ extension RecipeListViewController: UISearchBarDelegate {
         
         if let text = searchBar.text, text.isEmpty && isSearching {
             isSearching = false
+            print(text)
 //            let topRow = IndexPath(row: 0, section: 0)
 //            tableView.scrollToRow(at: topRow, at: .top, animated: false)
         }

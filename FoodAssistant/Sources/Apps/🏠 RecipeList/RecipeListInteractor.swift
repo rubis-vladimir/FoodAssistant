@@ -168,7 +168,7 @@ extension RecipeListInteractor {
         }
         
         /// Если установленный язык не базовый пробуем выполнить перевод
-        if self.currentAppleLanguage() != "Base" {
+        if self.currentAppleLanguage() != "English" {
             self.translateService.fetchTranslate(recipes: recipes) { result in
                 switch result {
                 case .success(let newRecipes):

@@ -143,6 +143,8 @@ extension Ingredient {
         } else if ["lb", "lbs", "pounds", "pound"].contains(dtoUnit) {
             /// Переводим в граммы из фунта
             return 453.6 * dtoAmount
+        } else if ["inch"].contains(dtoUnit) {
+            return 1.0
         } else {
             return dtoAmount
         }
@@ -162,11 +164,12 @@ extension Ingredient {
             return "g" // Грамм
         } else if ["serving", "servings", "dash"].contains(unit) {
             return "serv" // Порция
-        } else if ["small", "large", "medium", "container", "head"].contains(unit) {
+        } else if ["small", "large", "medium", "container", "head", "jar", "inch"].contains(unit) {
             return ""
         } else if ["handfuls", "handful", "medium"].contains(unit) {
             return "handful"
-            
+        } else if ["leaves", "leaf"].contains(unit) {
+            return "leaf"
         } else {
             guard let unit = dtoUnit else { return "" }
             return unit
