@@ -15,13 +15,13 @@ enum FilterParameters: Int, CaseIterable {
 extension FilterParameters {
     var title: String {
         switch self {
-        case .time: return "Время"
-        case .dishType: return "Тип блюда"
-        case .region: return "Вид кухни"
-        case .diet: return "Диета"
-        case .calories: return "Каллории"
-        case .includeIngredients: return "Включить ингредиенты"
-        case .excludeIngredients: return "Исключить ингредиенты"
+        case .time: return "Time".localize()
+        case .dishType: return "Type dish".localize()
+        case .region: return "Region".localize()
+        case .diet: return "Diet".localize()
+        case .calories: return "Calories".localize()
+        case .includeIngredients: return "Include ingredients".localize()
+        case .excludeIngredients: return "Exclude Ingredients".localize()
         }
     }
 }

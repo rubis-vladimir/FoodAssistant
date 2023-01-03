@@ -42,22 +42,22 @@ extension FilterManager: FilterManagement {
     
     func getRecipeParameters() -> [FilterParameters: [String]] {
         var dict = [FilterParameters: [String]]()
-        dict[.time] = RecipeFilterTagTitles.time.map{$0.localize()}
-        dict[.dishType] = RecipeFilterTagTitles.dishType.map{$0.localize()}
-        dict[.region] = RecipeFilterTagTitles.regions.map{$0.localize()}
-        dict[.diet] = RecipeFilterTagTitles.diets.map{$0.localize()}
-        dict[.calories] = RecipeFilterTagTitles.calories.map{$0.localize()}
+        dict[.time] = RecipeFilterTagTitles.time
+        dict[.dishType] = RecipeFilterTagTitles.dishType
+        dict[.region] = RecipeFilterTagTitles.regions
+        dict[.diet] = RecipeFilterTagTitles.diets
+        dict[.calories] = RecipeFilterTagTitles.calories
         
         let key1 = FilterParameters.includeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key1) as? [String] {
-            dict[.includeIngredients] = titles.map{$0.localize()}
+            dict[.includeIngredients] = titles
         } else {
             UserDefaults.standard.set(RecipeFilterTagTitles.includeIngredients, forKey: key1)
         }
         
         let key2 = FilterParameters.excludeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key2) as? [String] {
-            dict[.excludeIngredients] = titles.map{$0.localize()}
+            dict[.excludeIngredients] = titles
         } else {
             UserDefaults.standard.set(RecipeFilterTagTitles.excludeIngredients, forKey: key2)
         }

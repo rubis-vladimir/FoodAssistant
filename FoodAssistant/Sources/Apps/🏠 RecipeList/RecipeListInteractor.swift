@@ -16,13 +16,13 @@ final class RecipeListInteractor {
     
     private let dataFetcher: DataFetcherProtocol
     private let imageDownloader: ImageDownloadProtocol
-    private let translateService: RecipeTranslatable
+    private let translateService: Translatable
     
     private let storage: DBRecipeManagement & DBIngredientsManagement
     
     init(dataFetcher: DataFetcherProtocol,
          imageDownloader: ImageDownloadProtocol,
-         translateService: RecipeTranslatable,
+         translateService: Translatable,
          storage: DBRecipeManagement & DBIngredientsManagement) {
         self.dataFetcher = dataFetcher
         self.imageDownloader = imageDownloader
@@ -46,8 +46,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 
                 switch result {
                 case .success(let responce): // Успех
-                    guard let recipes = responce.results else {
-                        /// !!!! Нет рецептов
+                    guard let recipes = responce.results,
+                          !recipes.isEmpty else {
+                        completion(.failure(.noResults))
                         return }
                     self.convert(recipes: recipes, completion: completion)
                     
@@ -65,12 +66,30 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
             ingredientTitles = ingredients.map { $0.name }
         }
         
-        /// Отправляем запрос на получения рецептов
-        if ingredientTitles.isEmpty {
-            let parameters = RecipeFilterParameters()
+        /// Дефолтные параметры
+        let parameters = RecipeFilterParameters()
+        
+        guard !ingredientTitles.isEmpty else {
+            /// Загрузка рекомендаций по дефолту, если холодильник пуст
             fetchRecipe(with: parameters, number: number, query: nil, completion: completion)
-        } else {
-            fetchRecipe(ingredientTitles: ingredientTitles, number: number, completion: completion)
+            return
+        }
+        
+        if currentAppleLanguage() != "en" {
+            translateService.translate(with: ingredientTitles, source: currentAppleLanguage(), target: "en") { [weak self] result in
+                switch result {
+                    
+                case .success(let responce):
+                    /// При успешном переводе
+                    let titles = responce.translations.map{$0.text}
+                    self?.fetchRecipe(ingredientTitles: titles, number: number, completion: completion)
+                    
+                case .failure(let error):
+                    /// При ошибке
+                    completion(.failure(error))
+                    self?.fetchRecipe(with: parameters, number: number, query: nil, completion: completion)
+                }
+            }
         }
     }
     
@@ -168,8 +187,8 @@ extension RecipeListInteractor {
         }
         
         /// Если установленный язык не базовый пробуем выполнить перевод
-        if self.currentAppleLanguage() != "English" {
-            self.translateService.fetchTranslate(recipes: recipes) { result in
+        if self.currentAppleLanguage() != "en" {
+            self.translateService.fetchTranslate(recipes: recipes, sourse: "en", target: "\(self.currentAppleLanguage())") { result in
                 switch result {
                 case .success(let newRecipes):
                     self.addModels(recipes: newRecipes, completion: completion)

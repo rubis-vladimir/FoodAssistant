@@ -1,5 +1,5 @@
 //
-//  AddedIngredientsConfigurator.swift
+//  ShopListConfigurator.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 13.12.2022.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Конфигуратор секции AddedRecipes в коллекции
-final class AddedIngredientsConfigurator {
+final class ShopListConfigurator {
     
     private let models: [IngredientViewModel]
     private let title: String
@@ -25,12 +25,12 @@ final class AddedIngredientsConfigurator {
 }
     
 // MARK: - CVSectionConfiguration
-extension AddedIngredientsConfigurator: CVSectionConfiguration {
+extension ShopListConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
         
         /// Конфигурируем билдер и регистрируем ячейки
-        let itemBuilder = AddedIngredientsItemBuilder(models: models,
+        let itemBuilder = ShopListItemBuilder(models: models,
                                                       delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

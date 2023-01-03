@@ -7,14 +7,29 @@
 
 import Foundation
 
-/// #Протокол перевода текста для рецептов
-protocol RecipeTranslatable {
+/// #Протокол перевода текста 
+protocol Translatable {
     /// Получает массив рецептов с переведенными текстами
     ///  - Parameters:
     ///   - recipes: рецепты до перевода
+    ///   - source: из какого языка
+    ///   - target: в какой язык
     ///   - completion: захватывает рецепты с переводом / ошибку
     func fetchTranslate(recipes: [Recipe],
+                        sourse: String,
+                        target: String,
                         completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void)
+    
+    /// Запрос на перевод
+    ///  - Parameters:
+    ///   - texts: строки для перевода
+    ///   - source: из какого языка
+    ///   - target: в какой язык
+    ///   - completion: захватывает ответ с переводом / ошибку
+    func translate(with texts: [String],
+                   source: String,
+                   target: String,
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void)
 }
 
 /// #Сервис перевода
@@ -29,10 +44,12 @@ final class TranslateService {
     }
 }
 
-// MARK: - RecipeTranslatable
-extension TranslateService: RecipeTranslatable {
+// MARK: - Translatable
+extension TranslateService: Translatable {
     
     func fetchTranslate(recipes: [Recipe],
+                        sourse: String,
+                        target: String,
                         completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void) {
         var newRecipes: [Recipe] = []
         
@@ -45,7 +62,9 @@ extension TranslateService: RecipeTranslatable {
             let texts = takeForTranslate(recipe: recipe)
             
             /// Отправляем на перевод
-            translate(with: texts) { [weak self] result in
+            translate(with: texts,
+                      source: sourse,
+                      target: target) { [weak self] result in
                 guard let self = self else { return }
                 
                 switch result {
@@ -77,24 +96,22 @@ extension TranslateService: RecipeTranslatable {
             completion(.success(newRecipes))
         }
     }
+    
+    func translate(with texts: [String],
+                   source: String,
+                   target: String,
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
+        let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
+                                             texts: texts,
+                                             sourceLanguageCode: source,
+                                             targetLanguageCode: target)
+        
+        LanguageRequest.translate(patameters: parameters).download(with: dataFetcher, completion: completion)
+    }
 }
 
 /// #Вспомогательные функции
 private extension TranslateService {
-    /// Запрос на перевод
-    ///  - Parameters:
-    ///   - texts: строки для перевода
-    ///   - completion: захватывает ответ с переводом / ошибку
-    private func translate(with texts: [String],
-                           completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
-        let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
-                                             texts: texts,
-                                             sourceLanguageCode: "en",
-                                             targetLanguageCode: "ru")
-        
-        LanguageRequest.translate(patameters: parameters).download(with: dataFetcher, completion: completion)
-    }
-    
     /// Получает массив строк, которые необходимо перевести
     ///  - Parameter recipe: рецепт
     ///  - Returns: массив строк

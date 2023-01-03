@@ -55,6 +55,12 @@
 "Filter" = "Фильтр";
 "Enter titles separated\nby commas and/or spaces" = "Введите названия через\nзапятую и/или пробел";
 "Show results" = "Показать результаты";
+"Diet" = "Диета";
+"Region" = "Вид кухни";
+"Type dish" = "Тип блюда";
+"Time" = "Время";
+"Include ingredients" = "Включить ингредиенты";
+"Exclude Ingredients" = "Исключить ингредиенты";
 /// Время
 "Under 5 min" = "До 5 мин";
 "Under 15 min" = "До 15 мин";

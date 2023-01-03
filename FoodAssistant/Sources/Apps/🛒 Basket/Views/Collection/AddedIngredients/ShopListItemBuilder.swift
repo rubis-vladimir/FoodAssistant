@@ -1,5 +1,5 @@
 //
-//  AddedIngredientsItemBuilder.swift
+//  ShopListItemBuilder.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 13.12.2022.
@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Строитель ячеек секции RecommendedRecipe
-final class AddedIngredientsItemBuilder {
+final class ShopListItemBuilder {
     private let height: CGFloat = 55
     private let models: [IngredientViewModel]
     
@@ -22,7 +22,7 @@ final class AddedIngredientsItemBuilder {
 }
 
 // MARK: - RecommendedRecipeItemBuilder
-extension AddedIngredientsItemBuilder: CVItemBuilderProtocol {
+extension ShopListItemBuilder: CVItemBuilderProtocol {
     
     func register(collectionView: UICollectionView) {
         collectionView.register(CVIngredientCell.self)

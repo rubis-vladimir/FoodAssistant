@@ -23,7 +23,7 @@ final class TagCellBuilder {
     /// Рассчитывает размеры ячейки
     private func calculateItemSize(index: Int,
                                    width: CGFloat) -> CGSize {
-        let title = tagModels[index].title
+        let title = tagModels[index].title.localize()
         let size: CGSize = title.size(withAttributes: [NSAttributedString.Key.font: Fonts.subtitle?.withSize(25) ?? UIFont.systemFont(ofSize: 25)])
         
         let availableWidth = size.width > width ? width - 20 : size.width - 5
@@ -52,9 +52,7 @@ extension TagCellBuilder: CVItemBuilderProtocol {
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
         /// Название
-        let title = tagModels[indexPath.item].title
-        /// Размер текста при указанном шрифте
-        let size = title.size(withAttributes: [NSAttributedString.Key.font: Fonts.subtitle?.withSize(25) ?? UIFont.systemFont(ofSize: 25)])
+        let title = tagModels[indexPath.item].title.localize()
         /// Проверяем установлен ли флаг
         let isCheck = delegate?.checkFlag(indexPath: indexPath) ?? false
         

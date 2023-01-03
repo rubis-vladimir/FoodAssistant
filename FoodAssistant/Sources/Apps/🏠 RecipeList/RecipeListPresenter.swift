@@ -13,6 +13,11 @@ protocol RecipeListRouting {
     ///  - Parameter model: модель рецепта
     func routeToDetail(model: RecipeProtocol)
     
+    /// Переход к экрану фильтра и обратно
+    ///  - Parameters:
+    ///   - flag: флаг перехода
+    ///   - search: поисковый контроллер
+    ///   - searchDelegate: делегат поиска
     func routeToFilter(_ flag: Bool,
                        search: UISearchController,
                        searchDelegate: SeachRecipesRequested)
@@ -113,19 +118,19 @@ final class RecipeListPresenter {
     func getStartData() {
         let filterParameters = RecipeFilterParameters()
         
-//        interactor.fetchRecommended(number: 5) { [weak self] result in
-//            switch result {
-//            case .success(let recipeModels):
-//                self?.viewModelsDictionary[.recommended] = recipeModels
-//            case .failure(let error):
-//                self?.view?.showError(error)
-//            }
-//        }
-//
-//        fetchRecipe(with: filterParameters,
-//                    number: 4,
-//                    query: nil,
-//                    type: .main)
+        interactor.fetchRecommended(number: 5) { [weak self] result in
+            switch result {
+            case .success(let recipeModels):
+                self?.viewModelsDictionary[.recommended] = recipeModels
+            case .failure(let error):
+                self?.view?.showError(error)
+            }
+        }
+
+        fetchRecipe(with: filterParameters,
+                    number: 4,
+                    query: nil,
+                    type: .main)
     }
     
     /// Получает рецепты
@@ -248,7 +253,7 @@ extension RecipeListPresenter: SeachRecipesRequested {
         print(parameters)
         fetchRecipe(with: parameters,
                     number: 6,
-                    query: nil,
+                    query: text,
                     type: .main)
     }
 }

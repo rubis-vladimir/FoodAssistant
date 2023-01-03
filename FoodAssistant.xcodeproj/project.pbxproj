@@ -26,8 +26,8 @@
 		7D2B348929478FF800FF01A2 /* StorageProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B348829478FF800FF01A2 /* StorageProtocols.swift */; };
 		7D2B348C294792C400FF01A2 /* CDIngredient+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B348A294792C400FF01A2 /* CDIngredient+CoreDataClass.swift */; };
 		7D2B348D294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B348B294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift */; };
-		7D2B34922948DCF200FF01A2 /* AddedIngredientsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34912948DCF200FF01A2 /* AddedIngredientsConfigurator.swift */; };
-		7D2B34942948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34932948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift */; };
+		7D2B34922948DCF200FF01A2 /* ShopListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34912948DCF200FF01A2 /* ShopListConfigurator.swift */; };
+		7D2B34942948DD1800FF01A2 /* ShopListItemBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34932948DD1800FF01A2 /* ShopListItemBuilder.swift */; };
 		7D2B34962948DE2000FF01A2 /* PresentationProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34952948DE2000FF01A2 /* PresentationProtocols.swift */; };
 		7D2B3498294A1EAA00FF01A2 /* BusinessLogicProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B3497294A1EAA00FF01A2 /* BusinessLogicProtocols.swift */; };
 		7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2F76F1291A94D4009D3444 /* AppDelegate.swift */; };
@@ -213,8 +213,8 @@
 		7D2B348829478FF800FF01A2 /* StorageProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageProtocols.swift; sourceTree = "<group>"; };
 		7D2B348A294792C400FF01A2 /* CDIngredient+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIngredient+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7D2B348B294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDIngredient+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		7D2B34912948DCF200FF01A2 /* AddedIngredientsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedIngredientsConfigurator.swift; sourceTree = "<group>"; };
-		7D2B34932948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddedIngredientsItemBuilder.swift; sourceTree = "<group>"; };
+		7D2B34912948DCF200FF01A2 /* ShopListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListConfigurator.swift; sourceTree = "<group>"; };
+		7D2B34932948DD1800FF01A2 /* ShopListItemBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopListItemBuilder.swift; sourceTree = "<group>"; };
 		7D2B34952948DE2000FF01A2 /* PresentationProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentationProtocols.swift; sourceTree = "<group>"; };
 		7D2B3497294A1EAA00FF01A2 /* BusinessLogicProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessLogicProtocols.swift; sourceTree = "<group>"; };
 		7D2F76EE291A94D4009D3444 /* FoodAssistant.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoodAssistant.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -459,8 +459,8 @@
 		7D2B34902948DC7400FF01A2 /* AddedIngredients */ = {
 			isa = PBXGroup;
 			children = (
-				7D2B34912948DCF200FF01A2 /* AddedIngredientsConfigurator.swift */,
-				7D2B34932948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift */,
+				7D2B34912948DCF200FF01A2 /* ShopListConfigurator.swift */,
+				7D2B34932948DD1800FF01A2 /* ShopListItemBuilder.swift */,
 			);
 			path = AddedIngredients;
 			sourceTree = "<group>";
@@ -1454,7 +1454,7 @@
 				7D2B34962948DE2000FF01A2 /* PresentationProtocols.swift in Sources */,
 				7D3D19BB294650BF005E3840 /* AddedRecipesItemBuilder.swift in Sources */,
 				7D3D19882942895B005E3840 /* CDNutrient+CoreDataProperties.swift in Sources */,
-				7D2B34922948DCF200FF01A2 /* AddedIngredientsConfigurator.swift in Sources */,
+				7D2B34922948DCF200FF01A2 /* ShopListConfigurator.swift in Sources */,
 				7DE6BA95295B18C500711FB4 /* FilterManager.swift in Sources */,
 				7D48A9B7292A154A009EF273 /* RecipeViewModel.swift in Sources */,
 				7DC16127292FC0340026A072 /* CVAdapter.swift in Sources */,
@@ -1510,7 +1510,7 @@
 				7D3BC9312930D70C001B1B57 /* HeaderBuilder.swift in Sources */,
 				7DFEB5DE291C2F9D008C28FC /* NetworkDataFetcher.swift in Sources */,
 				7D3D19B7294647CF005E3840 /* SingleCellSectionConfigurator.swift in Sources */,
-				7D2B34942948DD1800FF01A2 /* AddedIngredientsItemBuilder.swift in Sources */,
+				7D2B34942948DD1800FF01A2 /* ShopListItemBuilder.swift in Sources */,
 				7D4BA4262922AD2100A4393B /* UserProfileViewController.swift in Sources */,
 				7DE6BAA9295E2EC600711FB4 /* RecoverableError.swift in Sources */,
 				7D3BC93B2931050D001B1B57 /* RecommendedItemBuilder.swift in Sources */,

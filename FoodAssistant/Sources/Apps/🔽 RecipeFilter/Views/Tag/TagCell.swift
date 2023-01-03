@@ -26,9 +26,9 @@ class TagCell: UICollectionViewCell {
     private let singleTapGestureRecognizer = UITapGestureRecognizer()
     private var indexPath: IndexPath?
     
-    override var isSelected: Bool {
+    var isSelectedX: Bool = false {
         didSet {
-            if isSelected {
+            if isSelectedX {
                 backgroundColor = Palette.darkColor.color
                 titleLabel.textColor = .white
             } else {
@@ -77,7 +77,10 @@ class TagCell: UICollectionViewCell {
                    indexPath: IndexPath) {
         titleLabel.text = title
         self.indexPath = indexPath
-        isSelected = flag
+        print("\(titleLabel) - \(flag)")
+//        if isSelected == flag && isSelected != false {
+            isSelectedX = flag
+//        }
     }
     
     private func setupCell() {
@@ -107,9 +110,9 @@ class TagCell: UICollectionViewCell {
     
     /// Обработка одного касания
     @objc private func handleSingleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
-        isSelected.toggle()
+        isSelectedX.toggle()
         guard let indexPath = indexPath else { return }
-        delegate?.didTapElementCell(isSelected,
+        delegate?.didTapElementCell(isSelectedX,
                                     indexPath: indexPath)
     }
 }

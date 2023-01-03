@@ -12,7 +12,7 @@ enum BasketSectionType {
     /// Добавленные рецепты
     case addedRecipe
     /// Добавленные ингредиенты
-    case ingredients
+    case shopList
 }
 
 /// #Фабрика настройки коллекции модуля Basket
@@ -67,10 +67,10 @@ final class BasketFactory {
             return SingleCellSectionConfigurator(title: Constants.titleAddedRecipeSection,
                                                  configurators: [configurator],
                                                  height: Constants.heightSingleCell ).configure(for: collectionView)
-        case .ingredients:
+        case .shopList:
             
-            return AddedIngredientsConfigurator(models: ingredients,
-                                                title: Constants.titleIngredientsSection,
+            return ShopListConfigurator(models: ingredients,
+                                                title: Constants.titleShopListSection,
                                                 delegate: delegate).configure(for: collectionView)
         }
     }
@@ -83,7 +83,7 @@ extension BasketFactory: CVFactoryProtocol {
         var builders: [CVSectionBuilderProtocol] = []
         
         builders.append(createBuilder(type: .addedRecipe))
-        builders.append(createBuilder(type: .ingredients))
+        builders.append(createBuilder(type: .shopList))
         
         return builders
     }
@@ -93,7 +93,7 @@ extension BasketFactory: CVFactoryProtocol {
 extension BasketFactory {
     private struct Constants {
         static let titleAddedRecipeSection = "Added recipes".localize()
-        static let titleIngredientsSection = "Shop-list".localize()
+        static let titleShopListSection = "Shop-list".localize()
         static let heightSingleCell: CGFloat = 200
     }
 }
