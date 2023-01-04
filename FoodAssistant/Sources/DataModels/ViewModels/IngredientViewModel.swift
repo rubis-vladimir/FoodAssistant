@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// #Вью-модель ингредиента
 struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
     /// Идентификатор ингредиента
     var id: Int

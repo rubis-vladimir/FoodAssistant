@@ -7,11 +7,11 @@
 
 import UIKit
 
-/// #Конфигуратор секции Main в коллекции
+/// #Конфигуратор секции Profile в коллекции
 final class ProfileSectionConfigurator {
     
     private struct Constants {
-        static let title = "Мои данные"
+        static let title = "My data".localize()
     }
 }
     

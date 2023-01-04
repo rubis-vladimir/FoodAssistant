@@ -43,6 +43,8 @@ protocol DBRecipeManagement {
     /// - Returns: да/нет
     func check(id: Int) -> Bool
     
+    /// Получает id избранных рецептов
+    ///   - Parameter completion: захватывает массив id
     func fetchFavoriteId(completion: @escaping ([Int]) -> Void)
 }
 

@@ -7,7 +7,7 @@
 
 import UIKit
 
-/// Компоновщик модуля
+/// #Компоновщик модуля RecipeFilter
 final class RecipeFilterAssembly {
     private let navigationController: UINavigationController
     private weak var searchDelegate: SeachRecipesRequested?

@@ -18,7 +18,6 @@ class LaunchPageViewController: UIPageViewController {
     
     private let presenter: LaunchPresentation
     
-    // MARK: - Init & ViewDidLoad
     init(presenter: LaunchPresentation) {
         self.presenter = presenter
         super.init(transitionStyle: UIPageViewController.TransitionStyle.pageCurl, navigationOrientation: UIPageViewController.NavigationOrientation.horizontal)
@@ -32,10 +31,13 @@ class LaunchPageViewController: UIPageViewController {
         super.viewDidLoad()
         
         addViewControllers()
-        setViewControllers([pages[0]], direction: .forward, animated: true)
+        setViewControllers([pages[0]],
+                           direction: .forward,
+                           animated: true)
         dataSource = self
     }
     
+    /// Добавляет контроллеры в PageController
     private func addViewControllers() {
         pages.append(LaunchViewController(page: .first, delegate: presenter))
         pages.append(LaunchViewController(page: .second, delegate: presenter))
@@ -71,6 +73,7 @@ extension LaunchPageViewController: UIPageViewControllerDataSource {
     }
 }
 
+// MARK: - LaunchViewable
 extension LaunchPageViewController: LaunchViewable {
     func updatePage() {
         goToNextPage()

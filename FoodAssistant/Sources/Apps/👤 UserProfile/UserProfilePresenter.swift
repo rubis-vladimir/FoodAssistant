@@ -10,26 +10,25 @@ import Foundation
 /// #Навигация в модуле UserProfile
 enum UserProfileTarget {
     /// Детальная информация
-    case detailInfo
+    case detailInfo(_ recipe: RecipeProtocol)
 }
 
 /// #Протокол управления слоем навигации модуля UserProfile
 protocol UserProfileRouting {
     /// Перейти к следующему экрану
     ///  - Parameter to: вариант перехода
-    func route(to: UserProfileTarget, model: RecipeProtocol)
+    func route(to: UserProfileTarget)
 }
 
 /// #Протокол управления View-слоем модуля UserProfile
-protocol UserProfileViewable: AnyObject {
-    /// Обновление `Collection View`
+protocol UserProfileViewable: ErrorShowable,
+                              AnyObject {
+    /// Обновить `Collection View`
     func updateCV(orderSection: [UPSectionType])
     /// Скрыть `Search Bar`
     func hideSearchBar(shouldHide: Bool)
-    
+    /// Показать алерт добавления ингредиента
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
-    /// Показать ошибку
-    func showError()
     /// Перезагрузить элементы
     func reload(items: [IndexPath])
 }
@@ -37,11 +36,10 @@ protocol UserProfileViewable: AnyObject {
 /// #Протокол управления бизнес логикой модуля UserProfile
 protocol UserProfileBusinessLogic: RecipeReceived,
                                    ImageBusinessLogic,
-                                   UserProfileRecipeBL,
-                                   UserProfileIngredientBL { }
-
-/// #Протокол управления рецептами
-protocol UserProfileRecipeBL {
+                                   IngredientFetchable,
+                                   InBasketAdded,
+                                   RecipeRemovable {
+    
     /// Получить ингредиенты
     /// - Parameters:
     ///  - text: текст в поисковом баре
@@ -49,27 +47,13 @@ protocol UserProfileRecipeBL {
     func fetchFavoriteRecipe(text: String,
                              completion: @escaping ([RecipeViewModel]) -> Void)
     
-    
-    
-    /// Удалить рецепт
-    /// - Parameter id: идентификатор рецепта
-    func removeRecipe(id: Int)
-    
-    /// Добавить в корзину
-    /// - Parameter id: идентификатор рецепта
-    func addToBasket(id: Int)
-}
-
-/// #Протокол управления ингредиентами
-protocol UserProfileIngredientBL {
-    
-    /// Получить ингредиенты
-    /// - Parameter completion: захватывает вьюмодели ингредиентов
-    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
-    
-    
+    /// Найти ингредиент (для определения идентификатора)
+    /// - Parameters:
+    ///  - ingredient: вью-модель ингредиента
+    ///  - flag: флаг использования
     func find(ingredient: IngredientViewModel,
               completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
+    
     /// Изменить флаг использования ингредиента
     /// - Parameters:
     ///  - id: идентификатор ингредиента
@@ -89,18 +73,17 @@ protocol UserProfileIngredientBL {
 // MARK: - Presenter
 /// #Слой презентации модуля UserProfile
 final class UserProfilePresenter {
-    
+    /// Текущий сегмент
     private var currentSegmentIndex = 0
-    
-    private(set) var viewModels: [RecipeViewModel] = []
-    {
+    /// Вью-модели рецептов
+    private var viewModels: [RecipeViewModel] = [] {
         didSet {
             guard currentSegmentIndex == 2 else { return }
             view?.updateCV(orderSection: [.favorite(viewModels)])
         }
     }
-    
-    private(set) var ingredients: [IngredientViewModel] = [] 
+    /// Вью-модели ингредиентов
+    private var ingredients: [IngredientViewModel] = []
     
     weak var view: UserProfileViewable?
     private let interactor: UserProfileBusinessLogic
@@ -110,6 +93,25 @@ final class UserProfilePresenter {
          router: UserProfileRouting) {
         self.interactor = interactor
         self.router = router
+    }
+    
+    /// Конфигурирует и показывает восстанавливаемую ошибку
+    /// - Parameters:
+    ///  - error: ошибка
+    ///  - action: действи при восстановлении
+    private func showRecoveryError(from error: DataFetcherError,
+                                   action: @escaping () -> ()) {
+        var actions: [RecoveryOptions] = [.cancel]
+        
+        switch error {
+        case .invalidNumber:
+            let tryAgainAction = RecoveryOptions.tryAgain(action: action)
+            actions.append(tryAgainAction)
+        default: break
+        }
+        
+        view?.show(rError: RecoverableError(error: error,
+                                            recoveryOptions: actions))
     }
 }
 
@@ -126,20 +128,33 @@ extension UserProfilePresenter: UserProfilePresentation {
                 self.interactor.find(ingredient: ingredient) { result in
                     
                     switch result {
-                        
                     case .success(let newViewModel):
                         self.ingredients.append(newViewModel)
                         self.view?.updateCV(orderSection: [.fridge(self.ingredients)])
-                    case .failure(_):
-                        break
+                        
+                    case .failure(let error):
+                        /// Пока не обрабатывается
+                        print(error.localizedDescription)
                     }
-                    
                 }
                 
             case .failure(let error):
-                print(error)
+                switch error {
+                case .invalidNumber:
+                    let action = { self.didTapAddIngredientButton() }
+                    self.showRecoveryError(from: error,
+                                           action: action)
+                default:
+                    print(error.localizedDescription)
+                }
             }
         })
+    }
+    
+    func textEntered(_ text: String) {
+        interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
+            self?.viewModels = models
+        }
     }
     
     func checkFlag(id: Int) -> Bool {
@@ -147,20 +162,15 @@ extension UserProfilePresenter: UserProfilePresentation {
         return ingredients[index].toUse
     }
     
-    
-    func fetchFavoriteRecipe(text: String) {
-        interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
-            self?.viewModels = models
-        }
-    }
-    
-    func getNewData() {
+    // ViewAppearable
+    func viewAppeared() {
         didSelectSegment(index: currentSegmentIndex)
     }
     
     // SegmentedViewDelegate
     func didSelectSegment(index: Int) {
-        currentSegmentIndex = index
+        
+        guard index != currentSegmentIndex else { return }
         
         switch index {
         /// вкладка профиля
@@ -182,6 +192,8 @@ extension UserProfilePresenter: UserProfilePresentation {
             view?.hideSearchBar(shouldHide: false)
             view?.updateCV(orderSection: [.favorite(viewModels)])
         }
+        
+        currentSegmentIndex = index
     }
     
     // ImagePresentation
@@ -193,7 +205,8 @@ extension UserProfilePresenter: UserProfilePresentation {
             case .success(let data):
                 completion(data)
             case .failure(let error):
-                print(error)
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }
@@ -211,21 +224,10 @@ extension UserProfilePresenter: UserProfilePresentation {
         interactor.addToBasket(id: id)
     }
     
-    // LayoutChangable
-    func didTapChangeLayoutButton(section: Int) {
-        /// Вызываем уведомление изменения layout
-        NotificationCenter.default
-            .post(name: NSNotification.Name("changeLayoutType2"),
-                  object: nil)
-        
-        let indexPath = (0...viewModels.count-1).map { IndexPath(item: $0, section: section) }
-        view?.reload(items: indexPath)
-    }
-    
     // SelectedCellDelegate
     func didSelectItem(id: Int) {
-        interactor.getRecipe(id: id) { [weak self] model in
-            self?.router.route(to: .detailInfo, model: model)
+        interactor.getRecipe(id: id) { [weak self] recipe in
+            self?.router.route(to: .detailInfo(recipe))
         }
     }
     

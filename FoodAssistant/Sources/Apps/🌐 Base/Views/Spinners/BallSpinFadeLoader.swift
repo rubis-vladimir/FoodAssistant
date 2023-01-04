@@ -45,7 +45,7 @@ class BallSpinFadeLoader: UIView {
     }
     
     /// Настраивает анимацию загрузки
-    func setupAnimation() {
+    private func setupAnimation() {
         var animationRect = frame
         let minEdge = min(animationRect.width, animationRect.height)
         
@@ -59,7 +59,7 @@ class BallSpinFadeLoader: UIView {
     ///   - layer: слой
     ///   - size: размер
     ///   - color: цвет
-    func setupAnimationView(in layer: CALayer,
+    private func setupAnimationView(in layer: CALayer,
                             size: CGSize,
                             color: UIColor) {
         let circleSpacing: CGFloat = -2
@@ -115,7 +115,7 @@ class BallSpinFadeLoader: UIView {
     ///  - containerSize: размер контейнера анимации
     ///  - color: цвет
     /// - Returns: объект CA
-    func circleAt(angle: CGFloat,
+    private func circleAt(angle: CGFloat,
                   size: CGFloat,
                   origin: CGPoint,
                   containerSize: CGSize,
@@ -138,7 +138,7 @@ class BallSpinFadeLoader: UIView {
     ///   - size: размер
     ///   - color: цвет
     ///  - Returns: объект CA
-    func circleLayerWith(size: CGSize,
+    private func circleLayerWith(size: CGSize,
                          color: UIColor) -> CALayer {
         let layer: CAShapeLayer = CAShapeLayer()
         let path: UIBezierPath = UIBezierPath()
@@ -154,5 +154,19 @@ class BallSpinFadeLoader: UIView {
         layer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
         return layer
+    }
+}
+
+extension BallSpinFadeLoader {
+    
+    /// Настраивает активити индикатор для `ImageView`
+    func setupSpinner(loadingImageView: UIImageView) {
+        let spinner = self
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        spinner.centerXAnchor.constraint(equalTo: loadingImageView.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: loadingImageView.centerYAnchor).isActive = true
+        spinner.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        spinner.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }

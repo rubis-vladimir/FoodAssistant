@@ -21,12 +21,12 @@ extension RecipeListAssembly: Assemblying {
     
     func assembly() -> UIViewController {
         /// Менеджер для работы с сетью
-        let networkManager = NetworkDataFetcher()
+        let networkManager = NetworkDataFetcher.shared
         /// Сервис перевода текста
         let translateService = TranslateService(dataFetcher: networkManager)
         
         /// Сервис загрузки изображений
-        let imageDownloader = ImageDownloader()
+        let imageDownloader = ImageDownloader.shared
         /// Сервис кеширования изображений
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
@@ -45,7 +45,6 @@ extension RecipeListAssembly: Assemblying {
         let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.view = viewController
-        presenter.getStartData()
         
         return viewController
     }

@@ -45,7 +45,7 @@ protocol CVItemBuilderProtocol {
                 collectionView: UICollectionView) -> UICollectionViewCell
 }
 
-/// #
+/// #Протокол строителя для обработки нажатия на ячейку
 protocol CVSelectableItemBuilderProtocol: CVItemBuilderProtocol {
     /// Ивент при нажатии на ячейку
     func didSelectItem(indexPath: IndexPath)

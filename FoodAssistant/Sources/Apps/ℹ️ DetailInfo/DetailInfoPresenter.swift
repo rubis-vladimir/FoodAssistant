@@ -9,29 +9,20 @@ import Foundation
 
 /// #Протокол управления слоем навигации модуля DetailInfo
 protocol DetailInfoRouting {
-    /// Возврат назад
+    /// Вернуться назад
     func routeToBack()
 }
 
 /// #Протокол управления бизнес логикой модуля DetailInfo
-protocol DetailInfoBusinessLogic {
+protocol DetailInfoBusinessLogic: ImageBusinessLogic {
     
-    /// Получить изображения из сети/кэша
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchImageRecipe(_ imageName: String,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-    
-    /// Получить изображения из сети/кэша
-    ///  - Parameters:
-    ///   - imageName: название изображения
-    ///   - size: размер изображения
-    ///   - completion: захватывает данные изображения / ошибку
-    func fetchImageIngredients(_ imageName: String,
-                               size: ImageSize,
-                               completion: @escaping (Result<Data, DataFetcherError>) -> Void)
-    
+    /// Обновить флаг избранного рецепта
+    /// - Parameters:
+    ///  - flag: флаг
+    ///  - recipe: рецепт
+    func updateFavotite(_ flag: Bool,
+                        recipe: RecipeProtocol)
+    /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
 }
 
@@ -41,45 +32,43 @@ final class DetailInfoPresenter {
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
     
-    private(set) var model: RecipeProtocol
+    private(set) var recipe: RecipeProtocol
     
     init(interactor: DetailInfoBusinessLogic,
          router: DetailInfoRouting,
-         model: RecipeProtocol) {
+         recipe: RecipeProtocol) {
         self.interactor = interactor
         self.router = router
-        self.model = model
+        self.recipe = recipe
     }
 }
 
 // MARK: - DetailInfoPresentation
 extension DetailInfoPresenter: DetailInfoPresentation {
+    func didTapChangeFavoriteButton(_ flag: Bool) {
+        interactor.updateFavotite(flag, recipe: recipe)
+    }
+    
     func checkFor(ingredient: IngredientViewModel) -> Bool {
         interactor.checkFor(ingredient: ingredient)
     }
     
-    func fetchRecipe(with imageName: String, completion: @escaping (Data) -> Void) {
-        interactor.fetchImageRecipe(imageName) { result in
+    // ImagePresentation
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Data) -> Void) {
+        interactor.fetchImage(imageName, type: type) { result in
             switch result {
             case .success(let data):
                 completion(data)
-            case .failure(_):
-                break
+            case .failure(let error):
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }
     
-    func fetchIngredients(with imageName: String, size: ImageSize, completion: @escaping (Data) -> Void) {
-        interactor.fetchImageIngredients(imageName, size: size) { result in
-            switch result {
-            case .success(let data):
-                completion(data)
-            case .failure(_):
-                break
-            }
-        }
-    }
-    
+    // BackTappable
     func didTapBackButton() {
         router.routeToBack()
     }

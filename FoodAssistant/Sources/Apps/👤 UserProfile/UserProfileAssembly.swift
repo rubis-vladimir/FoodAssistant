@@ -20,11 +20,11 @@ final class UserProfileAssembly {
 extension UserProfileAssembly: Assemblying {
     func assembly() -> UIViewController {
         
-        let imageDownloader = ImageDownloader()
+        let imageDownloader = ImageDownloader.shared
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
                                                         imageCache: imageCacheService)
-        let dataFetcher = NetworkDataFetcher()
+        let dataFetcher = NetworkDataFetcher.shared
         let storage = StorageManager.shared
         
         let router = UserProfileRouter(navigationController: navigationController)
@@ -34,6 +34,7 @@ extension UserProfileAssembly: Assemblying {
         let presenter = UserProfilePresenter(interactor: interactor,
                                   router: router)
         let viewController = UserProfileViewController(presenter: presenter)
+        
         presenter.view = viewController
         return viewController
     }

@@ -7,46 +7,64 @@
 
 import Foundation
 
-/// #Протокол перевода текста для рецептов
-protocol RecipeTranslatable {
+/// #Протокол перевода текста 
+protocol Translatable {
     /// Получает массив рецептов с переведенными текстами
     ///  - Parameters:
     ///   - recipes: рецепты до перевода
+    ///   - source: из какого языка
+    ///   - target: в какой язык
     ///   - completion: захватывает рецепты с переводом / ошибку
     func fetchTranslate(recipes: [Recipe],
+                        sourse: String,
+                        target: String,
                         completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void)
+    
+    /// Запрос на перевод
+    ///  - Parameters:
+    ///   - texts: строки для перевода
+    ///   - source: из какого языка
+    ///   - target: в какой язык
+    ///   - completion: захватывает ответ с переводом / ошибку
+    func translate(with texts: [String],
+                   source: String,
+                   target: String,
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void)
 }
 
 /// #Сервис перевода
 final class TranslateService {
-    private let dataFetcher: DataFetcherProtocol
+    /// Словарь содержащий количество символов
+    private var symbolsCount: [String : Int] = [:]
     
-    private var elementsCount: [String : Int] = [:]
+    private let dataFetcher: DataFetcherProtocol
     
     init(dataFetcher: DataFetcherProtocol) {
         self.dataFetcher = dataFetcher
     }
 }
 
-// MARK: - RecipeTranslatable
-extension TranslateService: RecipeTranslatable {
+// MARK: - Translatable
+extension TranslateService: Translatable {
     
     func fetchTranslate(recipes: [Recipe],
+                        sourse: String,
+                        target: String,
                         completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void) {
         var newRecipes: [Recipe] = []
         
         let dispatchGroup = DispatchGroup() /// Создаем диспатч-группу
         
         recipes.forEach { recipe in
-            guard currentAppleLanguage() != "Base" else { return }
-            
             dispatchGroup.enter() /// Входим в группу
            
             /// Получаем массив текстов, которые нужно перевести
             let texts = takeForTranslate(recipe: recipe)
             
             /// Отправляем на перевод
-            translate(with: texts) { [weak self] result in
+            translate(with: texts,
+                      source: sourse,
+                      target: target) { [weak self] result in
                 guard let self = self else { return }
                 
                 switch result {
@@ -62,7 +80,9 @@ extension TranslateService: RecipeTranslatable {
                 case .failure(let error):
                     /// Если перевод не удался
                     newRecipes.append(recipe)
-                    completion(.failure(error))
+                    
+                    print(error.localizedDescription)
+                    completion(.failure(.translateError))
                     
                     dispatchGroup.leave() /// Выходим из группы
                 }
@@ -76,24 +96,22 @@ extension TranslateService: RecipeTranslatable {
             completion(.success(newRecipes))
         }
     }
+    
+    func translate(with texts: [String],
+                   source: String,
+                   target: String,
+                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
+        let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
+                                             texts: texts,
+                                             sourceLanguageCode: source,
+                                             targetLanguageCode: target)
+        
+        LanguageRequest.translate(patameters: parameters).download(with: dataFetcher, completion: completion)
+    }
 }
 
 /// #Вспомогательные функции
 private extension TranslateService {
-    /// Запрос на перевод
-    ///  - Parameters:
-    ///   - texts: строки для перевода
-    ///   - completion: захватывает ответ с переводом / ошибку
-    private func translate(with texts: [String],
-                           completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
-        let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
-                                             texts: texts,
-                                             sourceLanguageCode: "en",
-                                             targetLanguageCode: "ru")
-        
-        LanguageRequest.translate(patameters: parameters).download(with: dataFetcher, completion: completion)
-    }
-    
     /// Получает массив строк, которые необходимо перевести
     ///  - Parameter recipe: рецепт
     ///  - Returns: массив строк
@@ -107,14 +125,14 @@ private extension TranslateService {
         if let ingredients = recipe.extendedIngredients {
             let ingredientTitles = ingredients.map { $0.name }
             arrayString.append(contentsOf: ingredientTitles)
-            elementsCount["ingredientTitles \(recipe.id)"] = ingredients.count
+            symbolsCount["ingredientTitles \(recipe.id)"] = ingredients.count
         }
         
         /// Шаги приготовления по инструкции
         if let steps = recipe.analyzedInstructions?.first?.steps {
             let stepTitles = steps.map { $0.step }
             arrayString.append(contentsOf: stepTitles)
-            elementsCount["steps \(recipe.id)"] = steps.count
+            symbolsCount["steps \(recipe.id)"] = steps.count
         }
         
         return arrayString
@@ -125,7 +143,7 @@ private extension TranslateService {
     ///   - recipe: изначальный рецепт
     ///   - texts: переведенные строки
     ///  - Returns: обновленный рецепт
-    func changeModels(_ recipe: Recipe,
+    private func changeModels(_ recipe: Recipe,
                       with texts: [String]) -> Recipe {
         var recipe = recipe
         
@@ -133,7 +151,7 @@ private extension TranslateService {
         recipe.title = texts[0]
         
         /// Названия ингредиентов
-        if let count = elementsCount["ingredientTitles \(recipe.id)"],
+        if let count = symbolsCount["ingredientTitles \(recipe.id)"],
            count == recipe.extendedIngredients?.count {
             let ingredientTexts = texts.dropFirst().prefix(count).map {String($0)}
             
@@ -143,7 +161,7 @@ private extension TranslateService {
         }
         
         /// Шаги приготовления по инструкции
-        if let count = elementsCount["steps \(recipe.id)"],
+        if let count = symbolsCount["steps \(recipe.id)"],
            count == recipe.analyzedInstructions?[0].steps.count {
             let instructionTexts = texts.suffix(count).map {String($0)}
             
@@ -152,24 +170,6 @@ private extension TranslateService {
             }
         }
         return recipe
-    }
-    
-    /// Проверяет установленный на устройстве язык
-    /// - Returns: обозначение локализации языка
-    private func currentAppleLanguage() -> String {
-        let appleLanguageKey = "AppleLanguages"
-        let userdef = UserDefaults.standard
-        var currentWithoutLocale = "Base"
-        if let langArray = userdef.object(forKey: appleLanguageKey) as? [String] {
-            if var current = langArray.first {
-                if let range = current.range(of: "-") {
-                    current = String(current[..<range.lowerBound])
-                }
-                
-                currentWithoutLocale = current
-            }
-        }
-        return currentWithoutLocale
     }
 }
 

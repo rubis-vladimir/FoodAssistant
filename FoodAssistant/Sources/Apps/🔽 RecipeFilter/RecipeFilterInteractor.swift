@@ -7,8 +7,10 @@
 
 import Foundation
 
+/// #Протокол делегата бизнес-логики
 protocol RecipeFilterBusinessLogicDelegate: AnyObject {
-    
+    /// Обновить секцию
+    /// - Parameter section: номер секции
     func update(section: Int)
 }
 
@@ -17,7 +19,7 @@ final class RecipeFilterInteractor {
     
     weak var presenter: RecipeFilterBusinessLogicDelegate?
     
-    private var dict: [RecipeFilterParameter : [TagModel]] = [:]
+    private var dict: [FilterParameters : [TagModel]] = [:]
     
     private let filterManager: FilterManagement
     
@@ -30,8 +32,13 @@ final class RecipeFilterInteractor {
         return str.components(separatedBy: separators).filter{ $0 != "" }
     }
     
-    func number(fromString str: String?,
-                inOrder: Int) -> Int? {
+    /// Определяет количество из строки
+    /// - Parameters:
+    ///  - str: строка
+    ///  - inOrder: порядок
+    /// - Returns: количество
+    private func number(fromString str: String?,
+                        inOrder: Int) -> Int? {
         guard let str = str else { return nil }
         switch inOrder {
         case 1: return values(fromCSVString: str).compactMap(Int.init).last
@@ -39,7 +46,8 @@ final class RecipeFilterInteractor {
         }
     }
     
-    func getSelectedParameters(_ parameter: RecipeFilterParameter) -> [String] {
+    /// Получить выбранные данные для параметра
+    private func getSelected(_ parameter: FilterParameters) -> [String] {
         dict[parameter]?.filter { $0.isSelected == true }.map { $0.title } ?? []
     }
 }
@@ -48,14 +56,13 @@ final class RecipeFilterInteractor {
 extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     
     func getParameters(completion: @escaping (RecipeFilterParameters) -> Void) {
-        
-        let selectedTime = getSelectedParameters(.time).first
-        let selectedСalories = getSelectedParameters(.calories).first
-        let selectedCuisines = getSelectedParameters(.region)
-        let selectedDiet = getSelectedParameters(.diet).first
-        let selectedType = getSelectedParameters(.dishType)
-        let selectedIncludeIngredients = getSelectedParameters(.includeIngredients)
-        let selectedExcludeIngredients = getSelectedParameters(.excludeIngredients)
+        let selectedTime = getSelected(.time).first
+        let selectedСalories = getSelected(.calories).first
+        let selectedCuisines = getSelected(.region)
+        let selectedDiet = getSelected(.diet).first
+        let selectedType = getSelected(.dishType)
+        let selectedIncludeIngredients = getSelected(.includeIngredients)
+        let selectedExcludeIngredients = getSelected(.excludeIngredients)
         
         let filterParameters = RecipeFilterParameters(
             time: number(fromString: selectedTime, inOrder: 0),
@@ -69,11 +76,22 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
             maxCalories: number(fromString: selectedСalories, inOrder: 1),
             sort: nil
         )
-        print(filterParameters)
         completion(filterParameters)
     }
     
-    func fetchText(with parameter: RecipeFilterParameter,
+    func fetchFilterParameters(completion: @escaping ([FilterParameters : [TagModel]]) -> Void) {
+        var dict = [FilterParameters : [TagModel]]()
+        
+        filterManager.getRecipeParameters().forEach {
+            let tagModel = $0.value.map { TagModel(title: $0, isSelected: false)  }
+            dict[$0.key] = tagModel
+        }
+        
+        self.dict = dict
+        completion(dict)
+    }
+    
+    func fetchText(with parameter: FilterParameters,
                    completion: @escaping (String) -> Void) {
         guard let models = dict[parameter] else {
             completion("")
@@ -85,10 +103,9 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
         completion(text)
     }
     
-    func update(parameter: RecipeFilterParameter,
+    func update(parameter: FilterParameters,
                 text: String,
-                completion: @escaping ([RecipeFilterParameter : [TagModel]]) -> Void) {
-        
+                completion: @escaping ([FilterParameters : [TagModel]]) -> Void) {
         let titles = values(fromCSVString: text)
         filterManager.overWrite(parameter: parameter,
                                 value: titles)
@@ -98,13 +115,13 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     }
     
     func checkFlag(indexPath: IndexPath) -> Bool {
-        guard let parameter = RecipeFilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }),
+        guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == indexPath.section }),
               let model = dict[parameter]?[indexPath.item] else { return false }
         return model.isSelected
     }
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath) {
-        guard let parameter = RecipeFilterParameter.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
+        guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
         guard var models = dict[parameter] else { return }
         
         switch parameter {
@@ -119,17 +136,5 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
             models[indexPath.item].isSelected = flag
             dict[parameter] = models
         }
-    }
-    
-    func fetchFilterParameters(completion: @escaping ([RecipeFilterParameter : [TagModel]]) -> Void) {
-        var dict = [RecipeFilterParameter : [TagModel]]()
-        
-        filterManager.getRecipeParameters().forEach {
-            let tagModel = $0.value.map { TagModel(title: $0, isSelected: false)  }
-            dict[$0.key] = tagModel
-        }
-        
-        self.dict = dict
-        completion(dict)
     }
 }

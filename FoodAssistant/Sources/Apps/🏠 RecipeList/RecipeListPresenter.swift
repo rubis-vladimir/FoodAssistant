@@ -13,36 +13,34 @@ protocol RecipeListRouting {
     ///  - Parameter model: модель рецепта
     func routeToDetail(model: RecipeProtocol)
     
+    /// Переход к экрану фильтра и обратно
+    ///  - Parameters:
+    ///   - flag: флаг перехода
+    ///   - search: поисковый контроллер
+    ///   - searchDelegate: делегат поиска
     func routeToFilter(_ flag: Bool,
                        search: UISearchController,
                        searchDelegate: SeachRecipesRequested)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
-protocol RecipeListViewable: AnyObject {
-    /// Обновляет `CollectionView`
+protocol RecipeListViewable: ErrorShowable, AnyObject {
+    /// Обновить `CollectionView`
     /// - Parameter array: массив словарей моделей
     func updateCV(with: [RecipeModelsDictionary])
     
-    /// Обновляет UI кнопки фильтра
-    func updateFilterButton()
+    /// Получить текст из поиска
+    func getSearchText() -> String?
     
-    /// Перезагружает секцию коллекции
-    /// - Parameter section: номер секции
-    func reload(items: [IndexPath])
-    
-    /// Показывает ошибку
-    func showError(_ error: Error)
+    /// Обновить элементы коллекции
+    /// - Parameter indexPaths: массив `IndexPath`
+    func updateItems(indexPaths: [IndexPath])
 }
 
 /// #Протокол управления бизнес логикой модуля RecipeList
 protocol RecipeListBusinessLogic: RecipeReceived,
                                   ImageBusinessLogic,
-                                  RLNetworkBusinessLogic,
-                                  RLLocalStorageBusinessLogic { }
-
-/// #Протокол взаимодействия с сетью модуля RecipeList
-protocol RLNetworkBusinessLogic {
+                                  RecipeRemovable {
     /// Получить рецепт из сети по параметрам
     ///  - Parameters:
     ///   - parameters: установленные параметры
@@ -61,25 +59,19 @@ protocol RLNetworkBusinessLogic {
     ///   - completion: захватывает вью модель рецепта / ошибку
     func fetchRecommended(number: Int,
                           completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void)
-}
-
-/// #Протокол взаимодействия с ДБ модуля RecipeList
-protocol RLLocalStorageBusinessLogic {
+    
     /// Сохранить рецепт
     /// - Parameters:
     ///   - id: идентификатор рецепта
     ///   - target: цель сохранения
     func saveRecipe(id: Int,
                     for target: TargetOfSave)
-    
-    /// Удалить рецепт
-    /// - Parameter id: идентификатор рецепта
-    func removeRecipe(id: Int)
-    
+
     /// Обновляет информацию об избранных рецептах
     func updateFavoriteId()
     
     /// Проверяет находится ли рецепт в избранных
+    /// - Parameter id: идентификатор рецепта
     func checkFavorite(id: Int) -> Bool
 }
 
@@ -115,25 +107,36 @@ final class RecipeListPresenter {
          router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
+        
+        getStartData()
     }
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        var filterParameters = RecipeFilterParameters()
+        let filterParameters = RecipeFilterParameters()
         
-        interactor.fetchRecommended(number: 5) { [weak self] result in
-            switch result {
-            case .success(let recipeModels):
-                self?.viewModelsDictionary[.recommended] = recipeModels
-            case .failure(let error):
-                self?.view?.showError(error)
-            }
-        }
-        
-        fetchRecipe(with: filterParameters,
-                    number: 4,
-                    query: nil,
-                    type: .main)
+        /// Загрузка данных для секции Recommended
+//        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let recipeModels): // Успех
+//                self.viewModelsDictionary[.recommended] = recipeModels
+//
+//            case .failure(let error): // Ошибка
+//                /// Действие, если ошибка восстанавливаемая
+//                let action = { self.getStartData() }
+//                ///
+//                self.showRecoveryError(from: error,
+//                                       action: action)
+//            }
+//        }
+//
+//        /// Загрузка данных для секции Main
+//        fetchRecipe(with: filterParameters,
+//                    number: AppConstants.minRequestAmount,
+//                    query: nil,
+//                    type: .main)
     }
     
     /// Получает рецепты
@@ -149,11 +152,23 @@ final class RecipeListPresenter {
         interactor.fetchRecipe(with: parameters,
                                number: number,
                                query: query) { [weak self] result in
+            guard let self = self else { return }
+            
             switch result {
-            case .success(let recipeModels):
-                self?.viewModelsDictionary[type] = recipeModels
-            case .failure(let error):
-                self?.view?.showError(error)
+            case .success(let recipeModels): // Успех
+                self.viewModelsDictionary[type] = recipeModels
+                
+            case .failure(let error): // Ошибка
+                /// Действие при
+                let action = {
+                    self.fetchRecipe(with: parameters,
+                                     number: number,
+                                     query: query,
+                                     type: .main)
+                    
+                }
+                self.showRecoveryError(from: error,
+                                       action: action)
             }
         }
     }
@@ -176,6 +191,25 @@ final class RecipeListPresenter {
             view?.updateCV(with: [mainDictionary])
         }
     }
+    
+    /// Конфигурирует и показывает восстанавливаемую ошибку
+    /// - Parameters:
+    ///  - error: ошибка
+    ///  - action: действи при восстановлении
+    private func showRecoveryError(from error: DataFetcherError,
+                                   action: @escaping () -> ()) {
+        var actions: [RecoveryOptions] = [.cancel]
+        
+        switch error {
+        case .invalidResponceCode, .dataLoadingError:
+            let tryAgainAction = RecoveryOptions.tryAgain(action: action)
+            actions.append(tryAgainAction)
+        default: break
+        }
+        
+        view?.show(rError: RecoverableError(error: error,
+                                            recoveryOptions: actions))
+    }
 }
 
 // MARK: - RecipeListPresentation
@@ -194,19 +228,22 @@ extension RecipeListPresenter: RecipeListPresentation {
         interactor.checkFavorite(id: id)
     }
     
+    // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName, type: type) { [weak self] result in
+        interactor.fetchImage(imageName, type: type) { result in
             switch result {
             case .success(let data):
                 completion(data)
             case .failure(let error):
-                self?.view?.showError(error)
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }
-    
+     
+    // FavoriteChangable
     func didTapFavoriteButton(_ isFavorite: Bool,
                               id: Int) {
         if isFavorite {
@@ -217,18 +254,20 @@ extension RecipeListPresenter: RecipeListPresentation {
         }
     }
     
+    // InBasketTapable
     func didTapAddInBasketButton(id: Int) {
         interactor.saveRecipe(id: id,
                               for: .inBasket)
     }
     
-    
+    // CellSelectable
     func didSelectItem(id: Int) {
         interactor.getRecipe(id: id) { [weak self] model in
             self?.router.routeToDetail(model: model)
         }
     }
     
+    // LayoutChangable
     func didTapChangeLayoutButton(section: Int) {
         
         guard let count = viewModelsDictionary[.main]?.count else { return }
@@ -237,17 +276,21 @@ extension RecipeListPresenter: RecipeListPresentation {
             .post(name: NSNotification.Name("changeLayoutType"),
                   object: nil)
         
-        let indexPath = (0...count-1).map { IndexPath(item: $0, section: section) }
-        view?.reload(items: indexPath)
+        guard count > 0 else { return }
+        let indexPaths = (0...count-1).map { IndexPath(item: $0, section: section) }
+        view?.updateItems(indexPaths: indexPaths)
     }
 }
 
 // MARK: - SeachRecipesRequested
 extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
-        
-        view?.updateFilterButton()
+        let text = view?.getSearchText()
         buildType = .search
-        fetchRecipe(with: parameters, number: 6, query: nil, type: .main)
+        
+        fetchRecipe(with: parameters,
+                    number: AppConstants.minRequestAmount,
+                    query: text,
+                    type: .main)
     }
 }

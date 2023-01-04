@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Модель рецепта для отображения
+/// #Вью-модель рецепта
 struct RecipeViewModel {
     /// Идентификатор
     var id: Int
@@ -17,7 +17,7 @@ struct RecipeViewModel {
     var ingredientsCount: Int
     /// Название изображения
     var imageName: String?
-    /// Флаг отнесения к любимым рецептам
+    /// Флаг избранного рецепта
     var isFavorite: Bool
     /// Время приготовления в минутах
     var cookingTime: String

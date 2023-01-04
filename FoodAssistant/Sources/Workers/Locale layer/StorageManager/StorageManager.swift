@@ -41,27 +41,16 @@ extension StorageManager{
                 try viewContext.save()
             } catch {
                 let nserror = error as NSError
-                fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
+                print("Error \(nserror), \(nserror.userInfo)")
             }
         }
     }
     
     /// Получение моделей типа `T` из БД
-    private func read<T: NSManagedObject>(model: T.Type) -> [T] {
-        /// создаем запрос к базе данных "fetchRequest" - выбрать из базы ВСЕ объекты с типом CDRecipe
-        let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
-        do {
-            ///Persistent Store Coordinator возвращает в context массив Managed Object `[CDRecipe]`
-            let objects = try viewContext.fetch(fetchRequest) as! [T]
-            /// при удаче возвращаем массив рецептов
-            return objects
-        } catch let error {
-            print (error)
-            /// при неудаче возвращаем пустой массив
-            return []
-        }
-    }
-    
+    /// - Parameters:
+    ///  - model: тип модели
+    ///  - predicate: логическое условие для фильтрации
+    /// - Returns: массив моделей
     private func read<T: NSManagedObject>(model: T.Type, predicate: NSPredicate?) -> [T] {
         /// создаем запрос к базе данных "fetchRequest" - выбрать из базы ВСЕ объекты с типом CDRecipe
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
@@ -75,8 +64,9 @@ extension StorageManager{
             let objects = try viewContext.fetch(fetchRequest) as! [T]
             /// при удаче возвращаем массив рецептов
             return objects
-        } catch let error {
-            print (error)
+        } catch {
+            let nserror = error as NSError
+            print("Error \(nserror), \(nserror.userInfo)")
             /// при неудаче возвращаем пустой массив
             return []
         }
@@ -148,10 +138,12 @@ extension StorageManager: DBRecipeManagement {
     }
     
     func check(id: Int) -> Bool {
-        guard read(model: CDRecipe.self).first(where: {$0.id == id && $0.isFavorite == true }) != nil else { return false }
+        guard read(model: CDRecipe.self,
+                   predicate: nil).first(where: {$0.id == id && $0.isFavorite == true }) != nil else { return false }
         return true
     }
     
+    /// #Вспомогательный приватные функции
     /// Создает и добавляет в контекст модель данных CDRecipe
     ///  - Parameters:
     ///   - recipe: переданная модель рецепта
@@ -260,6 +252,7 @@ extension StorageManager: DBIngredientsManagement {
         saveContext()
     }
     
+    /// Создает модель CDIngredient для ингредиентов в холодильнике
     private func createCDIngredient(ingredient: IngredientProtocol) {
         let cdIngredient = CDIngredient(context: viewContext)
         cdIngredient.cdId = Int32(ingredient.id)
@@ -269,7 +262,6 @@ extension StorageManager: DBIngredientsManagement {
         cdIngredient.unit = ingredient.unit
         cdIngredient.toUse = ingredient.toUse
         cdIngredient.inFridge = true
-        
     }
 }
 

@@ -10,7 +10,7 @@ import Foundation
 typealias HTTPHeaders = [String: String]
 typealias Parameters = Codable
 
-// Варианты http-методов
+/// #Варианты http-методов
 enum HTTPMethod: String {
     case get = "GET"
     case post = "POST"
@@ -39,6 +39,7 @@ protocol RequestBuilding {
 extension RequestBuilding {
     
     var parameters: Parameters? { return nil }
+    
     var queryItems: [URLQueryItem]? { return nil }
 
     func asURLRequest() throws -> URLRequest {
@@ -52,6 +53,7 @@ extension RequestBuilding {
                 request.setValue($1, forHTTPHeaderField: $0)
             }
         }
+        
         if let parameters = parameters {
             do {
                 request.httpBody = try JSONEncoder().encode(parameters)

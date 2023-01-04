@@ -57,7 +57,7 @@ final class DetailTitleView: UIView {
         
         /// Дефолтный лейбл
         let label = UILabel()
-        label.text = "РЕЦЕПТ"
+        label.text = "RECIPE".localize()
         label.font = Fonts.main
         
         /// Контейнер для названия рецепта

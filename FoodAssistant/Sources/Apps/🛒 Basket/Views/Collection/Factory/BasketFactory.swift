@@ -12,14 +12,14 @@ enum BasketSectionType {
     /// Добавленные рецепты
     case addedRecipe
     /// Добавленные ингредиенты
-    case ingredients
+    case shopList
 }
 
 /// #Фабрика настройки коллекции модуля Basket
-final class BasketFactory: NSObject {
+final class BasketFactory {
     
     private let collectionView: UICollectionView
-    private let recipes: [RecipeProtocol]
+    private let recipes: [RecipeViewModel]
     private let ingredients: [IngredientViewModel]
     private let cvAdapter: CVAdapter
     
@@ -27,10 +27,12 @@ final class BasketFactory: NSObject {
     
     /// Инициализатор
     ///  - Parameters:
-    ///    - tableView: настраиваемая таблица
-    ///    - delegate: делегат для передачи UIEvent (VC)
+    ///    - collectionView: настраиваемая коллекция
+    ///    - recipes: рецепты
+    ///    - ingredients: ингредиенты
+    ///    - delegate: делегат для передачи UIEvent
     init(collectionView: UICollectionView,
-         recipes: [RecipeProtocol],
+         recipes: [RecipeViewModel],
          ingredients: [IngredientViewModel],
          delegate: BasketPresentation?) {
         self.collectionView = collectionView
@@ -38,54 +40,61 @@ final class BasketFactory: NSObject {
         self.ingredients = ingredients
         self.delegate = delegate
         
+        /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
         
-        super.init()
         setupCollectionView()
     }
     
-    /// Настраивает табличное представление
+    /// Настраивает коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
-        collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         
         cvAdapter.configure(with: builders)
     }
     
     /// Создает строителя ячеек
-    ///  - Parameters:
-    ///     - model: модель данных
-    ///     - type: тип секции
-    ///   - Return: объект протокола строителя
+    ///  - Parameter type: тип секции
+    ///  - Returns: объект протокола строителя
     private func createBuilder(type: BasketSectionType) -> CVSectionBuilderProtocol {
         switch type {
         case .addedRecipe:
-            let viewModels = recipes.map { RecipeViewModel(with: $0) }
-            let configurator = AddedRecipesConfigurator(models: viewModels,
+            let configurator = AddedRecipesConfigurator(recipes: recipes,
                                                         delegate: delegate)
-            return SingleCellSectionConfigurator(title: "Добавленные рецепты",
+            return SingleCellSectionConfigurator(title: Constants.titleAddedRecipeSection,
                                                  configurators: [configurator],
-                                                 height: 200).configure(for: collectionView)
-        case .ingredients:
+                                                 height: Constants.heightSingleCell ).configure(for: collectionView)
+        case .shopList:
             
-            return AddedIngredientsConfigurator(models: ingredients,
-                                                title: "Шоп-лист",
+            return ShopListConfigurator(models: ingredients,
+                                                title: Constants.titleShopListSection,
                                                 delegate: delegate).configure(for: collectionView)
         }
     }
 }
 
-//MARK: - TVFactoryProtocol
+// MARK: - TVFactoryProtocol
 extension BasketFactory: CVFactoryProtocol {
     
     var builders: [CVSectionBuilderProtocol] {
         var builders: [CVSectionBuilderProtocol] = []
         
         builders.append(createBuilder(type: .addedRecipe))
-        builders.append(createBuilder(type: .ingredients))
+        builders.append(createBuilder(type: .shopList))
         
         return builders
+    }
+}
+
+// MARK: - Constants
+extension BasketFactory {
+    private struct Constants {
+        static let titleAddedRecipeSection = "Added recipes".localize()
+        static let titleShopListSection = "Shop-list".localize()
+        static let heightSingleCell: CGFloat = 200
     }
 }
 

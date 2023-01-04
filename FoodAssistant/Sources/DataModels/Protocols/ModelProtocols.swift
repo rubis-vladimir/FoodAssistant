@@ -25,7 +25,7 @@ protocol RecipeProtocol {
     var nutrients: [NutrientProtocol]? { get }
     /// Инструкции для приготовления
     var instructions: [InstructionStepProtocol]? { get }
-    /// Флаг любимого рецепта
+    /// Флаг избранного рецепта
     var isFavorite: Bool { get }
 }
 

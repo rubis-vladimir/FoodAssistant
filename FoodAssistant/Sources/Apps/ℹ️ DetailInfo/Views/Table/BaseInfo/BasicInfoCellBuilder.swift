@@ -36,7 +36,7 @@ extension BasicInfoCellBuilder: TVCellBuilderProtocol {
         cell.configure(with: model)
         
         if let imageName = model.imageName {
-            delegate?.fetchRecipe(with: imageName) { imageData in
+            delegate?.fetchImage(imageName, type: .recipe) { imageData in
                 DispatchQueue.main.async {
                     cell.updateImage(with: imageData)
                 }

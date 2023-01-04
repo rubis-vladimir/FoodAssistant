@@ -7,18 +7,18 @@
 
 import UIKit
 
-/// Типы текстовых ячеек модуля AddEvent
+/// #Типы секций модуля UserProfile
 enum UPSectionType {
-    /// Ячейка для подгрузки фото
+    /// Секция профиля
     case profile
-    //
+    /// Секция холодильника
     case fridge(_ ingredients: [IngredientViewModel])
-    /// Ячейка с описанием события
+    /// Секция с избранными рецептами
     case favorite(_ recipes: [RecipeViewModel])
 }
 
-/// Фабрика настройки табличного представления модуля AddEvent
-final class UPFactory: NSObject {
+/// #Фабрика настройки представления коллекции модуля UserProfile
+final class UPFactory {
     
     private let collectionView: UICollectionView
     private let orderSections: [UPSectionType]
@@ -28,8 +28,9 @@ final class UPFactory: NSObject {
     
     /// Инициализатор
     ///  - Parameters:
-    ///    - tableView: настраиваемая таблица
-    ///    - delegate: делегат для передачи UIEvent (VC)
+    ///    - collectionView: настраиваемая коллекция
+    ///    - delegate: делегат для передачи UIEvent
+    ///    - orderSections: массив секций по порядку
     init(collectionView: UICollectionView,
          delegate: UserProfilePresentation?,
          orderSections: [UPSectionType]) {
@@ -38,26 +39,25 @@ final class UPFactory: NSObject {
         self.delegate = delegate
         self.orderSections = orderSections
         
+        /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
-        
-        super.init()
         
         setupCollectionView()
     }
     
-    /// Настраивает табличное представление
+    /// Настраивает  коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         collectionView.backgroundColor = .clear
+        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsVerticalScrollIndicator = false
         
         cvAdapter.configure(with: builders)
     }
     
     /// Создает строителя ячеек
-    ///  - Parameters:
-    ///     - model: модель данных
-    ///     - type: тип ячейки
+    ///  - Parameter type: тип ячейки
     ///   - Return: объект протокола строителя
     private func createBuilder(type: UPSectionType) -> CVSectionBuilderProtocol {
         

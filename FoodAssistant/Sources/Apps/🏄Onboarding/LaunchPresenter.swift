@@ -10,13 +10,13 @@ import Foundation
 
 /// #Протокол управления слоем навигации модуля Launch
 protocol LaunchRouting {
-    /// Переход к основному экрану приложения
+    /// Перейти к основному экрану приложения
     func routeToMainScreen()
 }
 
 /// #Протокол управления View-слоем модуля Launch
 protocol LaunchViewable: AnyObject {
-    /// Обновление Страницы
+    /// Обновить страницу
     func updatePage()
 }
 

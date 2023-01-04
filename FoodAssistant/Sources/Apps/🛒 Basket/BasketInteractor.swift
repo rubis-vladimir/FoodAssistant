@@ -10,7 +10,7 @@ import Foundation
 /// #Протокол взаимодействия со слоем презентации модуля Basket
 protocol BasketBusinessLogicDelegate: AnyObject {
     
-    /// Передает ингредиенты
+    /// Передать ингредиенты
     ///  - Parameter ingredients: массив ингредиентов
     func handOver(ingredients: [IngredientViewModel])
 }
@@ -18,11 +18,13 @@ protocol BasketBusinessLogicDelegate: AnyObject {
 /// #Слой бизнес логики модуля Basket
 final class BasketInteractor {
     
+    /// Модели рецептов
+    private var models: [RecipeProtocol] = []
+    /// Модели ингредиентов
+    private var ingredients: [IngredientViewModel] = []
+    
     weak var presenter: BasketBusinessLogicDelegate?
     
-    private var models: [RecipeProtocol] = []
-    private var ingredients: [IngredientViewModel] = []
-
     private let imageDownloader: ImageDownloadProtocol
     private let storage: DBRecipeManagement & DBIngredientsManagement
     private let ingredientManager: ShopListCalculatable
@@ -34,20 +36,30 @@ final class BasketInteractor {
         self.storage = storage
         self.ingredientManager = ingredientManager
     }
+    
+    /// Получает ингредиенты для Шоп-листа
+    private func getIngredients(complection: @escaping ([IngredientViewModel]) -> Void) {
+        let ingredients = models.map {
+            $0.ingredients ?? []
+        }.reduce([], +)
+        
+        ingredientManager.getShopList(ingredients: ingredients,
+                                      complection: complection)
+    }
 }
 
 
 // MARK: - BasketBusinessLogic
 extension BasketInteractor: BasketBusinessLogic {
-   
-    // RecipeReceived
-    func getRecipe(id: Int,
-                   completion: @escaping (RecipeProtocol) -> Void) {
-        guard let model = models.first(where: { $0.id == id }) else { return }
-        completion(model)
+    
+    func fetchRecipeFromBasket(completion: @escaping ([RecipeViewModel]) -> Void) {
+        storage.fetchRecipes(for: .inBasket) { [weak self] recipes in
+            self?.models = recipes
+            let viewModels = recipes.map { RecipeViewModel(with: $0) }
+            completion(viewModels)
+        }
     }
     
-    // ImageBusinessLogic
     func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void) {
         guard !models.isEmpty else { return }
         getIngredients { [weak self] ingredients in
@@ -55,21 +67,33 @@ extension BasketInteractor: BasketBusinessLogic {
             completion(ingredients)
         }
     }
-    
-    func fetchRecipeInBasket(completion: @escaping ([RecipeProtocol]) -> Void) {
-        storage.fetchRecipes(for: .inBasket) { [weak self] recipes in
-            self?.models = recipes
-            completion(recipes)
-        }
+   
+    func changeIsCheck(id: Int, flag: Bool) {
+        guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { return }
+        ingredients[index].isCheck = flag
+        presenter?.handOver(ingredients: ingredients)
     }
     
-    func deleteFromBasket(id: Int) {
+    func addIngredientsInFridge() {
+        let checkIngredients = ingredients.filter { $0.isCheck == true }
+        storage.save(ingredients: checkIngredients)
+    }
+    
+    // RecipeReceived
+    func getRecipe(id: Int,
+                   completion: @escaping (RecipeProtocol) -> Void) {
+        guard let model = models.first(where: { $0.id == id }) else { return }
+        completion(model)
+    }
+    
+    // RecipeRemovable
+    func removeRecipe(id: Int) {
         guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
         models.remove(at: index)
         storage.remove(id: id, for: .inBasket)
-        
     }
     
+    // ImageBusinessLogic
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
@@ -85,27 +109,5 @@ extension BasketInteractor: BasketBusinessLogic {
                 .download(with: imageDownloader,
                           completion: completion)
         }
-    }
-    
-    func changeIsCheck(id: Int, flag: Bool) {
-        guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { return }
-        ingredients[index].isCheck = flag
-        presenter?.handOver(ingredients: ingredients)
-    }
-    
-    func addIngredientsInFridge() {
-        let checkIngredients = ingredients.filter { $0.isCheck == true }
-        storage.save(ingredients: checkIngredients)
-    }
-}
-
-extension BasketInteractor {
-    private func getIngredients(complection: @escaping ([IngredientViewModel]) -> Void) {
-        let ingredients = models.map {
-            $0.ingredients ?? []
-        }.reduce([], +)
-        
-        ingredientManager.getShopList(ingredients: ingredients,
-                                      complection: complection)
     }
 }

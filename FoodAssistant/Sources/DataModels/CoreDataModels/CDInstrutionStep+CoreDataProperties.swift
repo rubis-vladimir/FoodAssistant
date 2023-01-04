@@ -20,5 +20,4 @@ extension CDInstrutionStep: InstructionStepProtocol {
     @NSManaged public var cdNumber: Int16
     @NSManaged public var step: String
     @NSManaged public var recipe: CDRecipe?
-
 }

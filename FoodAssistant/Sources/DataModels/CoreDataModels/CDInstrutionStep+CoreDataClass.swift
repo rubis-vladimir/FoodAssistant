@@ -10,6 +10,4 @@ import Foundation
 import CoreData
 
 @objc(CDInstrutionStep)
-public class CDInstrutionStep: NSManagedObject {
-
-}
+public class CDInstrutionStep: NSManagedObject { }

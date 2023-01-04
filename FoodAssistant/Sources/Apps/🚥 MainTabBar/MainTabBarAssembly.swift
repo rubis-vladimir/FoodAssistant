@@ -18,12 +18,8 @@ final class MainTabBarAssembly {
         self.navigationController = navigationController
         self.tabBarConfigurator = tabBarConfigurator
         
-        /// Скрываю `navigationBar` для `TabBar`
+        /// Скрываем `navigationBar` для `TabBar`
         navigationController.navigationBar.isHidden = true
-    }
-    
-    deinit {
-        print("DEINIT \(self)")
     }
 }
 

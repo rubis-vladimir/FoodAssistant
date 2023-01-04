@@ -7,10 +7,12 @@
 
 import UIKit
 
+/// #
 protocol UISearchBarFilterDelegate: AnyObject {
     func changeFilterView(isFilter: Bool)
 }
 
+/// #Кастомный поисковой бар для рецептов
 class RecipesSearchBar: UISearchBar {
     
     weak var filterDelegate: UISearchBarFilterDelegate?
@@ -52,7 +54,7 @@ class RecipesSearchBar: UISearchBar {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setViews()
-        layoutViews()
+        setupConstrains()
     }
     
     required init?(coder: NSCoder) {
@@ -60,7 +62,7 @@ class RecipesSearchBar: UISearchBar {
     }
     
     func setViews() {
-        placeholder = "Search recipes here..."
+        placeholder = "Search recipes here...".localize()
         guard let textField = textField else {
             return
         }
@@ -79,7 +81,7 @@ class RecipesSearchBar: UISearchBar {
         addSubview(filterButton)
     }
     
-    func layoutViews() {
+    func setupConstrains() {
         guard let textField = textField else { return }
         
         NSLayoutConstraint.activate([

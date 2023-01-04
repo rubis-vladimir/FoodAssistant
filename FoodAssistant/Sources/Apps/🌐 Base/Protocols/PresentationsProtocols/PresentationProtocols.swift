@@ -1,5 +1,5 @@
 //
-//  FetchImageProtocols.swift
+//  ImagePresentation.swift
 //  FoodAssistant
 //
 //  Created by Владимир Рубис on 13.12.2022.
@@ -27,4 +27,14 @@ protocol ImagePresentation {
                     completion: @escaping (Data) -> Void)
 }
 
+/// #Протокол для обновления данных, которое должно происходить при появлении вью на экране
+protocol ViewAppearable {
+    /// Сообщить, что вью появляется на экране
+    func viewAppeared()
+}
 
+/// #Протокол передачи UI-ивента при нажатии на кнопку назад
+protocol BackTapable {
+    /// Ивент нажатия кнопки назад
+    func didTapBackButton()
+}

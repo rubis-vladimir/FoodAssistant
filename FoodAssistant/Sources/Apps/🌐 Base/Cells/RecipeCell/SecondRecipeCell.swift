@@ -46,16 +46,18 @@ final class SecondRecipeCell: CVBaseRecipeCell {
         
         stack.addArrangedSubview(cookingTimeLabel)
         stack.addArrangedSubview(addToBasketButton)
+        substrateAction.addSubview(actionButton)
         
         addSubview(recipeImageView)
         addSubview(stack)
-        addSubview(actionButton)
+        addSubview(substrateAction)
         addSubview(containerTopLabel)
         
         /// Константы
         let padding: CGFloat = AppConstants.padding
         let height: CGFloat = 35
-        let width: CGFloat = 30
+        let widthAction: CGFloat = 27
+        let heightAction: CGFloat = 26
         let widthAB: CGFloat = 100
         let paddingMin: CGFloat = 5
         
@@ -70,11 +72,12 @@ final class SecondRecipeCell: CVBaseRecipeCell {
             
             containerTopLabel.bottomAnchor.constraint(equalTo: stack.topAnchor, constant: -paddingMin),
             containerTopLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            containerTopLabel.trailingAnchor.constraint(equalTo: actionButton.leadingAnchor, constant: -paddingMin),
+            containerTopLabel.trailingAnchor.constraint(equalTo: substrateAction.leadingAnchor, constant: -paddingMin),
             
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            actionButton.widthAnchor.constraint(equalToConstant: width),
+            substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
+            substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            substrateAction.heightAnchor.constraint(equalToConstant: heightAction),
+            substrateAction.widthAnchor.constraint(equalToConstant: widthAction),
             
             stack.bottomAnchor.constraint(equalTo: bottomAnchor),
             stack.trailingAnchor.constraint(equalTo: trailingAnchor),

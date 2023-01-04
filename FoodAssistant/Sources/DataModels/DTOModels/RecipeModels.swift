@@ -50,7 +50,7 @@ extension Recipe {
     }
     
     var ingredients: [IngredientProtocol]? {
-        combineUnit(ingredients: extendedIngredients)
+        combine(ingredients: extendedIngredients)
     }
     
     var nutrients: [NutrientProtocol]? { nutrition?.nutrients }
@@ -59,17 +59,21 @@ extension Recipe {
     
     /// Время приготовления в часах и минутах
     var cookingTime: String {
+        let hourText = "h".localize()
+        let minText = "min".localize()
+        
         let hours = readyInMinutes / 60
         let minutes = readyInMinutes % 60
         
         return hours > 0 && minutes > 0 // Условие 1
-        ? "\(hours) ч \(minutes) мин" :
+        ? "\(hours) \(hourText) \(minutes) \(minText)" :
         hours > 0 // Условие 2
-        ? "\(hours) ч"
-        :  "\(minutes) мин"
+        ? "\(hours) \(hourText)"
+        :  "\(minutes) \(minText)"
     }
     
-    func combineUnit(ingredients: [Ingredient]?) -> [Ingredient]? {
+    /// Объединяет ингредиенты если они повторяются в рецепте
+    func combine(ingredients: [Ingredient]?) -> [Ingredient]? {
          
         guard let ingredients = ingredients else { return nil }
         
@@ -123,7 +127,6 @@ struct Ingredient: IngredientProtocol, Codable, Hashable, Equatable {
 }
 
 extension Ingredient {
-    
     var unit: String {
         getUnit()
     }
@@ -132,6 +135,7 @@ extension Ingredient {
         getAmount()
     }
     
+    /// Получает обновленное количество
     func getAmount() -> Float {
         if ["ounce", "ounces", "oz"].contains(dtoUnit) {
             /// Переводим в граммы из тройской унции
@@ -139,26 +143,33 @@ extension Ingredient {
         } else if ["lb", "lbs", "pounds", "pound"].contains(dtoUnit) {
             /// Переводим в граммы из фунта
             return 453.6 * dtoAmount
+        } else if ["inch"].contains(dtoUnit) {
+            return 1.0
         } else {
             return dtoAmount
         }
     }
     
+    /// Приводит единицы измерения к одному варианту отображения
     func getUnit() -> String {
         let unit = dtoUnit?.lowercased()
         
         if ["tbsps", "tbs", "tbsp", "tablespoons", "tablespoon"].contains(unit) {
-            return "tbsp"
+            return "tbsp" // Столовая ложка
         } else if ["tsps", "teaspoons", "teaspoon", "tsp", "t"].contains(unit) {
-            return "tsp"
+            return "tsp" // Чайная ложка
         } else if ["cups", "cup", "c"].contains(unit) {
-            return "cup"
+            return "cup" // Чашка
         } else if ["ounce", "ounces", "oz", "g", "lb", "lbs", "pounds", "pound", "grams"].contains(unit) {
-            return "g"
-        } else if ["serving", "servings"].contains(unit) {
-            return "serv"
-        } else if ["small", "large", "medium"].contains(unit) {
+            return "g" // Грамм
+        } else if ["serving", "servings", "dash"].contains(unit) {
+            return "serv" // Порция
+        } else if ["small", "large", "medium", "container", "head", "jar", "inch"].contains(unit) {
             return ""
+        } else if ["handfuls", "handful", "medium"].contains(unit) {
+            return "handful"
+        } else if ["leaves", "leaf"].contains(unit) {
+            return "leaf"
         } else {
             guard let unit = dtoUnit else { return "" }
             return unit

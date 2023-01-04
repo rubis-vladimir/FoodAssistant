@@ -8,21 +8,17 @@
 import UIKit
 
 /// #Протокол передачи UI-ивентов слою презентации модуля Basket
-protocol BasketPresentation: RecipeRemovable,
+protocol BasketPresentation: DeleteTapable,
                              ImagePresentation,
-                             SelectedCellDelegate,
+                             CellSelectable,
                              CheckChangable,
+                             BackTapable,
                              AnyObject {
-    
-    func fetchAddedRecipe()
-    
+    /// Была нажата кнопка добавления в холодильник
     func didTapAddFridgeButton()
-    
+    /// Проверяет флаг ингредиента
+    /// - Parameter id: идентификатор ингредиента
     func checkFlag(id: Int) -> Bool
-        
-    /// Ивент перехода
-    /// - Parameter to: цель перехода
-    func route(to: BasketTarget)
 }
 
 /// #Контроллер представления Корзины
@@ -31,35 +27,29 @@ final class BasketViewController: UIViewController {
     // MARK: - Properties
     private let presenter: BasketPresentation
     private var factory: CVFactoryProtocol?
-    private var collectionView: UICollectionView!
     
-    private lazy var addInFridgeButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(" Добавить", for: .normal)
-        button.titleLabel?.font = Fonts.subtitle
-        button.layer.cornerRadius = 25
-        button.tintColor = .white
-        button.setImage(Icons.fridge.image, for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
+    private lazy var collectionView = UICollectionView(frame: CGRect.zero,
+                                                       collectionViewLayout: AppConstants.getFlowLayout())
+    
+    private lazy var addInFridgeButton = BaseRedButton(title: Constracts.addFridgeTitle,
+                                                       image: Constracts.addFridgeImage) { [weak self] in
+        self?.presenter.didTapAddFridgeButton()
+    }
+    
+    private lazy var orderDeliveryButton = BaseRedButton(title: Constracts.orderButtonTitle,
+                                                       image: Constracts.orderBurronImage) { [weak self] in
+        self?.showInformationAlert(title: "Order".localize(),
+                                  text: "Go to checkout screen".localize())
+    }
+    
+    let stack: UIStackView = {
+        let stack = UIStackView()
+        stack.spacing = 20
+        stack.distribution = .fillEqually
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.isHidden = true
+        return stack
     }()
-    
-    private lazy var orderDeliveryButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(" Заказать", for: .normal)
-        button.titleLabel?.font = Fonts.subtitle
-        button.layer.cornerRadius = 25
-        button.tintColor = .white
-        button.setImage(Icons.fridge.image, for: .normal)
-        button.backgroundColor = Palette.darkColor.color
-        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
-    let stack = UIStackView()
     
     // MARK: - Init & ViewDidLoad
     init(presenter: BasketPresentation) {
@@ -70,40 +60,24 @@ final class BasketViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationController?.navigationBar.isHidden = false
-        setupNavigitionBarViews()
-        setupElements()
         
-        presenter.fetchAddedRecipe()
+        setupNavigitionBar()
+        setupElements()
     }
     
     // MARK: - Private func
     private func setupElements() {
         
-        addInFridgeButton.addTarget(self, action: #selector(didTapAddFridgeButton), for: .touchUpInside)
-                
-        /// Настройка `CollectionView`
-        collectionView = UICollectionView(frame: CGRect.zero,
-                                          collectionViewLayout: getFlowLayout())
-        
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.showsVerticalScrollIndicator = false
-        collectionView.backgroundColor = .clear
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
-        stack.spacing = 20
-        stack.distribution = .fillEqually
-        stack.translatesAutoresizingMaskIntoConstraints = false
-        stack.isHidden = true
+        collectionView.backgroundColor = .clear
         
         stack.addArrangedSubview(addInFridgeButton)
         stack.addArrangedSubview(orderDeliveryButton)
         
         view.addSubview(collectionView)
-//        view.addSubview(addInFridgeButton)
         view.addSubview(stack)
         
         NSLayoutConstraint.activate([
@@ -114,54 +88,33 @@ final class BasketViewController: UIViewController {
             
             stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            stack.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 1 / 2),
             stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             stack.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
     
-    /// Возвращает настроенный `FlowLayout`
-    private func getFlowLayout() -> UICollectionViewFlowLayout {
-        let layout = UICollectionViewFlowLayout()
-        let padding = AppConstants.padding
-        layout.sectionInset = UIEdgeInsets(top: 0,
-                                           left: padding,
-                                           bottom: padding,
-                                           right: padding)
-        layout.minimumInteritemSpacing = padding
-        layout.minimumLineSpacing = padding
-        return layout
-    }
-    
-    /// Настраивает кастомный NavigitionBar
-    private func setupNavigitionBarViews() {
+    /// Настраивает NavigitionBar
+    private func setupNavigitionBar() {
+        navigationController?.navigationBar.isHidden = false
         
-        let dismissButton = createCustomBarButton(
+        let backButton = createCustomBarButton(
             icon: .xmark,
-            selector: #selector(dismissButtonTapped)
+            selector: #selector(backButtonTapped)
         )
         
-        let label = UILabel()
-        label.text = "Корзина"
-        
-        navigationItem.leftBarButtonItems = [dismissButton]
-        navigationItem.titleView = label
+        navigationItem.leftBarButtonItems = [backButton]
+        navigationItem.titleView = createNavTitle(title: "Basket".localize())
     }
 
-    /// Скрывает экран
-    @objc private func dismissButtonTapped() {
-        presenter.route(to: .back)
-    }
-    
-    @objc private func didTapAddFridgeButton() {
-        presenter.didTapAddFridgeButton()
+    @objc private func backButtonTapped() {
+        presenter.didTapBackButton()
     }
 }
 
 // MARK: - BasketViewable
 extension BasketViewController: BasketViewable {
     
-    func updateCV(recipes: [RecipeProtocol],
+    func updateCV(recipes: [RecipeViewModel],
                   ingredients: [IngredientViewModel]) {
         if recipes.isEmpty {
             factory = nil
@@ -171,16 +124,21 @@ extension BasketViewController: BasketViewable {
                                     recipes: recipes,
                                     ingredients: ingredients,
                                     delegate: presenter)
-            collectionView.reloadData()
         }
     }
     
     func showAddButton(_ flag: Bool) {
         stack.isHidden = !flag
     }
-    
-    
-    func showError() {
+}
+
+// MARK: - Constants
+extension BasketViewController {
+    private struct Constracts {
+        static let orderButtonTitle = "Order".localize()
+        static let orderBurronImage = Icons.fridge.image
+        static let addFridgeTitle = "Add".localize()
+        static let addFridgeImage = Icons.cart.image
         
     }
 }

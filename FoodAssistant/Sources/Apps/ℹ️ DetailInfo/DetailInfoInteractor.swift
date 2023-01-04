@@ -13,10 +13,10 @@ final class DetailInfoInteractor {
     private var ingredientsFromFridge: [IngredientViewModel] = []
     
     private let imageDownloader: ImageDownloadProtocol
-    private let storage: DBIngredientsManagement
+    private let storage: DBIngredientsManagement & DBRecipeManagement
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBIngredientsManagement) {
+         storage: DBIngredientsManagement & DBRecipeManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
         
@@ -33,30 +33,34 @@ final class DetailInfoInteractor {
 
 // MARK: - DetailInfoBusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
+    
+    func fetchImage(_ imageName: String, type: TypeOfImage, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        switch type {
+        case .recipe:
+            ImageRequest
+                .recipe(imageName: imageName)
+                .download(with: imageDownloader,
+                          completion: completion)
+        case .ingredient:
+            ImageRequest
+                .ingredient(imageName: imageName,
+                            size: .mini)
+                .download(with: imageDownloader,
+                          completion: completion)
+        }
+    }
+    
+    func updateFavotite(_ flag: Bool, recipe: RecipeProtocol) {
+        if flag {
+            storage.save(recipe: recipe, for: .isFavorite)
+        } else {
+            storage.remove(id: recipe.id, for: .isFavorite)
+        }
+    }
+    
     func checkFor(ingredient: IngredientViewModel) -> Bool {
         guard let ingredientInFridge = ingredientsFromFridge.first(where: {$0 == ingredient}),
-//              ingredientInFridge.unit == ingredient.unit,
               ingredientInFridge.amount >= ingredient.amount else { return false }
         return true
-    }
-    
-    
-    func fetchImageRecipe(_ imageName: String, 
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        
-        ImageRequest
-            .recipe(imageName: imageName)
-            .download(with: imageDownloader,
-                      completion: completion)
-    }
-    
-    func fetchImageIngredients(_ imageName: String, size: ImageSize,
-                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-       
-        ImageRequest
-            .ingredient(imageName: imageName,
-                        size: size)
-            .download(with: imageDownloader,
-                      completion: completion)
     }
 }

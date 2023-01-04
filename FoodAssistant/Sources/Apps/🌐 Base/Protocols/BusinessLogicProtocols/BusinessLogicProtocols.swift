@@ -29,3 +29,21 @@ protocol RecipeReceived {
     func getRecipe(id: Int,
                    completion: @escaping (RecipeProtocol) -> Void)
 }
+
+protocol RecipeRemovable {
+    /// Удалить рецепт
+    /// - Parameter id: идентификатор рецепта
+    func removeRecipe(id: Int)
+}
+
+protocol IngredientFetchable {
+    /// Получить ингредиенты
+    /// - Parameter completion: захватывает вьюмодели ингредиентов
+    func fetchIngredients(completion: @escaping ([IngredientViewModel]) -> Void)
+}
+
+protocol InBasketAdded {
+    /// Добавить в корзину
+    /// - Parameter id: идентификатор рецепта
+    func addToBasket(id: Int)
+}
