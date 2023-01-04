@@ -100,6 +100,13 @@ final class RecipeListViewController: UIViewController {
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
+    func show(rError: RecoverableError) {
+        DispatchQueue.main.async {
+            self.showAlertError(rError)
+        }
+        
+    }
+    
     func updateItems(indexPaths: [IndexPath]) {
         collectionView.reloadItems(at: indexPaths)
     }
@@ -115,10 +122,6 @@ extension RecipeListViewController: RecipeListViewable {
                                      arrayModelsDictionary: with,
                                      delegate: self.presenter)
         }
-    }
-    
-    func showError(_ error: Error) {
-        
     }
 }
 

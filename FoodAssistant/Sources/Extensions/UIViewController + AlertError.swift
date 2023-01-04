@@ -14,7 +14,7 @@ extension UIViewController {
         guard let error = rError.error as? DataFetcherError else { return }
         
         let errorMessage = [error.failureReason, error.recoverySuggestion]
-            .compactMap({ $0 })
+            .compactMap({ $0?.localize() })
             .joined(separator: ". ")
         
         let alert = UIAlertController(

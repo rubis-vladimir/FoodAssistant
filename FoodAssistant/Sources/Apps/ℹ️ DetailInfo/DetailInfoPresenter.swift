@@ -62,7 +62,8 @@ extension DetailInfoPresenter: DetailInfoPresentation {
             case .success(let data):
                 completion(data)
             case .failure(let error):
-                print(error)
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }

@@ -10,7 +10,7 @@ import Foundation
 /// #Протокол демонстрации ошибки
 protocol ErrorShowable {
     
-    /// Показывает ошибку
-    /// - Parameter error: ошибка
-    func show(error: Error)
+    /// Показывает восстанавливаемую ошибку
+    /// - Parameter rError: ошибка
+    func show(rError: RecoverableError)
 }

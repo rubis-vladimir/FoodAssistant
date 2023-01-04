@@ -35,6 +35,8 @@ extension DataFetcherError: LocalizedError {
         switch self {
         case .invalidResponceCode(let code):
             return "No Internet Connection".localize()
+        case .noResults:
+            return "No Results".localize()
         default:
             return "Error".localize()
         }
@@ -55,13 +57,11 @@ extension DataFetcherError: LocalizedError {
     
     var recoverySuggestion: String? {
         switch self {
-        case .invalidResponceCode(let code):
+        case .invalidResponceCode:
             return "Please check your internet connection and try again".localize()
-        case .translateError:
-            return "Unfortunately, it was not possible to localize (translate) the data".localize()
         case .invalidNumber:
-            return "Invalid quantity, must be entered in numeric format".localize()
-        case .dataLoadingError, .imageLoadingError:
+            return "Please, enter again".localize()
+        case .dataLoadingError:
             return "Please, try again".localize()
         default:
             return "Send information to support. We will deal with this problem in the near future".localize()

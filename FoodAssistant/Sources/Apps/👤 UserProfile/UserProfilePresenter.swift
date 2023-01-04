@@ -94,6 +94,25 @@ final class UserProfilePresenter {
         self.interactor = interactor
         self.router = router
     }
+    
+    /// Конфигурирует и показывает восстанавливаемую ошибку
+    /// - Parameters:
+    ///  - error: ошибка
+    ///  - action: действи при восстановлении
+    private func showRecoveryError(from error: DataFetcherError,
+                                   action: @escaping () -> ()) {
+        var actions: [RecoveryOptions] = [.cancel]
+        
+        switch error {
+        case .invalidNumber:
+            let tryAgainAction = RecoveryOptions.tryAgain(action: action)
+            actions.append(tryAgainAction)
+        default: break
+        }
+        
+        view?.show(rError: RecoverableError(error: error,
+                                            recoveryOptions: actions))
+    }
 }
 
 
@@ -114,12 +133,20 @@ extension UserProfilePresenter: UserProfilePresentation {
                         self.view?.updateCV(orderSection: [.fridge(self.ingredients)])
                         
                     case .failure(let error):
-                        self.view?.show(error: error)
+                        /// Пока не обрабатывается
+                        print(error.localizedDescription)
                     }
                 }
                 
             case .failure(let error):
-                self.view?.show(error: error)
+                switch error {
+                case .invalidNumber:
+                    let action = { self.didTapAddIngredientButton() }
+                    self.showRecoveryError(from: error,
+                                           action: action)
+                default:
+                    print(error.localizedDescription)
+                }
             }
         })
     }
@@ -173,12 +200,13 @@ extension UserProfilePresenter: UserProfilePresentation {
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName, type: type) { [weak self] result in
+        interactor.fetchImage(imageName, type: type) { result in
             switch result {
             case .success(let data):
                 completion(data)
             case .failure(let error):
-                self?.view?.show(error: error)
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }

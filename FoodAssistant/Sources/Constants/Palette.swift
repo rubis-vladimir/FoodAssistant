@@ -27,8 +27,3 @@ extension Palette {
         }
     }
 }
-// #colorLiteral(red: 0.6, green: 0.1921568627, blue: 0.07843137255, alpha: 1)
-// #colorLiteral(red: 0.7960784314, green: 0.1568627451, blue: 0.1294117647, alpha: 1)
-// #colorLiteral(red: 0.8609796166, green: 0.8864883184, blue: 0.791760385, alpha: 1)
-// #colorLiteral(red: 0.906179691, green: 0.9301896193, blue: 0.839947971, alpha: 1)
-// #colorLiteral(red: 0.7960784314, green: 0.1568627451, blue: 0.1294117647, alpha: 1)

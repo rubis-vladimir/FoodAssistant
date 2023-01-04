@@ -48,17 +48,19 @@ extension UIViewController {
         stack.addArrangedSubview(annotationLabel)
         alert.view.addSubview(stack)
         
+        let padding = AppConstants.padding
+        
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 16),
-            stack.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -16),
+            stack.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: padding),
+            stack.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: padding),
+            stack.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -padding),
             stack.bottomAnchor.constraint(equalTo: alert.view.bottomAnchor, constant: -60)
         ])
         
-        alert.addAction(UIAlertAction(title: "Отмена",
+        alert.addAction(UIAlertAction(title: "Cancel".localize(),
                                       style: .cancel,
                                       handler: nil))
-        alert.addAction(UIAlertAction(title: "Добавить",
+        alert.addAction(UIAlertAction(title: "Add".localize(),
                                       style: .default,
                                       handler: { _ in completion(textView.text) }))
         
@@ -74,7 +76,9 @@ extension UIViewController {
         alert.view.backgroundColor = Palette.bgColor.color
         alert.view.layer.cornerRadius = 10
         
-        let titles = ["Наименование", "Количество", "Ед.измерения"]
+        let titles = ["Name".localize(),
+                      "Amount".localize(),
+                      "Unit".localize()]
         
         let titleTF = UITextView()
         let amountTF = UITextView()
@@ -82,7 +86,7 @@ extension UIViewController {
         
         let headerLabel = UILabel()
         headerLabel.font = Fonts.subtitle
-        headerLabel.text = "Добавить ингредиент"
+        headerLabel.text = "Add Ingredient".localize()
         headerLabel.textAlignment = .center
         
         let container = UIStackView()
@@ -116,16 +120,18 @@ extension UIViewController {
         
         alert.view.addSubview(container)
         
+        let padding = AppConstants.padding
+        
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: 16),
-            container.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: 16),
-            container.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -16),
+            container.topAnchor.constraint(equalTo: alert.view.topAnchor, constant: padding),
+            container.leadingAnchor.constraint(equalTo: alert.view.leadingAnchor, constant: padding),
+            container.trailingAnchor.constraint(equalTo: alert.view.trailingAnchor, constant: -padding),
         ])
         
-        alert.addAction(UIAlertAction(title: "Отмена",
+        alert.addAction(UIAlertAction(title: "Cancel".localize(),
                                       style: .cancel,
                                       handler: nil))
-        alert.addAction(UIAlertAction(title: "Добавить",
+        alert.addAction(UIAlertAction(title: "Add".localize(),
                                       style: .default,
                                       handler: { _ in
             

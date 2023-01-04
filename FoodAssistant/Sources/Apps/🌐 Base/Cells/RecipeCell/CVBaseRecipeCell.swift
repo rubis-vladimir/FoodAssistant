@@ -92,8 +92,18 @@ class CVBaseRecipeCell: UICollectionViewCell {
         return label
     }()
     
-    /// Подложка для лейбла
-    let substrate: UIStackView = {
+    /// Подложка для кнопки действия (отображается при типе Favorite)
+    let substrateAction: UIImageView = {
+        let iv = UIImageView()
+        iv.isUserInteractionEnabled = true
+        iv.tintColor = .white
+        iv.backgroundColor = .clear
+        iv.translatesAutoresizingMaskIntoConstraints = false
+        return iv
+    }()
+    
+    /// Подложка для лейбла времени
+    let substrateTime: UIStackView = {
         let stack = UIStackView()
         stack.layer.cornerRadius = 10
         stack.backgroundColor = .white
@@ -143,6 +153,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
             actionButton.addTarget(self,
                                      action: #selector(didFavoriteButtonTapped),
                                      for: .touchUpInside)
+            substrateAction.image = Icons.heartFill.image
         case .delete:
             actionButton.setImage(Icons.xmark.image, for: .normal)
             actionButton.addTarget(self,

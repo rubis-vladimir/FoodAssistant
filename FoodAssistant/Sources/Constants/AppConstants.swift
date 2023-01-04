@@ -9,10 +9,16 @@ import UIKit
 
 /// #Константы
 struct AppConstants {
+    /// Отступ
     static let padding: CGFloat = 16
+    /// Радиус скругления
     static let cornerRadius: CGFloat = 20
+    /// Расстояния от краев
     static let edgeInsert = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
+    /// Минимальное количество рецептов в запросе
+    static let minRequestAmount = 3
     
+    /// Тени
     enum Shadow: ShadowProtocol {
         case defaultOne, defaultTwo
         

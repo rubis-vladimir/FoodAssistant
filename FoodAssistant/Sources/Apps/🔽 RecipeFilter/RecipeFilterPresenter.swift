@@ -26,7 +26,10 @@ protocol RecipeFilterViewable: AnyObject {
     /// - Parameter dictModels: словарь параметров с данными
     func updateCV(dictModels: [FilterParameters: [TagModel]])
     
+    /// Обновить секцию
+    /// - Parameter section: номер секции
     func update(section: Int)
+    
     /// Показать алерт корректировки параметра
     /// - Parameters:
     ///  - parameter: параметр
@@ -39,14 +42,17 @@ protocol RecipeFilterViewable: AnyObject {
 protocol RecipeFilterBusinessLogic {
     /// Получить параметры для запроса
     func getParameters(completion: @escaping (RecipeFilterParameters) -> Void)
+    
     /// Получить параметры для конфигурации UI
     func fetchFilterParameters(completion: @escaping ([FilterParameters: [TagModel]]) -> Void)
+    
     /// Получить текст из данных параметра
     /// - Parameters:
     ///  - parameter: параметр
     ///  - completion: захватывает текст
     func fetchText(with parameter: FilterParameters,
                    completion: @escaping (String) -> Void)
+    
     /// Обновить данные параметра
     /// - Parameters:
     ///  - parameter: параметр
@@ -55,8 +61,10 @@ protocol RecipeFilterBusinessLogic {
     func update(parameter: FilterParameters,
                 text: String,
                 completion: @escaping ([FilterParameters : [TagModel]]) -> Void)
+    
     /// Проверка флага выбора тэга
     func checkFlag(indexPath: IndexPath) -> Bool
+    
     /// Изменить флаг для конкретного тэга
     /// - Parameters:
     ///  - flag: флаг

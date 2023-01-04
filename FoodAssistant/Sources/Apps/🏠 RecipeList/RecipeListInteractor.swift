@@ -90,6 +90,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                     self?.fetchRecipe(with: parameters, number: number, query: nil, completion: completion)
                 }
             }
+        } else {
+            /// Если установлен английский
+            fetchRecipe(ingredientTitles: ingredientTitles, number: number, completion: completion)
         }
     }
     
@@ -187,7 +190,7 @@ extension RecipeListInteractor {
         }
         
         /// Если установленный язык не базовый пробуем выполнить перевод
-        if self.currentAppleLanguage() != "en" {
+        if self.currentAppleLanguage() == "en" {
             self.translateService.fetchTranslate(recipes: recipes, sourse: "en", target: "\(self.currentAppleLanguage())") { result in
                 switch result {
                 case .success(let newRecipes):

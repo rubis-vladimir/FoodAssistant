@@ -130,11 +130,6 @@ extension BasketViewController: BasketViewable {
     func showAddButton(_ flag: Bool) {
         stack.isHidden = !flag
     }
-    
-    
-    func show(error: Error) {
-        
-    }
 }
 
 // MARK: - Constants

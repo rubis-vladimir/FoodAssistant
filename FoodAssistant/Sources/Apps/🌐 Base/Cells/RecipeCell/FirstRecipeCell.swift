@@ -30,30 +30,35 @@ final class FirstRecipeCell: CVBaseRecipeCell {
         
         
         /// Добавление элементов в слои
-        substrate.addArrangedSubview(cookingTimeLabel)
+        substrateTime.addArrangedSubview(cookingTimeLabel)
+        substrateAction.addSubview(actionButton)
         containerTopLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(substrate)
+        recipeImageView.addSubview(substrateTime)
         
         stack.addArrangedSubview(recipeImageView)
         stack.addArrangedSubview(containerTopLabel)
         
         addSubview(stack)
-        addSubview(actionButton)
+        addSubview(substrateAction)
         
         /// Констрейнты
         let heightOne: CGFloat = 30
         let heightTwo: CGFloat = 45
         let paddingCL: CGFloat = 5
+        let widthAction: CGFloat = 27
+        let heightAction: CGFloat = 26
         
         NSLayoutConstraint.activate([
-            substrate.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -AppConstants.padding),
-            substrate.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: AppConstants.padding),
-            substrate.heightAnchor.constraint(equalToConstant: heightOne),
+            substrateTime.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -AppConstants.padding),
+            substrateTime.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: AppConstants.padding),
+            substrateTime.heightAnchor.constraint(equalToConstant: heightOne),
             
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrate.leadingAnchor, constant: paddingCL),
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrateTime.leadingAnchor, constant: paddingCL),
             
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
-            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
+            substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            substrateAction.heightAnchor.constraint(equalToConstant: heightAction),
+            substrateAction.widthAnchor.constraint(equalToConstant: widthAction),
             
             containerTopLabel.heightAnchor.constraint(equalToConstant: heightTwo),
             

@@ -23,8 +23,7 @@ protocol BasketRouting {
 }
 
 /// #Протокол управления View-слоем модуля Basket
-protocol BasketViewable: ErrorShowable,
-                         AnyObject {
+protocol BasketViewable: AnyObject {
     /// Обновить Collection View
     ///  - Parameters:
     ///   - recipes: рецепты
@@ -137,13 +136,14 @@ extension BasketPresenter: BasketPresentation {
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
                     completion: @escaping (Data) -> Void) {
-        interactor.fetchImage(imageName, type: type) { [weak self] result in
+        interactor.fetchImage(imageName, type: type) { result in
             switch result {
             case .success(let data):
                 completion(data)
                 
             case .failure(let error):
-                self?.view?.show(error: error)
+                /// Пока не обрабатывается
+                print(error.localizedDescription)
             }
         }
     }

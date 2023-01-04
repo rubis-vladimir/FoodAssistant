@@ -183,7 +183,7 @@ extension UserProfileViewController: UserProfileViewable {
         }
     }
     
-    func show(error: Error) {
-        
+    func show(rError: RecoverableError) {
+        showAlertError(rError)
     }
 }

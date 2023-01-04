@@ -6,6 +6,19 @@
   
 */
 
+// MARK: - Errors
+"Error" = "Ошибка";
+"No Internet Connection" = "Отсутствует интернет соединение";
+"No Results" = "Нет результатов";
+"Something went wrong" = "Что-то пошло не так";
+"Unfortunately, it was not possible to localize (translate) the data" = "К сожалению не удалось локализовать(перевести) данные";
+"Invalid quantity, must be entered in numeric format" = "Некорретное количество, необходимо ввести в числовом формате";
+"Please check your internet connection and try again" = "Пожалуйста проверьте ваше интернет соединение и попробуйте снова";
+"Send information to support. We will deal with this problem in the near future" = "Направьте информацию в службу поддержки. В ближайшее время мы разберемся с данной проблемой";
+"Please, try again" = "Пожалуйста, попробуйте снова";
+"Please, enter again" = "Пожалуйста, введите заново";
+"Try again" = "Попробовать снова";
+
 // MARK: - DetailInfo
 "Step" = "Шаг";
 "Calories" = "Калории";
@@ -116,3 +129,5 @@
 // MARK: - RecipeList
 "Search recipes here..." = "Поиск рецептов здесь...";
 "Recommendations" = "Рекомендации";
+
+

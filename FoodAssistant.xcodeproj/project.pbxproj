@@ -282,7 +282,6 @@
 		7D485DA7295F64DB00BBA21A /* TagModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagModel.swift; sourceTree = "<group>"; };
 		7D485DA9295F652300BBA21A /* FilterParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterParameters.swift; sourceTree = "<group>"; };
 		7D485DAB295F8F4400BBA21A /* ru */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = ru; path = ru.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		7D485DAC295F97B100BBA21A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7D485DAF295F992900BBA21A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D485DB12960468200BBA21A /* RLSearchAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RLSearchAdapter.swift; sourceTree = "<group>"; };
 		7D48A9A92927B5FF009EF273 /* FirstRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRecipeCell.swift; sourceTree = "<group>"; };
@@ -1655,7 +1654,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				7DE6BAB8295E38AC00711FB4 /* ru */,
-				7D485DAC295F97B100BBA21A /* en */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

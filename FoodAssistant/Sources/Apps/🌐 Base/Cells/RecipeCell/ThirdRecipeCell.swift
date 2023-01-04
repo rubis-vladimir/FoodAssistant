@@ -41,16 +41,17 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
-        substrate.addArrangedSubview(cookingTimeLabel)
+        substrateTime.addArrangedSubview(cookingTimeLabel)
         containerTopLabel.addArrangedSubview(titleRecipeLabel)
-        recipeImageView.addSubview(substrate)
+        recipeImageView.addSubview(substrateTime)
         
         stack.addArrangedSubview(containerTopLabel)
         stack.addArrangedSubview(addToBasketButton)
+        substrateAction.addSubview(actionButton)
         
         addSubview(recipeImageView)
         addSubview(stack)
-        addSubview(actionButton)
+        addSubview(substrateAction)
         
         /// Константы
         let padding: CGFloat = AppConstants.padding
@@ -58,17 +59,21 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         let heightTwo: CGFloat = 35
         let heightStack: CGFloat = 90
         let paddingCL: CGFloat = 5
+        let widthAction: CGFloat = 27
+        let heightAction: CGFloat = 26
         
         /// Настраиваем констрейнты
         NSLayoutConstraint.activate([
-            substrate.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
-            substrate.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
-            substrate.heightAnchor.constraint(equalToConstant: heightOne),
+            substrateTime.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
+            substrateTime.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
+            substrateTime.heightAnchor.constraint(equalToConstant: heightOne),
             
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrate.leadingAnchor, constant: paddingCL),
+            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrateTime.leadingAnchor, constant: paddingCL),
             
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
-            actionButton.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
+            substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            substrateAction.heightAnchor.constraint(equalToConstant: heightAction),
+            substrateAction.widthAnchor.constraint(equalToConstant: widthAction),
             
             addToBasketButton.heightAnchor.constraint(equalToConstant: heightTwo),
             
