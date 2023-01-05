@@ -44,7 +44,8 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
         
         cell.configure(with: model,
                        flag: flag)
-        cell.delegate = delegate
+        cell.checkDelegate = delegate
+        cell.deleteDelegate = delegate
         
         if let imageName = model.image {
             delegate?.fetchImage(imageName,

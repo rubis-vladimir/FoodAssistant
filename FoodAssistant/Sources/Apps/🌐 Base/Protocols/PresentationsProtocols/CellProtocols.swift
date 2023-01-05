@@ -47,11 +47,3 @@ protocol LayoutChangable: AnyObject {
     ///  - Parameter section: номер секции
     func didTapChangeLayoutButton(section: Int)
 }
-
-/// #Варианты Layout
-enum LayoutType {
-    /// Две в ряду
-    case split2xN
-    /// Одна в ряду
-    case split1xN
-}

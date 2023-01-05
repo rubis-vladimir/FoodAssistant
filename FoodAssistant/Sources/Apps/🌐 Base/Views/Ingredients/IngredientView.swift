@@ -78,6 +78,17 @@ final class IngredientView: UIView {
         if ingredient.amount < 1 {
             let amountFraction = ingredient.amount.rationalApproximationOf()
             amountString = "\(amountFraction.0)/\(amountFraction.1)"
+        } else if ingredient.amount > 40 {
+            
+            var amount = Int(ingredient.amount)
+            let endingBy10 = amount % 10
+            
+            switch endingBy10 {
+            case 0, 1, 2, 3, 4: amount = amount / 10 * 10
+            default: amount = amount / 10 * 10 + 10
+            }
+            
+            amountString = String(amount)
         } else {
             if (ingredient.amount - Float(Int(ingredient.amount))) == 0 {
                 amountString = String(format: "%.0f", ingredient.amount)
@@ -88,7 +99,7 @@ final class IngredientView: UIView {
         
         var text = "\(amountString)"
         let unit = ingredient.unit.localize()
-        print(ingredient.unit)
+        
         if unit != "" {
             text += "\n\(unit)"
         }

@@ -113,9 +113,10 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        let filterParameters = RecipeFilterParameters()
-        
-        /// Загрузка данных для секции Recommended
+        var filterParameters = RecipeFilterParameters()
+        filterParameters.includeIngredients = ["onion", "chiken"]
+
+        // Загрузка данных для секции Recommended
 //        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
 //            guard let self = self else { return }
 //

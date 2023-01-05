@@ -124,6 +124,7 @@
 // MARK: - RecipeList
 "Search recipes here..." = "Поиск рецептов здесь...";
 "Recommendations" = "Рекомендации";
+"Base Recipes" = "Основные рецепты";
 
 // MARK: - Errors
 "Error" = "Ошибка";
@@ -132,11 +133,13 @@
 
 "Unfortunately, it was not possible to localize (translate) the data" = "К сожалению не удалось локализовать(перевести) данные";
 "Invalid quantity, must be entered in numeric format" = "Неверное количество, необходимо ввести в числовом формате";
+"Not all data provided" = "Представлены не все данные";
 "Something went wrong" = "Что-то пошло не так";
 
 "Please check your internet connection and try again" = "Пожалуйста проверьте ваше интернет соединение и попробуйте снова";
 "Please, enter again" = "Пожалуйста, введите заново";
 "Please, try again" = "Пожалуйста, попробуйте снова";
+"Please, enter name, amount" = "Пожалуйста, введите название, количество";
 "Information sent to support. We will deal with this problem in the near future" = "Информация направлена в службу поддержки. В ближайшее время мы разберемся с данной проблемой";
 
 

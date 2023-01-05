@@ -7,8 +7,20 @@
 
 import UIKit
 
-/// #Ячейка с инструкцией
+/// #Протокол передачи UI-ивента нажатия на кнопку таймера
+protocol TimerTapable: AnyObject {
+    
+    /// Нажата кнопка таймера
+    /// - Parameter step: Шаг в инструкции
+    func didTapTimerButton(step: Int)
+}
+
+/// #Ячейка с инструкцией по приготовлению
 final class InstructionCell: TVBaseCell {
+    
+    weak var delegate: TimerTapable?
+    
+    private var step: Int?
     
     private lazy var stepNumberLabel: UILabel = {
         let label = UILabel()
@@ -26,6 +38,14 @@ final class InstructionCell: TVBaseCell {
         return label
     }()
     
+    private lazy var timerButton: UIButton = {
+        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+        button.setImage(Icons.alarm.image, for: .normal)
+        
+        button.tintColor = Palette.darkColor.color
+        return button
+    }()
+    
     private lazy var container: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -35,10 +55,27 @@ final class InstructionCell: TVBaseCell {
         return stack
     }()
     
+    private lazy var stack: UIStackView = {
+        let stack = UIStackView()
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.spacing = 10
+        return stack
+    }()
+    
     override func setupCell() {
-        [stepNumberLabel, cookingInstructionsLabel].forEach {
+        contentView.backgroundColor = .clear
+        
+        timerButton.addTarget(self,
+                              action: #selector(didTapTimerButton),
+                              for: .touchUpInside)
+        
+        stack.addArrangedSubview(stepNumberLabel)
+        stack.addArrangedSubview(timerButton)
+        [stack, cookingInstructionsLabel].forEach {
             container.addArrangedSubview($0)
         }
+        stack.sizeToFit()
+        addSubview(container)
         setupConstraints()
     }
     
@@ -46,13 +83,10 @@ final class InstructionCell: TVBaseCell {
         let stepText = "Шаг".localize()
         stepNumberLabel.text = "\(stepText) \(step.number)"
         cookingInstructionsLabel.text = step.step
-        
-        container.layoutIfNeeded()
+        self.step = step.number
     }
     
     private func setupConstraints() {
-        
-        addSubview(container)
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
@@ -60,6 +94,12 @@ final class InstructionCell: TVBaseCell {
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8)
         ])
+    }
+    
+    @objc private func didTapTimerButton() {
+        guard let step = step else { return }
+        delegate?.didTapTimerButton(step: step)
+        print("***STEP \(step)***")
     }
 }
 

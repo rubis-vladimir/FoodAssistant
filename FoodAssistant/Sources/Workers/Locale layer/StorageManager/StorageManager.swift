@@ -226,15 +226,35 @@ extension StorageManager: DBIngredientsManagement {
     }
     
     func save(ingredients: [IngredientProtocol]) {
+        
         ingredients.forEach {
-            createCDIngredient(ingredient: $0)
+            let predicate1 = NSPredicate(format: "cdId == %@",
+                                         NSNumber(value: $0.id))
+            let predicate2 = NSPredicate(format: "inFridge == %@",
+                                        NSNumber(value: true))
+            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
+            
+            /// Обновляем количество если ингредиент уже добавлен
+            if let object = read(model: CDIngredient.self,
+                                 predicate: predicate).first {
+                let amount = object.amount + $0.amount
+                object.setValue($0.toUse, forKey: "toUse")
+                object.setValue(amount, forKey: "amount")
+                
+            } else {
+                /// Создаем и добавляем новый ингредиент
+                createCDIngredient(ingredient: $0)
+            }
         }
         saveContext()
     }
     
     func removeIngredient(id: Int) {
-        let predicate = NSPredicate(format: "cdId == %@",
+        let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
+        let predicate2 = NSPredicate(format: "inFridge == %@",
+                                    NSNumber(value: true))
+        let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
         viewContext.delete(object)
         saveContext()

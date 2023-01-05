@@ -24,12 +24,16 @@ protocol UserProfileRouting {
 protocol UserProfileViewable: ErrorShowable,
                               AnyObject {
     /// Обновить `Collection View`
+    /// - Parameter orderSection: подгружаемая секция
     func updateCV(orderSection: [UPSectionType])
-    /// Скрыть `Search Bar`
-    func hideSearchBar(shouldHide: Bool)
+    /// Обновить `Nav Bar`
+    /// - Parameter index: выбранный индекс сегмента
+    func updateNavBar(index: Int)
     /// Показать алерт добавления ингредиента
+    /// - Parameter completion: захватывает модель ингредиента/ ошибку
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
     /// Перезагрузить элементы
+    /// - Parameter items: перезагружаемые элементы
     func reload(items: [IndexPath])
 }
 
@@ -39,7 +43,6 @@ protocol UserProfileBusinessLogic: RecipeReceived,
                                    IngredientFetchable,
                                    InBasketAdded,
                                    RecipeRemovable {
-    
     /// Получить ингредиенты
     /// - Parameters:
     ///  - text: текст в поисковом баре
@@ -74,12 +77,12 @@ protocol UserProfileBusinessLogic: RecipeReceived,
 /// #Слой презентации модуля UserProfile
 final class UserProfilePresenter {
     /// Текущий сегмент
-    private var currentSegmentIndex = 0
+    private var currentSegmentIndex = 1
     /// Вью-модели рецептов
     private var viewModels: [RecipeViewModel] = [] {
         didSet {
-            guard currentSegmentIndex == 2 else { return }
-            view?.updateCV(orderSection: [.favorite(viewModels)])
+//            guard currentSegmentIndex == 2 else { return }
+//            view?.updateCV(orderSection: [.favorite(viewModels)])
         }
     }
     /// Вью-модели ингредиентов
@@ -93,6 +96,17 @@ final class UserProfilePresenter {
          router: UserProfileRouting) {
         self.interactor = interactor
         self.router = router
+        
+    }
+    
+    
+    func getStart() {
+        interactor.fetchIngredients { ingredients in
+            self.ingredients = ingredients
+        }
+        
+        view?.updateNavBar(index: currentSegmentIndex)
+        view?.updateCV(orderSection: [.fridge(ingredients)])
     }
     
     /// Конфигурирует и показывает восстанавливаемую ошибку
@@ -104,7 +118,7 @@ final class UserProfilePresenter {
         var actions: [RecoveryOptions] = [.cancel]
         
         switch error {
-        case .invalidNumber:
+        case .invalidNumber, .notDataProvided:
             let tryAgainAction = RecoveryOptions.tryAgain(action: action)
             actions.append(tryAgainAction)
         default: break
@@ -112,6 +126,29 @@ final class UserProfilePresenter {
         
         view?.show(rError: RecoverableError(error: error,
                                             recoveryOptions: actions))
+    }
+    
+    private func updateSelectedSegment(index: Int) {
+        switch index {
+        /// вкладка профиля
+        case 0:
+            view?.updateCV(orderSection: [.profile])
+            
+        /// вкладка холодильника
+        case 1:
+            interactor.fetchIngredients { ingredients in
+                self.ingredients = ingredients
+            }
+            view?.updateCV(orderSection: [.fridge(ingredients)])
+        
+        /// вкладка избранных рецептов
+        default:
+            view?.updateCV(orderSection: [.favorite(viewModels)])
+        }
+        view?.updateNavBar(index: index)
+        
+        
+        currentSegmentIndex = index
     }
 }
 
@@ -140,7 +177,7 @@ extension UserProfilePresenter: UserProfilePresentation {
                 
             case .failure(let error):
                 switch error {
-                case .invalidNumber:
+                case .invalidNumber, .notDataProvided:
                     let action = { self.didTapAddIngredientButton() }
                     self.showRecoveryError(from: error,
                                            action: action)
@@ -164,36 +201,14 @@ extension UserProfilePresenter: UserProfilePresentation {
     
     // ViewAppearable
     func viewAppeared() {
-        didSelectSegment(index: currentSegmentIndex)
+        updateSelectedSegment(index: currentSegmentIndex)
     }
     
     // SegmentedViewDelegate
     func didSelectSegment(index: Int) {
         
         guard index != currentSegmentIndex else { return }
-        
-        switch index {
-        /// вкладка профиля
-        case 0:
-            view?.hideSearchBar(shouldHide: true)
-            view?.updateCV(orderSection: [.profile])
-            
-        /// вкладка холодильника
-        case 1:
-            interactor.fetchIngredients { ingredients in
-                self.ingredients = ingredients
-            }
-            
-            view?.hideSearchBar(shouldHide: true)
-            view?.updateCV(orderSection: [.fridge(ingredients)])
-        
-        /// вкладка избранных рецептов
-        default:
-            view?.hideSearchBar(shouldHide: false)
-            view?.updateCV(orderSection: [.favorite(viewModels)])
-        }
-        
-        currentSegmentIndex = index
+        updateSelectedSegment(index: index)
     }
     
     // ImagePresentation
@@ -213,10 +228,23 @@ extension UserProfilePresenter: UserProfilePresentation {
     
     // RecipeRemovable
     func didTapDeleteButton(id: Int) {
-        interactor.removeRecipe(id: id)
         
-        guard let index = viewModels.firstIndex(where: {$0.id == id} ) else { return }
-        viewModels.remove(at: index)
+        switch currentSegmentIndex {
+        case 1:
+            interactor.deleteIngredient(id: id)
+            
+            guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { return }
+            ingredients.remove(at: index)
+            
+        case 2:
+            interactor.removeRecipe(id: id)
+            
+            guard let index = viewModels.firstIndex(where: {$0.id == id} ) else { return }
+            viewModels.remove(at: index)
+        default: break
+        }
+        
+        updateSelectedSegment(index: currentSegmentIndex)
     }
     
     // InBasketAdded

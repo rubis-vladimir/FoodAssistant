@@ -11,19 +11,20 @@ import UIKit
 final class MainSectionConfigurator {
     
     private struct Constants {
-        static let titleOne = "Популярные блюда"
-        static let titleTwo = "Полученные рецепты"
         static let firstImage = Icons.split2x2.image
         static let secondImage = Icons.split1x2.image
     }
     
     private let models: [RecipeViewModel]
+    private let titleHeader: String
     
     private weak var delegate: RecipeListPresentation?
     
     init(models: [RecipeViewModel],
+         titleHeader: String,
          delegate: RecipeListPresentation?) {
         self.models = models
+        self.titleHeader = titleHeader
         self.delegate = delegate
     }
 }
@@ -35,7 +36,7 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         /// Создаем действие по изменению `Layout`
         let action: ((Int) -> Void)? = { section in self.delegate?.didTapChangeLayoutButton(section: section) }
         /// Модель заголовка
-        let headerModel = HeaderSectionModel(title: Constants.titleOne,
+        let headerModel = HeaderSectionModel(title: titleHeader,
                                              firstImage: Constants.firstImage,
                                              secondImage: Constants.secondImage,
                                              action: action )

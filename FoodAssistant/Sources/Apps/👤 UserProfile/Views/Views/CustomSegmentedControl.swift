@@ -31,7 +31,7 @@ class CustomSegmentedControl: UIView {
         return stack
     }()
     /// Текущий индекс
-    private var currentIndex: Int = 0
+    private var currentIndex: Int = 1
     /// Вью показывающее выбранный сегмент
     private lazy var slideView: UIView = {
         var view = UIView(frame: CGRect.zero)

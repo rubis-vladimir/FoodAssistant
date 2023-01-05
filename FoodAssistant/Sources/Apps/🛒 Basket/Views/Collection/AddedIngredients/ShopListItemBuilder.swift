@@ -42,7 +42,7 @@ extension ShopListItemBuilder: CVItemBuilderProtocol {
         let model = models[indexPath.item]
         let isCheck = delegate?.checkFlag(id: model.id) ?? false
         
-        cell.delegate = delegate
+        cell.checkDelegate = delegate
         cell.configure(with: model, flag: isCheck)
         
         if let imageName = model.image {

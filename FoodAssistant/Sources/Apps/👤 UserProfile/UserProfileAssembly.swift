@@ -36,6 +36,7 @@ extension UserProfileAssembly: Assemblying {
         let viewController = UserProfileViewController(presenter: presenter)
         
         presenter.view = viewController
+        presenter.getStart()
         return viewController
     }
 }

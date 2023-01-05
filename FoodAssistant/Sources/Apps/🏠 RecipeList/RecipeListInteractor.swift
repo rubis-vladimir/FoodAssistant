@@ -67,7 +67,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
         
         /// Дефолтные параметры
-        let parameters = RecipeFilterParameters()
+        var parameters = RecipeFilterParameters()
+        parameters.type = ["dessert"]
         
         guard !ingredientTitles.isEmpty else {
             /// Загрузка рекомендаций по дефолту, если холодильник пуст
@@ -190,7 +191,7 @@ extension RecipeListInteractor {
         }
         
         /// Если установленный язык не базовый пробуем выполнить перевод
-        if self.currentAppleLanguage() == "en" {
+        if self.currentAppleLanguage() != "en" {
             self.translateService.fetchTranslate(recipes: recipes, sourse: "en", target: "\(self.currentAppleLanguage())") { result in
                 switch result {
                 case .success(let newRecipes):

@@ -25,6 +25,8 @@ enum DataFetcherError: Error {
     case translateError
     /// Некорректный номер
     case invalidNumber
+    /// Данные не предоставлены
+    case notDataProvided
     /// Результатов нет
     case noResults
 }
@@ -48,6 +50,8 @@ extension DataFetcherError: LocalizedError {
             return nil
         case .translateError:
             return "Unfortunately, it was not possible to localize (translate) the data".localize()
+        case .notDataProvided:
+            return "Not all data provided".localize()
         case .invalidNumber:
             return "Invalid quantity, must be entered in numeric format".localize()
         default:
@@ -61,6 +65,8 @@ extension DataFetcherError: LocalizedError {
             return "Please check your internet connection and try again".localize()
         case .invalidNumber:
             return "Please, enter again".localize()
+        case .notDataProvided:
+            return "Please, enter name, amount".localize()
         case .dataLoadingError:
             return "Please, try again".localize()
         default:

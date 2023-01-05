@@ -9,7 +9,13 @@ import UIKit
 
 extension UIViewController {
     
-    func showTFAlert(title: String,
+    /// Показывает алерт с TextView
+    /// - Parameters:
+    ///  - title: заголовок
+    ///  - text: основной текст
+    ///  - note: заметка
+    ///  - completion: захватывает текст в TV
+    func showTVAlert(title: String,
                      text: String,
                      note: String,
                      completion: @escaping (String) -> Void) {
@@ -48,6 +54,10 @@ extension UIViewController {
         stack.addArrangedSubview(annotationLabel)
         alert.view.addSubview(stack)
         
+        /// Добавляем скрытие клавиатуры
+        addHideKeyboard(alert.view)
+        
+        /// Настраиваем констрейнты
         let padding = AppConstants.padding
         
         NSLayoutConstraint.activate([
@@ -67,7 +77,8 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
     
-    
+    /// Показывает алерт для добавления ингредиента
+    /// - Parameter completion: захватывает модель ингредиента/ошибку
     func showAddIngredientAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void) {
         
         let alert = UIAlertController(title: nil,
@@ -76,13 +87,14 @@ extension UIViewController {
         alert.view.backgroundColor = Palette.bgColor.color
         alert.view.layer.cornerRadius = 10
         
+        
         let titles = ["Name".localize(),
                       "Amount".localize(),
                       "Unit".localize()]
         
-        let titleTF = UITextView()
-        let amountTF = UITextView()
-        let unitTF = UITextView()
+        let titleTF = UITextField()
+        let amountTF = UITextField()
+        let unitTF = UITextField()
         
         let headerLabel = UILabel()
         headerLabel.font = Fonts.subtitle
@@ -118,8 +130,12 @@ extension UIViewController {
             container.addArrangedSubview(stack)
         }
         
+        /// Добавляем скрытие клавиатуры
+        addHideKeyboard(alert.view)
+        
         alert.view.addSubview(container)
         
+        /// Настройка констрейнтов
         let padding = AppConstants.padding
         
         NSLayoutConstraint.activate([
@@ -134,13 +150,19 @@ extension UIViewController {
         alert.addAction(UIAlertAction(title: "Add".localize(),
                                       style: .default,
                                       handler: { _ in
+            guard let title = titleTF.text?.lowercased(),
+                  let amount = amountTF.text,
+            title != "", amount != "" else {
+                completion(.failure(.notDataProvided))
+                return
+            }
             
-            if let amount = Float(amountTF.text ?? "") {
+            if let amount = Float(amount) {
                 let model = IngredientViewModel(id: 0,
                                                 image: nil,
-                                                name: titleTF.text.lowercased(),
+                                                name: title,
                                                 amount: amount,
-                                                unit: unitTF.text.lowercased())
+                                                unit: unitTF.text?.lowercased() ?? "")
                 completion(.success(model))
             } else {
                 completion(.failure(.invalidNumber))
@@ -159,9 +181,16 @@ extension UIViewController {
         let alert = UIAlertController(title: title,
                                       message: text,
                                       preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel) 
+        let action = UIAlertAction(title: "OK", style: .cancel)
         alert.addAction(action)
-
+        
         present(alert, animated: true)
+    }
+    
+    /// Добавляет ивент скрытия клавиатуры при касании
+    func addHideKeyboard(_ view: UIView) {
+        let tap = UITapGestureRecognizer(target: view,
+                                         action: #selector(UIView.endEditing))
+        view.addGestureRecognizer(tap)
     }
 }

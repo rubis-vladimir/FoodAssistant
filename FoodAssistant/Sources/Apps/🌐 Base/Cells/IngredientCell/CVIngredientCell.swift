@@ -7,6 +7,14 @@
 
 import UIKit
 
+/// #Варианты кнопки в ячейке игредиента
+enum IngredientCellButtonType {
+    /// Подтверждение
+    case check
+    /// Удаление
+    case delete
+}
+
 /// #Протокол изменения флага подтверждения
 protocol CheckChangable: AnyObject {
     /// Ивент при нажатии на чек-кнопку
@@ -21,15 +29,23 @@ protocol CheckChangable: AnyObject {
 class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Properties
-    weak var delegate: CheckChangable?
+    weak var checkDelegate: CheckChangable?
+    weak var deleteDelegate: DeleteTapable?
     
+    var isEditing: Bool = false {
+        didSet {
+            changeActionButtonImage()
+        }
+    }
+
     private var isCheck: Bool = false {
         didSet {
-            let image = isCheck ? Icons.checkFill.image : Icons.circle.image
-            checkButton.setImage(image, for: .normal)
+            guard !isEditing else { return }
+            
+            changeActionButtonImage()
             
             guard let id = id else { return }
-            delegate?.didTapCheckButton(id: id, flag: isCheck)
+            checkDelegate?.didTapCheckButton(id: id, flag: isCheck)
         }
     }
     
@@ -37,8 +53,8 @@ class CVIngredientCell: UICollectionViewCell {
     
     private lazy var ingredientView = IngredientView()
 
-    /// Чек-кнопка
-    private lazy var checkButton: UIButton = {
+    /// Кнопка действия
+    private lazy var actionButton: UIButton = {
         let button = UIButton()
         button.tintColor = Palette.darkColor.color
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +71,7 @@ class CVIngredientCell: UICollectionViewCell {
         return stack
     }()
     
+    // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -67,10 +84,10 @@ class CVIngredientCell: UICollectionViewCell {
     
     // MARK: - Functions
     func setupCell() {
-        
-        checkButton.addTarget(self,
-                              action: #selector(didTapCheckButton),
+        actionButton.addTarget(self,
+                              action: #selector(didTapActionButton),
                               for: .touchUpInside)
+        
         setupConstraints()
     }
     
@@ -78,8 +95,8 @@ class CVIngredientCell: UICollectionViewCell {
                    flag: Bool) {
         id = ingredient.id
         ingredientView.configure(with: ingredient)
-        
         isCheck = flag
+        changeActionButtonImage()
     }
     
     func updateImage(with imageData: Data) {
@@ -87,7 +104,7 @@ class CVIngredientCell: UICollectionViewCell {
     }
     
     private func setupConstraints() {
-        [ingredientView, checkButton].forEach {
+        [ingredientView, actionButton].forEach {
             container.addArrangedSubview($0)
         }
         addSubview(container)
@@ -98,11 +115,27 @@ class CVIngredientCell: UICollectionViewCell {
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
         
-            checkButton.widthAnchor.constraint(equalTo: container.heightAnchor)
+            actionButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])
     }
     
-    @objc private func didTapCheckButton() {
-        isCheck.toggle()
+    /// Изменяет изображение кнопки
+    private func changeActionButtonImage() {
+        if isEditing {
+            actionButton.setImage(Icons.xmark.image,
+                                 for: .normal)
+        } else {
+            let image = isCheck ? Icons.checkFill.image : Icons.circle.image
+            actionButton.setImage(image, for: .normal)
+        }
+    }
+    
+    @objc private func didTapActionButton() {
+        if isEditing {
+            guard let id = id else { return }
+            deleteDelegate?.didTapDeleteButton(id: id)
+        } else {
+            isCheck.toggle()
+        }
     }
 }

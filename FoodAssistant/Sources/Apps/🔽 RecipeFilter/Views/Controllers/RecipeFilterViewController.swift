@@ -99,7 +99,7 @@ extension RecipeFilterViewController: RecipeFilterViewable {
     }
     
     func showTFAlert(parameter: FilterParameters, text: String) {
-        showTFAlert(title: parameter.title,
+        showTVAlert(title: parameter.title,
                     text: text,
                     note: Constants.noteText) { [weak self] text in
             self?.presenter.didTapChange(parameter: parameter, text: text)

@@ -71,6 +71,7 @@ final class RLFactory {
             
         case .main:
             return MainSectionConfigurator(models: models,
+                                           titleHeader: Constants.mainTitle,
                                            delegate: delegate).configure(for: collectionView)
         }
     }
@@ -90,6 +91,7 @@ extension RLFactory: CVFactoryProtocol {
 extension RLFactory {
     private struct Constants {
         static let recommendedTitle = "Recommendations".localize()
+        static let mainTitle = "Base Recipes".localize()
         static let reccomendedHeight: CGFloat = 360
     }
 }

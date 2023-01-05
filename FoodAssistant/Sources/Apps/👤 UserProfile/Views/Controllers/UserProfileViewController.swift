@@ -76,12 +76,23 @@ final class UserProfileViewController: UIViewController {
         presenter.textEntered(text)
     }
     
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+        
+        collectionView.allowsMultipleSelection = editing
+        collectionView.indexPathsForVisibleItems.forEach { (indexPath) in
+            guard let cell = collectionView.cellForItem(at: indexPath) as? CVIngredientCell else { return }
+            cell.isEditing = editing
+            print("EDITING - \(editing)")
+        }
+    }
+    
     // MARK: - Private func
     private func setupNavigationBar() {
         navigationItem.titleView = navTitle
     }
     
-    func setupElements() {
+    private func setupElements() {
         view.backgroundColor = .white
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,10 +100,6 @@ final class UserProfileViewController: UIViewController {
         
         searchBar.delegate = self
         segmentView.delegate = presenter
-        
-        factory = UPFactory(collectionView: collectionView,
-                            delegate: presenter,
-                            orderSections: [.profile])
     }
     
     private func setupConstraints() {
@@ -166,11 +173,16 @@ extension UserProfileViewController: UserProfileViewable {
         collectionView.reloadItems(at: items)
     }
     
-    func hideSearchBar(shouldHide: Bool) {
-        if shouldHide {
+    func updateNavBar(index: Int) {
+
+        switch index {
+        case 0:
             navigationItem.titleView = navTitle
             navigationItem.leftBarButtonItem = nil
-        } else {
+        case 1:
+            navigationItem.titleView = navTitle
+            navigationItem.leftBarButtonItem = editButtonItem
+        default:
             searchBarShown ? search(shouldShow: true) : search(shouldShow: false)
         }
     }

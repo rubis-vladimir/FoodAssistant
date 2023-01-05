@@ -164,9 +164,9 @@ extension Ingredient {
             return "g" // Грамм
         } else if ["serving", "servings", "dash"].contains(unit) {
             return "serv" // Порция
-        } else if ["small", "large", "medium", "container", "head", "jar", "inch"].contains(unit) {
+        } else if ["small", "large", "medium", "container", "head", "jar", "inch" ].contains(unit) {
             return ""
-        } else if ["handfuls", "handful", "medium"].contains(unit) {
+        } else if ["handfuls", "handful", "medium", "small handful"].contains(unit) {
             return "handful"
         } else if ["leaves", "leaf"].contains(unit) {
             return "leaf"
