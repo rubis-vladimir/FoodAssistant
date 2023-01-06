@@ -17,6 +17,9 @@
 "Nutrients" = "Питательные вещества";
 "Ingredients" = "Ингредиенты";
 "Instructions" = "Инструкция по приготовлению";
+"Timer" = "Таймер";
+"minut" = "минут";
+"hour" = "час";
 
 // MARK: - UserProfile
 "Favorite Dishes" = "Любимые блюда";
@@ -29,7 +32,6 @@
 "Fridge" = "Холодильник";
 "Recipes" = "Рецепты";
 
-
 // MARK: - Ingredient
 "g" = "гр";
 "tbsp" = "ст.л";
@@ -41,8 +43,11 @@
 "min" = "мин";
 "pinch" = "щеп";
 "leaf" = "лист";
-"cloves" = "зубч";
+"clove" = "зубч";
 "slices" = "ломтик";
+"pint" = "пинта";
+"box" = "короб";
+"ml" = "мл";
 
 // MARK: - Basket
 "Added recipes" = "Добавленные рецепты";
