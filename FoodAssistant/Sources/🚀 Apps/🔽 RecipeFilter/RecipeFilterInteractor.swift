@@ -27,8 +27,8 @@ final class RecipeFilterInteractor {
         self.filterManager = filterManager
     }
     
-    func values(fromCSVString str: String) -> [String] {
-        let separators = CharacterSet(charactersIn: ",; ")
+    private func values(fromCSVString str: String) -> [String] {
+        let separators = CharacterSet(charactersIn: ",;")
         return str.components(separatedBy: separators).filter{ $0 != "" }
     }
     
