@@ -35,6 +35,13 @@ final class RecipeFilterInteractor {
             .map(String.init)
     }
     
+    private func values(fromCSVString str: String) -> [String] {
+        let characterSet =
+        return str.components(separatedBy: ", ")
+            .flatMap { $0.split(separator: ",") }
+            .map(String.init)
+    }
+    
     /// Определяет количество из строки
     /// - Parameters:
     ///  - str: строка
@@ -124,6 +131,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     }
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath) {
+        print(indexPath)
         guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
         guard var models = dict[parameter] else { return }
         
@@ -134,7 +142,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
             }
             dict[parameter] = models
             presenter?.update(section: indexPath.section)
-            
+            print(models)
         default:
             models[indexPath.item].isSelected = flag
             dict[parameter] = models

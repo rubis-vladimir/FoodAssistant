@@ -38,23 +38,39 @@ final class RecipeFilterInteractorTests: XCTestCase {
 
     func testGetParameters() {
         //arange
-        
+        let indexPath: IndexPath = [4, 1]
+        var calories: Int?
         
         //act
-        var parameters: RecipeFilterParameters?
-        sut.getParameters { newParameters in
-            parameters = newParameters
+        sut.fetchFilterParameters { parameters in
+            
+            print(parameters)
         }
-        let caloriesMinOne = parameters?.minCalories
-        let caloriesMaxOne = parameters?.maxCalories
+        sut.changeFlag(true, indexPath: indexPath)
         
+        sut.getParameters { parameters in
+            calories = parameters.maxCalories
+            print(parameters)
+        }
+//        let caloriesMinOne = parameters?.minCalories
+//        let caloriesMaxOne = parameters?.maxCalories
+//
         //assert
-//        XCTAssertEqual(<#T##expression1: Equatable##Equatable#>, <#T##expression2: Equatable##Equatable#>)
+        XCTAssertEqual(200, calories)
         
     }
     
-    func testOverwriteParameters() {
+    func testFetchFilterParameters() {
+        //arange
+        var calories: String?
         
+        //act
+        sut.fetchFilterParameters { parameters in
+            calories = parameters[.calories]?.first?.title
+        }
+        
+        //assert
+        XCTAssertEqual("500 Foo", calories)
     }
     
     func testUpdateParameters() {
@@ -66,7 +82,6 @@ final class RecipeFilterInteractorTests: XCTestCase {
         //act
         sut.update(parameter: .includeIngredients,
                    text: text) { dict in
-            
             ingredient = dict[.includeIngredients]?[1].title
         }
         

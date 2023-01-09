@@ -32,7 +32,7 @@ class RecipesSearchBar: UISearchBar {
         return textField
     }()
     
-    lazy var filterButton: UIButton = {
+    private lazy var filterButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = Palette.bgColor.color
         

@@ -9,7 +9,7 @@ import UIKit
 @testable import FoodAssistant
 
 class MockRecipeListRouter: RecipeListRouting {
-    func routeToFilter(_ flag: Bool, searchDelegate: FoodAssistant.SeachRecipesRequested) {
+    func routeToFilter(searchDelegate: FoodAssistant.SeachRecipesRequested) {
         
     }
     
