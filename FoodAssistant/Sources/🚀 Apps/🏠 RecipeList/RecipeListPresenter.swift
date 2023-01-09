@@ -14,12 +14,8 @@ protocol RecipeListRouting {
     func routeToDetail(model: RecipeProtocol)
     
     /// Переход к экрану фильтра и обратно
-    ///  - Parameters:
-    ///   - flag: флаг перехода
-    ///   - search: поисковый контроллер
-    ///   - searchDelegate: делегат поиска
-    func routeToFilter(_ flag: Bool,
-                       searchDelegate: SeachRecipesRequested)
+    ///  - Parameter searchDelegate: делегат поиска
+    func routeToFilter(searchDelegate: SeachRecipesRequested)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -115,7 +111,7 @@ final class RecipeListPresenter {
         var filterParameters = RecipeFilterParameters()
         filterParameters.includeIngredients = ["onion", "chiken"]
 
-//        // Загрузка данных для секции Recommended
+        // Загрузка данных для секции Recommended
 //        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
 //            guard let self = self else { return }
 //
@@ -214,9 +210,8 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
-    func didTapFilterButton(_ flag: Bool) {
-        router.routeToFilter(flag,
-                             searchDelegate: self)
+    func didTapFilterButton() {
+        router.routeToFilter(searchDelegate: self)
     }
     
     func updateNewData() {

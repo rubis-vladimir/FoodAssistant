@@ -48,7 +48,6 @@ final class RecipeFilterInteractorTests: XCTestCase {
         let caloriesMinOne = parameters?.minCalories
         let caloriesMaxOne = parameters?.maxCalories
         
-        
         //assert
 //        XCTAssertEqual(<#T##expression1: Equatable##Equatable#>, <#T##expression2: Equatable##Equatable#>)
         

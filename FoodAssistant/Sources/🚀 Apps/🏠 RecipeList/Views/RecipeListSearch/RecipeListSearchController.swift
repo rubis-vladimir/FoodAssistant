@@ -10,7 +10,7 @@ import UIKit
 /// #Кастомный поисковой контроллер
 final class RecipeListSearchController: UISearchController, UISearchBarDelegate {
     /// Кастомный `SearchBar`
-    private let customSearchBar = RecipesSearchBar()
+    private let customSearchBar = RecipesSearchBar(isFilter: false)
     
     override var searchBar: RecipesSearchBar {
         return customSearchBar

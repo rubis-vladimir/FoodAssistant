@@ -1330,7 +1330,7 @@
 			isa = PBXGroup;
 			children = (
 				7DEF8E1B2923C5F00016A207 /* Controllers */,
-				7DEF8E1E2923C61E0016A207 /* Views */,
+				7DEF8E1E2923C61E0016A207 /* SegmentControl */,
 				7DEF8E1C2923C5FE0016A207 /* Collection */,
 			);
 			path = Views;
@@ -1355,12 +1355,12 @@
 			path = Collection;
 			sourceTree = "<group>";
 		};
-		7DEF8E1E2923C61E0016A207 /* Views */ = {
+		7DEF8E1E2923C61E0016A207 /* SegmentControl */ = {
 			isa = PBXGroup;
 			children = (
 				7DEF8E382925209C0016A207 /* CustomSegmentedControl.swift */,
 			);
-			path = Views;
+			path = SegmentControl;
 			sourceTree = "<group>";
 		};
 		7DEF8E1F2923C6270016A207 /* Factory */ = {
