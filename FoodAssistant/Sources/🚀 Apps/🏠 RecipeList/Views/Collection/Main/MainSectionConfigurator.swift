@@ -32,7 +32,7 @@ final class MainSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension MainSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Создаем действие по изменению `Layout`
         let action: ((Int) -> Void)? = { section in self.delegate?.didTapChangeLayoutButton(section: section) }
         /// Модель заголовка

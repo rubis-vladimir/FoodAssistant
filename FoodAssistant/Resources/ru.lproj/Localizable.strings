@@ -59,7 +59,7 @@
 
 // MARK: - RecipeFilter
 "Filter" = "Фильтр";
-"Enter titles separated\nby commas and/or spaces" = "Введите названия через\nзапятую и/или пробел";
+"Enter titles separated by commas" = "Введите названия через запятую";
 "Show results" = "Показать результаты";
 "Diet" = "Диета";
 "Region" = "Вид кухни";

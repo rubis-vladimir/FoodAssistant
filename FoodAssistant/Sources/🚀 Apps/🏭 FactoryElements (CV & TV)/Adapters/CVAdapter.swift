@@ -11,7 +11,7 @@ import UIKit
 final class CVAdapter: NSObject {
     
     private let collectionView: UICollectionView
-    private var builders: [CVSectionBuilderProtocol] = [] {
+    private var builders: [CVSectionProtocol] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -21,7 +21,7 @@ final class CVAdapter: NSObject {
         self.collectionView = collectionView
     }
     
-    func configure(with builders: [CVSectionBuilderProtocol]) {
+    func configure(with builders: [CVSectionProtocol]) {
         self.builders = builders
     }
 }

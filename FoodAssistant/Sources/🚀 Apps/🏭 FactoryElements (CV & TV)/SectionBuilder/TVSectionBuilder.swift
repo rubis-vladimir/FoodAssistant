@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Строитель секции для таблицы
-final class TVSectionBuilder: TVSectionBuilderProtocol {
+final class TVSectionBuilder: TVSectionProtocol {
     var titleHeader: String?
     var cellBuilder: TVCellBuilderProtocol
     

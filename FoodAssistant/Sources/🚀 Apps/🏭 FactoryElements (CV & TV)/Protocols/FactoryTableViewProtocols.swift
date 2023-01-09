@@ -11,11 +11,11 @@ import UIKit
 /// #Протокол фабрики для TableView
 protocol TVCFactoryProtocol {
     /// Строители ячеек
-    var builders: [TVSectionBuilderProtocol] { get }
+    var builders: [TVSectionProtocol] { get }
 }
 
-/// #Протокол строителя секции таблицы
-protocol TVSectionBuilderProtocol {
+/// #Протокол секции таблицы
+protocol TVSectionProtocol {
     /// Заголовок секции
     var titleHeader: String? { get }
     /// Строитель ячеек

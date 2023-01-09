@@ -29,7 +29,7 @@ final class FridgeSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension FridgeSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         
         /// Создаем действие по добавлению ингредиента
         let action: ((Int) -> Void)? = { _ in

@@ -224,12 +224,6 @@ extension RecipeListInteractor {
         completion(.success(viewModels))
     }
     
-    /// Получает из url-строки название изображения
-    private func getImageName(from urlString: String?) -> String? {
-        guard let urlString = urlString else { return nil }
-        return String(urlString.dropFirst(37))
-    }
-    
     /// Проверяет установленный на устройстве язык
     private func currentAppleLanguage() -> String {
         let appleLanguageKey = "AppleLanguages"

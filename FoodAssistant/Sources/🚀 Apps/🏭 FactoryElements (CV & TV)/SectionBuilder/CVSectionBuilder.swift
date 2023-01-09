@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Строитель для секции коллекции
-final class CVSectionBuilder: CVSectionBuilderProtocol {
+final class CVSectionBuilder: CVSectionProtocol {
     var headerBuilder: CVHeaderBuilderProtocol?
     var itemBuilder: CVItemBuilderProtocol
     

@@ -61,12 +61,13 @@ final class RecipeFilterInteractorTests: XCTestCase {
     func testUpdateParameters() {
         //arange
         
-        let text = "Meat Foo, Carrot Foo; Foo"
+        let text = "Meat Foo, Carrot Foo,Foo"
         var ingredient: String?
         
         //act
         sut.update(parameter: .includeIngredients,
                    text: text) { dict in
+            
             ingredient = dict[.includeIngredients]?[1].title
         }
         

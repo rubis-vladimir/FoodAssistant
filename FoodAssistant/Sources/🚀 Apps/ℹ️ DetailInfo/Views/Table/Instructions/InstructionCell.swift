@@ -63,8 +63,6 @@ final class InstructionCell: TVBaseCell {
     }()
     
     override func setupCell() {
-//        contentView.backgroundColor = .clear
-        
         timerButton.addTarget(self,
                               action: #selector(didTapTimerButton),
                               for: .touchUpInside)
@@ -88,7 +86,7 @@ final class InstructionCell: TVBaseCell {
         
         timerButton.isHidden = !isTime(from: step.step)
         
-        contentView.layoutSubviews()
+        container.layoutSubviews()
     }
     
     private func setupConstraints() {

@@ -111,6 +111,6 @@ extension RecipeFilterViewController: RecipeFilterViewable {
 extension RecipeFilterViewController {
     private struct Constants {
         static let showResultsButtonTitle = "Show results".localize()
-        static let noteText = "Enter titles separated\nby commas and/or spaces".localize()
+        static let noteText = "Enter titles separated by commas".localize()
     }
 }

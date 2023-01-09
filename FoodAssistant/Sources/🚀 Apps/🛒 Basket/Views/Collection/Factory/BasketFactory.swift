@@ -59,7 +59,7 @@ final class BasketFactory {
     /// Создает строителя ячеек
     ///  - Parameter type: тип секции
     ///  - Returns: объект протокола строителя
-    private func createBuilder(type: BasketSectionType) -> CVSectionBuilderProtocol {
+    private func createBuilder(type: BasketSectionType) -> CVSectionProtocol {
         switch type {
         case .addedRecipe:
             let configurator = AddedRecipesConfigurator(recipes: recipes,
@@ -79,8 +79,8 @@ final class BasketFactory {
 // MARK: - TVFactoryProtocol
 extension BasketFactory: CVFactoryProtocol {
     
-    var builders: [CVSectionBuilderProtocol] {
-        var builders: [CVSectionBuilderProtocol] = []
+    var builders: [CVSectionProtocol] {
+        var builders: [CVSectionProtocol] = []
         
         builders.append(createBuilder(type: .addedRecipe))
         builders.append(createBuilder(type: .shopList))

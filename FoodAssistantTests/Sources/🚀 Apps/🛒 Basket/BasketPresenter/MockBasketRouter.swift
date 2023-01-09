@@ -10,6 +10,6 @@ import Foundation
 
 class MockBasketRouter: BasketRouting {
     func route(to: FoodAssistant.BasketTarget) {
-        <#code#>
+        
     }
 }

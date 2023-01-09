@@ -62,7 +62,7 @@ final class RFFactory {
     ///     - type: тип секции
     ///  - Returns: объект протокола строителя
     private func createBuilder(tagModels: [TagModel],
-                               type: RFSectionType) -> CVSectionBuilderProtocol {
+                               type: RFSectionType) -> CVSectionProtocol {
         switch type {
         case .tag(let headerType):
             return TagSectionConfigurator(header: headerType,
@@ -75,7 +75,7 @@ final class RFFactory {
 //MARK: - TVFactoryProtocol
 extension RFFactory: CVFactoryProtocol {
     
-    var builders: [CVSectionBuilderProtocol] {
+    var builders: [CVSectionProtocol] {
         /// Устанавливаем действие
         let action: ((Int) -> Void)? = { section in
             self.delegate?.changeSelectedIngredients(section: section)

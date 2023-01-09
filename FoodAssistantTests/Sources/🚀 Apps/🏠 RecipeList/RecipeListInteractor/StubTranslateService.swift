@@ -10,10 +10,10 @@ import Foundation
 
 class StubTranslateService: Translatable {
     func fetchTranslate(recipes: [FoodAssistant.Recipe], sourse: String, target: String, completion: @escaping (Result<[FoodAssistant.Recipe], FoodAssistant.DataFetcherError>) -> Void) {
-        <#code#>
+        
     }
     
     func translate(with texts: [String], source: String, target: String, completion: @escaping (Result<FoodAssistant.TranslateResponce, FoodAssistant.DataFetcherError>) -> Void) {
-        <#code#>
+        
     }
 }

@@ -10,6 +10,6 @@ import Foundation
 
 class StubIngredientManager: ShopListCalculatable {
     func getShopList(ingredients: [FoodAssistant.IngredientProtocol], complection: @escaping ([FoodAssistant.IngredientViewModel]) -> Void) {
-        <#code#>
+        
     }
 }

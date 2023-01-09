@@ -60,7 +60,7 @@ final class RLFactory {
     ///     - type: тип секции
     ///   - Return: объект протокола строителя
     private func createBuilder(models: [RecipeViewModel],
-                               type: RLSectionType) -> CVSectionBuilderProtocol {
+                               type: RLSectionType) -> CVSectionProtocol {
         switch type {
         case .recommended:
             let configurator = RecommendedSectionConfigurator(models: models,
@@ -80,7 +80,7 @@ final class RLFactory {
 //MARK: - TVFactoryProtocol
 extension RLFactory: CVFactoryProtocol {
     
-    var builders: [CVSectionBuilderProtocol] {
+    var builders: [CVSectionProtocol] {
         arrayModelsDictionary.flatMap {
             $0.map { createBuilder(models: $0.value, type: $0.key) }
         }

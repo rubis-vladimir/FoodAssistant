@@ -10,7 +10,7 @@ import XCTest
 
 final class BasketPresenterTests: XCTestCase {
 
-    var view: StubBasketView!
+//    var view: StubBasketView!
     var router: MockBasketRouter!
     var interactor: StubBasketInteractor!
     var sut: BasketPresenter!

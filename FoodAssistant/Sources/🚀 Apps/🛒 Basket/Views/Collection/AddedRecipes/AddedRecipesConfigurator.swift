@@ -24,7 +24,7 @@ final class AddedRecipesConfigurator {
 // MARK: - CVSectionConfiguration
 extension AddedRecipesConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = AddedRecipesItemBuilder(recipes: recipes,

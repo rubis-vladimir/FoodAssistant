@@ -16,8 +16,8 @@ final class RecipeListSearchController: UISearchController, UISearchBarDelegate 
         return customSearchBar
     }
     
-    override init(searchResultsController: UIViewController?) {
-        super.init(searchResultsController: searchResultsController)
+    init() {
+        super.init(nibName: nil, bundle: nil)
         /// Настройка
         searchBar.showsCancelButton = false
         obscuresBackgroundDuringPresentation = false

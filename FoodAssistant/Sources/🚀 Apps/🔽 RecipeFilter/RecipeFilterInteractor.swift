@@ -27,9 +27,12 @@ final class RecipeFilterInteractor {
         self.filterManager = filterManager
     }
     
+    /// Получение значений из строки (разделенный запятой)
+    /// - Parameter str: строка
     private func values(fromCSVString str: String) -> [String] {
-        let separators = CharacterSet(charactersIn: ",;")
-        return str.components(separatedBy: separators).filter{ $0 != "" }
+        return str.components(separatedBy: ", ")
+            .flatMap { $0.split(separator: ",") }
+            .map(String.init)
     }
     
     /// Определяет количество из строки

@@ -10,6 +10,6 @@ import Foundation
 
 class StubDataFetcher: DataFetcherProtocol {
     func fetchObject<T>(urlRequest: URLRequest, completion: @escaping (Result<T, FoodAssistant.DataFetcherError>) -> Void) where T : Decodable {
-        <#code#>
+        
     }
 }

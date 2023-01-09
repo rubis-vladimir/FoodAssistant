@@ -35,7 +35,7 @@ extension RecipeListAssembly: Assemblying {
         let storage = StorageManager.shared
         
         /// Контроллер поиска
-        let searchController = RecipeListSearchController(searchResultsController: nil)
+        let searchController = RecipeListSearchController()
         
         /// Модуль VIPER
         let router = RecipeListRouter(navigationController: navigationController, searchController: searchController)
