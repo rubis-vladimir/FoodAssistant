@@ -8,8 +8,23 @@
 import Foundation
 @testable import FoodAssistant
 
-class StubDataFetcher: DataFetcherProtocol {
-    func fetchObject<T>(urlRequest: URLRequest, completion: @escaping (Result<T, FoodAssistant.DataFetcherError>) -> Void) where T : Decodable {
-        
+class StubDataFetcher<T: Decodable>: DataFetcherProtocol {
+    
+    var error: DataFetcherError?
+    var model: T?
+    
+    init(error: DataFetcherError? = nil,
+         model: T? = nil) {
+        self.error = error
+        self.model = model
+    }
+    
+    func fetchObject<T>(urlRequest: URLRequest,
+                        completion: @escaping (Result<T, DataFetcherError>) -> Void) where T: Decodable {
+        if let model = model {
+            completion(.success(model))
+        } else {
+            
+        }
     }
 }

@@ -123,7 +123,7 @@
 		7DBCED4F2968687900BAA8FF /* MockRecipeListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4E2968687800BAA8FF /* MockRecipeListRouter.swift */; };
 		7DBCED51296868E200BAA8FF /* StubRecipeListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED50296868E200BAA8FF /* StubRecipeListInteractor.swift */; };
 		7DBCED542968694200BAA8FF /* RecipeListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED532968694200BAA8FF /* RecipeListInteractorTests.swift */; };
-		7DBCED5629686AB400BAA8FF /* StubStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5529686AB400BAA8FF /* StubStorageManager.swift */; };
+		7DBCED5629686AB400BAA8FF /* SpyStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5529686AB400BAA8FF /* SpyStorageManager.swift */; };
 		7DBCED5829686AC300BAA8FF /* StubTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5729686AC300BAA8FF /* StubTranslateService.swift */; };
 		7DBCED5A29686AD000BAA8FF /* StubImageDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5929686AD000BAA8FF /* StubImageDownloader.swift */; };
 		7DBCED5C29686AEA00BAA8FF /* StubDataFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5B29686AEA00BAA8FF /* StubDataFetcher.swift */; };
@@ -133,13 +133,13 @@
 		7DBCED6729686DD400BAA8FF /* StubRecipeFilterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6629686DD400BAA8FF /* StubRecipeFilterInteractor.swift */; };
 		7DBCED6929686DE400BAA8FF /* MockRecipeFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6829686DE400BAA8FF /* MockRecipeFilterRouter.swift */; };
 		7DBCED6B29686DF300BAA8FF /* StubRecipeFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6A29686DF300BAA8FF /* StubRecipeFilterView.swift */; };
-		7DBCED6D29686EE200BAA8FF /* StubRecipeFilterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6C29686EE200BAA8FF /* StubRecipeFilterPresenter.swift */; };
-		7DBCED6F29686EEE00BAA8FF /* StubFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6E29686EED00BAA8FF /* StubFilterManager.swift */; };
+		7DBCED6D29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6C29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift */; };
+		7DBCED6F29686EEE00BAA8FF /* SpyFilterManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED6E29686EED00BAA8FF /* SpyFilterManager.swift */; };
 		7DBCED7529686FB900BAA8FF /* BasketInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED7429686FB900BAA8FF /* BasketInteractorTests.swift */; };
 		7DBCED7729686FD900BAA8FF /* BasketPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED7629686FD900BAA8FF /* BasketPresenterTests.swift */; };
 		7DBCED792968706D00BAA8FF /* StubBasketInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED782968706D00BAA8FF /* StubBasketInteractor.swift */; };
 		7DBCED7B2968708400BAA8FF /* MockBasketRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED7A2968708400BAA8FF /* MockBasketRouter.swift */; };
-		7DBCED7F2968728A00BAA8FF /* StubBasketPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED7E2968728A00BAA8FF /* StubBasketPresenter.swift */; };
+		7DBCED7F2968728A00BAA8FF /* SpyBasketPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED7E2968728A00BAA8FF /* SpyBasketPresenter.swift */; };
 		7DBCED812968729800BAA8FF /* StubIngredientManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED802968729800BAA8FF /* StubIngredientManager.swift */; };
 		7DC16111292E49310026A072 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16110292E49310026A072 /* ImageCacheService.swift */; };
 		7DC16113292E4FA20026A072 /* LRUCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DC16112292E4FA20026A072 /* LRUCache.swift */; };
@@ -336,7 +336,7 @@
 		7DBCED4E2968687800BAA8FF /* MockRecipeListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecipeListRouter.swift; sourceTree = "<group>"; };
 		7DBCED50296868E200BAA8FF /* StubRecipeListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRecipeListInteractor.swift; sourceTree = "<group>"; };
 		7DBCED532968694200BAA8FF /* RecipeListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListInteractorTests.swift; sourceTree = "<group>"; };
-		7DBCED5529686AB400BAA8FF /* StubStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubStorageManager.swift; sourceTree = "<group>"; };
+		7DBCED5529686AB400BAA8FF /* SpyStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyStorageManager.swift; sourceTree = "<group>"; };
 		7DBCED5729686AC300BAA8FF /* StubTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTranslateService.swift; sourceTree = "<group>"; };
 		7DBCED5929686AD000BAA8FF /* StubImageDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubImageDownloader.swift; sourceTree = "<group>"; };
 		7DBCED5B29686AEA00BAA8FF /* StubDataFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubDataFetcher.swift; sourceTree = "<group>"; };
@@ -346,13 +346,13 @@
 		7DBCED6629686DD400BAA8FF /* StubRecipeFilterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRecipeFilterInteractor.swift; sourceTree = "<group>"; };
 		7DBCED6829686DE400BAA8FF /* MockRecipeFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecipeFilterRouter.swift; sourceTree = "<group>"; };
 		7DBCED6A29686DF300BAA8FF /* StubRecipeFilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRecipeFilterView.swift; sourceTree = "<group>"; };
-		7DBCED6C29686EE200BAA8FF /* StubRecipeFilterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRecipeFilterPresenter.swift; sourceTree = "<group>"; };
-		7DBCED6E29686EED00BAA8FF /* StubFilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubFilterManager.swift; sourceTree = "<group>"; };
+		7DBCED6C29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeFilterPresenter.swift; sourceTree = "<group>"; };
+		7DBCED6E29686EED00BAA8FF /* SpyFilterManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyFilterManager.swift; sourceTree = "<group>"; };
 		7DBCED7429686FB900BAA8FF /* BasketInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketInteractorTests.swift; sourceTree = "<group>"; };
 		7DBCED7629686FD900BAA8FF /* BasketPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketPresenterTests.swift; sourceTree = "<group>"; };
 		7DBCED782968706D00BAA8FF /* StubBasketInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubBasketInteractor.swift; sourceTree = "<group>"; };
 		7DBCED7A2968708400BAA8FF /* MockBasketRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBasketRouter.swift; sourceTree = "<group>"; };
-		7DBCED7E2968728A00BAA8FF /* StubBasketPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubBasketPresenter.swift; sourceTree = "<group>"; };
+		7DBCED7E2968728A00BAA8FF /* SpyBasketPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyBasketPresenter.swift; sourceTree = "<group>"; };
 		7DBCED802968729800BAA8FF /* StubIngredientManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubIngredientManager.swift; sourceTree = "<group>"; };
 		7DC16110292E49310026A072 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
 		7DC16112292E4FA20026A072 /* LRUCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LRUCache.swift; sourceTree = "<group>"; };
@@ -1121,7 +1121,7 @@
 				7DBCED5B29686AEA00BAA8FF /* StubDataFetcher.swift */,
 				7DBCED5929686AD000BAA8FF /* StubImageDownloader.swift */,
 				7DBCED5729686AC300BAA8FF /* StubTranslateService.swift */,
-				7DBCED5529686AB400BAA8FF /* StubStorageManager.swift */,
+				7DBCED5529686AB400BAA8FF /* SpyStorageManager.swift */,
 			);
 			path = RecipeListInteractor;
 			sourceTree = "<group>";
@@ -1130,8 +1130,8 @@
 			isa = PBXGroup;
 			children = (
 				7DBCED6129686D1E00BAA8FF /* RecipeFilterInteractorTests.swift */,
-				7DBCED6E29686EED00BAA8FF /* StubFilterManager.swift */,
-				7DBCED6C29686EE200BAA8FF /* StubRecipeFilterPresenter.swift */,
+				7DBCED6E29686EED00BAA8FF /* SpyFilterManager.swift */,
+				7DBCED6C29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift */,
 			);
 			path = RecipeFilterInteractor;
 			sourceTree = "<group>";
@@ -1163,7 +1163,7 @@
 			children = (
 				7DBCED7429686FB900BAA8FF /* BasketInteractorTests.swift */,
 				7DBCED802968729800BAA8FF /* StubIngredientManager.swift */,
-				7DBCED7E2968728A00BAA8FF /* StubBasketPresenter.swift */,
+				7DBCED7E2968728A00BAA8FF /* SpyBasketPresenter.swift */,
 			);
 			path = BasketInteractor;
 			sourceTree = "<group>";
@@ -1775,18 +1775,18 @@
 				7DBCED6729686DD400BAA8FF /* StubRecipeFilterInteractor.swift in Sources */,
 				7DBCED4929671E9400BAA8FF /* RecipeListPresenterTests.swift in Sources */,
 				7DBCED4D2968681400BAA8FF /* RecipeListViewStub.swift in Sources */,
-				7DBCED6D29686EE200BAA8FF /* StubRecipeFilterPresenter.swift in Sources */,
+				7DBCED6D29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift in Sources */,
 				7DBCED542968694200BAA8FF /* RecipeListInteractorTests.swift in Sources */,
-				7DBCED5629686AB400BAA8FF /* StubStorageManager.swift in Sources */,
+				7DBCED5629686AB400BAA8FF /* SpyStorageManager.swift in Sources */,
 				7DBCED5C29686AEA00BAA8FF /* StubDataFetcher.swift in Sources */,
 				7DBCED6929686DE400BAA8FF /* MockRecipeFilterRouter.swift in Sources */,
 				7DBCED6029686D0700BAA8FF /* RecipeFilterPresenterTests.swift in Sources */,
 				7DBCED7529686FB900BAA8FF /* BasketInteractorTests.swift in Sources */,
-				7DBCED6F29686EEE00BAA8FF /* StubFilterManager.swift in Sources */,
+				7DBCED6F29686EEE00BAA8FF /* SpyFilterManager.swift in Sources */,
 				7DBCED6B29686DF300BAA8FF /* StubRecipeFilterView.swift in Sources */,
 				7DBCED6529686DC300BAA8FF /* StubRootPresenter.swift in Sources */,
 				7DBCED7B2968708400BAA8FF /* MockBasketRouter.swift in Sources */,
-				7DBCED7F2968728A00BAA8FF /* StubBasketPresenter.swift in Sources */,
+				7DBCED7F2968728A00BAA8FF /* SpyBasketPresenter.swift in Sources */,
 				7DBCED5A29686AD000BAA8FF /* StubImageDownloader.swift in Sources */,
 				7DBCED792968706D00BAA8FF /* StubBasketInteractor.swift in Sources */,
 				7D2F770C291A94D6009D3444 /* FoodAssistantTests.swift in Sources */,

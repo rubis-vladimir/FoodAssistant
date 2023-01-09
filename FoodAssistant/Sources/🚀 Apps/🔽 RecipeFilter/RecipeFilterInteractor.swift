@@ -27,19 +27,21 @@ final class RecipeFilterInteractor {
         self.filterManager = filterManager
     }
     
-    /// Получение значений из строки (разделенный запятой)
+    /// Получение названий ингредиентов из строки (разделенный запятой)
     /// - Parameter str: строка
-    private func values(fromCSVString str: String) -> [String] {
+    /// - Returns: массив названий ингредиентов
+    private func ingredients(from str: String) -> [String] {
         return str.components(separatedBy: ", ")
             .flatMap { $0.split(separator: ",") }
             .map(String.init)
     }
     
-    private func values(fromCSVString str: String) -> [String] {
-        let characterSet =
-        return str.components(separatedBy: ", ")
-            .flatMap { $0.split(separator: ",") }
-            .map(String.init)
+    /// Получение значений из строки
+    /// - Parameter str: строка
+    /// - Returns: массив значений
+    private func values(from str: String) -> [String] {
+        let separators = CharacterSet(charactersIn: ",; ")
+        return str.components(separatedBy: separators).filter{ $0 != "" }
     }
     
     /// Определяет количество из строки
@@ -51,8 +53,8 @@ final class RecipeFilterInteractor {
                         inOrder: Int) -> Int? {
         guard let str = str else { return nil }
         switch inOrder {
-        case 1: return values(fromCSVString: str).compactMap(Int.init).last
-        default:  return values(fromCSVString: str).compactMap(Int.init).first
+        case 1: return values(from: str).compactMap(Int.init).last
+        default:  return values(from: str).compactMap(Int.init).first
         }
     }
     
@@ -116,7 +118,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     func update(parameter: FilterParameters,
                 text: String,
                 completion: @escaping ([FilterParameters : [TagModel]]) -> Void) {
-        let titles = values(fromCSVString: text)
+        let titles = ingredients(from: text)
         filterManager.overWrite(parameter: parameter,
                                 value: titles)
         
@@ -142,7 +144,6 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
             }
             dict[parameter] = models
             presenter?.update(section: indexPath.section)
-            print(models)
         default:
             models[indexPath.item].isSelected = flag
             dict[parameter] = models

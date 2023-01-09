@@ -12,31 +12,103 @@ final class BasketInteractorTests: XCTestCase {
 
     var ingredientManager: StubIngredientManager!
     var imageDownloader: StubImageDownloader!
-    var storage: StubStorageManager!
-    var presenter: StubBasketPresenter!
+    var storage: SpyStorageManager!
+    var presenter: SpyBasketPresenter!
     var sut: BasketInteractor!
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        assembly()
+    }
+    
+    override func tearDown() {
+        ingredientManager = nil
+        imageDownloader = nil
+        storage = nil
+        presenter = nil
+        sut = nil
+        super.tearDown()
+    }
+    
+    func assembly() {
+        let mockIngredients: [Ingredient] = [Ingredient(id: 357,
+                                                        name: "Cheese Bar",
+                                                        dtoAmount: 200),
+                                             Ingredient(id: 246,
+                                                        name: "Sausage Baz",
+                                                        dtoAmount: 300)]
+        
+        let mockArrayRecipes: [RecipeProtocol] = [Recipe(id: 5678,
+                                                         title: "Pizza Baz",
+                                                         readyInMinutes: 20,
+                                                         servings: 4,
+                                                         extendedIngredients: mockIngredients),
+                                                  Recipe(id: 1234,
+                                                         title: "Borsch Foo",
+                                                         readyInMinutes: 60,
+                                                         servings: 3)]
+        
+        ingredientManager = StubIngredientManager()
+        imageDownloader = StubImageDownloader(error: .dataLoadingError)
+        storage = SpyStorageManager(arrayRecipes: mockArrayRecipes)
+        presenter = SpyBasketPresenter()
+        sut = BasketInteractor(imageDownloader: imageDownloader,
+                               storage: storage,
+                               ingredientManager: ingredientManager)
+        sut.presenter = presenter
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func getModels() {
+        sut.fetchRecipeFromBasket { _ in }
+        sut.fetchIngredients { _ in }
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testAddIngredientsInFridge() {
+        //arange
+        getModels()
+        
+        //act
+        sut.changeIsCheck(id: 357, flag: true)
+        sut.changeIsCheck(id: 124, flag: false)
+        let count = presenter.count
+        
+        //assert
+        XCTAssertEqual(1, count)
+        
+        //act
+        sut.addIngredientsInFridge()
+        let tuple = storage.arrayIds.first
+        
+        //assert
+        XCTAssertEqual(357, tuple?.0)
+        XCTAssertEqual(true, tuple?.1)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    func testRemoveRecipe() {
+        //arange
+        let id = 1234
+        getModels()
+        
+        //act
+        sut.removeRecipe(id: id)
+        let remove = storage.arrayIds.first
+        
+        //assert
+        XCTAssertEqual(id, remove?.0)
+        XCTAssertEqual(false, remove?.1)
+    }
+    
+    func testFetchImage() {
+        //act
+        sut.fetchImage("",
+                       type: .recipe) { result in
+            //assert
+            switch result {
+            case .success(_):
+                XCTFail()
+            case .failure(let error):
+                XCTAssertEqual(DataFetcherError.dataLoadingError, error)
+            }
         }
     }
-
 }

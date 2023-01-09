@@ -8,11 +8,11 @@
 import Foundation
 @testable import FoodAssistant
 
-class StubRecipeFilterPresenter: RecipeFilterBusinessLogicDelegate {
+class SpyRecipeFilterPresenter: RecipeFilterBusinessLogicDelegate {
     
-    var section: Int = 0
+    var updateCount = 0
     
     func update(section: Int) {
-        self.section = section
+        updateCount += 1
     }
 }

@@ -10,8 +10,8 @@ import XCTest
 
 final class RecipeFilterInteractorTests: XCTestCase {
     
-    var filterManager: StubFilterManager!
-    var presenter: StubRecipeFilterPresenter!
+    var filterManager: SpyFilterManager!
+    var presenter: SpyRecipeFilterPresenter!
     var sut: RecipeFilterInteractor!
     
     let mockParameters: [FilterParameters : [String]] = [.calories: ["500 Foo", "100 - 200 Baz"],
@@ -30,47 +30,53 @@ final class RecipeFilterInteractorTests: XCTestCase {
     }
     
     func assembly() {
-        filterManager = StubFilterManager(parameters: mockParameters)
-        presenter = StubRecipeFilterPresenter()
+        filterManager = SpyFilterManager(parameters: mockParameters)
+        presenter = SpyRecipeFilterPresenter()
         sut = RecipeFilterInteractor(filterManager: filterManager)
         sut.presenter = presenter
     }
 
     func testGetParameters() {
         //arange
-        let indexPath: IndexPath = [4, 1]
+        guard let indexSecton = FilterParameters.allCases.first(where: { $0 == .calories })?.rawValue else {
+            XCTFail()
+            return
+        }
+        let indexPath = IndexPath(row: 1, section: indexSecton)
         var calories: Int?
         
         //act
-        sut.fetchFilterParameters { parameters in
-            
-            print(parameters)
-        }
-        sut.changeFlag(true, indexPath: indexPath)
+        sut.fetchFilterParameters { _ in } /// Загрузка параметров
         
+        sut.changeFlag(true, indexPath: indexPath) /// Изменяем флаг параметра
+        ///
         sut.getParameters { parameters in
             calories = parameters.maxCalories
-            print(parameters)
-        }
-//        let caloriesMinOne = parameters?.minCalories
-//        let caloriesMaxOne = parameters?.maxCalories
-//
+        } /// получаем параметры для запроса в сеть
+        
+        let check = sut.checkFlag(indexPath: indexPath) /// Чек флага
+        let updateCount = presenter.updateCount /// Количество обновлений секций
+        
         //assert
         XCTAssertEqual(200, calories)
-        
+        XCTAssertEqual(true, check)
+        XCTAssertEqual(1, updateCount)
     }
     
     func testFetchFilterParameters() {
         //arange
         var calories: String?
+        var count: Int?
         
         //act
         sut.fetchFilterParameters { parameters in
             calories = parameters[.calories]?.first?.title
+            count = parameters[.excludeIngredients]?.count
         }
         
         //assert
         XCTAssertEqual("500 Foo", calories)
+        XCTAssertEqual(2, count)
     }
     
     func testUpdateParameters() {
@@ -84,9 +90,10 @@ final class RecipeFilterInteractorTests: XCTestCase {
                    text: text) { dict in
             ingredient = dict[.includeIngredients]?[1].title
         }
+        let count = filterManager.parameters.count
         
         //assert
         XCTAssertEqual("Carrot Foo", ingredient)
-        
+        XCTAssertEqual(3, count)
     }
 }

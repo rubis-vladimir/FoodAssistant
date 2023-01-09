@@ -9,7 +9,22 @@ import Foundation
 @testable import FoodAssistant
 
 class StubImageDownloader: ImageDownloadProtocol {
-    func fetchImage(url: URL, completion: @escaping (Result<Data, FoodAssistant.DataFetcherError>) -> Void) {
-        
+    
+    var error: DataFetcherError?
+    var data: Data?
+    
+    init(error: DataFetcherError? = nil,
+         data: Data? = nil) {
+        self.error = error
+        self.data = data
+    }
+    
+    func fetchImage(url: URL,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+        if let data = data {
+            completion(.success(data))
+        } else if let error = error {
+            completion(.failure(error))
+        }
     }
 }

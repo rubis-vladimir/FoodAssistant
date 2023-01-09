@@ -1,5 +1,5 @@
 //
-//  StubFilterManager.swift
+//  SpyFilterManager.swift
 //  FoodAssistantTests
 //
 //  Created by Владимир Рубис on 06.01.2023.
@@ -8,7 +8,7 @@
 import Foundation
 @testable import FoodAssistant
 
-class StubFilterManager: FilterManagement {
+class SpyFilterManager: FilterManagement {
     
     var parameters: [FilterParameters : [String]]
     
