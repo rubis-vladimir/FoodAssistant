@@ -48,7 +48,10 @@ final class RecipeListViewController: UIViewController {
     init(presenter: RecipeListPresentation,
          searchController: RecipeListSearchController) {
         self.presenter = presenter
-        self.searchController = searchController
+        
+        
+            self.searchController = searchController
+       
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -74,9 +77,12 @@ final class RecipeListViewController: UIViewController {
         searchController.searchBar.filterDelegate = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.searchController = searchController
-        
         navigationItem.hidesSearchBarWhenScrolling = false
+        if #available(iOS 13.0, *) {
+            navigationItem.searchController = searchController
+        } else {
+            navigationItem.titleView = searchController.searchBar
+        }
     }
     
     // MARK: - Private func

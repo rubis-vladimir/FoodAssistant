@@ -16,13 +16,22 @@ final class RecipeListSearchController: UISearchController, UISearchBarDelegate 
         return customSearchBar
     }
     
-    init() {
-        super.init(nibName: nil, bundle: nil)
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    override init(searchResultsController: UIViewController?) {
+        super.init(searchResultsController: searchResultsController)
         /// Настройка
         searchBar.showsCancelButton = false
         obscuresBackgroundDuringPresentation = false
         customSearchBar.delegate = self
     }
+    
+//    init() {
+//        super.init(nibName: nil, bundle: nil)
+//       
+//    }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
