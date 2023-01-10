@@ -78,8 +78,16 @@ protocol UserProfileBusinessLogic: RecipeReceived,
 final class UserProfilePresenter {
     /// Текущий сегмент
     private var currentSegmentIndex = 1
+    /// Последний текст
+    private var lastText = ""
     /// Вью-модели рецептов
-    private var recipes: [RecipeViewModel] = []
+    private var recipes: [RecipeViewModel] = [] {
+        didSet {
+            guard currentSegmentIndex == 2 else { return }
+            view?.updateCV(orderSection: [.favorite(recipes)])
+        }
+    }
+    
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
     
@@ -137,7 +145,7 @@ final class UserProfilePresenter {
         
         /// вкладка избранных рецептов
         default:
-            interactor.fetchFavoriteRecipe(text: nil) { [weak self] viewModels in
+            interactor.fetchFavoriteRecipe(text: lastText) { [weak self] viewModels in
                 self?.recipes = viewModels
             }
             view?.updateCV(orderSection: [.favorite(recipes)])
@@ -185,6 +193,8 @@ extension UserProfilePresenter: UserProfilePresentation {
     }
     
     func textEntered(_ text: String) {
+        lastText = text
+        
         interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
             self?.recipes = models
         }

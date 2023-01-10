@@ -41,7 +41,7 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
             var newRecipes: [RecipeProtocol] = []
             
             if let text = text {
-                let newRecipes = text == "" ?
+                let recipes = text == "" ?
                 recipes :
                 recipes.filter { recipe in
                     let title = recipe.title.lowercased()
@@ -49,7 +49,8 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
                     return title.contains(text)
                 }
                 
-                self?.models = newRecipes
+                self?.models = recipes
+                newRecipes.append(contentsOf: recipes)
             } else {
                 newRecipes = recipes
             }
