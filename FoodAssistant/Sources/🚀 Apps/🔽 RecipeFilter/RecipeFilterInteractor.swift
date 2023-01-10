@@ -27,7 +27,19 @@ final class RecipeFilterInteractor {
         self.filterManager = filterManager
     }
     
-    func values(fromCSVString str: String) -> [String] {
+    /// Получение названий ингредиентов из строки (разделенный запятой)
+    /// - Parameter str: строка
+    /// - Returns: массив названий ингредиентов
+    private func ingredients(from str: String) -> [String] {
+        return str.components(separatedBy: ", ")
+            .flatMap { $0.split(separator: ",") }
+            .map(String.init)
+    }
+    
+    /// Получение значений из строки
+    /// - Parameter str: строка
+    /// - Returns: массив значений
+    private func values(from str: String) -> [String] {
         let separators = CharacterSet(charactersIn: ",; ")
         return str.components(separatedBy: separators).filter{ $0 != "" }
     }
@@ -41,8 +53,12 @@ final class RecipeFilterInteractor {
                         inOrder: Int) -> Int? {
         guard let str = str else { return nil }
         switch inOrder {
-        case 1: return values(fromCSVString: str).compactMap(Int.init).last
-        default:  return values(fromCSVString: str).compactMap(Int.init).first
+        case 1:
+            return values(from: str).compactMap(Int.init).last
+            
+        default:
+            let array = values(from: str).compactMap(Int.init)
+            return array.count == 2 ? array.first : 0
         }
     }
     
@@ -106,7 +122,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     func update(parameter: FilterParameters,
                 text: String,
                 completion: @escaping ([FilterParameters : [TagModel]]) -> Void) {
-        let titles = values(fromCSVString: text)
+        let titles = ingredients(from: text)
         filterManager.overWrite(parameter: parameter,
                                 value: titles)
         
@@ -121,6 +137,7 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     }
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath) {
+        print(indexPath)
         guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
         guard var models = dict[parameter] else { return }
         
@@ -131,7 +148,6 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
             }
             dict[parameter] = models
             presenter?.update(section: indexPath.section)
-            
         default:
             models[indexPath.item].isSelected = flag
             dict[parameter] = models

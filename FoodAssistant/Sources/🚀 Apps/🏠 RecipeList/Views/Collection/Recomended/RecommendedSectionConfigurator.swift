@@ -24,7 +24,7 @@ final class RecommendedSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension RecommendedSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем и регистрируем ячейки
         let itemBuilder = RecommendedItemBuilder(models: models,
                                                        delegate: delegate)

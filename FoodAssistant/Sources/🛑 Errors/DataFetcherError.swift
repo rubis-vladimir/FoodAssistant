@@ -67,10 +67,10 @@ extension DataFetcherError: LocalizedError {
             return "Please, enter again".localize()
         case .notDataProvided:
             return "Please, enter name, amount".localize()
-        case .dataLoadingError:
+        case .dataLoadingError, .noResults:
             return "Please, try again".localize()
         default:
-            return "Send information to support. We will deal with this problem in the near future".localize()
+            return "Information sent to support. We will deal with this problem in the near future".localize()
         }
     }
 }

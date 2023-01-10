@@ -18,7 +18,7 @@ final class ProfileSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension ProfileSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .base(title: Constants.title))
         headerBuilder.register(collectionView: collectionView)

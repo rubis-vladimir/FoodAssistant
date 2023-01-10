@@ -27,7 +27,7 @@ final class ShopListConfigurator {
 // MARK: - CVSectionConfiguration
 extension ShopListConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = ShopListItemBuilder(models: models,

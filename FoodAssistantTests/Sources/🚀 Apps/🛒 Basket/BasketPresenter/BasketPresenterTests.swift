@@ -1,16 +1,19 @@
 //
-//  RecipeListPresenterTests.swift
+//  BasketPresenterTests.swift
 //  FoodAssistantTests
 //
-//  Created by Владимир Рубис on 05.01.2023.
+//  Created by Владимир Рубис on 06.01.2023.
 //
 
 import XCTest
 @testable import FoodAssistant
 
-final class RecipeListPresenterTests: XCTestCase {
+final class BasketPresenterTests: XCTestCase {
 
-//    var view:
+//    var view: StubBasketView!
+    var router: MockBasketRouter!
+    var interactor: StubBasketInteractor!
+    var sut: BasketPresenter!
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

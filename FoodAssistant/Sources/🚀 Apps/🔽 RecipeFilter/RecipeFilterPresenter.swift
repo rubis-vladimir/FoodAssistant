@@ -134,6 +134,11 @@ extension RecipeFilterPresenter: RecipeFilterPresentation {
         interactor.changeFlag(flag,
                               indexPath: indexPath)
     }
+    
+    // SearchBarFilterDelegate
+    func didTapFilterButton() {
+        self.router.routeToBack()
+    }
 }
 
 // MARK: - RecipeFilterBusinessLogicDelegate

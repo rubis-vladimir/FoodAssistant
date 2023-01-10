@@ -45,8 +45,10 @@ struct Recipe: RecipeProtocol, Codable, Equatable, Hashable {
 extension Recipe {
     
     var imageName: String? {
+        /// Определяем название изображения
         guard let image = image else { return nil }
-        return String(image.dropFirst(37))
+        guard let last = image.lastIndex(where: {$0 == "/"}) else { return nil }
+        return String(image.suffix(from: last))
     }
     
     var ingredients: [IngredientProtocol]? {

@@ -20,7 +20,7 @@ final class TVAdapter: NSObject {
     private let tableView: UITableView
     private weak var scrollDelegate: ScrollDelegate?
     
-    private var builders: [TVSectionBuilderProtocol] = [] {
+    private var builders: [TVSectionProtocol] = [] {
         didSet {
             tableView.reloadData()
         }
@@ -32,7 +32,7 @@ final class TVAdapter: NSObject {
         self.scrollDelegate = scrollDelegate
     }
     
-    func configure(with builders: [TVSectionBuilderProtocol]) {
+    func configure(with builders: [TVSectionProtocol]) {
         self.builders = builders
     }
 }

@@ -97,7 +97,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
     }
     
-    func saveRecipe(id: Int, for target: TargetOfSave) {
+    func saveRecipe(id: Int,
+                    for target: TargetOfSave) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         favoriteArrayId.append(id)
         storage.save(recipe: model, for: target)
@@ -116,8 +117,13 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     // RecipeReceived
     func getRecipe(id: Int,
                    completion: @escaping (RecipeProtocol) -> Void) {
-        guard let model = models.first(where: { $0.id == id }) else { return }
-        completion(model)
+        guard var recipe = models.first(where: { $0.id == id }) as? Recipe else { return }
+        
+        if favoriteArrayId.contains(id) {
+            recipe.isFavorite = true
+        }
+        
+        completion(recipe)
     }
     
     // ImageBusinessLogic
@@ -146,7 +152,8 @@ extension RecipeListInteractor {
     /// - Parameters:
     ///  - ids: идентификаторы рецептов
     ///  - completion: захватывает вью-модели/ошибку
-    private func fetchRecipes(by ids: [Int], completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
+    private func fetchRecipes(by ids: [Int],
+                              completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         RecipeRequest.byId(ids).downloadById(with: dataFetcher) { [weak self] result in
             switch result {
             case .success(let recipes):
@@ -222,12 +229,6 @@ extension RecipeListInteractor {
             RecipeViewModel(with: $0)
         }
         completion(.success(viewModels))
-    }
-    
-    /// Получает из url-строки название изображения
-    private func getImageName(from urlString: String?) -> String? {
-        guard let urlString = urlString else { return nil }
-        return String(urlString.dropFirst(37))
     }
     
     /// Проверяет установленный на устройстве язык

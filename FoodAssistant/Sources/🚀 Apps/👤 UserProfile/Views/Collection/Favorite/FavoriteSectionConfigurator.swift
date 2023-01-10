@@ -26,7 +26,7 @@ final class FavoriteSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension FavoriteSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .base(title: title))
         headerBuilder.register(collectionView: collectionView)

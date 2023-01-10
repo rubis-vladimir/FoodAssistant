@@ -34,20 +34,18 @@ extension RecipeListAssembly: Assemblying {
         /// Менеджер работы с БД
         let storage = StorageManager.shared
         
-        /// Контроллер поиска
-        let searchController = RecipeListSearchController(searchResultsController: nil)
-        
         /// Модуль VIPER
-        let router = RecipeListRouter(navigationController: navigationController, searchController: searchController)
+        let router = RecipeListRouter(navigationController: navigationController)
         let interactor = RecipeListInteractor(dataFetcher: networkManager,
                                               imageDownloader: imageDownloaderProxy,
                                               translateService: translateService,
                                               storage: storage)
         let presenter = RecipeListPresenter(interactor: interactor,
                                             router: router)
-        let viewController = RecipeListViewController(presenter: presenter, searchController: searchController)
+        let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.view = viewController
+        presenter.getStartData()
         
         return viewController
     }

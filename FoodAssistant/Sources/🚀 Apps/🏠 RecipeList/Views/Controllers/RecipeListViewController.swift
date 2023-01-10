@@ -13,42 +13,35 @@ protocol RecipeListPresentation: LayoutChangable,
                                  FavoriteChangable,
                                  InBasketTapable,
                                  ImagePresentation,
+                                 ViewAppearable,
                                  AnyObject {
     /// Ивент нажатия на кнопку фильтр
-    /// - Parameters:
-    ///  - flag: флаг
-    ///  - search: поисковой контроллер
-    func didTapFilterButton(_ flag: Bool)
-    /// Обновить новые данные
-    func updateNewData()
+    func didTapFilterButton()
     /// Проверить избранный ли рецепт
     func checkFavorite(id: Int) -> Bool
 }
 
 /// #Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {
-
+    
     // MARK: - Properties
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
-                                                                        collectionViewLayout: AppConstants.getFlowLayout())
+                                                       collectionViewLayout: AppConstants.getFlowLayout())
     
     private var timer: Timer?
     private var factory: RLFactory?
     
     private let presenter: RecipeListPresentation
-    private let searchController: RecipeListSearchController
+    private let searchBar = RecipesSearchBar(isFilter: false)
     
-    private var isSearching: Bool = false
-    private var isChangingFilters: Bool = false
     private var selectedSegment: Int = 0
     
     private lazy var navLabel = createNavTitle(title: "FoodAssistant")
     
     // MARK: - Init & ViewDidLoad
-    init(presenter: RecipeListPresentation,
-         searchController: RecipeListSearchController) {
+    init(presenter: RecipeListPresentation) {
         self.presenter = presenter
-        self.searchController = searchController
+       
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -66,17 +59,12 @@ final class RecipeListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        presenter.updateNewData()
+        presenter.viewAppeared()
     }
     
     func configureSearchController() {
-        searchController.searchBar.delegate = self
-        searchController.searchBar.filterDelegate = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.searchController = searchController
-        
-        navigationItem.hidesSearchBarWhenScrolling = false
+        searchBar.delegate = self
+        searchBar.filterDelegate = self
     }
     
     // MARK: - Private func
@@ -84,14 +72,21 @@ final class RecipeListViewController: UIViewController {
         navigationItem.titleView = navLabel
         navigationController?.navigationBar.shadowImage = UIImage()
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.backgroundColor = .clear
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
         
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        
+        view.addSubview(searchBar)
         view.addSubview(collectionView)
         
         /// Настройка констрейнтов
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchBar.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
+            
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
@@ -112,8 +107,7 @@ extension RecipeListViewController: RecipeListViewable {
     }
     
     func getSearchText() -> String? {
-        searchController.searchBar.isFilter = false
-        return searchController.searchBar.text
+        searchBar.text
     }
     
     func updateCV(with: [RecipeModelsDictionary]) {
@@ -127,8 +121,8 @@ extension RecipeListViewController: RecipeListViewable {
 
 // MARK: - UISearchBarFilterDelegate
 extension RecipeListViewController: SearchBarFilterDelegate {
-    func changeFilterView(isFilter: Bool) {
-        presenter.didTapFilterButton(isFilter)
+    func didTapFilterButton() {
+        presenter.didTapFilterButton()
     }
 }
 
@@ -137,17 +131,12 @@ extension RecipeListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        isSearching = true
-        // Пока не реализовано
+        // В работе
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         
-        if let text = searchBar.text, text.isEmpty && isSearching {
-            isSearching = false
-            
-            // Пока не реализовано
-        }
+        // В работе
     }
 }

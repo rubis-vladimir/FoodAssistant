@@ -59,7 +59,7 @@ final class UPFactory {
     /// Создает строителя ячеек
     ///  - Parameter type: тип ячейки
     ///   - Return: объект протокола строителя
-    private func createBuilder(type: UPSectionType) -> CVSectionBuilderProtocol {
+    private func createBuilder(type: UPSectionType) -> CVSectionProtocol {
         
         switch type {
         case .profile: 
@@ -79,7 +79,7 @@ final class UPFactory {
 //MARK: - TVFactoryProtocol
 extension UPFactory: CVFactoryProtocol {
     
-    var builders: [CVSectionBuilderProtocol] {
+    var builders: [CVSectionProtocol] {
         orderSections.map { createBuilder(type: $0) }
     }
 }

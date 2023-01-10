@@ -7,11 +7,10 @@
 
 import UIKit
 
-/// #Протокол передачи делегату об изменении состояния Фильтра в SearchBar
+/// #Протокол передачи UI-ивента нажатия на кнопку
 protocol SearchBarFilterDelegate: AnyObject {
-    /// Ивент изменения фильтра
-    /// - Parameter isFilter: флаг
-    func changeFilterView(isFilter: Bool)
+    /// Ивент нажатия на кнопку фильтра
+    func didTapFilterButton()
 }
 
 /// #Кастомный поисковой бар для рецептов
@@ -21,15 +20,7 @@ class RecipesSearchBar: UISearchBar {
     weak var filterDelegate: SearchBarFilterDelegate?
     
     /// Флаг фильтра
-    var isFilter: Bool = false {
-        didSet {
-            if isFilter {
-                changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
-            } else {
-                changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
-            }
-        }
-    }
+    var isFilter: Bool
     
     /// Текстовое поля для поиска
     private lazy var textField: UITextField? = {
@@ -41,7 +32,7 @@ class RecipesSearchBar: UISearchBar {
         return textField
     }()
     
-    lazy var filterButton: UIButton = {
+    private lazy var filterButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = Palette.bgColor.color
         
@@ -57,18 +48,29 @@ class RecipesSearchBar: UISearchBar {
     }()
     
     // MARK: - Init
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    init(isFilter: Bool) {
+        self.isFilter = isFilter
+        super.init(frame: CGRect.zero)
+        
         setViews()
         setupConstrains()
     }
     
     required init?(coder: NSCoder) {
-        super.init(coder: coder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     // MARK: - Functions
     private func setViews() {
+        
+        if isFilter {
+            changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
+        } else {
+            changeFilterButtonAppearance(with: .black, and: Palette.bgColor.color)
+        }
+        
+        backgroundImage = UIImage()
+        
         placeholder = "Search recipes here...".localize()
         
         guard let textField = textField else { return }
@@ -121,8 +123,7 @@ class RecipesSearchBar: UISearchBar {
 
 private extension RecipesSearchBar {
     @objc func didTapFilterButton() {
-        isFilter.toggle()
-        filterDelegate?.changeFilterView(isFilter: isFilter)
+        filterDelegate?.didTapFilterButton()
     }
 }
 

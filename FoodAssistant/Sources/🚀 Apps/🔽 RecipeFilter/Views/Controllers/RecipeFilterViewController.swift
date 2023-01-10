@@ -10,6 +10,7 @@ import UIKit
 /// #Протокол передачи UI-ивентов слою презентации модуля RecipeFilter
 protocol RecipeFilterPresentation: CellTapable,
                                    SelectedIngredientsChangable,
+                                   SearchBarFilterDelegate,
                                    AnyObject {
     /// Ивент нажатия на изменение данных параметра
     /// - Parameters:
@@ -39,9 +40,12 @@ final class RecipeFilterViewController: UIViewController {
         self?.presenter.didTapShowResultButton()
     }
     
+    private let searchBar = RecipesSearchBar(isFilter: true)
+    
     // MARK: - Init & Override
     init(presenter: RecipeFilterPresentation) {
         self.presenter = presenter
+        
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -60,17 +64,24 @@ final class RecipeFilterViewController: UIViewController {
     private func setupElements() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        searchBar.filterDelegate = presenter
         
         navigationItem.titleView = createNavTitle(title: "Filter".localize())
         navigationItem.hidesBackButton = true
     }
     
     private func setupConstraints() {
+        view.addSubview(searchBar)
         view.addSubview(collectionView)
         view.addSubview(showResultsButton)
         
         NSLayoutConstraint.activate([
-            collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            searchBar.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            searchBar.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            searchBar.bottomAnchor.constraint(equalTo: collectionView.topAnchor),
+            
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             collectionView.bottomAnchor.constraint(equalTo:  showResultsButton.topAnchor),
@@ -111,6 +122,6 @@ extension RecipeFilterViewController: RecipeFilterViewable {
 extension RecipeFilterViewController {
     private struct Constants {
         static let showResultsButtonTitle = "Show results".localize()
-        static let noteText = "Enter titles separated\nby commas and/or spaces".localize()
+        static let noteText = "Enter titles separated by commas".localize()
     }
 }

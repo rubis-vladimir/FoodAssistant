@@ -64,7 +64,7 @@ final class DIFactory {
     ///  - Parameters:
     ///     - type: тип секции
     ///  - Returns: объект протокола строителя секции
-    private func createBuilder(type: DISectionType) -> TVSectionBuilderProtocol {
+    private func createBuilder(type: DISectionType) -> TVSectionProtocol {
         switch type {
             
         case .baseInfo:
@@ -105,8 +105,8 @@ final class DIFactory {
 // MARK: - TVFactoryProtocol
 extension DIFactory: TVCFactoryProtocol {
     
-    var builders: [TVSectionBuilderProtocol] {
-        var builders: [TVSectionBuilderProtocol] = []
+    var builders: [TVSectionProtocol] {
+        var builders: [TVSectionProtocol] = []
         
         /// Добавляем секцию с основной информацией
         builders.append(createBuilder(type: .baseInfo))

@@ -14,12 +14,8 @@ protocol RecipeListRouting {
     func routeToDetail(model: RecipeProtocol)
     
     /// Переход к экрану фильтра и обратно
-    ///  - Parameters:
-    ///   - flag: флаг перехода
-    ///   - search: поисковый контроллер
-    ///   - searchDelegate: делегат поиска
-    func routeToFilter(_ flag: Bool,
-                       searchDelegate: SeachRecipesRequested)
+    ///  - Parameter searchDelegate: делегат поиска
+    func routeToFilter(searchDelegate: SeachRecipesRequested)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -78,7 +74,7 @@ protocol RecipeListBusinessLogic: RecipeReceived,
 enum RLBuildType {
     /// Основная при загрузке
     case main
-    /// При поиске рецептов
+    /// При поиске рецептов (будет добавлена возможность убирать рекомендации)
     case search
 }
 
@@ -106,8 +102,6 @@ final class RecipeListPresenter {
          router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
-        
-        getStartData()
     }
     
     /// Загрузка данных при начальной загрузке приложения
@@ -214,14 +208,9 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
-    func didTapFilterButton(_ flag: Bool) {
-        router.routeToFilter(flag,
-                             searchDelegate: self)
-    }
     
-    func updateNewData() {
-        interactor.updateFavoriteId()
-        updateCV()
+    func didTapFilterButton() {
+        router.routeToFilter(searchDelegate: self)
     }
     
     func checkFavorite(id: Int) -> Bool {
@@ -280,13 +269,18 @@ extension RecipeListPresenter: RecipeListPresentation {
         let indexPaths = (0...count-1).map { IndexPath(item: $0, section: section) }
         view?.updateItems(indexPaths: indexPaths)
     }
+    
+    // ViewAppearable
+    func viewAppeared() {
+        interactor.updateFavoriteId()
+        updateCV()
+    }
 }
 
 // MARK: - SeachRecipesRequested
 extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
         let text = view?.getSearchText()
-        buildType = .search
         
         fetchRecipe(with: parameters,
                     number: AppConstants.minRequestAmount,

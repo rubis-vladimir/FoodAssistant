@@ -26,7 +26,7 @@ final class SingleCellSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension SingleCellSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем стандартный заголовок секции
         var headerBuilder: HeaderBuilder?
         if let title = title {

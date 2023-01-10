@@ -11,17 +11,17 @@ import UIKit
 /// #Протокол фабрики для коллекции
 protocol CVFactoryProtocol {
     /// Строители ячеек
-    var builders: [CVSectionBuilderProtocol] { get }
+    var builders: [CVSectionProtocol] { get }
 }
 
 /// #Протокол конфигуратора Секции
 protocol CVSectionConfiguration {
     /// Конфигурирует секцию
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol
 }
 
-/// #Протокол строителя секции коллекции
-protocol CVSectionBuilderProtocol {
+/// #Протокол секции коллекции
+protocol CVSectionProtocol {
     /// Строитель заголовка
     var headerBuilder: CVHeaderBuilderProtocol? { get }
     /// Строитель ячеек

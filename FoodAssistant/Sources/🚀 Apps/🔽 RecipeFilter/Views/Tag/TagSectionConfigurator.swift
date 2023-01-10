@@ -27,7 +27,7 @@ final class TagSectionConfigurator {
 // MARK: - CVSectionConfiguration
 extension TagSectionConfigurator: CVSectionConfiguration {
     
-    func configure(for collectionView: UICollectionView) -> CVSectionBuilderProtocol {
+    func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         
         var headerBuilder: CVHeaderBuilderProtocol?
         

@@ -62,16 +62,6 @@ class LaunchView: UIView {
         return label
     }()
     
-    /// Кнопка готовности
-//    private let readyButton: UIButton = {
-//        let button = UIButton()
-//        button.titleLabel?.font = Fonts.header
-//        button.backgroundColor = Palette.darkColor.color
-//        button.layer.add(shadow: AppConstants.Shadow.defaultOne)
-//        button.translatesAutoresizingMaskIntoConstraints = false
-//        return button
-//    }()
-    
     private lazy var readyButton = BaseRedButton(title: nil,
                                                  image: nil) { [weak self] in
         guard let page = self?.page else { return }
@@ -81,7 +71,6 @@ class LaunchView: UIView {
     // MARK: - Init & Override
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
         setupConstraints()
     }
     
@@ -112,10 +101,6 @@ class LaunchView: UIView {
         backgroundImageView.image = UIImage(named: page.rawValue)
         headerLabel.text = page.headerText
         descriptionLabel.text = page.descriptionText
-    }
-    
-    private func setupView() {
-        readyButton.addTarget(self, action: #selector(didTapReadyButton(_:)), for: .touchUpInside)
     }
     
     private func setupConstraints() {
@@ -152,12 +137,6 @@ class LaunchView: UIView {
             readyButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -60),
             readyButton.heightAnchor.constraint(equalToConstant: 50)
         ])
-    }
-    
-    /// Нажата кнопка готовности
-    @objc private func didTapReadyButton(_ button: UIButton) {
-        guard let page = page else { return }
-        delegate?.didTapReadyButton(page: page)
     }
 }
 

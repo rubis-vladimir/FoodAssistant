@@ -7,14 +7,18 @@
 
 import Foundation
 
-/// #Варианты восстановления ошибок
+/// #Варианты опций восстановления ошибок
 enum RecoveryOptions {
+    /// попробовать снова
     case tryAgain(action: (() -> Void))
+    /// отменить
     case cancel
 }
 
 /// #Восстанавливаемая ошибка
 struct RecoverableError {
+    /// Ошибка
     let error: Error
+    /// Опции
     let recoveryOptions: [RecoveryOptions]
 }

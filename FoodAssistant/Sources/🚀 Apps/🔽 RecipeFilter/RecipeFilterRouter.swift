@@ -19,6 +19,6 @@ final class RecipeFilterRouter {
 // MARK: - RecipeFilterRouting
 extension RecipeFilterRouter: RecipeFilterRouting {
     func routeToBack() {
-        navigationController.popToRootViewController(animated: true)
+        navigationController.popToRootViewController(animated: false)
     }
 }
