@@ -282,6 +282,10 @@ extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
         let text = view?.getSearchText()
         
+        if viewModelsDictionary[.recommended] == nil {
+            buildType = .search
+        }
+        
         fetchRecipe(with: parameters,
                     number: AppConstants.minRequestAmount,
                     query: text,

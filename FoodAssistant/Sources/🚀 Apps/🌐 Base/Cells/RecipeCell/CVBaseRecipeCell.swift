@@ -107,6 +107,8 @@ class CVBaseRecipeCell: UICollectionViewCell {
         let stack = UIStackView()
         stack.layer.cornerRadius = 10
         stack.backgroundColor = .white
+        stack.layer.borderColor = Palette.darkColor.color.cgColor
+        stack.layer.borderWidth = 1
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()

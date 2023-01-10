@@ -8,14 +8,11 @@
 import UIKit
 
 /// #Слой навигации модуля Launch
-final class LaunchRouter {
-    weak var view: UIViewController?
-}
+final class LaunchRouter {}
 
 // MARK: - LaunchRouting
 extension LaunchRouter: LaunchRouting {
     func routeToMainScreen() {
-        guard let view = view else { return }
         /// Создаем NavigationController для TabBarController
         let navigationVC = UINavigationController()
         
