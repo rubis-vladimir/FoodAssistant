@@ -74,7 +74,7 @@ protocol RecipeListBusinessLogic: RecipeReceived,
 enum RLBuildType {
     /// Основная при загрузке
     case main
-    /// При поиске рецептов
+    /// При поиске рецептов (будет добавлена возможность убирать рекомендации)
     case search
 }
 
@@ -281,7 +281,6 @@ extension RecipeListPresenter: RecipeListPresentation {
 extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters) {
         let text = view?.getSearchText()
-        buildType = .search
         
         fetchRecipe(with: parameters,
                     number: AppConstants.minRequestAmount,

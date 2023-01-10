@@ -117,8 +117,13 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     // RecipeReceived
     func getRecipe(id: Int,
                    completion: @escaping (RecipeProtocol) -> Void) {
-        guard let model = models.first(where: { $0.id == id }) else { return }
-        completion(model)
+        guard var recipe = models.first(where: { $0.id == id }) as? Recipe else { return }
+        
+        if favoriteArrayId.contains(id) {
+            recipe.isFavorite = true
+        }
+        
+        completion(recipe)
     }
     
     // ImageBusinessLogic
