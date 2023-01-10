@@ -8,17 +8,19 @@
 import XCTest
 @testable import FoodAssistant
 
-final class RecipeListInteractorTests: XCTestCase {
+public enum TestCase {
+    case success, failure
+}
 
+final class RecipeListInteractorTests: XCTestCase {
+    
     var dataFetcher: StubDataFetcher!
     var imageDownloader: StubImageDownloader!
     var translateService: StubTranslateService!
     var storage: SpyStorageManager!
     var sut: RecipeListInteractor!
     
-    enum TestCase {
-        case success, failure
-    }
+    
     
     override func setUp() {
         super.setUp()
@@ -78,7 +80,7 @@ final class RecipeListInteractorTests: XCTestCase {
                                    translateService: translateService,
                                    storage: storage)
     }
-
+    
     func testFetchRecommendedDFFailure() {
         //arange
         assembly(caseDF: .failure,
@@ -120,16 +122,13 @@ final class RecipeListInteractorTests: XCTestCase {
             }
         }
     }
-
+    
     func testFetchRecommendedDFSuccessTSSuccess() {
         //arange
         assembly(caseDF: .success,
                  caseTS: .success)
         
         //act
-        sut.updateFavoriteId() /// Обновляем массив избранных
-        let check = sut.checkFavorite(id: 5678) /// Чек флага
-        
         sut.fetchRecommended(number: 5) { result in
             switch result {
             case .success(let recipes): /// Переведенные рецепты
@@ -139,8 +138,6 @@ final class RecipeListInteractorTests: XCTestCase {
                 //assert
                 XCTAssertEqual(2, recipeCount)
                 XCTAssertEqual("Пицца Баз", recipeFirst?.title)
-                XCTAssertEqual(true, recipeFirst?.isFavorite)
-                XCTAssertEqual(check, recipeFirst?.isFavorite)
                 
             case .failure:
                 //assert

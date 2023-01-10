@@ -50,7 +50,8 @@ final class BasketInteractorTests: XCTestCase {
         
         ingredientManager = StubIngredientManager()
         imageDownloader = StubImageDownloader(error: .dataLoadingError)
-        storage = SpyStorageManager(arrayRecipes: mockArrayRecipes, arrayId: [1234])
+        storage = SpyStorageManager(arrayRecipes: mockArrayRecipes,
+                                    arrayId: [1234])
         presenter = SpyBasketPresenter()
         sut = BasketInteractor(imageDownloader: imageDownloader,
                                storage: storage,

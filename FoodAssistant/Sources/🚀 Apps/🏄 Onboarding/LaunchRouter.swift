@@ -27,8 +27,6 @@ extension LaunchRouter: LaunchRouting {
         navigationVC.viewControllers = [tabBarController]
         
         navigationVC.modalPresentationStyle = .fullScreen
-//        view.present(navigationVC, animated: true)
-        
         
         DispatchQueue.main.async {
             let appDelegate = UIApplication.shared.delegate as? AppDelegate

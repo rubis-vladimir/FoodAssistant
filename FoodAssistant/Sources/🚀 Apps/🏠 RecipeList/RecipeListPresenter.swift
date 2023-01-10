@@ -102,8 +102,6 @@ final class RecipeListPresenter {
          router: RecipeListRouting) {
         self.interactor = interactor
         self.router = router
-        
-        getStartData()
     }
     
     /// Загрузка данных при начальной загрузке приложения
@@ -112,27 +110,27 @@ final class RecipeListPresenter {
         filterParameters.includeIngredients = ["onion", "chiken"]
 
         // Загрузка данных для секции Recommended
-//        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
-//            guard let self = self else { return }
-//
-//            switch result {
-//            case .success(let recipeModels): // Успех
-//                self.viewModelsDictionary[.recommended] = recipeModels
-//
-//            case .failure(let error): // Ошибка
-//                /// Действие, если ошибка восстанавливаемая
-//                let action = { self.getStartData() }
-//                ///
-//                self.showRecoveryError(from: error,
-//                                       action: action)
-//            }
-//        }
-//
-//        // Загрузка данных для секции Main
-//        fetchRecipe(with: filterParameters,
-//                    number: AppConstants.minRequestAmount,
-//                    query: nil,
-//                    type: .main)
+        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
+            guard let self = self else { return }
+
+            switch result {
+            case .success(let recipeModels): // Успех
+                self.viewModelsDictionary[.recommended] = recipeModels
+
+            case .failure(let error): // Ошибка
+                /// Действие, если ошибка восстанавливаемая
+                let action = { self.getStartData() }
+                ///
+                self.showRecoveryError(from: error,
+                                       action: action)
+            }
+        }
+
+        // Загрузка данных для секции Main
+        fetchRecipe(with: filterParameters,
+                    number: AppConstants.minRequestAmount,
+                    query: nil,
+                    type: .main)
     }
     
     /// Получает рецепты
@@ -210,13 +208,9 @@ final class RecipeListPresenter {
 
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
+    
     func didTapFilterButton() {
         router.routeToFilter(searchDelegate: self)
-    }
-    
-    func updateNewData() {
-        interactor.updateFavoriteId()
-        updateCV()
     }
     
     func checkFavorite(id: Int) -> Bool {
@@ -274,6 +268,12 @@ extension RecipeListPresenter: RecipeListPresentation {
         guard count > 0 else { return }
         let indexPaths = (0...count-1).map { IndexPath(item: $0, section: section) }
         view?.updateItems(indexPaths: indexPaths)
+    }
+    
+    // ViewAppearable
+    func viewAppeared() {
+        interactor.updateFavoriteId()
+        updateCV()
     }
 }
 

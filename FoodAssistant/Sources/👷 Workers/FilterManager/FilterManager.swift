@@ -52,13 +52,16 @@ extension FilterManager: FilterManagement {
         if let titles = UserDefaults.standard.value(forKey: key1) as? [String] {
             dict[.includeIngredients] = titles
         } else {
+            dict[.includeIngredients] = RecipeFilterTagTitles.includeIngredients
             UserDefaults.standard.set(RecipeFilterTagTitles.includeIngredients, forKey: key1)
         }
+        
         
         let key2 = FilterParameters.excludeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key2) as? [String] {
             dict[.excludeIngredients] = titles
         } else {
+            dict[.includeIngredients] = RecipeFilterTagTitles.excludeIngredients
             UserDefaults.standard.set(RecipeFilterTagTitles.excludeIngredients, forKey: key2)
         }
         return dict

@@ -13,21 +13,20 @@ protocol RecipeListPresentation: LayoutChangable,
                                  FavoriteChangable,
                                  InBasketTapable,
                                  ImagePresentation,
+                                 ViewAppearable,
                                  AnyObject {
     /// Ивент нажатия на кнопку фильтр
     func didTapFilterButton()
-    /// Обновить новые данные
-    func updateNewData()
     /// Проверить избранный ли рецепт
     func checkFavorite(id: Int) -> Bool
 }
 
 /// #Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {
-
+    
     // MARK: - Properties
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
-                                                                        collectionViewLayout: AppConstants.getFlowLayout())
+                                                       collectionViewLayout: AppConstants.getFlowLayout())
     
     private var timer: Timer?
     private var factory: RLFactory?
@@ -35,8 +34,6 @@ final class RecipeListViewController: UIViewController {
     private let presenter: RecipeListPresentation
     private let searchBar = RecipesSearchBar(isFilter: false)
     
-//    private var isSearching: Bool = false
-//    private var isChangingFilters: Bool = false
     private var selectedSegment: Int = 0
     
     private lazy var navLabel = createNavTitle(title: "FoodAssistant")
@@ -62,7 +59,7 @@ final class RecipeListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        presenter.updateNewData()
+        presenter.viewAppeared()
     }
     
     func configureSearchController() {
@@ -134,13 +131,12 @@ extension RecipeListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        // Пока не реализовано
+        // В работе
     }
     
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-            
-            // Пока не реализовано
         
+        // В работе
     }
 }

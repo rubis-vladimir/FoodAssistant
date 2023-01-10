@@ -36,6 +36,5 @@ extension RecipeListRouter: RecipeListRouting {
         detailInfoVC.hidesBottomBarWhenPushed = true
         navigationController.navigationBar.isTranslucent = true
         navigationController.pushViewController(detailInfoVC, animated: true)
-        
     }
 }

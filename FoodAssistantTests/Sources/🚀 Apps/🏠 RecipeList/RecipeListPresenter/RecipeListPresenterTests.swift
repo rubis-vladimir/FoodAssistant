@@ -10,32 +10,119 @@ import XCTest
 
 final class RecipeListPresenterTests: XCTestCase {
 
-    var view: RecipeListViewStub!
-    var router: MockRecipeListRouter!
-    var interactor: StubRecipeListInteractor!
+    var view: SpyRecipeListView!
+    var router: SpyRecipeListRouter!
+    var interactor: SpyRecipeListInteractor!
     var sut: RecipeListPresenter!
+
+    let mockArrayRecipes: [RecipeProtocol] = [Recipe(id: 5678,
+                                                     title: "Pizza Baz",
+                                                     readyInMinutes: 20,
+                                                     servings: 4),
+                                              Recipe(id: 1234,
+                                                     title: "Borsch Foo",
+                                                     readyInMinutes: 60,
+                                                     servings: 3)]
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    override func setUp() {
+        super.setUp()
+        view = SpyRecipeListView(text: "Введенный текст")
+        router = SpyRecipeListRouter()
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    override func tearDown() {
+        view = nil
+        router = nil
+        interactor = nil
+        sut = nil
+        super.tearDown()
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    /// Конфигурация для успешных и неуспешных кейсов
+    func assembly(testCase: TestCase) {
+        switch testCase {
+        case .success:
+            interactor = SpyRecipeListInteractor(recipeModels: mockArrayRecipes, arrayId: [1234])
+        case .failure:
+            interactor = SpyRecipeListInteractor(error: .dataLoadingError)
         }
+        
+        sut = RecipeListPresenter(interactor: interactor,
+                                  router: router)
+        sut.view = view
     }
 
+    func testRoute() {
+        //arange
+        assembly(testCase: .success)
+        let recipeId = 1234
+        
+        //act
+        sut.didTapFilterButton()
+        sut.didSelectItem(id: recipeId)
+        let id = router.id
+        let count = router.count
+        
+        //assert
+        XCTAssertEqual(recipeId, id)
+        XCTAssertEqual(2, count)
+    }
+
+    func testDidTapFavoriteButton() {
+        //arange
+        assembly(testCase: .success)
+        let testId = 1234
+        
+        //act
+        var check = sut.checkFavorite(id: testId)
+        //assert
+        XCTAssertEqual(true, check)
+        
+        //act
+        sut.didTapFavoriteButton(false, id: testId)
+        check = sut.checkFavorite(id: testId)
+        //assert
+        XCTAssertEqual(false, check)
+    }
+    
+    func testDidTapAddInBasketButton() {
+        //arange
+        assembly(testCase: .success)
+        let testId = 2222
+        
+        //act
+        sut.didTapAddInBasketButton(id: testId)
+        let id = interactor.arrayIds.last
+        
+        //assert
+        XCTAssertEqual(testId, id)
+    }
+    
+    func testGetStartDataSuccess() {
+        
+        //arange
+        assembly(testCase: .success)
+        
+        //act
+        sut.getStartData()
+        sut.didTapChangeLayoutButton(section: 0)
+        let countUpdate = view.countUpdate
+        
+        //assert
+        XCTAssertEqual(2, countUpdate)
+    }
+    
+    func testGetStartDataFailure() {
+        //arange
+        assembly(testCase: .failure)
+        
+        //act
+        sut.getStartData()
+        let error = view.error?.error as? DataFetcherError
+        let optionsCount = view.error?.recoveryOptions.count
+        
+        //assert
+        XCTAssertEqual(DataFetcherError.dataLoadingError, error)
+        XCTAssertEqual(2, optionsCount)
+    }
 }

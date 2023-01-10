@@ -53,8 +53,12 @@ final class RecipeFilterInteractor {
                         inOrder: Int) -> Int? {
         guard let str = str else { return nil }
         switch inOrder {
-        case 1: return values(from: str).compactMap(Int.init).last
-        default:  return values(from: str).compactMap(Int.init).first
+        case 1:
+            return values(from: str).compactMap(Int.init).last
+            
+        default:
+            let array = values(from: str).compactMap(Int.init)
+            return array.count == 2 ? array.first : 0
         }
     }
     

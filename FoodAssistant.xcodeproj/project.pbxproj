@@ -119,9 +119,9 @@
 		7D875DD5292D2A1B0033A4C0 /* ImageDownloaderProxy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D875DD4292D2A1B0033A4C0 /* ImageDownloaderProxy.swift */; };
 		7DBCED422966E89B00BAA8FF /* UIViewController + AlertTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED412966E89B00BAA8FF /* UIViewController + AlertTimer.swift */; };
 		7DBCED4929671E9400BAA8FF /* RecipeListPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4829671E9400BAA8FF /* RecipeListPresenterTests.swift */; };
-		7DBCED4D2968681400BAA8FF /* RecipeListViewStub.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4C2968681400BAA8FF /* RecipeListViewStub.swift */; };
-		7DBCED4F2968687900BAA8FF /* MockRecipeListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4E2968687800BAA8FF /* MockRecipeListRouter.swift */; };
-		7DBCED51296868E200BAA8FF /* StubRecipeListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED50296868E200BAA8FF /* StubRecipeListInteractor.swift */; };
+		7DBCED4D2968681400BAA8FF /* SpyRecipeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4C2968681400BAA8FF /* SpyRecipeListView.swift */; };
+		7DBCED4F2968687900BAA8FF /* SpyRecipeListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED4E2968687800BAA8FF /* SpyRecipeListRouter.swift */; };
+		7DBCED51296868E200BAA8FF /* SpyRecipeListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED50296868E200BAA8FF /* SpyRecipeListInteractor.swift */; };
 		7DBCED542968694200BAA8FF /* RecipeListInteractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED532968694200BAA8FF /* RecipeListInteractorTests.swift */; };
 		7DBCED5629686AB400BAA8FF /* SpyStorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5529686AB400BAA8FF /* SpyStorageManager.swift */; };
 		7DBCED5829686AC300BAA8FF /* StubTranslateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DBCED5729686AC300BAA8FF /* StubTranslateService.swift */; };
@@ -180,7 +180,6 @@
 		7DEF8E272923D3E90016A207 /* UICollectionView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */; };
 		7DEF8E292923D3F70016A207 /* UITableView + Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */; };
 		7DEF8E392925209C0016A207 /* CustomSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DEF8E382925209C0016A207 /* CustomSegmentedControl.swift */; };
-		7DF53EF0295631A200C4BA66 /* RecipeListSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EEF295631A200C4BA66 /* RecipeListSearchController.swift */; };
 		7DF53EF32956321D00C4BA66 /* RecipeListSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF22956321D00C4BA66 /* RecipeListSearchBar.swift */; };
 		7DF53EF92956DC8900C4BA66 /* RecipeFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF42956DC8900C4BA66 /* RecipeFilterRouter.swift */; };
 		7DF53EFA2956DC8900C4BA66 /* RecipeFilterAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DF53EF52956DC8900C4BA66 /* RecipeFilterAssembly.swift */; };
@@ -332,9 +331,9 @@
 		7D875DD4292D2A1B0033A4C0 /* ImageDownloaderProxy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDownloaderProxy.swift; sourceTree = "<group>"; };
 		7DBCED412966E89B00BAA8FF /* UIViewController + AlertTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertTimer.swift"; sourceTree = "<group>"; };
 		7DBCED4829671E9400BAA8FF /* RecipeListPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListPresenterTests.swift; sourceTree = "<group>"; };
-		7DBCED4C2968681400BAA8FF /* RecipeListViewStub.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListViewStub.swift; sourceTree = "<group>"; };
-		7DBCED4E2968687800BAA8FF /* MockRecipeListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockRecipeListRouter.swift; sourceTree = "<group>"; };
-		7DBCED50296868E200BAA8FF /* StubRecipeListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubRecipeListInteractor.swift; sourceTree = "<group>"; };
+		7DBCED4C2968681400BAA8FF /* SpyRecipeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeListView.swift; sourceTree = "<group>"; };
+		7DBCED4E2968687800BAA8FF /* SpyRecipeListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeListRouter.swift; sourceTree = "<group>"; };
+		7DBCED50296868E200BAA8FF /* SpyRecipeListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeListInteractor.swift; sourceTree = "<group>"; };
 		7DBCED532968694200BAA8FF /* RecipeListInteractorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListInteractorTests.swift; sourceTree = "<group>"; };
 		7DBCED5529686AB400BAA8FF /* SpyStorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyStorageManager.swift; sourceTree = "<group>"; };
 		7DBCED5729686AC300BAA8FF /* StubTranslateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StubTranslateService.swift; sourceTree = "<group>"; };
@@ -393,7 +392,6 @@
 		7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView + Extensions.swift"; sourceTree = "<group>"; };
 		7DEF8E282923D3F70016A207 /* UITableView + Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView + Extensions.swift"; sourceTree = "<group>"; };
 		7DEF8E382925209C0016A207 /* CustomSegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegmentedControl.swift; sourceTree = "<group>"; };
-		7DF53EEF295631A200C4BA66 /* RecipeListSearchController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListSearchController.swift; sourceTree = "<group>"; };
 		7DF53EF22956321D00C4BA66 /* RecipeListSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeListSearchBar.swift; sourceTree = "<group>"; };
 		7DF53EF42956DC8900C4BA66 /* RecipeFilterRouter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFilterRouter.swift; sourceTree = "<group>"; };
 		7DF53EF52956DC8900C4BA66 /* RecipeFilterAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeFilterAssembly.swift; sourceTree = "<group>"; };
@@ -1107,9 +1105,9 @@
 			isa = PBXGroup;
 			children = (
 				7DBCED4829671E9400BAA8FF /* RecipeListPresenterTests.swift */,
-				7DBCED50296868E200BAA8FF /* StubRecipeListInteractor.swift */,
-				7DBCED4E2968687800BAA8FF /* MockRecipeListRouter.swift */,
-				7DBCED4C2968681400BAA8FF /* RecipeListViewStub.swift */,
+				7DBCED50296868E200BAA8FF /* SpyRecipeListInteractor.swift */,
+				7DBCED4E2968687800BAA8FF /* SpyRecipeListRouter.swift */,
+				7DBCED4C2968681400BAA8FF /* SpyRecipeListView.swift */,
 			);
 			path = RecipeListPresenter;
 			sourceTree = "<group>";
@@ -1394,7 +1392,6 @@
 		7DF53EF1295631F100C4BA66 /* RecipeListSearch */ = {
 			isa = PBXGroup;
 			children = (
-				7DF53EEF295631A200C4BA66 /* RecipeListSearchController.swift */,
 				7DF53EF22956321D00C4BA66 /* RecipeListSearchBar.swift */,
 			);
 			path = RecipeListSearch;
@@ -1755,7 +1752,6 @@
 				7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */,
 				7DC1611E292E91F80026A072 /* CVSectionHeaderWithButton.swift in Sources */,
 				7DC16111292E49310026A072 /* ImageCacheService.swift in Sources */,
-				7DF53EF0295631A200C4BA66 /* RecipeListSearchController.swift in Sources */,
 				7D3D19A329447782005E3840 /* FridgeItemBuilder.swift in Sources */,
 				7D2F76F2291A94D4009D3444 /* AppDelegate.swift in Sources */,
 				7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */,
@@ -1768,13 +1764,13 @@
 			files = (
 				7DBCED812968729800BAA8FF /* StubIngredientManager.swift in Sources */,
 				7DBCED6229686D1E00BAA8FF /* RecipeFilterInteractorTests.swift in Sources */,
-				7DBCED4F2968687900BAA8FF /* MockRecipeListRouter.swift in Sources */,
+				7DBCED4F2968687900BAA8FF /* SpyRecipeListRouter.swift in Sources */,
 				7DBCED7729686FD900BAA8FF /* BasketPresenterTests.swift in Sources */,
-				7DBCED51296868E200BAA8FF /* StubRecipeListInteractor.swift in Sources */,
+				7DBCED51296868E200BAA8FF /* SpyRecipeListInteractor.swift in Sources */,
 				7DBCED5829686AC300BAA8FF /* StubTranslateService.swift in Sources */,
 				7DBCED6729686DD400BAA8FF /* StubRecipeFilterInteractor.swift in Sources */,
 				7DBCED4929671E9400BAA8FF /* RecipeListPresenterTests.swift in Sources */,
-				7DBCED4D2968681400BAA8FF /* RecipeListViewStub.swift in Sources */,
+				7DBCED4D2968681400BAA8FF /* SpyRecipeListView.swift in Sources */,
 				7DBCED6D29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift in Sources */,
 				7DBCED542968694200BAA8FF /* RecipeListInteractorTests.swift in Sources */,
 				7DBCED5629686AB400BAA8FF /* SpyStorageManager.swift in Sources */,

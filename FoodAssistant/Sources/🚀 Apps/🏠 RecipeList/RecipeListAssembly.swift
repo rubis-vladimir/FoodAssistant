@@ -45,6 +45,7 @@ extension RecipeListAssembly: Assemblying {
         let viewController = RecipeListViewController(presenter: presenter)
         
         presenter.view = viewController
+        presenter.getStartData()
         
         return viewController
     }
