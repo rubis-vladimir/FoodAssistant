@@ -78,7 +78,7 @@ final class BasketInteractorTests: XCTestCase {
         
         //act
         sut.addIngredientsInFridge()
-        let save = storage.arrayIds.first
+        let save = storage.arrayIds.last
         
         //assert
         XCTAssertEqual(357, save)
@@ -91,10 +91,10 @@ final class BasketInteractorTests: XCTestCase {
         
         //act
         sut.removeRecipe(id: id)
-        let remove = storage.arrayIds.first
+        let count = storage.arrayIds.count
         
         //assert
-        XCTAssertEqual(id, remove)
+        XCTAssertEqual(0, count)
     }
     
     func testFetchImage() {
