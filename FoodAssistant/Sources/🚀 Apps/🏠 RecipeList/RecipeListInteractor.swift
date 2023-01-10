@@ -97,7 +97,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
     }
     
-    func saveRecipe(id: Int, for target: TargetOfSave) {
+    func saveRecipe(id: Int,
+                    for target: TargetOfSave) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         favoriteArrayId.append(id)
         storage.save(recipe: model, for: target)
@@ -146,7 +147,8 @@ extension RecipeListInteractor {
     /// - Parameters:
     ///  - ids: идентификаторы рецептов
     ///  - completion: захватывает вью-модели/ошибку
-    private func fetchRecipes(by ids: [Int], completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
+    private func fetchRecipes(by ids: [Int],
+                              completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         RecipeRequest.byId(ids).downloadById(with: dataFetcher) { [weak self] result in
             switch result {
             case .success(let recipes):

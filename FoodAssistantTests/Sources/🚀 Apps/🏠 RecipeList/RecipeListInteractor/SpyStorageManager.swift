@@ -13,11 +13,11 @@ class SpyStorageManager: DBRecipeManagement & DBIngredientsManagement {
     var toUse: Bool?
     var arrayRecipes: [RecipeProtocol]
     var arrayIngredients: [IngredientProtocol]
-    var arrayIds: [(Int, Bool)]
+    var arrayIds: [Int]
     
     init(arrayRecipes: [RecipeProtocol] = [],
          arrayIngredients: [IngredientProtocol] = [],
-         arrayId: [(Int, Bool)] = []) {
+         arrayId: [Int] = []) {
         self.arrayRecipes = arrayRecipes
         self.arrayIngredients = arrayIngredients
         self.arrayIds = arrayId
@@ -31,21 +31,21 @@ class SpyStorageManager: DBRecipeManagement & DBIngredientsManagement {
     
     func save(recipe: RecipeProtocol,
               for target: TargetOfSave) {
-        arrayIds.append((recipe.id, true))
+        arrayIds.append(recipe.id)
     }
     
     func remove(id: Int,
                 for target: TargetOfSave) {
-        arrayIds.append((id, false))
+        guard let index = arrayIds.firstIndex(where: { $0 == id }) else { return }
+        arrayIds.remove(at: index)
     }
     
     func check(id: Int) -> Bool {
-        arrayIds.contains(where: {$0.0 == id})
+        arrayIds.contains(where: {$0 == id})
     }
     
     func fetchFavoriteId(completion: @escaping ([Int]) -> Void) {
-        let ids = arrayIds.map{ $0.0 }
-        completion(ids)
+        completion(arrayIds)
     }
     
     func fetchIngredients(toUse: Bool,
@@ -54,16 +54,17 @@ class SpyStorageManager: DBRecipeManagement & DBIngredientsManagement {
     }
     
     func save(ingredients: [IngredientProtocol]) {
-        let ids = ingredients.map { ($0.id, true) }
+        let ids = ingredients.map { $0.id }
         arrayIds.append(contentsOf: ids)
     }
     
     func removeIngredient(id: Int) {
-        arrayIds.append((id, false))
+        guard let index = arrayIds.firstIndex(where: { $0 == id }) else { return }
+        arrayIds.remove(at: index)
     }
     
     func updateIngredient(id: Int, toUse: Bool) {
         self.toUse = toUse
-        arrayIds.append((id, true))
+        arrayIds.append(id)
     }
 }

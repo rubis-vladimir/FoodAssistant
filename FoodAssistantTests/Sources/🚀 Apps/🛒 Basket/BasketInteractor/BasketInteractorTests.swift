@@ -50,7 +50,7 @@ final class BasketInteractorTests: XCTestCase {
         
         ingredientManager = StubIngredientManager()
         imageDownloader = StubImageDownloader(error: .dataLoadingError)
-        storage = SpyStorageManager(arrayRecipes: mockArrayRecipes)
+        storage = SpyStorageManager(arrayRecipes: mockArrayRecipes, arrayId: [1234])
         presenter = SpyBasketPresenter()
         sut = BasketInteractor(imageDownloader: imageDownloader,
                                storage: storage,
@@ -77,11 +77,10 @@ final class BasketInteractorTests: XCTestCase {
         
         //act
         sut.addIngredientsInFridge()
-        let tuple = storage.arrayIds.first
+        let save = storage.arrayIds.first
         
         //assert
-        XCTAssertEqual(357, tuple?.0)
-        XCTAssertEqual(true, tuple?.1)
+        XCTAssertEqual(357, save)
     }
     
     func testRemoveRecipe() {
@@ -94,8 +93,7 @@ final class BasketInteractorTests: XCTestCase {
         let remove = storage.arrayIds.first
         
         //assert
-        XCTAssertEqual(id, remove?.0)
-        XCTAssertEqual(false, remove?.1)
+        XCTAssertEqual(id, remove)
     }
     
     func testFetchImage() {

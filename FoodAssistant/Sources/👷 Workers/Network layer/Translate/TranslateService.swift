@@ -106,7 +106,9 @@ extension TranslateService: Translatable {
                                              sourceLanguageCode: source,
                                              targetLanguageCode: target)
         
-        LanguageRequest.translate(patameters: parameters).download(with: dataFetcher, completion: completion)
+        LanguageRequest
+            .translate(patameters: parameters)
+            .download(with: dataFetcher, completion: completion)
     }
 }
 
