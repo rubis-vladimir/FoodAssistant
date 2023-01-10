@@ -37,7 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         /// Определяем rootVC и отображаем на экране
-        
         window?.makeKeyAndVisible()
         return true
     }
@@ -50,6 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().shadowImage = UIImage()
         UITableView.appearance().tableHeaderView = .init(frame: CGRect(x: 0, y: 0, width: 0, height: CGFLOAT_MIN))
+        UINavigationBar.appearance().isTranslucent = false
+        
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel".localize()
     }
 }
 
