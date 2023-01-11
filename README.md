@@ -28,10 +28,9 @@
   + Тестирование `UnitTesting`
   + Паттерны `Factory Method` `Proxy` `Adapter` и другие
   ____
- <img src="https://user-images.githubusercontent.com/84345727/211849052-e861f185-5d4f-4921-a342-330b2461f03e.png" align="left" width="230px" height="470px">
- <img src="https://user-images.githubusercontent.com/84345727/211849488-633f3ca8-7532-46bf-9ecf-992e87d55e50.png" align="left" width="230px" height="470px">
- <img src="https://user-images.githubusercontent.com/84345727/211852651-91d658b2-ec10-4ff9-9180-eecae8872f47.png" height="470px" width="230px" align="left">
- <img src="https://user-images.githubusercontent.com/84345727/211852771-a8b6ad19-02af-47fd-bc90-d5184915501c.png" width="230px" height="470px">
+ <img src="https://user-images.githubusercontent.com/84345727/211849052-e861f185-5d4f-4921-a342-330b2461f03e.png" align="left" width="250px" height="510px">
+ <img src="https://user-images.githubusercontent.com/84345727/211849488-633f3ca8-7532-46bf-9ecf-992e87d55e50.png" align="left" width="250px" height="510px">
+ <img src="https://user-images.githubusercontent.com/84345727/211852651-91d658b2-ec10-4ff9-9180-eecae8872f47.png" height="510px" width="250px">
  
  ____
   
