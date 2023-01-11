@@ -32,6 +32,14 @@ protocol UserProfileViewable: ErrorShowable,
     /// Показать алерт добавления ингредиента
     /// - Parameter completion: захватывает модель ингредиента/ ошибку
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
+    
+    /// Показать алерт с запросом на удаление
+    /// - Parameters:
+    ///  - text: название удаляемого
+    ///  - action: действие удаления
+    func showDelete(text: String,
+                    action: @escaping (() -> Void))
+    
     /// Перезагрузить элементы
     /// - Parameter items: перезагружаемые элементы
     func reload(items: [IndexPath])
@@ -235,6 +243,15 @@ extension UserProfilePresenter: UserProfilePresentation {
     // RecipeRemovable
     func didTapDeleteButton(id: Int) {
         
+        let text = currentSegmentIndex == 1 ? "product" : "recipe"
+        
+        view?.showDelete(text: text,
+                         action: { [weak self] in
+            self?.delete(id: id)
+        })
+    }
+    
+    private func delete(id: Int) {
         switch currentSegmentIndex {
         case 1:
             interactor.deleteIngredient(id: id)

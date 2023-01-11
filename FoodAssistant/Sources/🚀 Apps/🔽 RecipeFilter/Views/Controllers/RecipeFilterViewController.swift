@@ -64,6 +64,7 @@ final class RecipeFilterViewController: UIViewController {
     private func setupElements() {
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
+        collectionView.keyboardDismissMode = .onDrag
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.filterDelegate = presenter
         searchBar.delegate = self

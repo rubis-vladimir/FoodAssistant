@@ -78,6 +78,7 @@ final class RecipeListViewController: UIViewController {
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
+        collectionView.keyboardDismissMode = .onDrag
         
         view.addSubview(searchBar)
         view.addSubview(collectionView)
