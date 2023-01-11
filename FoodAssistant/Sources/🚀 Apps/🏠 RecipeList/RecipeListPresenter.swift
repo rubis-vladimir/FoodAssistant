@@ -14,8 +14,11 @@ protocol RecipeListRouting {
     func routeToDetail(model: RecipeProtocol)
     
     /// Переход к экрану фильтра и обратно
-    ///  - Parameter searchDelegate: делегат поиска
-    func routeToFilter(searchDelegate: SeachRecipesRequested)
+    /// - Parameters:
+    ///  - text: String
+    ///  - searchDelegate: делегат поиска
+    func routeToFilter(text: String,
+                       searchDelegate: SeachRecipesRequested)
 }
 
 /// #Протокол управления View-слоем модуля RecipeList
@@ -24,8 +27,9 @@ protocol RecipeListViewable: ErrorShowable, AnyObject {
     /// - Parameter array: массив словарей моделей
     func updateCV(with: [RecipeModelsDictionary])
     
-    /// Получить текст из поиска
-    func getSearchText() -> String?
+    /// Обновляет текст в поисковой строке
+    /// - Parameter text: текст
+    func updateSearch(text: String)
     
     /// Обновить элементы коллекции
     /// - Parameter indexPaths: массив `IndexPath`
@@ -91,6 +95,7 @@ final class RecipeListPresenter {
     
     /// Флаг варианта загрузки данных коллекции
     private var buildType: RLBuildType = .main
+    private var filterParameters = RecipeFilterParameters()
     
     private(set) var viewModelsDictionary: RecipeModelsDictionary = [:] {
         didSet {
@@ -106,7 +111,6 @@ final class RecipeListPresenter {
     
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        var filterParameters = RecipeFilterParameters()
         filterParameters.includeIngredients = ["onion", "chiken"]
 
         // Загрузка данных для секции Recommended
@@ -186,6 +190,21 @@ final class RecipeListPresenter {
         }
     }
     
+    /// Поиск по названию рецепта с установленными параметрами
+    /// - Parameter text: название рецепта
+    private func search(text: String) {
+        view?.updateSearch(text: text)
+        
+        if viewModelsDictionary[.recommended] == nil {
+            buildType = .search
+        }
+        
+        fetchRecipe(with: filterParameters,
+                    number: AppConstants.minRequestAmount,
+                    query: text,
+                    type: .main)
+    }
+    
     /// Конфигурирует и показывает восстанавливаемую ошибку
     /// - Parameters:
     ///  - error: ошибка
@@ -209,12 +228,17 @@ final class RecipeListPresenter {
 // MARK: - RecipeListPresentation
 extension RecipeListPresenter: RecipeListPresentation {
     
-    func didTapFilterButton() {
-        router.routeToFilter(searchDelegate: self)
+    func didTapFilterButton(searchText: String) {
+        router.routeToFilter(text: searchText,
+                             searchDelegate: self)
     }
     
     func checkFavorite(id: Int) -> Bool {
         interactor.checkFavorite(id: id)
+    }
+    
+    func didTapSearch(_ text: String) {
+        search(text: text)
     }
     
     // ImagePresentation
@@ -279,16 +303,10 @@ extension RecipeListPresenter: RecipeListPresentation {
 
 // MARK: - SeachRecipesRequested
 extension RecipeListPresenter: SeachRecipesRequested {
-    func search(with parameters: RecipeFilterParameters) {
-        let text = view?.getSearchText()
+    func search(with parameters: RecipeFilterParameters,
+                text: String) {
+        filterParameters = parameters
         
-        if viewModelsDictionary[.recommended] == nil {
-            buildType = .search
-        }
-        
-        fetchRecipe(with: parameters,
-                    number: AppConstants.minRequestAmount,
-                    query: text,
-                    type: .main)
+        search(text: text)
     }
 }
