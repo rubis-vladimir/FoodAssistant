@@ -5,12 +5,10 @@
  
  </div>
  
- Экономия времени при выборе и приготовлении еды 
+ **Экономия времени при выборе и приготовлении еды**
 
  <p></p>
- <img src ="https://user-images.githubusercontent.com/84345727/211885220-5ce053de-cf69-43ac-bff7-09e887bfe8a6.gif" align="right" width="250px". height="510px"      hspace="50px" vspace="20px"/>
- 
-
+   <img src ="https://user-images.githubusercontent.com/84345727/211885220-5ce053de-cf69-43ac-bff7-09e887bfe8a6.gif" align="right" width="250px".   height="510px" hspace="50px" vspace="10px"/>
   
   ### Функционал приложения: 
   + Поиск рецептов с использованием фильтров
