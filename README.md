@@ -38,7 +38,7 @@
 
   | Владимир Рубис |
   | --- | 
-  | [Telegram](t.me/Rubis_Vladimir)  | 
+  | [Telegram](t.me/hey_justsmile)  | 
   | [LinkedIn](https://www.linkedin.com/in/vladimir-rubis/) | 
   | [GitHub](https://github.com/rubis-vladimir)| 
   | <a href="mailto:rubis_vladimir@mail.ru"> rubis_vladimir@mail.ru</a>| 
