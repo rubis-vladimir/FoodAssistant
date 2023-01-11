@@ -58,7 +58,7 @@ final class RecipeListPresenterTests: XCTestCase {
         let recipeId = 1234
         
         //act
-        sut.didTapFilterButton()
+        sut.didTapFilterButton(searchText: "")
         sut.didSelectItem(id: recipeId)
         let id = router.id
         let count = router.count
