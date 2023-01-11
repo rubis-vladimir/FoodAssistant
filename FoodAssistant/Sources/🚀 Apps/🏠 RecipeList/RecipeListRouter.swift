@@ -19,10 +19,12 @@ final class RecipeListRouter {
 // MARK: - RecipeListRouting
 extension RecipeListRouter: RecipeListRouting {
     
-    func routeToFilter(searchDelegate: SeachRecipesRequested) {
+    func routeToFilter(text: String,
+                       searchDelegate: SeachRecipesRequested) {
         guard let navigationController = navigationController else { return }
         
         let filterVC = RecipeFilterAssembly(navigationController: navigationController,
+                                            text: text,
                                             searchDelegate: searchDelegate).assembly()
         filterVC.hidesBottomBarWhenPushed = true
         navigationController.createCustomTransition(with: .fade)

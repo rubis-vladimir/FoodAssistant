@@ -31,6 +31,10 @@
 "Profile" = "Профиль";
 "Fridge" = "Холодильник";
 "Recipes" = "Рецепты";
+"Attention!" = "Внимание!";
+"Are you sure you want to delete " = "Вы точно хотите удалить ";
+"product" = "продукт";
+"recipe" = "рецепт";
 
 // MARK: - Ingredient
 "g" = "гр";

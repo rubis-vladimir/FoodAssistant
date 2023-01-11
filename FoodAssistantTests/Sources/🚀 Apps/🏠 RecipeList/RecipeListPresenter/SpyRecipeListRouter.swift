@@ -13,7 +13,7 @@ class SpyRecipeListRouter: RecipeListRouting {
     var count = 0
     var id: Int?
     
-    func routeToFilter(searchDelegate: SeachRecipesRequested) {
+    func routeToFilter(text: String, searchDelegate: SeachRecipesRequested) {
         count += 1
     }
     

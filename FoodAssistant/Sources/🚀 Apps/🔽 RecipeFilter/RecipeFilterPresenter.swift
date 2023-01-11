@@ -11,7 +11,8 @@ import Foundation
 protocol SeachRecipesRequested: AnyObject {
     /// Выполнить поиск рецептов с параметрами
     /// - Parameter parameters: параметры
-    func search(with parameters: RecipeFilterParameters)
+    func search(with parameters: RecipeFilterParameters,
+                text: String)
 }
 
 /// #Протокол управления слоем навигации модуля RecipeFilter
@@ -30,6 +31,13 @@ protocol RecipeFilterViewable: AnyObject {
     /// - Parameter section: номер секции
     func update(section: Int)
     
+    /// Обновляет текст в searchBar
+    /// - Parameter text: текст
+    func updateSearch(text: String)
+    
+    /// Получить текст из поиска
+    func getSearchText() -> String?
+
     /// Показать алерт корректировки параметра
     /// - Parameters:
     ///  - parameter: параметр
@@ -90,7 +98,9 @@ final class RecipeFilterPresenter {
     }
     
     /// Стартовая подгрузка параметров
-    func getStartData() {
+    func getStartData(text: String) {
+        view?.updateSearch(text: text)
+        
         interactor.fetchFilterParameters { [weak self] parameters in
             self?.view?.updateCV(dictModels: parameters)
         }
@@ -109,8 +119,11 @@ extension RecipeFilterPresenter: RecipeFilterPresentation {
     }
     
     func didTapShowResultButton() {
+        let text = view?.getSearchText()
+        
         interactor.getParameters { [weak self] parameters in
-            self?.rootPresenter?.search(with: parameters)
+            self?.rootPresenter?.search(with: parameters,
+                                        text: text ?? "")
             self?.router.routeToBack()
         }
     }

@@ -83,6 +83,7 @@
 		7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE372926C4A7002BC96A /* Icons.swift */; };
 		7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B30E294CDA2400D832A0 /* FileManagerService.swift */; };
 		7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */; };
+		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
 		7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */; };
 		7D451C6C293B5C5200A4CDC5 /* SecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */; };
 		7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */; };
@@ -286,6 +287,7 @@
 		7D3EDE372926C4A7002BC96A /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		7D40B30E294CDA2400D832A0 /* FileManagerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManager.swift; sourceTree = "<group>"; };
+		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
 		7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseSectionHeader.swift; sourceTree = "<group>"; };
@@ -577,6 +579,7 @@
 				7DE6BA96295B29D700711FB4 /* UIViewController + Alert.swift */,
 				7DE6BAA6295E2D1400711FB4 /* UIViewController + AlertError.swift */,
 				7DBCED412966E89B00BAA8FF /* UIViewController + AlertTimer.swift */,
+				7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */,
 				7DEF8E0E2922B24B0016A207 /* UINavigationController + Transition.swift */,
 				7DC550A329532E51001539C5 /* UIPageViewController + NextPage.swift */,
 				7DEF8E262923D3E90016A207 /* UICollectionView + Extensions.swift */,
@@ -1620,6 +1623,7 @@
 				7D48A9B4292915FD009EF273 /* Fonts.swift in Sources */,
 				7DF53EF32956321D00C4BA66 /* RecipeListSearchBar.swift in Sources */,
 				7DEF8E252923D05C0016A207 /* AvatarCell.swift in Sources */,
+				7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */,
 				7D2B3498294A1EAA00FF01A2 /* BusinessLogicProtocols.swift in Sources */,
 				7D3D19B329463086005E3840 /* SingleCellBuilder.swift in Sources */,
 				7D4BA42A2922AD2100A4393B /* UserProfileAssembly.swift in Sources */,
@@ -1922,8 +1926,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1951,8 +1955,8 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

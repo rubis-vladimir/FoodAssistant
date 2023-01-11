@@ -35,5 +35,9 @@ class SpyRecipeListView: RecipeListViewable {
     func show(rError: FoodAssistant.RecoverableError) {
         error = rError
     }
+    
+    func updateSearch(text: String) {
+        countUpdate += 1
+    }
 }
  
