@@ -23,7 +23,7 @@
   + Архитектура `VIPER`
   + Фреймворк `UIKit`  
   + Хранение `CoreData` `UserDefaults`
-  + Сеть `URLSession`
+  + Работа с сетью `URLSession`
   + Многопоточность `GCD`
   + Тестирование `UnitTesting`
   + Паттерны `Factory Method` `Proxy` `Adapter` и другие
