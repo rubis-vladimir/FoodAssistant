@@ -10,7 +10,7 @@ import UIKit
 // MARK: - Фабрика для CollectionView
 /// #Протокол фабрики для коллекции
 protocol CVFactoryProtocol {
-    /// Строители ячеек
+    /// Строители секций
     var builders: [CVSectionProtocol] { get }
 }
 

@@ -89,6 +89,8 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         ])
     }
     
+    /// Создает строку количества ингредиентов
+    /// - Parameter number: количество
     private func addEnding(number: Int) -> String {
         let endingBy10 = number % 10
         let endingBy100 = number % 100

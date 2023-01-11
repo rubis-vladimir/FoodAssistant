@@ -177,6 +177,8 @@ extension Ingredient {
             return "leaf" // Лист
         case "cloves", "clove":
             return "clove" // Зубчик
+        case "pinches", "pinch":
+            return "pinch" // Щепотка
         default:
             guard let unit = dtoUnit else { return "" }
             return unit

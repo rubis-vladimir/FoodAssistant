@@ -17,7 +17,7 @@ struct AppConstants {
     static let edgeInsert = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
     /// Минимальное количество рецептов в запросе
     static let minRequestAmount = 2
-    
+
     /// Тени
     enum Shadow: ShadowProtocol {
         case defaultOne, defaultTwo

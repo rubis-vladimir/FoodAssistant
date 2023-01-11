@@ -172,21 +172,6 @@ extension UIViewController {
         present(alert, animated: true)
     }
     
-    /// Показывает информационный алерт (заглушка)
-    /// - Parameters:
-    ///  - title: заголовок
-    ///  - text: описание
-    func showInformationAlert(title: String,
-                              text: String) {
-        let alert = UIAlertController(title: title,
-                                      message: text,
-                                      preferredStyle: .alert)
-        let action = UIAlertAction(title: "OK", style: .cancel)
-        alert.addAction(action)
-        
-        present(alert, animated: true)
-    }
-    
     /// Добавляет ивент скрытия клавиатуры при касании
     func addHideKeyboard(_ view: UIView) {
         let tap = UITapGestureRecognizer(target: view,

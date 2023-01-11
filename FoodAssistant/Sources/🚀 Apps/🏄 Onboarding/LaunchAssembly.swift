@@ -19,7 +19,6 @@ extension LaunchAssembly: Assemblying {
         let viewController = LaunchPageViewController(presenter: presenter)
         
         presenter.view = viewController
-        router.view = viewController
     
         return viewController
     }
