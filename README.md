@@ -1,5 +1,5 @@
  <div>
- <img src="https://user-images.githubusercontent.com/84345727/211861764-b8a8aa4d-af69-4e16-b10e-b84d02f3bba7.jpg" width="110px" height="110px" align="left" /img>
+ <img src="https://user-images.githubusercontent.com/84345727/211861764-b8a8aa4d-af69-4e16-b10e-b84d02f3bba7.jpg" width="100px" height="100px" align="left" /img>
 
  # FoodAssistant  
  
