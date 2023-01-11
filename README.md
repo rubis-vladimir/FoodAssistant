@@ -41,5 +41,5 @@
   | [Telegram](t.me/Rubis_Vladimir)  | 
   | [LinkedIn](https://www.linkedin.com/in/vladimir-rubis/) | 
   | [GitHub](github.com/rubis-vladimir)| 
-  | <a href="mailto:rubis-vu@mail.ru"> rubis-vu@mail.ru</a>| 
+  | <a href="mailto:rubis_vladimir@mail.ru"> rubis_vladimir@mail.ru</a>| 
  </a>
