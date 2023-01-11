@@ -84,6 +84,7 @@
 		7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B30E294CDA2400D832A0 /* FileManagerService.swift */; };
 		7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */; };
 		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
+		7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C9296ED36C007684DE /* TimerManager.swift */; };
 		7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */; };
 		7D451C6C293B5C5200A4CDC5 /* SecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */; };
 		7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */; };
@@ -288,6 +289,7 @@
 		7D40B30E294CDA2400D832A0 /* FileManagerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManager.swift; sourceTree = "<group>"; };
 		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
+		7D4365C9296ED36C007684DE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseSectionHeader.swift; sourceTree = "<group>"; };
@@ -883,6 +885,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		7D4365C8296ED35C007684DE /* TimerManager */ = {
+			isa = PBXGroup;
+			children = (
+				7D4365C9296ED36C007684DE /* TimerManager.swift */,
+			);
+			path = TimerManager;
+			sourceTree = "<group>";
+		};
 		7D451C62293A88C800A4CDC5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -1399,6 +1409,7 @@
 		7DFEB5DC291C2F14008C28FC /* 👷 Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7D4365C8296ED35C007684DE /* TimerManager */,
 				7D485DA5295F583500BBA21A /* FilterManager */,
 				7D40B306294CBF7C00D832A0 /* IngredientCalculator */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
@@ -1601,6 +1612,7 @@
 				7D2B348C294792C400FF01A2 /* CDIngredient+CoreDataClass.swift in Sources */,
 				7D3D19892942895B005E3840 /* CDInstrutionStep+CoreDataClass.swift in Sources */,
 				7DC550942951018B001539C5 /* LaunchPresenter.swift in Sources */,
+				7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */,
 				7D3BC94D29312C29001B1B57 /* DetailInfoViewController.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */,
