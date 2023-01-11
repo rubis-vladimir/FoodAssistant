@@ -34,9 +34,9 @@ final class TimerManager {
         }
     }
     
-    private let shared = TimerManager()
+    static let shared = TimerManager()
     
-    init() {}
+    private init() {}
 }
 
 extension TimerManager: TimerManagement {

@@ -85,6 +85,8 @@
 		7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */; };
 		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
 		7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C9296ED36C007684DE /* TimerManager.swift */; };
+		7D4365CD296F40C2007684DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */; };
+		7D4365CF296F443D007684DE /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */; };
 		7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */; };
 		7D451C6C293B5C5200A4CDC5 /* SecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */; };
 		7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */; };
@@ -290,6 +292,8 @@
 		7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManager.swift; sourceTree = "<group>"; };
 		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
 		7D4365C9296ED36C007684DE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
+		7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
+		7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseSectionHeader.swift; sourceTree = "<group>"; };
@@ -557,6 +561,7 @@
 			isa = PBXGroup;
 			children = (
 				7D2F76F1291A94D4009D3444 /* AppDelegate.swift */,
+				7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */,
 				7D3EDE362926C495002BC96A /* Constants */,
 				7DFEB5DC291C2F14008C28FC /* 👷 Workers */,
 				7D2F7749291B9E2F009D3444 /* 💾 DataModels */,
@@ -893,6 +898,14 @@
 			path = TimerManager;
 			sourceTree = "<group>";
 		};
+		7D4365CB296F40A6007684DE /* UserDefaultsManager */ = {
+			isa = PBXGroup;
+			children = (
+				7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */,
+			);
+			path = UserDefaultsManager;
+			sourceTree = "<group>";
+		};
 		7D451C62293A88C800A4CDC5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -966,6 +979,7 @@
 		7D451C75293F22CB00A4CDC5 /* Locale layer */ = {
 			isa = PBXGroup;
 			children = (
+				7D4365CB296F40A6007684DE /* UserDefaultsManager */,
 				7DC5509929510344001539C5 /* Constants */,
 				7D40B307294CBFAA00D832A0 /* StorageManager */,
 				7DC1610F292E48830026A072 /* Cache */,
@@ -1693,6 +1707,7 @@
 				7D2F773F291A99B6009D3444 /* RecipeRequest.swift in Sources */,
 				7D0F2B832935151D00F57E2A /* NutrientsCell.swift in Sources */,
 				7DEF8E0F2922B24B0016A207 /* UINavigationController + Transition.swift in Sources */,
+				7D4365CD296F40C2007684DE /* UserDefaultsManager.swift in Sources */,
 				7D0F2B7C2934C21900F57E2A /* BasicInfoCellBuilder.swift in Sources */,
 				7D77FDAB291FC56C0085D7FF /* BasketViewController.swift in Sources */,
 				7D3BC9352930D957001B1B57 /* MainSectionConfigurator.swift in Sources */,
@@ -1703,6 +1718,7 @@
 				7D77FDAA291FC56C0085D7FF /* BasketPresenter.swift in Sources */,
 				7D2B348D294792C400FF01A2 /* CDIngredient+CoreDataProperties.swift in Sources */,
 				7D4BA4292922AD2100A4393B /* UserProfilePresenter.swift in Sources */,
+				7D4365CF296F443D007684DE /* ApplicationCoordinator.swift in Sources */,
 				7DC550A229522850001539C5 /* BallSpinFadeLoader.swift in Sources */,
 				7D48A9AA2927B5FF009EF273 /* FirstRecipeCell.swift in Sources */,
 				7D2F773A291A975A009D3444 /* RecipeListViewController.swift in Sources */,
