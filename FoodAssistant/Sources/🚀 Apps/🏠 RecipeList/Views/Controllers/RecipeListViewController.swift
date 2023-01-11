@@ -16,9 +16,11 @@ protocol RecipeListPresentation: LayoutChangable,
                                  ViewAppearable,
                                  AnyObject {
     /// Ивент нажатия на кнопку фильтр
-    func didTapFilterButton()
-    /// Проверить избранный ли рецепт
+    func didTapFilterButton(searchText: String)
+    /// Проверить избранный ли рецепт по id
     func checkFavorite(id: Int) -> Bool
+    /// Ивент нажатия на кнопку поиска в клавиатуре
+    func didTapSearch(_ text: String)
 }
 
 /// #Контроллер представления списка рецептов
@@ -96,6 +98,10 @@ final class RecipeListViewController: UIViewController {
 
 // MARK: - RecipeListViewable
 extension RecipeListViewController: RecipeListViewable {
+    func updateSearch(text: String) {
+        searchBar.text = text
+    }
+    
     func show(rError: RecoverableError) {
         DispatchQueue.main.async {
             self.showAlertError(rError)
@@ -104,10 +110,6 @@ extension RecipeListViewController: RecipeListViewable {
     
     func updateItems(indexPaths: [IndexPath]) {
         collectionView.reloadItems(at: indexPaths)
-    }
-    
-    func getSearchText() -> String? {
-        searchBar.text
     }
     
     func updateCV(with: [RecipeModelsDictionary]) {
@@ -122,21 +124,16 @@ extension RecipeListViewController: RecipeListViewable {
 // MARK: - UISearchBarFilterDelegate
 extension RecipeListViewController: SearchBarFilterDelegate {
     func didTapFilterButton() {
-        presenter.didTapFilterButton()
+        presenter.didTapFilterButton(searchText: searchBar.text ?? "")
     }
 }
 
-// MARK: - UISearchBarDelegate - В Разработке
+// MARK: - UISearchBarDelegate
 extension RecipeListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
-        // В работе
-    }
-    
-    
-    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        
-        // В работе
+        searchBar.endEditing(true)
+        presenter.didTapSearch(searchBar.text ?? "")
     }
 }

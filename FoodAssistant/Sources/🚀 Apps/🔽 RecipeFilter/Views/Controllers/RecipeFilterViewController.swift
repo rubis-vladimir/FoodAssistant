@@ -66,6 +66,7 @@ final class RecipeFilterViewController: UIViewController {
         collectionView.backgroundColor = .white
         searchBar.translatesAutoresizingMaskIntoConstraints = false
         searchBar.filterDelegate = presenter
+        searchBar.delegate = self
         
         navigationItem.titleView = createNavTitle(title: "Filter".localize())
         navigationItem.hidesBackButton = true
@@ -94,8 +95,26 @@ final class RecipeFilterViewController: UIViewController {
     }
 }
 
+// MARK: - UISearchBarDelegate
+extension RecipeFilterViewController: UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        searchBar.endEditing(true)
+        presenter.didTapShowResultButton()
+    }
+}
+
+
 // MARK: - RecipreFilterViewable
 extension RecipeFilterViewController: RecipeFilterViewable {
+    func getSearchText() -> String? {
+        searchBar.text
+    }
+    
+    func updateSearch(text: String) {
+        searchBar.text = text
+    }
     
     func update(section: Int) {
         collectionView.reloadSections(IndexSet(integer: section))
