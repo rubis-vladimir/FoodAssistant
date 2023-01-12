@@ -17,7 +17,7 @@ enum HeaderType {
 
 /// #Строитель заголовка секции Main
 final class HeaderBuilder {
-    private let height: CGFloat = 45
+    private let height: CGFloat = AppConstants.heightHeader
     private let type: HeaderType
     
     init(type: HeaderType) {

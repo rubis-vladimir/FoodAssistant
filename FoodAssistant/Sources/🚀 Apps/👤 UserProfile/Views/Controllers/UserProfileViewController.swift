@@ -163,6 +163,7 @@ extension UserProfileViewController: UISearchBarDelegate {
 
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
+    
     func showDelete(text: String,
                     action: @escaping (() -> Void)) {
         showInformationAlert(title: "Attention!".localize(),

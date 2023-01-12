@@ -19,19 +19,19 @@ extension LaunchPage {
     /// Текст заголовка
     var headerText: String {
         switch self {
-        case .first: return "Добро пожаловать в FoodAssistant!".localize()
-        case .second: return "Находите вкусное и полезное".localize()
-        case .third: return "Сохраняйте рецепты".localize()
-        case .last: return "Формируйте Шоп-лист".localize()
+        case .first: return "Welcome to FoodAssistant!".localize()
+        case .second: return "Find tasty and healthy".localize()
+        case .third: return "Save Recipes".localize()
+        case .last: return "Create Shop-list".localize()
         }
     }
     /// Текст описания
     var descriptionText: String {
         switch self {
-        case .first: return "Это приложение поможет вам в приготовлении вкусной и полезной еды по различным рецептам".localize()
-        case .second: return "Вы быстро можете 🔍 найти сотни полезных и легких в приготовлении рецептов. А мы подскажем, что приготовить из ваших ингредиентов".localize()
-        case .third: return "Понравившиеся рецепты вы можете добавить в ❤Избранные, чтобы они всегда были под рукой".localize()
-        case .last: return "Выберите блюда для приготовления, укажите, какие ингредиенты из имеющихся вы будете использовать ✅ и получите актуальный Шоп-лист из выбранных блюд".localize()
+        case .first: return "This application will help you prepare tasty and healthy food according to various recipes".localize()
+        case .second: return "You can quickly 🔍 find hundreds of healthy and easy-to-cook recipes. And we'll show you what to cook with your ingredients".localize()
+        case .third: return "You can add the recipes you like to ❤Favorites so that they are always at hand".localize()
+        case .last: return "Choose dishes to cook, indicate which ingredients you will use from the available ones ✅ and get an up-to-date Shop List of the selected dishes".localize()
         }
     }
 }
@@ -47,10 +47,10 @@ final class LaunchViewController: UIViewController {
     }()
     
     weak var delegate: LaunchViewDelegate?
-    private var page: LaunchPage!
+    private var page: LaunchPage?
     
     // MARK: - Init & Override
-    init(page: LaunchPage,
+    init(page: LaunchPage?,
          delegate: LaunchViewDelegate?) {
         self.page = page
         self.delegate = delegate

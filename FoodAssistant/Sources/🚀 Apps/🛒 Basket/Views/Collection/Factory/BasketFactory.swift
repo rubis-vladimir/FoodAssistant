@@ -64,14 +64,15 @@ final class BasketFactory {
         case .addedRecipe:
             let configurator = AddedRecipesConfigurator(recipes: recipes,
                                                         delegate: delegate)
-            return SingleCellSectionConfigurator(title: Constants.titleAddedRecipeSection,
+            return SingleCellSectionConfigurator(title: Constants.titleHeaderAddedRecipe,
                                                  configurators: [configurator],
-                                                 height: Constants.heightSingleCell ).configure(for: collectionView)
+                                                 height: Constants.heightSingleCell).configure(for: collectionView)
         case .shopList:
             
             return ShopListConfigurator(models: ingredients,
-                                                title: Constants.titleShopListSection,
-                                                delegate: delegate).configure(for: collectionView)
+                                        title: Constants.titleHeaderShopList,
+                                        heightCell: Constants.heightShopListCell,
+                                        delegate: delegate).configure(for: collectionView)
         }
     }
 }
@@ -92,9 +93,11 @@ extension BasketFactory: CVFactoryProtocol {
 // MARK: - Constants
 extension BasketFactory {
     private struct Constants {
-        static let titleAddedRecipeSection = "Added recipes".localize()
-        static let titleShopListSection = "Shop-list".localize()
+        static let titleHeaderAddedRecipe = "Added recipes".localize()
         static let heightSingleCell: CGFloat = 200
+        
+        static let titleHeaderShopList = "Shop-list".localize()
+        static let heightShopListCell: CGFloat = 55
     }
 }
 

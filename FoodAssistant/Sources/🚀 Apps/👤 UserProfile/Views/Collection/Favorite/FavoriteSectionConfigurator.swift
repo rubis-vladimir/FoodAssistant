@@ -9,16 +9,18 @@ import UIKit
 
 /// #Конфигуратор секции Favorite в коллекции
 final class FavoriteSectionConfigurator {
-    
-    private let title = "Favorite Dishes".localize()
-    
+    /// Заголовок секции
+    private let title: String
+    /// Вью модели
     private let models: [RecipeViewModel]
     
     private weak var delegate: UserProfilePresentation?
     
     init(models: [RecipeViewModel],
+         title: String,
          delegate: UserProfilePresentation?) {
         self.models = models
+        self.title = title
         self.delegate = delegate
     }
 }

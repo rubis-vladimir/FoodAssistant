@@ -9,17 +9,22 @@ import UIKit
 
 /// #Конфигуратор секции AddedRecipes в коллекции
 final class ShopListConfigurator {
-    
+    /// Вью модели
     private let models: [IngredientViewModel]
+    /// Заголовок секции
     private let title: String
+    /// Высота ячейки
+    private let heightCell: CGFloat
     
     private weak var delegate: BasketPresentation?
     
     init(models: [IngredientViewModel],
          title: String,
+         heightCell: CGFloat,
          delegate: BasketPresentation?) {
         self.models = models
         self.title = title
+        self.heightCell = heightCell
         self.delegate = delegate
     }
 }
@@ -31,7 +36,8 @@ extension ShopListConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = ShopListItemBuilder(models: models,
-                                                      delegate: delegate)
+                                              height: heightCell,
+                                              delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем билдер и регистрируем заголовок

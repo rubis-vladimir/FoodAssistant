@@ -47,6 +47,10 @@ final class RFFactory {
         setupCollectionView()
     }
     
+    deinit {
+        print("DEINIT \(self)")
+    }
+    
     /// Настраивает коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
@@ -77,8 +81,8 @@ extension RFFactory: CVFactoryProtocol {
     
     var builders: [CVSectionProtocol] {
         /// Устанавливаем действие
-        let action: ((Int) -> Void)? = { section in
-            self.delegate?.changeSelectedIngredients(section: section)
+        let action: ((Int) -> Void)? = { [weak self] section in
+            self?.delegate?.changeSelectedIngredients(section: section)
         }
         /// Определяем параметры по порядку
         let parameters = FilterParameters.allCases.sorted {$0.rawValue < $1.rawValue}

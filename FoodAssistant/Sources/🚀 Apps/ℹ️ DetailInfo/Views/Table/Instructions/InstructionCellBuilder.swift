@@ -10,7 +10,6 @@ import UIKit
 /// #Строитель ячейки IngredientsCell
 final class InstructionCellBuilder {
     /// Высота ячейки
-    private let height: CGFloat = 150
     private let instructions: [InstructionStepProtocol]
     
     weak var delegate: TimerTapable?

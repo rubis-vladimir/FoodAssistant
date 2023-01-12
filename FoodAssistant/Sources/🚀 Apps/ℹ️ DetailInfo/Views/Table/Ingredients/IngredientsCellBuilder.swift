@@ -10,14 +10,16 @@ import UIKit
 /// #Строитель ячейки IngredientsCell
 final class IngredientsCellBuilder {
     /// Высота ячейки
-    private let height = CGFloat(66)
+    private let height: CGFloat
     private let ingredients: [IngredientViewModel]
     
     weak var delegate: DetailInfoPresentation?
     
     init(ingredients: [IngredientViewModel],
+         height: CGFloat,
          delegate: DetailInfoPresentation?) {
         self.ingredients = ingredients
+        self.height = height
         self.delegate = delegate
     }
 }
@@ -28,7 +30,7 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
         tableView.register(TVIngredientCell.self)
     }
     
-    func cellHeight() -> CGFloat { UITableView.automaticDimension }
+    func cellHeight() -> CGFloat { height }
     
     func cellCount() -> Int { ingredients.count }
     

@@ -9,19 +9,26 @@ import UIKit
 
 /// #Конфигуратор секции Fridge в коллекции
 final class FridgeSectionConfigurator {
-    
-    private struct Constants {
-        static let title = "In my fridge".localize()
-        static let image = Icons.plusFill.image
-    }
-    
+    /// Вью модели
     private let models: [IngredientViewModel]
+    /// Заголовок секции
+    private let title: String
+    /// Высота ячейки
+    private let heightCell: CGFloat
+    /// Изображение кнопки
+    private let image: UIImage?
     
     private weak var delegate: UserProfilePresentation?
     
     init(models: [IngredientViewModel],
+         title: String,
+         heightCell: CGFloat,
+         image: UIImage?,
          delegate: UserProfilePresentation?) {
         self.models = models
+        self.title = title
+        self.image = image
+        self.heightCell = heightCell
         self.delegate = delegate
     }
 }
@@ -36,10 +43,10 @@ extension FridgeSectionConfigurator: CVSectionConfiguration {
             self.delegate?.didTapAddIngredientButton()
         }
         /// Модель заголовка
-        let headerModel = HeaderSectionModel(title: Constants.title,
-                                             firstImage: Constants.image,
+        let headerModel = HeaderSectionModel(title: title,
+                                             firstImage: image,
                                              secondImage: nil,
-                                             action: action )
+                                             action: action)
         
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))
@@ -47,6 +54,7 @@ extension FridgeSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = FridgeItemBuilder(models: models,
+                                            height: heightCell,
                                             delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

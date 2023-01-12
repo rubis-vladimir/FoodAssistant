@@ -152,7 +152,7 @@ extension UIViewController {
                                       handler: { _ in
             guard let title = titleTF.text?.lowercased(),
                   let amount = amountTF.text,
-            title != "", amount != "" else {
+                  title != "", amount != "" else {
                 completion(.failure(.notDataProvided))
                 return
             }
