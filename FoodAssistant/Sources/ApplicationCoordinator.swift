@@ -23,16 +23,14 @@ final class ApplicationCoordinator: Coordinator {
          userDefaults: UserDefaultsManagement) {
         self.window = window
         self.userDefaults = userDefaults
-        
-        setup()
     }
     
     func start() {
-        window?.rootViewController = rootViewController
-        window?.makeKeyAndVisible()
+        setupWindow()
+        setupElementAppearence()
     }
     
-    private func setup() {
+    private func setupWindow() {
         window?.backgroundColor = .white
         
         if userDefaults.checkReady() {
@@ -49,7 +47,8 @@ final class ApplicationCoordinator: Coordinator {
             rootViewController = viewController
         }
         
-        setupElementAppearence()
+        window?.rootViewController = rootViewController
+        window?.makeKeyAndVisible()
     }
     
     /// Настраиваем свойства по дефолту в приложении
@@ -59,9 +58,9 @@ final class ApplicationCoordinator: Coordinator {
         UINavigationBar.appearance().tintColor = .black
         UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().shadowImage = UIImage()
-        UITableView.appearance().tableHeaderView = .init(frame: CGRect(x: 0, y: 0, width: 0, height: CGFLOAT_MIN))
         UINavigationBar.appearance().isTranslucent = false
         
+        UITableView.appearance().tableHeaderView = .init(frame: CGRect(x: 0, y: 0, width: 0, height: CGFLOAT_MIN))
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Cancel".localize()
     }
 }
