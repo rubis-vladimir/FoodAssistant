@@ -16,8 +16,10 @@ struct AppConstants {
     /// Расстояния от краев
     static let edgeInsert = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
     /// Минимальное количество рецептов в запросе
-    static let minRequestAmount = 8
-
+    static let minRequestAmount = 2
+    /// Высота заголовка по дефолту
+    static let heightHeader: CGFloat = 45
+    
     /// Тени
     enum Shadow: ShadowProtocol {
         case defaultOne, defaultTwo

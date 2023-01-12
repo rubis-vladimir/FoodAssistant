@@ -79,7 +79,7 @@ final class InstructionCell: TVBaseCell {
     }
     
     func configure(with step: InstructionStepProtocol) {
-        let stepText = "Шаг".localize()
+        let stepText = "Step".localize()
         stepNumberLabel.text = "\(stepText) \(step.number)"
         cookingInstructionsLabel.text = step.step
         self.step = step.number

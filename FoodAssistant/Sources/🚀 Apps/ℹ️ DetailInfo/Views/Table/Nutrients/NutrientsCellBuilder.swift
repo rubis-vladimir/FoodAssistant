@@ -10,11 +10,13 @@ import UIKit
 /// #Строитель ячейки NutrientsCell
 final class NutrientsCellBuilder {
     /// Высота ячейки
-    private let height = CGFloat(100)
+    private let height: CGFloat
     private let nutrients: [NutrientProtocol]
     
-    init(nutrients: [NutrientProtocol]) {
+    init(nutrients: [NutrientProtocol],
+         height: CGFloat) {
         self.nutrients = nutrients
+        self.height = height
     }
 }
 

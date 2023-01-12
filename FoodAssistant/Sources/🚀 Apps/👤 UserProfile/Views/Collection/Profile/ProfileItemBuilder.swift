@@ -9,7 +9,11 @@ import UIKit
 
 /// #Строитель ячеек секции Profile
 final class ProfileItemBuilder {
-    private let height: CGFloat = 300
+    private let height: CGFloat
+    
+    init(height: CGFloat) {
+        self.height = height
+    }
 }
 
 // MARK: - CVItemBuilderProtocol

@@ -17,14 +17,17 @@ final class MainSectionConfigurator {
     
     private let models: [RecipeViewModel]
     private let titleHeader: String
+    private let action: ((Int) -> Void)?
     
     private weak var delegate: RecipeListPresentation?
     
     init(models: [RecipeViewModel],
          titleHeader: String,
+         action: ((Int) -> Void)?,
          delegate: RecipeListPresentation?) {
         self.models = models
         self.titleHeader = titleHeader
+        self.action = action
         self.delegate = delegate
     }
 }
@@ -33,8 +36,6 @@ final class MainSectionConfigurator {
 extension MainSectionConfigurator: CVSectionConfiguration {
     
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
-        /// Создаем действие по изменению `Layout`
-        let action: ((Int) -> Void)? = { section in self.delegate?.didTapChangeLayoutButton(section: section) }
         /// Модель заголовка
         let headerModel = HeaderSectionModel(title: titleHeader,
                                              firstImage: Constants.firstImage,

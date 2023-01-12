@@ -67,11 +67,17 @@ final class RLFactory {
                                                               delegate: delegate)
             return SingleCellSectionConfigurator(title: Constants.recommendedTitle,
                                                  configurators: [configurator],
-                                                 height: Constants.reccomendedHeight).configure(for: collectionView)
+                                                 height: Constants.singleCellHeight).configure(for: collectionView)
             
         case .main:
+            /// Создаем действие по изменению `Layout`
+            let action: ((Int) -> Void)? = { [weak self] section in
+                self?.delegate?.didTapChangeLayoutButton(section: section)
+            }
+            
             return MainSectionConfigurator(models: models,
                                            titleHeader: Constants.mainTitle,
+                                           action: action,
                                            delegate: delegate).configure(for: collectionView)
         }
     }
@@ -92,6 +98,7 @@ extension RLFactory {
     private struct Constants {
         static let recommendedTitle = "Recommendations".localize()
         static let mainTitle = "Base Recipes".localize()
-        static let reccomendedHeight: CGFloat = 360
+        
+        static let singleCellHeight: CGFloat = 360
     }
 }

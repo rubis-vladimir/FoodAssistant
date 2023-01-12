@@ -63,13 +63,18 @@ final class UPFactory {
         
         switch type {
         case .profile: 
-            return ProfileSectionConfigurator().configure(for: collectionView)
+            return ProfileSectionConfigurator(title: Constants.titleHeaderProfile,
+                                              heightCell: Constants.heightProfileCell).configure(for: collectionView)
             
         case .fridge(let ingredients):
             return FridgeSectionConfigurator(models: ingredients,
+                                             title: Constants.titleHeaderFridge,
+                                             heightCell: Constants.heightFridgeCell,
+                                             image: Constants.imageHeaderButton,
                                              delegate: delegate).configure(for: collectionView)
         case .favorite(let models):
             return FavoriteSectionConfigurator(models: models,
+                                               title: Constants.titleHeaderFavorite,
                                                delegate: delegate).configure(for: collectionView)
         }
         
@@ -81,6 +86,20 @@ extension UPFactory: CVFactoryProtocol {
     
     var builders: [CVSectionProtocol] {
         orderSections.map { createBuilder(type: $0) }
+    }
+}
+
+// MARK: - Constants
+extension UPFactory {
+    private struct Constants {
+        static let titleHeaderProfile = "My data".localize()
+        static let heightProfileCell: CGFloat = 300
+        
+        static let titleHeaderFridge = "In my fridge".localize()
+        static let imageHeaderButton = Icons.plusFill.image
+        static let heightFridgeCell: CGFloat = 55
+        
+        static let titleHeaderFavorite = "Favorite Dishes".localize()
     }
 }
 

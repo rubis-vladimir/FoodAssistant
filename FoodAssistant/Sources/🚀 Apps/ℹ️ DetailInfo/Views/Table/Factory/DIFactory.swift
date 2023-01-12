@@ -69,25 +69,27 @@ final class DIFactory {
             
         case .baseInfo:
             let cellBuilder = BasicInfoCellBuilder(model: recipe,
-                                                  delegate: delegate)
+                                                   delegate: delegate)
             cellBuilder.register(tableView: tableView)
             let sectionBuilder = TVSectionBuilder(titleHeader: nil,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
         case .nutrients(let nutrients):
-            let cellBuilder = NutrientsCellBuilder(nutrients: nutrients)
+            let cellBuilder = NutrientsCellBuilder(nutrients: nutrients,
+                                                   height: Constants.heightNutrition)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleNutrition,
+            let sectionBuilder = TVSectionBuilder(titleHeader: Constants.titleNutrition,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
         case .ingredients(let ingredients):
             
             let cellBuilder = IngredientsCellBuilder(ingredients: ingredients,
+                                                     height: Constants.heightIngredients,
                                                      delegate: delegate)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleIngredients,
+            let sectionBuilder = TVSectionBuilder(titleHeader: Constants.titleIngredients,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
             
@@ -95,7 +97,7 @@ final class DIFactory {
             let cellBuilder = InstructionCellBuilder(instructions: instructions,
                                                      delegate: delegate)
             cellBuilder.register(tableView: tableView)
-            let sectionBuilder = TVSectionBuilder(titleHeader: HeaderConstants.titleInstructions,
+            let sectionBuilder = TVSectionBuilder(titleHeader: Constants.titleInstructions,
                                                   cellBuilder: cellBuilder)
             return sectionBuilder
         }
@@ -131,17 +133,20 @@ extension DIFactory: TVCFactoryProtocol {
         if let instructions = recipe.instructions, !instructions.isEmpty {
             builders.append(createBuilder(type: .instructions(instructions)))
         }
-                            
+        
         return builders
     }
 }
 
-// MARK: - Константы
+// MARK: - Constants
 extension DIFactory {
-    private struct HeaderConstants {
+    private struct Constants {
         static let titleNutrition = "Nutrients".localize()
         static let titleIngredients = "Ingredients".localize()
         static let titleInstructions = "Instructions".localize()
+        
+        static let heightNutrition: CGFloat = 100
+        static let heightIngredients: CGFloat = 66
     }
 }
 

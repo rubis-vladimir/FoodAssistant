@@ -9,14 +9,16 @@ import UIKit
 
 /// #Строитель ячеек секции Fridge
 final class FridgeItemBuilder {
-    private let height: CGFloat = 55
+    private let height: CGFloat
     private let models: [IngredientViewModel]
     
     weak var delegate: UserProfilePresentation?
     
     init(models: [IngredientViewModel],
+         height: CGFloat,
          delegate: UserProfilePresentation?) {
         self.models = models
+        self.height = height
         self.delegate = delegate
     }
 }

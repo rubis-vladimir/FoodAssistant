@@ -236,9 +236,6 @@
 		7D2F76FD291A94D6009D3444 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D2F7702291A94D6009D3444 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D2F7707291A94D6009D3444 /* FoodAssistantTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodAssistantTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D2F7711291A94D6009D3444 /* FoodAssistantUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoodAssistantUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7D2F7715291A94D6009D3444 /* FoodAssistantUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAssistantUITests.swift; sourceTree = "<group>"; };
-		7D2F7717291A94D6009D3444 /* FoodAssistantUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodAssistantUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7D2F772B291A9717009D3444 /* RecipeListAssembly.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListAssembly.swift; sourceTree = "<group>"; };
 		7D2F772C291A9717009D3444 /* RecipeListPresenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipeListPresenter.swift; sourceTree = "<group>"; };
 		7D2F772D291A9717009D3444 /* Assemblying.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assemblying.swift; sourceTree = "<group>"; };
@@ -1433,9 +1430,9 @@
 		7DF53F082959D2F800C4BA66 /* Tag */ = {
 			isa = PBXGroup;
 			children = (
-				7DF53F0B2959D8CD00C4BA66 /* TagCell.swift */,
-				7DF53F0D2959EC4000C4BA66 /* TagCellBuilder.swift */,
 				7DF53F0F2959F5F600C4BA66 /* TagSectionConfigurator.swift */,
+				7DF53F0D2959EC4000C4BA66 /* TagCellBuilder.swift */,
+				7DF53F0B2959D8CD00C4BA66 /* TagCell.swift */,
 			);
 			path = Tag;
 			sourceTree = "<group>";
@@ -1765,15 +1762,6 @@
 				7D4365DA296FF26C007684DE /* SpyRecipeFilterRouter.swift in Sources */,
 				7D4365D8296FF24E007684DE /* SpyRecipeFilterView.swift in Sources */,
 				7DBCED5A29686AD000BAA8FF /* StubImageDownloader.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7D2F770D291A94D6009D3444 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				7D2F7716291A94D6009D3444 /* FoodAssistantUITests.swift in Sources */,
-				7D2F7718291A94D6009D3444 /* FoodAssistantUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
