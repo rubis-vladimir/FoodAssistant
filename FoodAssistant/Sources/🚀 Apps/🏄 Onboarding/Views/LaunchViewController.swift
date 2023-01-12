@@ -47,10 +47,10 @@ final class LaunchViewController: UIViewController {
     }()
     
     weak var delegate: LaunchViewDelegate?
-    private var page: LaunchPage!
+    private var page: LaunchPage?
     
     // MARK: - Init & Override
-    init(page: LaunchPage,
+    init(page: LaunchPage?,
          delegate: LaunchViewDelegate?) {
         self.page = page
         self.delegate = delegate
