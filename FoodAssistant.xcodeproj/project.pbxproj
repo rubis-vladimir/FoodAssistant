@@ -80,6 +80,7 @@
 		7D3EDE382926C4A7002BC96A /* Icons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D3EDE372926C4A7002BC96A /* Icons.swift */; };
 		7D40B30F294CDA2400D832A0 /* FileManagerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B30E294CDA2400D832A0 /* FileManagerService.swift */; };
 		7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */; };
+		7D40FF78297030B800772D32 /* IngredientCalculateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */; };
 		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
 		7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C9296ED36C007684DE /* TimerManager.swift */; };
 		7D4365CD296F40C2007684DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */; };
@@ -283,6 +284,7 @@
 		7D3EDE372926C4A7002BC96A /* Icons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Icons.swift; sourceTree = "<group>"; };
 		7D40B30E294CDA2400D832A0 /* FileManagerService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManagerService.swift; sourceTree = "<group>"; };
 		7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManager.swift; sourceTree = "<group>"; };
+		7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManagerTests.swift; sourceTree = "<group>"; };
 		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
 		7D4365C9296ED36C007684DE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
@@ -899,6 +901,7 @@
 		7D4365D1296FEF1F007684DE /* IngredientCalculator */ = {
 			isa = PBXGroup;
 			children = (
+				7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */,
 			);
 			path = IngredientCalculator;
 			sourceTree = "<group>";
@@ -1761,6 +1764,7 @@
 				7DBCED5829686AC300BAA8FF /* StubTranslateService.swift in Sources */,
 				7D4365E1297025B2007684DE /* BasketPresenterTests.swift in Sources */,
 				7D4365DE29702173007684DE /* SpyRecipeFilterRootPresenter.swift in Sources */,
+				7D40FF78297030B800772D32 /* IngredientCalculateManagerTests.swift in Sources */,
 				7DBCED4929671E9400BAA8FF /* RecipeListPresenterTests.swift in Sources */,
 				7DBCED4D2968681400BAA8FF /* SpyRecipeListView.swift in Sources */,
 				7D4365E4297026BC007684DE /* FilterManagerTests.swift in Sources */,
