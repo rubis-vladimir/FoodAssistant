@@ -82,7 +82,6 @@
 		7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */; };
 		7D40FF78297030B800772D32 /* IngredientCalculateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */; };
 		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
-		7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C9296ED36C007684DE /* TimerManager.swift */; };
 		7D4365CD296F40C2007684DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */; };
 		7D4365CF296F443D007684DE /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */; };
 		7D4365D6296FF1A1007684DE /* RecipeFilterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365D5296FF1A1007684DE /* RecipeFilterPresenterTests.swift */; };
@@ -284,7 +283,6 @@
 		7D40B310294E04AA00D832A0 /* IngredientCalculateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManager.swift; sourceTree = "<group>"; };
 		7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManagerTests.swift; sourceTree = "<group>"; };
 		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
-		7D4365C9296ED36C007684DE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7D4365D5296FF1A1007684DE /* RecipeFilterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFilterPresenterTests.swift; sourceTree = "<group>"; };
@@ -868,14 +866,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7D4365C8296ED35C007684DE /* TimerManager */ = {
-			isa = PBXGroup;
-			children = (
-				7D4365C9296ED36C007684DE /* TimerManager.swift */,
-			);
-			path = TimerManager;
-			sourceTree = "<group>";
-		};
 		7D4365CB296F40A6007684DE /* UserDefaultsManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -1440,7 +1430,6 @@
 		7DFEB5DC291C2F14008C28FC /* 👷 Workers */ = {
 			isa = PBXGroup;
 			children = (
-				7D4365C8296ED35C007684DE /* TimerManager */,
 				7D485DA5295F583500BBA21A /* FilterManager */,
 				7D40B306294CBF7C00D832A0 /* IngredientCalculator */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
@@ -1613,7 +1602,6 @@
 				7D2B348C294792C400FF01A2 /* CDIngredient+CoreDataClass.swift in Sources */,
 				7D3D19892942895B005E3840 /* CDInstrutionStep+CoreDataClass.swift in Sources */,
 				7DC550942951018B001539C5 /* LaunchPresenter.swift in Sources */,
-				7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */,
 				7D3BC94D29312C29001B1B57 /* DetailInfoViewController.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */,
