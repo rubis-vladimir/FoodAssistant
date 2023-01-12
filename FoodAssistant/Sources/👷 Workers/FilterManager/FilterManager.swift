@@ -61,7 +61,7 @@ extension FilterManager: FilterManagement {
         if let titles = UserDefaults.standard.value(forKey: key2) as? [String] {
             dict[.excludeIngredients] = titles
         } else {
-            dict[.includeIngredients] = RecipeFilterTagTitles.excludeIngredients
+            dict[.excludeIngredients] = RecipeFilterTagTitles.excludeIngredients
             UserDefaults.standard.set(RecipeFilterTagTitles.excludeIngredients, forKey: key2)
         }
         return dict
