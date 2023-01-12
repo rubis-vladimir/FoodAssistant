@@ -26,6 +26,7 @@ final class RecipeFilterPresenterTests: XCTestCase {
         view = nil
         router = nil
         interactor = nil
+        rootPresenter = nil
         sut = nil
         super.tearDown()
     }

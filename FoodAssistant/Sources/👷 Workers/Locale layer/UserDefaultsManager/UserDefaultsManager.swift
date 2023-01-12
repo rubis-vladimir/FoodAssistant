@@ -7,11 +7,12 @@
 
 import Foundation
 
-protocol UserDefaultsManagement {
-    
+/// #Протокол проверки готовности пользователя
+protocol UserDefaultsVerifable {
     func checkReady() -> Bool
 }
 
+/// #Сервис работы с UserDefaults
 final class UserDefaultsManager {
     
     static let shared = UserDefaultsManager()
@@ -20,7 +21,8 @@ final class UserDefaultsManager {
     
 }
 
-extension UserDefaultsManager: UserDefaultsManagement {
+// MARK: - UserDefaultsVerifable
+extension UserDefaultsManager: UserDefaultsVerifable {
     func checkReady() -> Bool {
         UserDefaults.standard.bool(forKey: UserDefaultsKeys.isUserReady.rawValue)
     }

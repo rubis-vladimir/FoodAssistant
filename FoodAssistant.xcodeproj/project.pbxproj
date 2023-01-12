@@ -89,6 +89,8 @@
 		7D4365DA296FF26C007684DE /* SpyRecipeFilterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365D9296FF26C007684DE /* SpyRecipeFilterRouter.swift */; };
 		7D4365DC296FF27C007684DE /* SpyRecipeFilterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365DB296FF27C007684DE /* SpyRecipeFilterInteractor.swift */; };
 		7D4365DE29702173007684DE /* SpyRecipeFilterRootPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365DD29702173007684DE /* SpyRecipeFilterRootPresenter.swift */; };
+		7D4365E1297025B2007684DE /* BasketPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365E0297025B2007684DE /* BasketPresenterTests.swift */; };
+		7D4365E4297026BC007684DE /* FilterManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365E3297026BC007684DE /* FilterManagerTests.swift */; };
 		7D451C68293B36BE00A4CDC5 /* CVBaseRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */; };
 		7D451C6C293B5C5200A4CDC5 /* SecondRecipeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */; };
 		7D451C6E293BA70900A4CDC5 /* CVBaseSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */; };
@@ -290,6 +292,8 @@
 		7D4365D9296FF26C007684DE /* SpyRecipeFilterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeFilterRouter.swift; sourceTree = "<group>"; };
 		7D4365DB296FF27C007684DE /* SpyRecipeFilterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeFilterInteractor.swift; sourceTree = "<group>"; };
 		7D4365DD29702173007684DE /* SpyRecipeFilterRootPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpyRecipeFilterRootPresenter.swift; sourceTree = "<group>"; };
+		7D4365E0297025B2007684DE /* BasketPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasketPresenterTests.swift; sourceTree = "<group>"; };
+		7D4365E3297026BC007684DE /* FilterManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterManagerTests.swift; sourceTree = "<group>"; };
 		7D451C67293B36BE00A4CDC5 /* CVBaseRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6B293B5C5200A4CDC5 /* SecondRecipeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondRecipeCell.swift; sourceTree = "<group>"; };
 		7D451C6D293BA70900A4CDC5 /* CVBaseSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVBaseSectionHeader.swift; sourceTree = "<group>"; };
@@ -886,6 +890,7 @@
 		7D4365D0296FEEE4007684DE /* 👷 Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7D4365E229702695007684DE /* FilterManager */,
 				7D4365D1296FEF1F007684DE /* IngredientCalculator */,
 			);
 			path = "👷 Workers";
@@ -908,6 +913,22 @@
 				7D4365DD29702173007684DE /* SpyRecipeFilterRootPresenter.swift */,
 			);
 			path = RecipeFilterPresenter;
+			sourceTree = "<group>";
+		};
+		7D4365DF29702465007684DE /* BasketPresenter */ = {
+			isa = PBXGroup;
+			children = (
+				7D4365E0297025B2007684DE /* BasketPresenterTests.swift */,
+			);
+			path = BasketPresenter;
+			sourceTree = "<group>";
+		};
+		7D4365E229702695007684DE /* FilterManager */ = {
+			isa = PBXGroup;
+			children = (
+				7D4365E3297026BC007684DE /* FilterManagerTests.swift */,
+			);
+			path = FilterManager;
 			sourceTree = "<group>";
 		};
 		7D451C62293A88C800A4CDC5 /* Protocols */ = {
@@ -1103,6 +1124,7 @@
 			isa = PBXGroup;
 			children = (
 				7DBCED7129686F8400BAA8FF /* BasketInteractor */,
+				7D4365DF29702465007684DE /* BasketPresenter */,
 			);
 			path = "🛒 Basket";
 			sourceTree = "<group>";
@@ -1110,8 +1132,8 @@
 		7DBCED4729671D8600BAA8FF /* 🔽 RecipeFilter */ = {
 			isa = PBXGroup;
 			children = (
-				7D4365D4296FF17B007684DE /* RecipeFilterPresenter */,
 				7DBCED5D29686CD200BAA8FF /* RecipeFilterInteractor */,
+				7D4365D4296FF17B007684DE /* RecipeFilterPresenter */,
 			);
 			path = "🔽 RecipeFilter";
 			sourceTree = "<group>";
@@ -1737,9 +1759,11 @@
 				7DBCED51296868E200BAA8FF /* SpyRecipeListInteractor.swift in Sources */,
 				7D4365DC296FF27C007684DE /* SpyRecipeFilterInteractor.swift in Sources */,
 				7DBCED5829686AC300BAA8FF /* StubTranslateService.swift in Sources */,
+				7D4365E1297025B2007684DE /* BasketPresenterTests.swift in Sources */,
 				7D4365DE29702173007684DE /* SpyRecipeFilterRootPresenter.swift in Sources */,
 				7DBCED4929671E9400BAA8FF /* RecipeListPresenterTests.swift in Sources */,
 				7DBCED4D2968681400BAA8FF /* SpyRecipeListView.swift in Sources */,
+				7D4365E4297026BC007684DE /* FilterManagerTests.swift in Sources */,
 				7DBCED6D29686EE200BAA8FF /* SpyRecipeFilterPresenter.swift in Sources */,
 				7DBCED542968694200BAA8FF /* RecipeListInteractorTests.swift in Sources */,
 				7DBCED5629686AB400BAA8FF /* SpyStorageManager.swift in Sources */,

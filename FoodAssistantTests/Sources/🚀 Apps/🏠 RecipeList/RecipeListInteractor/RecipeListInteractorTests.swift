@@ -20,8 +20,6 @@ final class RecipeListInteractorTests: XCTestCase {
     var storage: SpyStorageManager!
     var sut: RecipeListInteractor!
     
-    
-    
     override func setUp() {
         super.setUp()
         imageDownloader = StubImageDownloader()

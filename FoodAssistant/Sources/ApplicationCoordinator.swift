@@ -17,10 +17,10 @@ final class ApplicationCoordinator: Coordinator {
     
     private var rootViewController: UIViewController?
     private var window: UIWindow?
-    private let userDefaults: UserDefaultsManagement
+    private let userDefaults: UserDefaultsVerifable
     
     init(window: UIWindow?,
-         userDefaults: UserDefaultsManagement) {
+         userDefaults: UserDefaultsVerifable) {
         self.window = window
         self.userDefaults = userDefaults
     }
