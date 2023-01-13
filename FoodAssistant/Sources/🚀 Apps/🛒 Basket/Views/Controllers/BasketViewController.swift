@@ -19,6 +19,8 @@ protocol BasketPresentation: DeleteTapable,
     /// Проверяет флаг ингредиента
     /// - Parameter id: идентификатор ингредиента
     func checkFlag(id: Int) -> Bool
+    
+    func getStartData()
 }
 
 /// #Контроллер представления Корзины
@@ -26,7 +28,7 @@ final class BasketViewController: UIViewController {
     
     // MARK: - Properties
     private let presenter: BasketPresentation
-    private var factory: CVFactoryProtocol?
+    private var factory: BasketFactory?
     
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
                                                        collectionViewLayout: AppConstants.getFlowLayout())
@@ -66,6 +68,7 @@ final class BasketViewController: UIViewController {
         
         setupNavigitionBar()
         setupElements()
+        presenter.getStartData()
     }
     
     // MARK: - Private func
@@ -80,16 +83,19 @@ final class BasketViewController: UIViewController {
         view.addSubview(collectionView)
         view.addSubview(stack)
         
+        let padding = AppConstants.padding
+        let heightStack: CGFloat = 50
+        
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -padding),
             
-            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
-            stack.heightAnchor.constraint(equalToConstant: 50)
+            stack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: padding),
+            stack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -padding),
+            stack.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -padding * 2),
+            stack.heightAnchor.constraint(equalToConstant: heightStack)
         ])
     }
     
@@ -120,10 +126,15 @@ extension BasketViewController: BasketViewable {
             factory = nil
             collectionView.reloadData()
         } else {
-            factory = BasketFactory(collectionView: collectionView,
-                                    recipes: recipes,
-                                    ingredients: ingredients,
-                                    delegate: presenter)
+            DispatchQueue.main.async {
+                
+                self.factory = BasketFactory(collectionView: self.collectionView,
+                                        recipes: recipes,
+                                        ingredients: ingredients,
+                                             delegate: self.presenter)
+                self.factory?.setupCollectionView()
+            }
+            
         }
     }
     

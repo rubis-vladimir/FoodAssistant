@@ -45,7 +45,6 @@ class CVBaseRecipeCell: UICollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.backgroundColor = .clear
         iv.tintColor = .white
-        iv.layer.add(shadow: AppConstants.Shadow.defaultOne)
         iv.clipsToBounds = true
         iv.isUserInteractionEnabled = true
         iv.translatesAutoresizingMaskIntoConstraints = false
@@ -78,7 +77,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
     let titleRecipeLabel: UILabel = {
         var label = UILabel()
         label.font = Fonts.selected
-        label.numberOfLines = 2
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -116,7 +115,6 @@ class CVBaseRecipeCell: UICollectionViewCell {
     /// Контейнер лейбла для центровки сверху
     let containerTopLabel: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .horizontal
         stack.alignment = .top
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -141,7 +139,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
     func configure(with model: RecipeViewModel,
                    type: TypeOfActionButton) {
         titleRecipeLabel.text = model.title
-        cookingTimeLabel.text = model.cookingTime + " "
+        cookingTimeLabel.text = " " + model.cookingTime + " "
         id = model.id
         
         if model.imageName != nil {
@@ -186,6 +184,21 @@ class CVBaseRecipeCell: UICollectionViewCell {
         addToBasketButton.addTarget(self,
                                     action: #selector(addToBasketButtonTapped),
                                     for: .touchUpInside)
+        setupConstraints()
+    }
+    
+    /// Функция для настройки констрейнтов
+    func setupConstraints() {
+        
+        containerTopLabel.addArrangedSubview(titleRecipeLabel)
+        substrateAction.addSubview(actionButton)
+        
+        NSLayoutConstraint.activate([
+            actionButton.topAnchor.constraint(equalTo: substrateAction.topAnchor),
+            actionButton.leadingAnchor.constraint(equalTo: substrateAction.leadingAnchor),
+            actionButton.bottomAnchor.constraint(equalTo: substrateAction.bottomAnchor),
+            actionButton.trailingAnchor.constraint(equalTo: substrateAction.trailingAnchor)
+        ])
     }
     
     /// Нажата кнопка удаления рецепта

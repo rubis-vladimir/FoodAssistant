@@ -43,7 +43,7 @@ final class BasketFactory {
         /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
         
-        setupCollectionView()
+        
     }
     
     /// Настраивает коллекцию

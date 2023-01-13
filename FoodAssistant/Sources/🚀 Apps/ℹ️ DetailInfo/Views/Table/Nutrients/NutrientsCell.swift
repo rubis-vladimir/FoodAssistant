@@ -14,7 +14,6 @@ final class NutrientsCell: TVBaseCell {
     private let container: UIStackView = {
        let stack = UIStackView()
         stack.distribution = .fillEqually
-        stack.spacing = 4
         stack.alignment = .center
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -52,6 +51,7 @@ final class NutrientsCell: TVBaseCell {
                                     number: "\(carbohydrates.amount)")
             container.addArrangedSubview(stack)
         }
+        
     }
     
     override func setupCell() {
@@ -61,11 +61,13 @@ final class NutrientsCell: TVBaseCell {
     func setupConstraints() {
         addSubview(container)
         
+        let padding = AppConstants.padding
+        
         NSLayoutConstraint.activate([
-            container.topAnchor.constraint(equalTo: topAnchor, constant: 8),
-            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16)
+            container.topAnchor.constraint(equalTo: topAnchor, constant: padding / 2),
+            container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding / 2),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding)
         ])
     }
     
@@ -78,8 +80,6 @@ final class NutrientsCell: TVBaseCell {
                              number: String) -> UIStackView {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillProportionally
-        stack.alignment = .center
         stack.spacing = 8
         
         let titleLabel = UILabel()

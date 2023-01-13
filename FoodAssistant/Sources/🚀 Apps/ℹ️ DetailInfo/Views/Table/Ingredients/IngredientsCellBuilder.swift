@@ -11,6 +11,7 @@ import UIKit
 final class IngredientsCellBuilder {
     /// Высота ячейки
     private let height: CGFloat
+    /// Ингредиенты
     private let ingredients: [IngredientViewModel]
     
     weak var delegate: DetailInfoPresentation?

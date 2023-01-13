@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// #Ячейка аватара пользователя (В РАБОТЕ)
 final class AvatarCell: UICollectionViewCell {
     
     weak var delegate: UserProfilePresentation?
@@ -26,7 +27,7 @@ final class AvatarCell: UICollectionViewCell {
     lazy var fullnameLabel: UILabel = {
         var label = UILabel()
         label.text = "Рубис Владимир"
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = label.font.withSize(30)
         label.textAlignment = .center
         return label
@@ -41,7 +42,6 @@ final class AvatarCell: UICollectionViewCell {
     
     lazy var avatarView: UIImageView = {
         var view = UIImageView()
-//        view.tintColor = .clear
         view.layer.add(shadow: AppConstants.Shadow.defaultOne)
         view.layer.cornerRadius = 20
         view.contentMode = .scaleAspectFit

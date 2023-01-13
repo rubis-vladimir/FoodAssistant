@@ -53,15 +53,20 @@ final class BasicInfoCell: TVBaseCell {
         addSubview(recipeImageView)
         addSubview(detailTitleView)
         
+        let padding = AppConstants.padding
+        
+        let heightAnchor = heightAnchor.constraint(equalToConstant: 400)
+        heightAnchor.priority = .defaultHigh
+        
         NSLayoutConstraint.activate([
             recipeImageView.topAnchor.constraint(equalTo: topAnchor),
             recipeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
             recipeImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            recipeImageView.heightAnchor.constraint(equalToConstant: 400),
+            heightAnchor,
             
             detailTitleView.centerYAnchor.constraint(equalTo: recipeImageView.bottomAnchor),
-            detailTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            detailTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            detailTitleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            detailTitleView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             detailTitleView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }

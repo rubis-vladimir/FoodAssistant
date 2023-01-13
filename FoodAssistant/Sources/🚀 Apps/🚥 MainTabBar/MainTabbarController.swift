@@ -87,10 +87,11 @@ final class MainTabBarController: UITabBarController {
         
         /// Настраиваем свойства
         middleButton.layer.cornerRadius = Constant.middleButtonSize / 2
-        middleButton.layer.masksToBounds = false
         middleButton.translatesAutoresizingMaskIntoConstraints = false
         middleButton.backgroundColor = Palette.darkColor.color
-        middleButton.addTarget(self, action: #selector(didMiddleButtonTapped), for: .touchUpInside)
+        middleButton.addTarget(self,
+                               action: #selector(didMiddleButtonTapped),
+                               for: .touchUpInside)
         
         middleButton.layer.add(shadow: Constant.Shadow.two)
         

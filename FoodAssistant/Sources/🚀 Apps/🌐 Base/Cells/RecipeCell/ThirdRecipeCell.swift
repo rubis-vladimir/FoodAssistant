@@ -24,17 +24,16 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
     }
     
     override func setupCell() {
-        super.setupCell()
         backgroundColor = Palette.bgColor.color
         clipsToBounds = true
         layer.cornerRadius = AppConstants.cornerRadius
-        layer.add(shadow: AppConstants.Shadow.defaultOne)
         
-        setupConstraints()
+        super.setupCell()
     }
     
     /// Настройка констрейнтов
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         
         let stack = UIStackView()
         stack.axis = .vertical
@@ -42,12 +41,10 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         substrateTime.addArrangedSubview(cookingTimeLabel)
-        containerTopLabel.addArrangedSubview(titleRecipeLabel)
         recipeImageView.addSubview(substrateTime)
         
         stack.addArrangedSubview(containerTopLabel)
         stack.addArrangedSubview(addToBasketButton)
-        substrateAction.addSubview(actionButton)
         
         addSubview(recipeImageView)
         addSubview(stack)
