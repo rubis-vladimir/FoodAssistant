@@ -41,7 +41,6 @@ final class AvatarCell: UICollectionViewCell {
     
     lazy var avatarView: UIImageView = {
         var view = UIImageView()
-//        view.tintColor = .clear
         view.layer.add(shadow: AppConstants.Shadow.defaultOne)
         view.layer.cornerRadius = 20
         view.contentMode = .scaleAspectFit

@@ -15,6 +15,8 @@ enum UPSectionType {
     case fridge(_ ingredients: [IngredientViewModel])
     /// Секция с избранными рецептами
     case favorite(_ recipes: [RecipeViewModel])
+    /// Секция с таймерами
+    case timers(_ timers: [RecipeTimer])
 }
 
 /// #Фабрика настройки представления коллекции модуля UserProfile
@@ -76,6 +78,11 @@ final class UPFactory {
             return FavoriteSectionConfigurator(models: models,
                                                title: Constants.titleHeaderFavorite,
                                                delegate: delegate).configure(for: collectionView)
+        case .timers(let timers):
+            return FavoriteSectionConfigurator(models: [],
+                                               title: Constants.titleHeaderFavorite,
+                                               delegate: delegate).configure(for: collectionView)
+
         }
         
     }

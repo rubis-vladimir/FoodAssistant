@@ -14,11 +14,14 @@ final class DetailInfoInteractor {
     
     private let imageDownloader: ImageDownloadProtocol
     private let storage: DBIngredientsManagement & DBRecipeManagement
+    private let timerManager: TimerManagement
     
     init(imageDownloader: ImageDownloadProtocol,
-         storage: DBIngredientsManagement & DBRecipeManagement) {
+         storage: DBIngredientsManagement & DBRecipeManagement,
+         timerManager: TimerManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
+        self.timerManager = timerManager
         
         fetchFromFridge()
     }
@@ -62,5 +65,15 @@ extension DetailInfoInteractor: DetailInfoBusinessLogic {
         guard let ingredientInFridge = ingredientsFromFridge.first(where: {$0 == ingredient}),
               ingredientInFridge.amount >= ingredient.amount else { return false }
         return true
+    }
+    
+    func setTimer(recipe: RecipeProtocol,
+                  step: Int,
+                  count: Int) {
+        let stepTimer = StepTimer(id: recipe.id,
+                                  title: recipe.title,
+                                  step: step,
+                                  count: count)
+        timerManager.addTimer(for: stepTimer)
     }
 }

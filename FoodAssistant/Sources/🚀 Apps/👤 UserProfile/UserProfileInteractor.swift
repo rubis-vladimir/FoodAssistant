@@ -7,9 +7,17 @@
 
 import Foundation
 
+/// #Протокол делегата бизнес-логики модуля UserProfile
+protocol UserProfileBusinessLogicDelegate: AnyObject {
+    /// Обновить таймеры
+    func updateTimers(timers: [RecipeTimer])
+}
+
 /// #Слой бизнес логики модуля UserProfile
 final class UserProfileInteractor {
 
+    weak var presenter: UserProfileBusinessLogicDelegate?
+    
     /// Массив моделей рецептов
     private var models: [RecipeProtocol] = []
     /// Массив вью-моделей ингредиентов
@@ -165,5 +173,12 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
             self?.ingredients = viewModels
             completion(viewModels)
         }
+    }
+}
+
+// MARK: - TimerManagerUpdatable
+extension UserProfileInteractor: TimerManagerUpdatable {
+    func didUpdateTimers(timers: [RecipeTimer]) {
+        presenter?.updateTimers(timers: timers)
     }
 }

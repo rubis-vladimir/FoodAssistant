@@ -29,6 +29,11 @@ protocol UserProfileViewable: ErrorShowable,
     /// Обновить `Nav Bar`
     /// - Parameter index: выбранный индекс сегмента
     func updateNavBar(index: Int)
+    
+    /// Обновить секцию с таймерами
+    /// - Parameter timers: таймеры
+    func updateTimerSection(with timers: [RecipeTimer])
+    
     /// Показать алерт добавления ингредиента
     /// - Parameter completion: захватывает модель ингредиента/ ошибку
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
@@ -285,5 +290,12 @@ extension UserProfilePresenter: UserProfilePresentation {
     // CheckChangable
     func didTapCheckButton(id: Int, flag: Bool) {
         interactor.changeToUse(id: id, flag: flag)
+    }
+}
+
+// MARK: - UserProfileBusinessLogicDelegate
+extension UserProfilePresenter: UserProfileBusinessLogicDelegate {
+    func updateTimers(timers: [RecipeTimer]) {
+        view?.updateTimerSection(with: timers)
     }
 }

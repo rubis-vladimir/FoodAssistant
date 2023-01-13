@@ -18,6 +18,8 @@ protocol DetailInfoPresentation: ImagePresentation,
     func didTapChangeFavoriteButton(_ flag: Bool)
     /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
+    /// Нажата кнопка запустить таймер
+    func didTapStartTimer(step: Int, count: Int)
 }
 
 /// #Контроллер представления детальной информации рецепта
@@ -116,8 +118,11 @@ final class DetailInfoViewController: UIViewController {
 // MARK: - DetailInfoViewable
 extension DetailInfoViewController: DetailInfoViewable {
 
-    func showTimer() { 
-        showInformationAlert(title: "Таймер", text: "Установка таймера обратного отсчета")
+    func showTimer(step: Int) {
+        showSetupTimerAlert(title: "Timer".localize()) { [weak self] count in
+            self?.presenter.didTapStartTimer(step: step,
+                                             count: count)
+        }
     }
 }
 

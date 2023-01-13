@@ -17,7 +17,8 @@ protocol DetailInfoRouting {
 protocol DetailInfoViewable: AnyObject {
     
     /// Показать таймер
-    func showTimer()
+    /// - Parameter step: шаг инструкции
+    func showTimer(step: Int)
 }
 
 /// #Протокол управления бизнес логикой модуля DetailInfo
@@ -31,6 +32,15 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
                         recipe: RecipeProtocol)
     /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
+    
+    /// Установить таймер
+    /// - Parameters:
+    ///  - recipe: рецепт
+    ///  - step: шаг приготовления
+    ///  - count: количество секунд
+    func setTimer(recipe: RecipeProtocol,
+                  step: Int,
+                  count: Int)
 }
 
 // MARK: - Presenter
@@ -54,7 +64,13 @@ final class DetailInfoPresenter {
 
 // MARK: - DetailInfoPresentation
 extension DetailInfoPresenter: DetailInfoPresentation {
-        
+    func didTapStartTimer(step: Int,
+                          count: Int) {
+        interactor.setTimer(recipe: recipe,
+                            step: step,
+                            count: count)
+    }
+
     func didTapChangeFavoriteButton(_ flag: Bool) {
         interactor.updateFavotite(flag, recipe: recipe)
     }
@@ -85,6 +101,6 @@ extension DetailInfoPresenter: DetailInfoPresentation {
     
     // TimerTapable
     func didTapTimerButton(step: Int) {
-        view?.showTimer()
+        view?.showTimer(step: step)
     }
 }

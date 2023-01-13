@@ -163,6 +163,10 @@ extension UserProfileViewController: UISearchBarDelegate {
 
 // MARK: - UserProfileViewable
 extension UserProfileViewController: UserProfileViewable {
+    func updateTimerSection(with timers: [RecipeTimer]) {
+        
+    }
+    
     
     func showDelete(text: String,
                     action: @escaping (() -> Void)) {
