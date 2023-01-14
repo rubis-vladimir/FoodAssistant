@@ -40,8 +40,7 @@ class RecipesSearchBar: UISearchBar {
         button.tintColor = .black
         
         button.layer.cornerRadius = 13
-        button.layer.shadowOffset = CGSize(width: 0, height: 4)
-        button.layer.shadowOpacity = 0.25
+        button.layer.add(shadow: Constants.Shadow.one)
         
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
@@ -76,12 +75,10 @@ class RecipesSearchBar: UISearchBar {
         guard let textField = textField else { return }
         
         textField.leftView?.tintColor = Palette.darkColor.color
-        textField.layer.shadowOffset = CGSize(width: 0, height: 3)
-        textField.layer.shadowOpacity = 0.25
+        textField.layer.add(shadow: Constants.Shadow.one)
         
         textField.backgroundColor = .white
-        textField.inputView?.layer.shadowOpacity = 0.25
-        textField.inputView?.layer.shadowOffset = CGSize(width: 0, height: 4)
+        textField.inputView?.layer.add(shadow: Constants.Shadow.one)
         
         let textFieldBackground = textField.subviews.first
         
@@ -95,12 +92,15 @@ class RecipesSearchBar: UISearchBar {
     private func setupConstrains() {
         guard let textField = textField else { return }
         
+        let padding = AppConstants.padding
+        let topPadding: CGFloat = 5
+        
         NSLayoutConstraint.activate([
-            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: AppConstants.padding),
-            textField.trailingAnchor.constraint(equalTo: filterButton.leadingAnchor, constant: -AppConstants.padding),
-            textField.topAnchor.constraint(equalTo: topAnchor, constant: 5),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding),
+            textField.trailingAnchor.constraint(equalTo: filterButton.leadingAnchor, constant: -padding),
+            textField.topAnchor.constraint(equalTo: topAnchor, constant: topPadding),
             
-            filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
+            filterButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
             filterButton.topAnchor.constraint(equalTo: textField.topAnchor),
             filterButton.bottomAnchor.constraint(equalTo: textField.bottomAnchor),
             filterButton.widthAnchor.constraint(equalTo: filterButton.heightAnchor),
@@ -127,3 +127,18 @@ private extension RecipesSearchBar {
     }
 }
 
+// MARK: - Константы
+extension RecipesSearchBar {
+    
+    private struct Constants {
+        /// Тень
+        enum Shadow: ShadowProtocol {
+            case one
+            
+            var color: UIColor { Palette.shadowColor.color }
+            var radius: CGFloat { 2 }
+            var opacity: Float { 0.25 }
+            var offset: CGSize { CGSize(width: 0, height: 4) }
+        }
+    }
+}

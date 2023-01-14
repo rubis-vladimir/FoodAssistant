@@ -11,6 +11,7 @@ import UIKit
 final class NutrientsCellBuilder {
     /// Высота ячейки
     private let height: CGFloat
+    /// Питательные вещества
     private let nutrients: [NutrientProtocol]
     
     init(nutrients: [NutrientProtocol],

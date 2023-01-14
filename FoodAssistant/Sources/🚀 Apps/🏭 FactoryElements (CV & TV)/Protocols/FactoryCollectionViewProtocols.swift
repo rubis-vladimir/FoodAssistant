@@ -51,6 +51,12 @@ protocol CVSelectableItemBuilderProtocol: CVItemBuilderProtocol {
     func didSelectItem(indexPath: IndexPath)
 }
 
+/// #Протокол установки отступов секции
+protocol CVSectionInsetProtocol: CVItemBuilderProtocol {
+    /// Определяет отступы секции
+    func insetForSection() -> UIEdgeInsets
+}
+
 /// #Протокол строителя заголовка коллекции
 protocol CVHeaderBuilderProtocol {
     /// Регистрирует заголовок 

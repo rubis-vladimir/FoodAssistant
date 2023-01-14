@@ -9,7 +9,9 @@ import UIKit
 
 /// #Строитель ячеек секции Fridge
 final class FridgeItemBuilder {
+    /// Высота ячеек
     private let height: CGFloat
+    /// Вью модели ингредиентов
     private let models: [IngredientViewModel]
     
     weak var delegate: UserProfilePresentation?
@@ -33,7 +35,9 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
     func itemCount() -> Int { models.count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.width,
+        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
+                                                      itemPerRow: 1,
+                                                      padding: AppConstants.padding),
                height: height)
     }
     

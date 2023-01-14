@@ -9,7 +9,7 @@ import UIKit
 
 /// #Конфигуратор секции Recommended в коллекции
 final class RecommendedSectionConfigurator {
-    
+    /// Вью модели рецептов
     private let models: [RecipeViewModel]
     
     weak var delegate: RecipeListPresentation?

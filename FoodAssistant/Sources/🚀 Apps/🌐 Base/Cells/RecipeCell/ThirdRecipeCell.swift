@@ -24,30 +24,26 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
     }
     
     override func setupCell() {
-        super.setupCell()
         backgroundColor = Palette.bgColor.color
         clipsToBounds = true
         layer.cornerRadius = AppConstants.cornerRadius
-        layer.add(shadow: AppConstants.Shadow.defaultOne)
         
-        setupConstraints()
+        super.setupCell()
     }
     
     /// Настройка констрейнтов
-    private func setupConstraints() {
+    override func setupConstraints() {
+        super.setupConstraints()
         
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         substrateTime.addArrangedSubview(cookingTimeLabel)
-        containerTopLabel.addArrangedSubview(titleRecipeLabel)
         recipeImageView.addSubview(substrateTime)
         
         stack.addArrangedSubview(containerTopLabel)
         stack.addArrangedSubview(addToBasketButton)
-        substrateAction.addSubview(actionButton)
         
         addSubview(recipeImageView)
         addSubview(stack)
@@ -58,7 +54,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         let heightOne: CGFloat = 30
         let heightTwo: CGFloat = 35
         let heightStack: CGFloat = 90
-        let paddingCL: CGFloat = 5
         let widthAction: CGFloat = 27
         let heightAction: CGFloat = 26
         
@@ -67,8 +62,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
             substrateTime.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
             substrateTime.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
             substrateTime.heightAnchor.constraint(equalToConstant: heightOne),
-            
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrateTime.leadingAnchor, constant: paddingCL),
             
             substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
             substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),

@@ -17,15 +17,20 @@ enum LayoutType {
 
 /// #Строитель ячеек секции Main
 final class MainItemBuilder {
-    
+    ///
     private var layoutType: LayoutType = .split2xN
+    /// Вью модели рецептов
     private let models: [RecipeViewModel]
+    /// Высота ячейки
+    private let height: CGFloat
     
     weak var delegate: RecipeListPresentation?
     
     init(models: [RecipeViewModel],
+         height: CGFloat,
          delegate: RecipeListPresentation?) {
         self.models = models
+        self.height = height
         self.delegate = delegate
         
         signInNotification()
@@ -33,12 +38,12 @@ final class MainItemBuilder {
     
     /// Рассчитывает размеры ячейки
     private func calculateItemSize(width: CGFloat) -> CGSize {
-        let padding: CGFloat = AppConstants.padding
         let itemPerRow: CGFloat = layoutType == .split1xN ? 1 : 2
-        let paddingWidht = padding * (itemPerRow + 1)
-        let availableWidth = (width - paddingWidht) / itemPerRow
-        let availableHeight = layoutType == .split1xN ? 125 : availableWidth + padding + 50
+        let availableWidth = AppConstants.calculateItemWidth(width: width,
+                                                             itemPerRow: itemPerRow,
+                                                             padding: AppConstants.padding)
         
+        let availableHeight = layoutType == .split1xN ? height : availableWidth * 1.3
         return CGSize(width: availableWidth,
                       height: availableHeight)
     }
@@ -69,6 +74,11 @@ extension MainItemBuilder: CVSelectableItemBuilderProtocol {
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         calculateItemSize(width: collectionView.bounds.width)
+//        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
+//                                                      itemPerRow: 2,
+//                                                      padding: AppConstants.padding),
+//               height: <#T##CGFloat#>)
+        
     }
     
     func cellAt(indexPath: IndexPath,

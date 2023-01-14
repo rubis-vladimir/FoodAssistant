@@ -111,8 +111,8 @@ class CVIngredientCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor),
-            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
-            container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
+            container.trailingAnchor.constraint(equalTo: trailingAnchor),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
         
             actionButton.widthAnchor.constraint(equalTo: container.heightAnchor)

@@ -20,6 +20,7 @@
 		7D0F2B8A293527B900F57E2A /* IngredientsCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */; };
 		7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */; };
 		7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */; };
+		7D228FF12972C78E00951436 /* AlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */; };
 		7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D27F66E2942600B00734443 /* CellProtocols.swift */; };
 		7D2B34862947611100FF01A2 /* CDRecipe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */; };
 		7D2B34872947611100FF01A2 /* CDRecipe+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */; };
@@ -83,7 +84,6 @@
 		7D40FF78297030B800772D32 /* IngredientCalculateManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */; };
 		7D40FF7A2971446300772D32 /* UIViewController + AlertSetupTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D40FF792971446300772D32 /* UIViewController + AlertSetupTimer.swift */; };
 		7D4365C7296EC036007684DE /* UIViewController + AlertInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */; };
-		7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365C9296ED36C007684DE /* TimerManager.swift */; };
 		7D4365CD296F40C2007684DE /* UserDefaultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */; };
 		7D4365CF296F443D007684DE /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */; };
 		7D4365D6296FF1A1007684DE /* RecipeFilterPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4365D5296FF1A1007684DE /* RecipeFilterPresenterTests.swift */; };
@@ -224,6 +224,7 @@
 		7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsCellBuilder.swift; sourceTree = "<group>"; };
 		7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCell.swift; sourceTree = "<group>"; };
 		7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCellBuilder.swift; sourceTree = "<group>"; };
+		7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7D27F66E2942600B00734443 /* CellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocols.swift; sourceTree = "<group>"; };
 		7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -289,7 +290,6 @@
 		7D40FF77297030B800772D32 /* IngredientCalculateManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientCalculateManagerTests.swift; sourceTree = "<group>"; };
 		7D40FF792971446300772D32 /* UIViewController + AlertSetupTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertSetupTimer.swift"; sourceTree = "<group>"; };
 		7D4365C6296EC036007684DE /* UIViewController + AlertInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + AlertInformation.swift"; sourceTree = "<group>"; };
-		7D4365C9296ED36C007684DE /* TimerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsManager.swift; sourceTree = "<group>"; };
 		7D4365CE296F443D007684DE /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		7D4365D5296FF1A1007684DE /* RecipeFilterPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeFilterPresenterTests.swift; sourceTree = "<group>"; };
@@ -468,6 +468,14 @@
 				7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */,
 			);
 			path = Instructions;
+			sourceTree = "<group>";
+		};
+		7D228FF22972C97400951436 /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */,
+			);
+			path = FlowLayout;
 			sourceTree = "<group>";
 		};
 		7D2B348E2948AC7800FF01A2 /* SingleCell */ = {
@@ -877,14 +885,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		7D4365C8296ED35C007684DE /* TimerManager */ = {
-			isa = PBXGroup;
-			children = (
-				7D4365C9296ED36C007684DE /* TimerManager.swift */,
-			);
-			path = TimerManager;
-			sourceTree = "<group>";
-		};
 		7D4365CB296F40A6007684DE /* UserDefaultsManager */ = {
 			isa = PBXGroup;
 			children = (
@@ -988,6 +988,7 @@
 				7DE6BABB295F3C7F00711FB4 /* Buttons */,
 				7D3D19B829464F19005E3840 /* Cells */,
 				7D3D19B929464F23005E3840 /* Headers */,
+				7D228FF22972C97400951436 /* FlowLayout */,
 			);
 			path = "🌐 Base";
 			sourceTree = "<group>";
@@ -1460,7 +1461,6 @@
 		7DFEB5DC291C2F14008C28FC /* 👷 Workers */ = {
 			isa = PBXGroup;
 			children = (
-				7D4365C8296ED35C007684DE /* TimerManager */,
 				7D485DA5295F583500BBA21A /* FilterManager */,
 				7D40B306294CBF7C00D832A0 /* IngredientCalculator */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
@@ -1633,7 +1633,6 @@
 				7D2B348C294792C400FF01A2 /* CDIngredient+CoreDataClass.swift in Sources */,
 				7D3D19892942895B005E3840 /* CDInstrutionStep+CoreDataClass.swift in Sources */,
 				7DC550942951018B001539C5 /* LaunchPresenter.swift in Sources */,
-				7D4365CA296ED36C007684DE /* TimerManager.swift in Sources */,
 				7D3BC94D29312C29001B1B57 /* DetailInfoViewController.swift in Sources */,
 				7D77FD90291FBFAD0085D7FF /* MainTabBarPresenter.swift in Sources */,
 				7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */,
@@ -1744,6 +1743,7 @@
 				7DC5509B295103A6001539C5 /* UserDefaultsKeys.swift in Sources */,
 				7D40FF7A2971446300772D32 /* UIViewController + AlertSetupTimer.swift in Sources */,
 				7D0F2B762934BCF600F57E2A /* FactoryCollectionViewProtocols.swift in Sources */,
+				7D228FF12972C78E00951436 /* AlignedCollectionViewFlowLayout.swift in Sources */,
 				7D3D19BE29465DEF005E3840 /* BasketFactory.swift in Sources */,
 				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,
 				7D77FD94291FBFAD0085D7FF /* TabBarConfigurator.swift in Sources */,

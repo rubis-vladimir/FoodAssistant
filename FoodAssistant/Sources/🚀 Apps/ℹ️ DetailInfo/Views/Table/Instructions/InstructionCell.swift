@@ -49,7 +49,6 @@ final class InstructionCell: TVBaseCell {
     private lazy var container: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillProportionally
         stack.spacing = 16
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack

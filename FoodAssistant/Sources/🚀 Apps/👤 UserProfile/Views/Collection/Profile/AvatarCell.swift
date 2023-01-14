@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// #Ячейка аватара пользователя (В РАБОТЕ)
 final class AvatarCell: UICollectionViewCell {
     
     weak var delegate: UserProfilePresentation?
@@ -26,7 +27,7 @@ final class AvatarCell: UICollectionViewCell {
     lazy var fullnameLabel: UILabel = {
         var label = UILabel()
         label.text = "Рубис Владимир"
-        label.numberOfLines = 0
+        label.numberOfLines = 2
         label.font = label.font.withSize(30)
         label.textAlignment = .center
         return label
@@ -95,28 +96,30 @@ final class AvatarCell: UICollectionViewCell {
         parametersStack.distribution = .fillEqually
         parametersStack.translatesAutoresizingMaskIntoConstraints = false
         
+        avatarView.layer.cornerRadius = 50
+        
         userContainer.addSubview(parametersStack)
         userContainer.addSubview(stack)
         addSubview(userContainer)
         
-        avatarView.layer.cornerRadius = 50
+        let padding: CGFloat = 20
 
-        parametersStack.bottomAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: -20).isActive = true
+        parametersStack.bottomAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: -padding).isActive = true
         parametersStack.centerXAnchor.constraint(equalTo: userContainer.centerXAnchor).isActive = true
-        parametersStack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: 20).isActive = true
+        parametersStack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: padding).isActive = true
         
-        stack.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: 20).isActive = true
-        stack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: 20).isActive = true
+        stack.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: padding).isActive = true
+        stack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: padding).isActive = true
         stack.centerXAnchor.constraint(equalTo: userContainer.centerXAnchor).isActive = true
         
         avatarView.widthAnchor.constraint(equalToConstant: 130).isActive = true
         avatarView.heightAnchor.constraint(equalToConstant: 130).isActive = true
 
         NSLayoutConstraint.activate([
-            userContainer.topAnchor.constraint(equalTo: topAnchor, constant: 20),
-            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20),
-            userContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-            userContainer.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20)
+            userContainer.topAnchor.constraint(equalTo: topAnchor, constant: padding),
+            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            userContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
+            userContainer.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
 }

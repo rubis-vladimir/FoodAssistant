@@ -9,6 +9,9 @@ import UIKit
 
 /// #Строитель ячеек секции Profile
 final class ProfileItemBuilder {
+    /// Количество ячеек
+    private let count = 1
+    /// Высота ячеек
     private let height: CGFloat
     
     init(height: CGFloat) {
@@ -23,10 +26,12 @@ extension ProfileItemBuilder: CVItemBuilderProtocol {
         collectionView.register(AvatarCell.self)
     }
     
-    func itemCount() -> Int { 1 }
+    func itemCount() -> Int { count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.width,
+        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
+                                                      itemPerRow: 1,
+                                                      padding: AppConstants.padding),
                height: height)
     }
     

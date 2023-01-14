@@ -46,7 +46,7 @@ final class UserProfileViewController: UIViewController {
     private var searchBarShown: Bool = false
     /// Коллекция
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
-                                                  collectionViewLayout: AppConstants.getFlowLayout())
+                                                       collectionViewLayout: AppConstants.getFlowLayout())
     
     // MARK: - Init & Override func
     init(presenter: UserProfilePresentation) {
@@ -109,10 +109,10 @@ final class UserProfileViewController: UIViewController {
         NSLayoutConstraint.activate([
             segmentView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             segmentView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
-            segmentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            segmentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: AppConstants.padding),
             segmentView.heightAnchor.constraint(equalToConstant: 42),
             
-            collectionView.topAnchor.constraint(equalTo: segmentView.bottomAnchor, constant: 12),
+            collectionView.topAnchor.constraint(equalTo: segmentView.bottomAnchor, constant: 5),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)

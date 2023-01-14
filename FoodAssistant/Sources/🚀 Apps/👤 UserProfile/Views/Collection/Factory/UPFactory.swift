@@ -66,17 +66,17 @@ final class UPFactory {
         switch type {
         case .profile: 
             return ProfileSectionConfigurator(title: Constants.titleHeaderProfile,
-                                              heightCell: Constants.heightProfileCell).configure(for: collectionView)
+                                              height: Constants.heightProfileCell).configure(for: collectionView)
             
         case .fridge(let ingredients):
             return FridgeSectionConfigurator(models: ingredients,
                                              title: Constants.titleHeaderFridge,
-                                             heightCell: Constants.heightFridgeCell,
+                                             height: Constants.heightFridgeCell,
                                              image: Constants.imageHeaderButton,
                                              delegate: delegate).configure(for: collectionView)
         case .favorite(let models):
             return FavoriteSectionConfigurator(models: models,
-                                               title: Constants.titleHeaderFavorite,
+                                               title: Constants.titleHeaderFavorite, height: Constants.heightFavoriteCell,
                                                delegate: delegate).configure(for: collectionView)
         case .timers(let timers):
             return FavoriteSectionConfigurator(models: [],
@@ -100,13 +100,14 @@ extension UPFactory: CVFactoryProtocol {
 extension UPFactory {
     private struct Constants {
         static let titleHeaderProfile = "My data".localize()
-        static let heightProfileCell: CGFloat = 300
+        static let heightProfileCell: CGFloat = 250
         
         static let titleHeaderFridge = "In my fridge".localize()
         static let imageHeaderButton = Icons.plusFill.image
         static let heightFridgeCell: CGFloat = 55
         
         static let titleHeaderFavorite = "Favorite Dishes".localize()
+        static let heightFavoriteCell: CGFloat = 125
     }
 }
 

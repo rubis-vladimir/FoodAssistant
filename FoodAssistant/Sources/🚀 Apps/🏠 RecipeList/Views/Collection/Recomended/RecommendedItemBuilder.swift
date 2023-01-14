@@ -9,7 +9,7 @@ import UIKit
 
 /// #Строитель ячеек секции Recommended
 final class RecommendedItemBuilder {
-    
+    /// Вью модели рецептов
     private let models: [RecipeViewModel]
     
     weak var delegate: RecipeListPresentation?

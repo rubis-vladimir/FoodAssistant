@@ -103,7 +103,6 @@ final class DetailTitleView: UIView {
                      image: UIImage?) -> UIStackView {
         let stack = UIStackView()
         stack.spacing = 8
-        stack.alignment = .center
         let iv = UIImageView()
         iv.image = image
         

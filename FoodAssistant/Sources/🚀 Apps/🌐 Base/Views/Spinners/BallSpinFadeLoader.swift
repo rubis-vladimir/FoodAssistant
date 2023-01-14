@@ -44,6 +44,17 @@ class BallSpinFadeLoader: UIView {
         layer.sublayers?.removeAll()
     }
     
+    /// Настраивает активити индикатор для `ImageView`
+    func setupSpinner(loadingImageView: UIImageView) {
+        let spinner = self
+        spinner.translatesAutoresizingMaskIntoConstraints = false
+        spinner.startAnimating()
+        spinner.centerXAnchor.constraint(equalTo: loadingImageView.centerXAnchor).isActive = true
+        spinner.centerYAnchor.constraint(equalTo: loadingImageView.centerYAnchor).isActive = true
+        spinner.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        spinner.widthAnchor.constraint(equalToConstant: 50).isActive = true
+    }
+    
     /// Настраивает анимацию загрузки
     private func setupAnimation() {
         var animationRect = frame
@@ -154,19 +165,5 @@ class BallSpinFadeLoader: UIView {
         layer.frame = CGRect(x: 0, y: 0, width: size.width, height: size.height)
 
         return layer
-    }
-}
-
-extension BallSpinFadeLoader {
-    
-    /// Настраивает активити индикатор для `ImageView`
-    func setupSpinner(loadingImageView: UIImageView) {
-        let spinner = self
-        spinner.translatesAutoresizingMaskIntoConstraints = false
-        spinner.startAnimating()
-        spinner.centerXAnchor.constraint(equalTo: loadingImageView.centerXAnchor).isActive = true
-        spinner.centerYAnchor.constraint(equalTo: loadingImageView.centerYAnchor).isActive = true
-        spinner.heightAnchor.constraint(equalToConstant: 50).isActive = true
-        spinner.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
 }

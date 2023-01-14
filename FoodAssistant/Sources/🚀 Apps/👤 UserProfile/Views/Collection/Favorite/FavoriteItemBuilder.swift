@@ -9,27 +9,19 @@ import UIKit
 
 /// #Строитель ячеек секции Favorite
 final class FavoriteItemBuilder {
-    
+    /// Высота ячеек
+    private let height: CGFloat
+    /// Вью модели рецептов
     private let models: [RecipeViewModel]
     
     weak var delegate: UserProfilePresentation?
     
     init(models: [RecipeViewModel],
+         height: CGFloat,
          delegate: UserProfilePresentation?) {
         self.models = models
+        self.height = height
         self.delegate = delegate
-    }
-    
-    /// Рассчитывает размер ячеек
-    private func calculateItemSize(width: CGFloat) -> CGSize {
-        let padding: CGFloat = AppConstants.padding
-        let itemPerRow: CGFloat = 1
-        let paddingWidht = padding * (itemPerRow + 1)
-        let availableWidth = (width - paddingWidht) / itemPerRow
-        let availableHeight: CGFloat = 125
-        
-        return CGSize(width: availableWidth,
-                      height: availableHeight)
     }
 }
 
@@ -37,14 +29,16 @@ final class FavoriteItemBuilder {
 extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
 
     func register(collectionView: UICollectionView) {
-        collectionView.register(ThirdRecipeCell.self)
         collectionView.register(SecondRecipeCell.self)
     }
     
     func itemCount() -> Int { models.count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        calculateItemSize(width: collectionView.bounds.width)
+        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
+                                                      itemPerRow: 1,
+                                                      padding: AppConstants.padding),
+               height: height)
     }
     
     func cellAt(indexPath: IndexPath,

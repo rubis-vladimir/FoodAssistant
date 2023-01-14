@@ -14,7 +14,7 @@ final class FridgeSectionConfigurator {
     /// Заголовок секции
     private let title: String
     /// Высота ячейки
-    private let heightCell: CGFloat
+    private let height: CGFloat
     /// Изображение кнопки
     private let image: UIImage?
     
@@ -22,13 +22,13 @@ final class FridgeSectionConfigurator {
     
     init(models: [IngredientViewModel],
          title: String,
-         heightCell: CGFloat,
+         height: CGFloat,
          image: UIImage?,
          delegate: UserProfilePresentation?) {
         self.models = models
         self.title = title
         self.image = image
-        self.heightCell = heightCell
+        self.height = height
         self.delegate = delegate
     }
 }
@@ -54,7 +54,7 @@ extension FridgeSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = FridgeItemBuilder(models: models,
-                                            height: heightCell,
+                                            height: height,
                                             delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

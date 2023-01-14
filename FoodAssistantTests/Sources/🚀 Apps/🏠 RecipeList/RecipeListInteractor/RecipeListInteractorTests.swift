@@ -177,7 +177,6 @@ final class RecipeListInteractorTests: XCTestCase {
         sut.updateFavoriteId() /// Обновляем список изранных Id
         let check = sut.checkFavorite(id: 1234) /// Чек флага
         var count = storage.arrayIds.count
-        print(storage.arrayIds)
         
         //assert
         XCTAssertEqual(true, check)

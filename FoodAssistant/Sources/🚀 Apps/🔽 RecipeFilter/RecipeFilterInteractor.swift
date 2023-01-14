@@ -137,7 +137,6 @@ extension RecipeFilterInteractor: RecipeFilterBusinessLogic {
     }
     
     func changeFlag(_ flag: Bool, indexPath: IndexPath) {
-        print(indexPath)
         guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == indexPath.section }) else { return }
         guard var models = dict[parameter] else { return }
         

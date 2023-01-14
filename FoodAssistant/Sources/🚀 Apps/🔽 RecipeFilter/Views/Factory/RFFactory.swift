@@ -47,10 +47,6 @@ final class RFFactory {
         setupCollectionView()
     }
     
-    deinit {
-        print("DEINIT \(self)")
-    }
-    
     /// Настраивает коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
@@ -104,7 +100,6 @@ extension RFFactory: CVFactoryProtocol {
                 return nil
             }
         }
-        
         return builders
     }
 }

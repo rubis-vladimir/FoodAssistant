@@ -13,14 +13,18 @@ final class FavoriteSectionConfigurator {
     private let title: String
     /// Вью модели
     private let models: [RecipeViewModel]
+    /// Высота ячейки
+    private let height: CGFloat
     
     private weak var delegate: UserProfilePresentation?
     
     init(models: [RecipeViewModel],
          title: String,
+         height: CGFloat,
          delegate: UserProfilePresentation?) {
         self.models = models
         self.title = title
+        self.height = height
         self.delegate = delegate
     }
 }
@@ -35,6 +39,7 @@ extension FavoriteSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = FavoriteItemBuilder(models: models,
+                                              height: height,
                                               delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

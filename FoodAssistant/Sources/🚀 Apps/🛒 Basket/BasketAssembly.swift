@@ -38,7 +38,7 @@ extension BasketAssembly: Assemblying {
         presenter.view = viewController
         interactor.presenter = presenter
     
-        presenter.getStart()
+        presenter.getStartData()
         return viewController
     }
 }

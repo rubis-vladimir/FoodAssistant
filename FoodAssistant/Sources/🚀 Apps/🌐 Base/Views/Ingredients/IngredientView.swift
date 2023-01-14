@@ -12,13 +12,11 @@ final class IngredientView: UIView {
     // MARK: - Properties
     /// Вью под изображение ингредиента
     private lazy var ingredientImageView: UIImageView = {
-        let width: CGFloat = 50
-        let view = UIImageView(frame: CGRect(x: 0, y: 0, width: width, height: width))
+        let view = UIImageView()
         view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.layer.cornerRadius = width / 2
         view.clipsToBounds = true
-        view.layer.add(shadow: AppConstants.Shadow.defaultOne)
+        view.contentMode = .scaleAspectFit
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -43,9 +41,7 @@ final class IngredientView: UIView {
     /// Общий контейнер
     private lazy var container: UIStackView = {
         let stack = UIStackView()
-        stack.distribution = .fill
         stack.spacing = 16
-        stack.alignment = .fill
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
@@ -63,6 +59,12 @@ final class IngredientView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        ingredientImageView.layer.cornerRadius = ingredientImageView.frame.height / 2
     }
     
     // MARK: - Functions
@@ -129,9 +131,8 @@ final class IngredientView: UIView {
             container.trailingAnchor.constraint(equalTo: trailingAnchor),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            ingredientImageView.widthAnchor.constraint(equalToConstant: 50),
-            ingredientImageView.heightAnchor.constraint(equalToConstant: 50),
-            amountLabel.widthAnchor.constraint(equalToConstant: 50)
+            ingredientImageView.widthAnchor.constraint(equalTo: ingredientImageView.heightAnchor),
+            amountLabel.widthAnchor.constraint(equalTo: ingredientImageView.widthAnchor)
         ])
     }
 }

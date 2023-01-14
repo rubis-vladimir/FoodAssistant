@@ -24,29 +24,23 @@ final class SecondRecipeCell: CVBaseRecipeCell {
     }
     
     override func setupCell() {
-        super.setupCell()
         backgroundColor = Palette.bgColor.color
         clipsToBounds = true
         layer.cornerRadius = AppConstants.cornerRadius
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         
-        setupConstraints()
+        super.setupCell()
     }
     
     /// Настройка констрейнтов
-    private func setupConstraints() {
-        
-        titleRecipeLabel.numberOfLines = 0
-        containerTopLabel.addArrangedSubview(titleRecipeLabel)
+    override func setupConstraints() {
+        super.setupConstraints()
         
         let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         stack.addArrangedSubview(cookingTimeLabel)
         stack.addArrangedSubview(addToBasketButton)
-        substrateAction.addSubview(actionButton)
         
         addSubview(recipeImageView)
         addSubview(stack)
@@ -74,8 +68,8 @@ final class SecondRecipeCell: CVBaseRecipeCell {
             containerTopLabel.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             containerTopLabel.trailingAnchor.constraint(equalTo: substrateAction.leadingAnchor, constant: -paddingMin),
             
-            substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
-            substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),
+            substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding),
+            substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: padding),
             substrateAction.heightAnchor.constraint(equalToConstant: heightAction),
             substrateAction.widthAnchor.constraint(equalToConstant: widthAction),
             
