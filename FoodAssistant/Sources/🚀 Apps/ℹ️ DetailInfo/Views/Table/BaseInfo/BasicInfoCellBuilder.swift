@@ -9,8 +9,9 @@ import UIKit
 
 /// #Строитель ячейки BaseInfoCell
 final class BasicInfoCellBuilder {
-
+    /// Рецепт
     private let model: RecipeProtocol
+    
     weak var delegate: DetailInfoPresentation?
     
     init(model: RecipeProtocol,

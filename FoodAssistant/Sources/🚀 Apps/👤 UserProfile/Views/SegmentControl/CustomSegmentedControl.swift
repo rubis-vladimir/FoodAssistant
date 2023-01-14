@@ -24,8 +24,6 @@ class CustomSegmentedControl: UIView {
     /// Контейнер для кнопок
     private lazy var stack: UIStackView = {
         let stack = UIStackView()
-        stack.axis = .horizontal
-        stack.alignment = .fill
         stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
@@ -84,7 +82,7 @@ class CustomSegmentedControl: UIView {
             button.tag = index
             
             button.imageEdgeInsets = index == currentIndex ?
-            AppConstants.edgeInsert :
+            AppConstants.edgeInsertImageButton :
             button.imageEdgeInsets
             
             buttons.append(button)
@@ -131,7 +129,7 @@ class CustomSegmentedControl: UIView {
         newButton.setImage(Constants.buttonSelectImages[index],
                            for: .normal)
         newButton.tintColor = .white
-        newButton.imageEdgeInsets = AppConstants.edgeInsert
+        newButton.imageEdgeInsets = AppConstants.edgeInsertImageButton
         
         currentIndex = index
         newButton.alpha = 0.0

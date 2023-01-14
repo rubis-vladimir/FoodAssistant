@@ -83,7 +83,11 @@ final class BasketPresenter {
     }
     
     /// Стартовая функция для подгрузки рецептов
-    
+    func getStartData() {
+        interactor.fetchRecipeFromBasket { [weak self] recipes in
+            self?.recipes = recipes
+        }
+    }
     
     /// Обновляет Шоп-лист
     private func updateShopList() {
@@ -98,11 +102,7 @@ final class BasketPresenter {
 // MARK: - BasketPresentation
 extension BasketPresenter: BasketPresentation {
     
-    func getStartData() {
-        interactor.fetchRecipeFromBasket { [weak self] recipes in
-            self?.recipes = recipes
-        }
-    }
+    
     
     func didTapAddFridgeButton() {
         interactor.addIngredientsInFridge()

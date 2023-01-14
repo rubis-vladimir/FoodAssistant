@@ -48,6 +48,8 @@ class BaseRedButton: UIButton {
         backgroundColor = Palette.darkColor.color
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         translatesAutoresizingMaskIntoConstraints = false
+        
+        
     }
     
     @objc private func didTapButton() {

@@ -37,7 +37,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         
         let stack = UIStackView()
         stack.axis = .vertical
-        stack.distribution = .fillProportionally
         stack.translatesAutoresizingMaskIntoConstraints = false
         
         substrateTime.addArrangedSubview(cookingTimeLabel)
@@ -55,7 +54,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
         let heightOne: CGFloat = 30
         let heightTwo: CGFloat = 35
         let heightStack: CGFloat = 90
-        let paddingCL: CGFloat = 5
         let widthAction: CGFloat = 27
         let heightAction: CGFloat = 26
         
@@ -64,8 +62,6 @@ final class ThirdRecipeCell: CVBaseRecipeCell {
             substrateTime.bottomAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: -padding),
             substrateTime.leadingAnchor.constraint(equalTo: recipeImageView.leadingAnchor, constant: padding),
             substrateTime.heightAnchor.constraint(equalToConstant: heightOne),
-            
-            cookingTimeLabel.leadingAnchor.constraint(equalTo: substrateTime.leadingAnchor, constant: paddingCL),
             
             substrateAction.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -AppConstants.padding),
             substrateAction.topAnchor.constraint(equalTo: topAnchor, constant: AppConstants.padding),

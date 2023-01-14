@@ -9,7 +9,7 @@ import UIKit
 
 /// #Конфигуратор секции AddedRecipes в коллекции
 final class ShopListConfigurator {
-    /// Вью модели
+    /// Вью модели ингредиентов
     private let models: [IngredientViewModel]
     /// Заголовок секции
     private let title: String

@@ -14,7 +14,6 @@ final class FirstRecipeCell: CVBaseRecipeCell {
     override func setupCell() {
         
         recipeImageView.layer.cornerRadius = AppConstants.cornerRadius
-        
         super.setupCell()
     }
     
@@ -22,14 +21,7 @@ final class FirstRecipeCell: CVBaseRecipeCell {
     /// Настройка констрейнтов
     override func setupConstraints() {
         super.setupConstraints()
-        
-        /// Основной стэк
-//        let stack = UIStackView()
-//        stack.spacing = 8
-//        stack.axis = .vertical
-//        stack.distribution = .fill
-//        stack.translatesAutoresizingMaskIntoConstraints = false
-        
+    
         /// Добавление элементов в слои
         substrateTime.addArrangedSubview(cookingTimeLabel)
         containerTopLabel.addArrangedSubview(titleRecipeLabel)
@@ -37,8 +29,6 @@ final class FirstRecipeCell: CVBaseRecipeCell {
         
         addSubview(recipeImageView)
         addSubview(containerTopLabel)
-        
-//        addSubview(stack)
         addSubview(substrateAction)
         
         /// Констрейнты
@@ -58,7 +48,6 @@ final class FirstRecipeCell: CVBaseRecipeCell {
             substrateAction.heightAnchor.constraint(equalToConstant: heightAction),
             substrateAction.widthAnchor.constraint(equalToConstant: widthAction),
             
-//            containerTopLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
             recipeImageView.topAnchor.constraint(equalTo: topAnchor),
             recipeImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             recipeImageView.leadingAnchor.constraint(equalTo: leadingAnchor),
@@ -68,10 +57,6 @@ final class FirstRecipeCell: CVBaseRecipeCell {
             containerTopLabel.topAnchor.constraint(equalTo: recipeImageView.bottomAnchor, constant: 8),
             containerTopLabel.trailingAnchor.constraint(equalTo: trailingAnchor),
             containerTopLabel.leadingAnchor.constraint(equalTo: leadingAnchor)
-//            stack.bottomAnchor.constraint(equalTo: bottomAnchor),
-//            stack.topAnchor.constraint(equalTo: topAnchor),
-//            stack.trailingAnchor.constraint(equalTo: trailingAnchor),
-//            stack.leadingAnchor.constraint(equalTo: leadingAnchor)
         ])
     }
 }

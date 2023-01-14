@@ -55,7 +55,7 @@ final class BasicInfoCell: TVBaseCell {
         
         let padding = AppConstants.padding
         
-        let heightAnchor = heightAnchor.constraint(equalToConstant: 400)
+        let heightAnchor = recipeImageView.heightAnchor.constraint(equalToConstant: 350)
         heightAnchor.priority = .defaultHigh
         
         NSLayoutConstraint.activate([

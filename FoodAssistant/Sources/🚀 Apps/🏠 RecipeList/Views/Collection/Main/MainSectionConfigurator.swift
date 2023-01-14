@@ -9,24 +9,31 @@ import UIKit
 
 /// #Конфигуратор секции Main в коллекции
 final class MainSectionConfigurator {
-    
+    /// Константы
     private struct Constants {
         static let firstImage = Icons.split2x2.image
         static let secondImage = Icons.split1x2.image
     }
     
+    /// Вью модели рецептов
     private let models: [RecipeViewModel]
+    /// Название заголовка
     private let titleHeader: String
+    /// Высота ячейки
+    private let height: CGFloat
+    /// Действие при нажатии на кнопку в заголовке
     private let action: ((Int) -> Void)?
     
     private weak var delegate: RecipeListPresentation?
     
     init(models: [RecipeViewModel],
          titleHeader: String,
+         height: CGFloat,
          action: ((Int) -> Void)?,
          delegate: RecipeListPresentation?) {
         self.models = models
         self.titleHeader = titleHeader
+        self.height = height
         self.action = action
         self.delegate = delegate
     }
@@ -47,6 +54,7 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = MainItemBuilder(models: models,
+                                          height: height,
                                           delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
         

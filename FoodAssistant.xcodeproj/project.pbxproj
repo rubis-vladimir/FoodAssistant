@@ -20,6 +20,7 @@
 		7D0F2B8A293527B900F57E2A /* IngredientsCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */; };
 		7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */; };
 		7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */; };
+		7D228FF12972C78E00951436 /* AlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */; };
 		7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D27F66E2942600B00734443 /* CellProtocols.swift */; };
 		7D2B34862947611100FF01A2 /* CDRecipe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */; };
 		7D2B34872947611100FF01A2 /* CDRecipe+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */; };
@@ -219,6 +220,7 @@
 		7D0F2B89293527B900F57E2A /* IngredientsCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsCellBuilder.swift; sourceTree = "<group>"; };
 		7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCell.swift; sourceTree = "<group>"; };
 		7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCellBuilder.swift; sourceTree = "<group>"; };
+		7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		7D27F66E2942600B00734443 /* CellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocols.swift; sourceTree = "<group>"; };
 		7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -458,6 +460,14 @@
 				7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */,
 			);
 			path = Instructions;
+			sourceTree = "<group>";
+		};
+		7D228FF22972C97400951436 /* FlowLayout */ = {
+			isa = PBXGroup;
+			children = (
+				7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */,
+			);
+			path = FlowLayout;
 			sourceTree = "<group>";
 		};
 		7D2B348E2948AC7800FF01A2 /* SingleCell */ = {
@@ -969,6 +979,7 @@
 				7DE6BABB295F3C7F00711FB4 /* Buttons */,
 				7D3D19B829464F19005E3840 /* Cells */,
 				7D3D19B929464F23005E3840 /* Headers */,
+				7D228FF22972C97400951436 /* FlowLayout */,
 			);
 			path = "🌐 Base";
 			sourceTree = "<group>";
@@ -1708,6 +1719,7 @@
 				7D77FD93291FBFAD0085D7FF /* MainTabBarRouter.swift in Sources */,
 				7DC5509B295103A6001539C5 /* UserDefaultsKeys.swift in Sources */,
 				7D0F2B762934BCF600F57E2A /* FactoryCollectionViewProtocols.swift in Sources */,
+				7D228FF12972C78E00951436 /* AlignedCollectionViewFlowLayout.swift in Sources */,
 				7D3D19BE29465DEF005E3840 /* BasketFactory.swift in Sources */,
 				7DEF8E112922B41B0016A207 /* UIViewController + CustomBarButton.swift in Sources */,
 				7D77FD94291FBFAD0085D7FF /* TabBarConfigurator.swift in Sources */,

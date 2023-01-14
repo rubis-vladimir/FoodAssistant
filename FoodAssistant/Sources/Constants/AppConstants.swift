@@ -14,9 +14,11 @@ struct AppConstants {
     /// Радиус скругления
     static let cornerRadius: CGFloat = 20
     /// Расстояния от краев
-    static let edgeInsert = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
+    static let edgeInsertImageButton = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
+    /// Расстояния от краев для секции
+    static let edgeInsertForSection = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
     /// Минимальное количество рецептов в запросе
-    static let minRequestAmount = 2
+    static let minRequestAmount = 8
     /// Высота заголовка по дефолту
     static let heightHeader: CGFloat = 45
     
@@ -38,14 +40,18 @@ struct AppConstants {
     /// Получаем дефолтный CVLayout
     static func getFlowLayout() -> UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0,
-                                           left: padding,
-                                           bottom: padding,
-                                           right: padding)
         layout.minimumInteritemSpacing = padding
         layout.minimumLineSpacing = padding
         return layout
     }
+    
+    /// Рассчитывает ширину ячеек коллекции
+    static func calculateItemWidth(width: CGFloat,
+                                   itemPerRow: CGFloat,
+                                   padding: CGFloat) -> CGFloat {
+        
+        let paddingWidht = padding * (itemPerRow + 1)
+        return (width - paddingWidht) / itemPerRow
+        
+    }
 }
-
-

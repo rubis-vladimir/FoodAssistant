@@ -9,7 +9,7 @@ import UIKit
 
 /// #Строитель для Tag ячеек
 final class TagCellBuilder {
-    
+    /// Тег-модели
     private let tagModels: [TagModel]
     
     weak var delegate: RecipeFilterPresentation?

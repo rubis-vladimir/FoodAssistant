@@ -9,8 +9,9 @@ import UIKit
 
 /// #Конфигуратор для Tag-секции
 final class TagSectionConfigurator {
-    
+    /// Тип заголовка
     private let header: HeaderType?
+    /// Тег-модели
     private let tagModels: [TagModel]
     
     private weak var delegate: RecipeFilterPresentation?

@@ -125,8 +125,6 @@ final class IngredientView: UIView {
         }
         addSubview(container)
         
-        let padding = AppConstants.padding
-        
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor),
             container.leadingAnchor.constraint(equalTo: leadingAnchor),

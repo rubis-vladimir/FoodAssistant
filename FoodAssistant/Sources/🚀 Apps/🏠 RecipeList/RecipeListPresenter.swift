@@ -129,8 +129,8 @@ final class RecipeListPresenter {
                                        action: action)
             }
         }
-
-        // Загрузка данных для секции Main
+        
+        /// Загрузка данных для секции Main
         fetchRecipe(with: filterParameters,
                     number: AppConstants.minRequestAmount,
                     query: nil,
@@ -155,7 +155,6 @@ final class RecipeListPresenter {
             switch result {
             case .success(let recipeModels): // Успех
                 self.viewModelsDictionary[type] = recipeModels
-                
             case .failure(let error): // Ошибка
                 /// Действие при восстановлении
                 let action = {

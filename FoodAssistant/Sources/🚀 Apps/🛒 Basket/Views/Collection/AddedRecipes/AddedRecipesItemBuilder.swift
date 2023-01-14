@@ -9,7 +9,7 @@ import UIKit
 
 /// #Строитель ячеек секции AddedRecipes
 final class AddedRecipesItemBuilder {
-    
+    /// Вью модели рецептов
     private let recipes: [RecipeViewModel]
     
     weak var delegate: BasketPresentation?
@@ -31,7 +31,8 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
     func itemCount() -> Int { recipes.count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.height - 50,
+        
+        CGSize(width: collectionView.bounds.height * 0.75,
                height: collectionView.bounds.height)
     }
     

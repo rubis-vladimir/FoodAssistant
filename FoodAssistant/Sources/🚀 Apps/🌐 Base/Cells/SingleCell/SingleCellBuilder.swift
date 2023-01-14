@@ -9,8 +9,11 @@ import UIKit
 
 /// #Строитель ячейки для размещения горизонтальной коллекции
 final class SingleCellBuilder {
+    /// Одна ячейка
     private let count = 1
+    /// Высота ячейки
     private let height: CGFloat
+    /// Конфигураторы секций коллекции внутри ячейки
     private let configurators: [CVSectionConfiguration]
     
     init(height: CGFloat,
@@ -21,9 +24,8 @@ final class SingleCellBuilder {
 }
 
 // MARK: - CVItemBuilderProtocol
-extension SingleCellBuilder: CVItemBuilderProtocol {
-    
-    
+extension SingleCellBuilder: CVSectionInsetProtocol {
+        
     func register(collectionView: UICollectionView) {
         collectionView.register(SingleCell.self)
     }
@@ -41,5 +43,9 @@ extension SingleCellBuilder: CVItemBuilderProtocol {
                                                       indexPath: indexPath)
         cell.configure(with: configurators)
         return cell
+    }
+    
+    func insetForSection() -> UIEdgeInsets {
+        .zero
     }
 }

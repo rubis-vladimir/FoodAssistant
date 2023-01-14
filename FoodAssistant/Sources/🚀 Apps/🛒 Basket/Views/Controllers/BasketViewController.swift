@@ -19,8 +19,6 @@ protocol BasketPresentation: DeleteTapable,
     /// Проверяет флаг ингредиента
     /// - Parameter id: идентификатор ингредиента
     func checkFlag(id: Int) -> Bool
-    
-    func getStartData()
 }
 
 /// #Контроллер представления Корзины
@@ -68,7 +66,6 @@ final class BasketViewController: UIViewController {
         
         setupNavigitionBar()
         setupElements()
-        presenter.getStartData()
     }
     
     // MARK: - Private func

@@ -9,7 +9,7 @@ import UIKit
 
 /// #Конфигуратор секции AddedRecipes в коллекции
 final class AddedRecipesConfigurator {
-    
+    /// Вью модели рецептов
     private let recipes: [RecipeViewModel]
     
     private weak var delegate: BasketPresentation?

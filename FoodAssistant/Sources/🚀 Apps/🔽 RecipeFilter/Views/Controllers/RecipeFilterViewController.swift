@@ -31,7 +31,15 @@ final class RecipeFilterViewController: UIViewController {
     private let presenter: RecipeFilterPresentation
     
     private lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero,
-                                                                         collectionViewLayout: AppConstants.getFlowLayout())
+                                                                         collectionViewLayout: getFlowLayout())
+    
+    
+    func getFlowLayout() -> UICollectionViewFlowLayout {
+        let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .leading)
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
+        return layout
+    }
+    
     private var factory: RFFactory?
     
     /// Кнопка показать результаты
@@ -86,7 +94,7 @@ final class RecipeFilterViewController: UIViewController {
             
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo:  showResultsButton.topAnchor),
+            collectionView.bottomAnchor.constraint(equalTo:  showResultsButton.topAnchor, constant: -5),
             
             showResultsButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 30),
             showResultsButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -30),

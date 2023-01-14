@@ -68,7 +68,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         button.titleLabel?.font = Fonts.main
         button.tintColor = .white
         button.layer.add(shadow: AppConstants.Shadow.defaultTwo)
-        button.imageEdgeInsets = AppConstants.edgeInsert
+        button.imageEdgeInsets = AppConstants.edgeInsertImageButton
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
