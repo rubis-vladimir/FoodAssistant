@@ -26,15 +26,18 @@ final class UserProfileInteractor {
     private let imageDownloader: ImageDownloadProtocol
     private let dataFetcher: DataFetcherProtocol
     private let translateService: Translatable
+    private let timerManager: TimerManagement
     private let storage: DBRecipeManagement & DBIngredientsManagement
     
     init(imageDownloader: ImageDownloadProtocol,
          dataFetcher: DataFetcherProtocol,
          translateService: Translatable,
+         timerManager: TimerManagement,
          storage: DBRecipeManagement & DBIngredientsManagement) {
         self.imageDownloader = imageDownloader
         self.dataFetcher = dataFetcher
         self.translateService = translateService
+        self.timerManager = timerManager
         self.storage = storage
     }
 }

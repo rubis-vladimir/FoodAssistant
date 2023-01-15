@@ -16,7 +16,9 @@ struct AppConstants {
     /// Расстояния от краев
     static let edgeInsertImageButton = UIEdgeInsets(top: 0, left: -15, bottom: 0, right: 0)
     /// Расстояния от краев для секции
-    static let edgeInsertForSection = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
+    static let edgeInsertForSectionZero = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
+    /// Расстояния от краев для секции
+    static let edgeInsertForSectionMoreZero = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
     /// Минимальное количество рецептов в запросе
     static let minRequestAmount = 2
     /// Высота заголовка по дефолту

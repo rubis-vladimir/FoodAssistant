@@ -91,11 +91,17 @@ extension CVAdapter: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        
+        
         /// Для ячеек с другим layout
         if let itemBuilder = builders[section].itemBuilder as? CVSectionInsetProtocol {
             return itemBuilder.insetForSection()
         } else {
-            return AppConstants.edgeInsertForSection
+            switch section {
+            case 0:  return AppConstants.edgeInsertForSectionZero
+            default:  return AppConstants.edgeInsertForSectionMoreZero
+            }
         }
     }
 }

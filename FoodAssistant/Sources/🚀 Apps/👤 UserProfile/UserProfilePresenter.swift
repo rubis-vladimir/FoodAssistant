@@ -101,6 +101,8 @@ final class UserProfilePresenter {
         }
     }
     
+    private var timers: [RecipeTimer]?
+    
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
     
@@ -147,7 +149,15 @@ final class UserProfilePresenter {
         switch index {
         /// вкладка профиля
         case 0:
-            view?.updateCV(orderSection: [.profile])
+            
+            guard index != currentSegmentIndex else { return }
+            
+            if let timers = timers {
+                view?.updateCV(orderSection: [.profile,
+                                              .timers(timers)])
+            } else {
+                view?.updateCV(orderSection: [.profile])
+            }
             
         /// вкладка холодильника
         case 1:
@@ -296,6 +306,11 @@ extension UserProfilePresenter: UserProfilePresentation {
 // MARK: - UserProfileBusinessLogicDelegate
 extension UserProfilePresenter: UserProfileBusinessLogicDelegate {
     func updateTimers(timers: [RecipeTimer]) {
-        view?.updateTimerSection(with: timers)
+        self.timers = timers
+        
+        view?.updateCV(orderSection: [
+            .profile,
+            .timers(timers)
+        ])
     }
 }

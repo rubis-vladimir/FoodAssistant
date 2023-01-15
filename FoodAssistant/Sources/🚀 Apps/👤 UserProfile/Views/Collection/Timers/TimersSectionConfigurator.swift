@@ -12,16 +12,16 @@ final class TimersSectionConfigurator {
     /// Заголовок секции
     private let title: String
     /// Высота ячейки
-    private let heightCell: CGFloat
+    private let height: CGFloat
     /// Таймеры
     private let timers: [RecipeTimer]
     
     init(title: String,
          timers: [RecipeTimer],
-         heightCell: CGFloat) {
+         height: CGFloat) {
         self.title = title
         self.timers = timers
-        self.heightCell = heightCell
+        self.height = height
     }
 }
 
@@ -34,13 +34,13 @@ extension TimersSectionConfigurator: CVSectionConfiguration {
         headerBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем билдер и регистрируем ячейки
-        let itemBuilder = TimersItemBuilder(height: heightCell,
+        let itemBuilder = TimersItemBuilder(height: height,
                                             timers: timers)
         itemBuilder.register(collectionView: collectionView)
         
         /// Конфигурируем секцию
-        let secionBuilder = CVSectionBuilder(headerBuilder: nil,
-                                                 itemBuilder: itemBuilder)
+        let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
+                                             itemBuilder: itemBuilder)
         return secionBuilder
     }
 }

@@ -35,6 +35,7 @@
 "Are you sure you want to delete " = "Вы точно хотите удалить ";
 "product" = "продукт";
 "recipe" = "рецепт";
+"Timers" = "Таймеры";
 
 // MARK: - Ingredient
 "g" = "гр";

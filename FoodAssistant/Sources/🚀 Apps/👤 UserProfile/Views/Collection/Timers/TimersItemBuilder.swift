@@ -22,7 +22,6 @@ final class TimersItemBuilder {
 // MARK: - CVItemBuilderProtocol
 extension TimersItemBuilder: CVSelectableItemBuilderProtocol {
    
-
     func register(collectionView: UICollectionView) {
         collectionView.register(TimerCell.self)
     }
@@ -30,7 +29,9 @@ extension TimersItemBuilder: CVSelectableItemBuilderProtocol {
     func itemCount() -> Int { timers.count }
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        CGSize(width: collectionView.bounds.width,
+        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
+                                                      itemPerRow: 2,
+                                                      padding: AppConstants.padding),
                height: height)
     }
     
@@ -38,6 +39,9 @@ extension TimersItemBuilder: CVSelectableItemBuilderProtocol {
                 collectionView: UICollectionView) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(TimerCell.self,
                                                       indexPath: indexPath)
+        let timer = timers[indexPath.item]
+        cell.configure(with: timer,
+                       index: indexPath.item)
         
         return cell
     }

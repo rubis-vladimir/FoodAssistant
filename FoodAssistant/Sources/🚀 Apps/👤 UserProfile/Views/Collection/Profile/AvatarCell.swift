@@ -117,7 +117,7 @@ final class AvatarCell: UICollectionViewCell {
 
         NSLayoutConstraint.activate([
             userContainer.topAnchor.constraint(equalTo: topAnchor, constant: padding),
-            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor),
+            userContainer.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding / 2),
             userContainer.leadingAnchor.constraint(equalTo: leadingAnchor),
             userContainer.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])

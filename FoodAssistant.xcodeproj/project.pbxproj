@@ -21,6 +21,7 @@
 		7D0F2B8D293533EE00F57E2A /* InstructionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */; };
 		7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */; };
 		7D228FF12972C78E00951436 /* AlignedCollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */; };
+		7D228FFB2972EA8B00951436 /* TimerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D228FFA2972EA8B00951436 /* TimerManager.swift */; };
 		7D27F66F2942600B00734443 /* CellProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D27F66E2942600B00734443 /* CellProtocols.swift */; };
 		7D2B34862947611100FF01A2 /* CDRecipe+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */; };
 		7D2B34872947611100FF01A2 /* CDRecipe+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */; };
@@ -225,6 +226,7 @@
 		7D0F2B8C293533EE00F57E2A /* InstructionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCell.swift; sourceTree = "<group>"; };
 		7D0F2B8E293533FF00F57E2A /* InstructionCellBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstructionCellBuilder.swift; sourceTree = "<group>"; };
 		7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlignedCollectionViewFlowLayout.swift; sourceTree = "<group>"; };
+		7D228FFA2972EA8B00951436 /* TimerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimerManager.swift; sourceTree = "<group>"; };
 		7D27F66E2942600B00734443 /* CellProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellProtocols.swift; sourceTree = "<group>"; };
 		7D2B34842947611100FF01A2 /* CDRecipe+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataClass.swift"; sourceTree = "<group>"; };
 		7D2B34852947611100FF01A2 /* CDRecipe+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDRecipe+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -476,6 +478,14 @@
 				7D228FF02972C78E00951436 /* AlignedCollectionViewFlowLayout.swift */,
 			);
 			path = FlowLayout;
+			sourceTree = "<group>";
+		};
+		7D228FF92972EA8B00951436 /* TimerManager */ = {
+			isa = PBXGroup;
+			children = (
+				7D228FFA2972EA8B00951436 /* TimerManager.swift */,
+			);
+			path = TimerManager;
 			sourceTree = "<group>";
 		};
 		7D2B348E2948AC7800FF01A2 /* SingleCell */ = {
@@ -1369,9 +1379,9 @@
 		7DEF8E1C2923C5FE0016A207 /* Collection */ = {
 			isa = PBXGroup;
 			children = (
-				7DCD6ADF2971BB1600ADE66E /* Timers */,
 				7DEF8E1F2923C6270016A207 /* Factory */,
 				7D3D19A629460E57005E3840 /* Profile */,
+				7DCD6ADF2971BB1600ADE66E /* Timers */,
 				7D3D199F294476E8005E3840 /* Fridge */,
 				7D3D199A2943A63B005E3840 /* Favorite */,
 			);
@@ -1461,6 +1471,7 @@
 		7DFEB5DC291C2F14008C28FC /* 👷 Workers */ = {
 			isa = PBXGroup;
 			children = (
+				7D228FF92972EA8B00951436 /* TimerManager */,
 				7D485DA5295F583500BBA21A /* FilterManager */,
 				7D40B306294CBF7C00D832A0 /* IngredientCalculator */,
 				7D3BC95929327DE9001B1B57 /* Network layer */,
@@ -1675,6 +1686,7 @@
 				7D3BC94F29312C29001B1B57 /* DetailInfoInteractor.swift in Sources */,
 				7D0F2B8F293533FF00F57E2A /* InstructionCellBuilder.swift in Sources */,
 				7D0F2B852935152B00F57E2A /* NutrientsCellBuilder.swift in Sources */,
+				7D228FFB2972EA8B00951436 /* TimerManager.swift in Sources */,
 				7D485DAA295F652300BBA21A /* FilterParameters.swift in Sources */,
 				7D77FDA9291FC56C0085D7FF /* BasketInteractor.swift in Sources */,
 				7D40B311294E04AA00D832A0 /* IngredientCalculateManager.swift in Sources */,

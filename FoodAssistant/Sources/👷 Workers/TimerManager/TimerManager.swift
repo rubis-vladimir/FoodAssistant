@@ -46,7 +46,7 @@ extension TimerManager: TimerManagement {
     func addTimer(for stepTimer: StepTimer) {
         
         let recipeTimer = RecipeTimer(stepTimer: stepTimer) { x in
-            print("XXX - \(x)")
+//            print("XXX - \(x)")
         }
         
         recipeTimer.start()
@@ -125,9 +125,9 @@ class RecipeTimer: Equatable {
     
     func start(){
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(timerUpdate), userInfo: nil, repeats: true)
-        if timer != nil {
-            RunLoop.current.add(timer!, forMode: .common)
-        }
+//        if timer != nil {
+//            RunLoop.current.add(timer!, forMode: .common)
+//        }
     }
     
     func stop(){

@@ -79,9 +79,9 @@ final class UPFactory {
                                                title: Constants.titleHeaderFavorite, height: Constants.heightFavoriteCell,
                                                delegate: delegate).configure(for: collectionView)
         case .timers(let timers):
-            return FavoriteSectionConfigurator(models: [],
-                                               title: Constants.titleHeaderFavorite,
-                                               delegate: delegate).configure(for: collectionView)
+            return TimersSectionConfigurator(title: Constants.titleHeaderTimers,
+                                             timers: timers,
+                                             height: Constants.heightTimerCell).configure(for: collectionView)
 
         }
         
@@ -100,7 +100,7 @@ extension UPFactory: CVFactoryProtocol {
 extension UPFactory {
     private struct Constants {
         static let titleHeaderProfile = "My data".localize()
-        static let heightProfileCell: CGFloat = 250
+        static let heightProfileCell: CGFloat = 270
         
         static let titleHeaderFridge = "In my fridge".localize()
         static let imageHeaderButton = Icons.plusFill.image
@@ -108,6 +108,9 @@ extension UPFactory {
         
         static let titleHeaderFavorite = "Favorite Dishes".localize()
         static let heightFavoriteCell: CGFloat = 125
+        
+        static let titleHeaderTimers = "Timers".localize()
+        static let heightTimerCell: CGFloat = 100
     }
 }
 
