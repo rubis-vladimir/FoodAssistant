@@ -12,7 +12,7 @@ final class IngredientCalculateManagerTests: XCTestCase {
 
     var sut: IngredientCalculateManager!
     var storage: SpyStorageManager!
-    
+
     let mockIngredientsInFridge: [IngredientProtocol] = [
         Ingredient(id: 357,
                    name: "orange",
@@ -31,13 +31,13 @@ final class IngredientCalculateManagerTests: XCTestCase {
                    dtoAmount: 100,
                    dtoUnit: "g")
     ]
-    
+
     override func setUp() {
         super.setUp()
         storage = SpyStorageManager(arrayIngredients: mockIngredientsInFridge)
         sut = IngredientCalculateManager(storage: storage)
     }
-    
+
     override func tearDown() {
         sut = nil
         storage = nil
@@ -45,7 +45,7 @@ final class IngredientCalculateManagerTests: XCTestCase {
     }
 
     func testGetShopList() {
-        //arange
+        // arange
         let mockRecipeIngredients: [IngredientProtocol] = [
             Ingredient(id: 357,
                        name: "orange",
@@ -68,19 +68,19 @@ final class IngredientCalculateManagerTests: XCTestCase {
                        dtoAmount: 1.3,
                        dtoUnit: "tbsp")
         ]
-        
-        //act
+
+        // act
         sut.getShopList(ingredients: mockRecipeIngredients) { ingredients in
-            //assert
+            // assert
             XCTAssertEqual(2, ingredients.count)
             XCTAssertEqual("orange", ingredients[1].name)
             XCTAssertEqual(2, ingredients[1].amount)
             XCTAssertEqual(100, ingredients[0].amount)
         }
-        
-        //act
+
+        // act
         sut.getShopList(ingredients: mockIngredientsInFridge) { ingredients in
-            //assert
+            // assert
             XCTAssertEqual([], ingredients)
         }
     }

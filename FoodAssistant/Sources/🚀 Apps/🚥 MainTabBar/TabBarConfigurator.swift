@@ -15,13 +15,13 @@ protocol TabBarConfiguration {
 
 /// #Конфигуратор TabBar
 final class TabBarConfigurator {
-    
+
     private let navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     /// Настройка tabBarItem
     /// - Parameters:
     ///  - viewController: Child-VC
@@ -39,31 +39,31 @@ final class TabBarConfigurator {
 
 // MARK: - TabBarConfiguration
 extension TabBarConfigurator: TabBarConfiguration {
-    
+
     func generate(tabBar: UITabBarController) {
         /// Конфигурируем модуль для первой вкладки
         let navigationControllerOne = UINavigationController()
         let recipeListVC = RecipeListAssembly(navigationController: navigationControllerOne).assembly()
         navigationControllerOne.viewControllers = [recipeListVC]
-        
+
         /// Конфигурируем модуль для второй вкладки
         let navigationControllerTwo = UINavigationController()
         let userProfileVC = UserProfileAssembly(navigationController: navigationControllerTwo).assembly()
         navigationControllerTwo.viewControllers = [userProfileVC]
-        
+
         /// Добавляем контроллеры и устанавливаем изображения
         tabBar.viewControllers = [
             setupChildVC(navigationControllerOne,
                          image: Icons.house.image,
                          selectedImage: Icons.houseFill.image),
-            
+
             UIViewController(),
-            
+
             setupChildVC(navigationControllerTwo,
                          image: Icons.person.image,
                          selectedImage: Icons.personFill.image)
         ]
-        
+
         tabBar.setViewControllers(tabBar.viewControllers, animated: false)
     }
 }

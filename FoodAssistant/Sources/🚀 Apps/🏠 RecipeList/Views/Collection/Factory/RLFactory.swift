@@ -17,13 +17,13 @@ enum RLSectionType {
 
 /// #Фабрика настройки коллекции модуля RecipeList
 final class RLFactory {
-    
+
     private let collectionView: UICollectionView
     private let arrayModelsDictionary: [RecipeModelsDictionary]
     private var cvAdapter: CVAdapter
-    
+
     private weak var delegate: RecipeListPresentation?
-    
+
     /// Инициализатор
     ///  - Parameters:
     ///    - collectionView: настраиваемая коллекция
@@ -35,25 +35,24 @@ final class RLFactory {
         self.collectionView = collectionView
         self.arrayModelsDictionary = arrayModelsDictionary
         self.delegate = delegate
-        
+
         /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
-        
+
         setupCollectionView()
     }
-    
-    
+
     /// Настраивает представление коллекции
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        
+
         /// Обновление данных в коллекции
         cvAdapter.configure(with: builders)
     }
-    
+
     /// Создает строителя ячеек
     ///  - Parameters:
     ///     - models: модели рецептов
@@ -68,13 +67,13 @@ final class RLFactory {
             return SingleCellSectionConfigurator(title: Constants.recommendedTitle,
                                                  configurators: [configurator],
                                                  height: Constants.singleCellHeight).configure(for: collectionView)
-            
+
         case .main:
             /// Создаем действие по изменению `Layout`
             let action: ((Int) -> Void)? = { [weak self] section in
                 self?.delegate?.didTapChangeLayoutButton(section: section)
             }
-            
+
             return MainSectionConfigurator(models: models,
                                            titleHeader: Constants.mainTitle,
                                            height: Constants.heightMainCell,
@@ -84,9 +83,9 @@ final class RLFactory {
     }
 }
 
-//MARK: - TVFactoryProtocol
+// MARK: - TVFactoryProtocol
 extension RLFactory: CVFactoryProtocol {
-    
+
     var builders: [CVSectionProtocol] {
         arrayModelsDictionary.flatMap {
             $0.map { createBuilder(models: $0.value, type: $0.key) }
@@ -99,7 +98,7 @@ extension RLFactory {
     private struct Constants {
         static let recommendedTitle = "Recommendations".localize()
         static let singleCellHeight: CGFloat = 360
-        
+
         static let mainTitle = "Base Recipes".localize()
         static let heightMainCell: CGFloat = 125
     }

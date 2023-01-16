@@ -19,7 +19,7 @@ enum HeaderType {
 final class HeaderBuilder {
     private let height: CGFloat = AppConstants.heightHeader
     private let type: HeaderType
-    
+
     init(type: HeaderType) {
         self.type = type
     }
@@ -27,20 +27,20 @@ final class HeaderBuilder {
 
 // MARK: - CVHeaderBuilderProtocol
 extension HeaderBuilder: CVHeaderBuilderProtocol {
-    
+
     func register(collectionView: UICollectionView) {
         collectionView.register(CVSectionHeaderWithButton.self,
                                 kind: UICollectionView.elementKindSectionHeader)
         collectionView.register(CVBaseSectionHeader.self,
                                 kind: UICollectionView.elementKindSectionHeader)
     }
-    
+
     func viewSupplementaryElement(collectionView: UICollectionView,
                                   kind: String,
                                   indexPath: IndexPath) -> UICollectionReusableView {
         switch kind {
         case UICollectionView.elementKindSectionHeader:
-            
+
             switch type {
             case .base(let title):
                 let headerView = collectionView.dequeueReusableView(CVBaseSectionHeader.self,
@@ -48,7 +48,7 @@ extension HeaderBuilder: CVHeaderBuilderProtocol {
                                                                     indexPath: indexPath)
                 headerView.configure(title: title)
                 return headerView
-                
+
             case  .withButton(let headerModel):
                 let headerView = collectionView.dequeueReusableView(CVSectionHeaderWithButton.self,
                                                                     kind: kind,
@@ -61,7 +61,7 @@ extension HeaderBuilder: CVHeaderBuilderProtocol {
             assert(false, "Недействительный тип элемента")
         }
     }
-    
+
     func headerSize(collectionView: UICollectionView) -> CGSize {
         .init(width: collectionView.bounds.width, height: height)
     }

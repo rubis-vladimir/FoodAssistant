@@ -9,10 +9,10 @@ import Foundation
 
 /// #Заместитель сервиса загрузки изображений (работает с cache)
 final class ImageDownloaderProxy {
-    
+
     private let imageDownloader: ImageDownloadProtocol
     private var imageCache: ImageCacheProtocol
-    
+
     init(imageDownloader: ImageDownloadProtocol,
          imageCache: ImageCacheProtocol) {
         self.imageDownloader = imageDownloader

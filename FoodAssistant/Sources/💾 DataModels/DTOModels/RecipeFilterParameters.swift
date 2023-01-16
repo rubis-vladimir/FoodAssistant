@@ -29,7 +29,7 @@ struct RecipeFilterParameters {
     var maxCalories: Int?
     /// Сортировка
     var sort: String?
-    
+
     init(time: Int?,
          cuisine: [String],
          diet: String?,
@@ -51,7 +51,7 @@ struct RecipeFilterParameters {
         self.maxCalories = maxCalories
         self.sort = sort
     }
-    
+
     init() {
         time = nil
         cuisine = []

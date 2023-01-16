@@ -11,7 +11,7 @@ import UIKit
 class BaseRedButton: UIButton {
     /// Действие
     private var action: (() -> Void)?
-    
+
     /// Доп инициализатор
     /// - Parameters:
     ///  - title: текст кнопки
@@ -25,30 +25,30 @@ class BaseRedButton: UIButton {
         setupButton(title: title,
                     image: image)
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         layer.cornerRadius = frame.height / 2
     }
-    
+
     /// Настройка кнопки
     private func setupButton(title: String?,
                              image: UIImage?) {
         setTitle(title, for: .normal)
         setImage(image, for: .normal)
-        
+
         addTarget(self,
                   action: #selector(didTapButton),
                   for: .touchUpInside)
-        
+
         titleLabel?.font = Fonts.subtitle
         tintColor = .white
         backgroundColor = Palette.darkColor.color
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     @objc private func didTapButton() {
         guard let action = action else { return }
         action()

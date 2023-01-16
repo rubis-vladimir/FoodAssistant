@@ -15,9 +15,9 @@ final class ShopListConfigurator {
     private let title: String
     /// Высота ячейки
     private let heightCell: CGFloat
-    
+
     private weak var delegate: BasketPresentation?
-    
+
     init(models: [IngredientViewModel],
          title: String,
          heightCell: CGFloat,
@@ -28,22 +28,22 @@ final class ShopListConfigurator {
         self.delegate = delegate
     }
 }
-    
+
 // MARK: - CVSectionConfiguration
 extension ShopListConfigurator: CVSectionConfiguration {
-    
+
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
-        
+
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = ShopListItemBuilder(models: models,
                                               height: heightCell,
                                               delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .base(title: title))
         headerBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем секцию
         let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                                  itemBuilder: itemBuilder)

@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIViewController {
-    
+
     /// Создает кастомный лейбл для `NavBar`
     /// - Parameter title: текст лейбла
     func createNavTitle(title: String) -> UILabel {
@@ -18,4 +18,3 @@ extension UIViewController {
         return label
     }
 }
-     

@@ -10,6 +10,6 @@ import Foundation
 extension Array where Element: Equatable & Hashable {
     /// Возвращает массив дублирующихся значений
     func duplicate() -> [Element] {
-       Array(Set(self.filter{ element in self.filter({ $0 == element }).count > 1}))
+       Array(Set(self.filter { element in self.filter({ $0 == element }).count > 1}))
     }
 }

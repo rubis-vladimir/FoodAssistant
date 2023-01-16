@@ -37,7 +37,7 @@ final class FilterManager {
 
 // MARK: - FilterManagement
 extension FilterManager: FilterManagement {
-    
+
     func getRecipeParameters() -> [FilterParameters: [String]] {
         var dict = [FilterParameters: [String]]()
         dict[.time] = RecipeFilterTagTitles.time
@@ -45,7 +45,7 @@ extension FilterManager: FilterManagement {
         dict[.region] = RecipeFilterTagTitles.regions
         dict[.diet] = RecipeFilterTagTitles.diets
         dict[.calories] = RecipeFilterTagTitles.calories
-        
+
         let key1 = FilterParameters.includeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key1) as? [String] {
             dict[.includeIngredients] = titles
@@ -53,7 +53,7 @@ extension FilterManager: FilterManagement {
             dict[.includeIngredients] = RecipeFilterTagTitles.includeIngredients
             UserDefaults.standard.set(RecipeFilterTagTitles.includeIngredients, forKey: key1)
         }
-        
+
         let key2 = FilterParameters.excludeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key2) as? [String] {
             dict[.excludeIngredients] = titles
@@ -63,7 +63,7 @@ extension FilterManager: FilterManagement {
         }
         return dict
     }
-    
+
     func overWrite(parameter: FilterParameters, value: [String]) {
         UserDefaults.standard.set(value, forKey: parameter.title)
     }

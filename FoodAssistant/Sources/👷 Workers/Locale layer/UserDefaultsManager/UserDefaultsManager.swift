@@ -14,11 +14,10 @@ protocol UserDefaultsVerifable {
 
 /// #Сервис работы с UserDefaults
 final class UserDefaultsManager {
-    
+
     static let shared = UserDefaultsManager()
-    private let ud = UserDefaults.standard
+    private let userDefaults = UserDefaults.standard
     private init() {}
-    
 }
 
 // MARK: - UserDefaultsVerifable

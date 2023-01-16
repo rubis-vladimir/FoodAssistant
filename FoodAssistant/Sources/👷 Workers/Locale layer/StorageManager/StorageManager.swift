@@ -16,7 +16,7 @@ class StorageManager {
     ///   Обращаемся к своему NSPersistentContainer который является оберткой для NSPersistentStoreCoordinator
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FoodAssistant")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -148,7 +148,7 @@ extension StorageManager: DBRecipeManagement {
         cdRecipe.imageName = recipe.imageName
         cdRecipe.cookingTime = recipe.cookingTime
         cdRecipe.cdServings = Int16(recipe.servings)
-        
+
         switch target {
         case .isFavorite:
             cdRecipe.isFavorite = true
@@ -157,7 +157,7 @@ extension StorageManager: DBRecipeManagement {
             cdRecipe.isFavorite = false
             cdRecipe.inBasket = true
         }
-        
+
         /// Создаем модели CDIngredient и добавляем их в рецепт
         if let ingredients = recipe.ingredients {
             ingredients.forEach {
@@ -171,7 +171,7 @@ extension StorageManager: DBRecipeManagement {
                 cdRecipe.addToCdIngredients(cdIngredient)
             }
         }
-        
+
         /// Создаем модели CDNutrient и добавляем их в рецепт
         if let nutrients = recipe.nutrients {
             nutrients.forEach {
@@ -182,7 +182,7 @@ extension StorageManager: DBRecipeManagement {
                 cdRecipe.addToCdNutrients(cdNutrient)
             }
         }
-        
+
         /// Создаем модели CDInstrutionStep и добавляем их в рецепт
         if let instructionSteps = recipe.instructions {
             instructionSteps.forEach {
@@ -205,27 +205,27 @@ extension StorageManager: DBIngredientsManagement {
         let predicate = toUse ?
         NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
         : predicate1
-        
+
         let objects = read(model: CDIngredient.self, predicate: predicate)
         completion(objects)
     }
-    
+
     func save(ingredients: [IngredientProtocol]) {
-        
+
         ingredients.forEach {
             let predicate1 = NSPredicate(format: "cdId == %@",
                                          NSNumber(value: $0.id))
             let predicate2 = NSPredicate(format: "inFridge == %@",
                                         NSNumber(value: true))
             let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
-            
+
             /// Обновляем количество если ингредиент уже добавлен
             if let object = read(model: CDIngredient.self,
                                  predicate: predicate).first {
                 let amount = object.amount + $0.amount
                 object.setValue($0.toUse, forKey: "toUse")
                 object.setValue(amount, forKey: "amount")
-                
+
             } else {
                 /// Создаем и добавляем новый ингредиент
                 createCDIngredient(ingredient: $0)
@@ -233,7 +233,7 @@ extension StorageManager: DBIngredientsManagement {
         }
         saveContext()
     }
-    
+
     func removeIngredient(id: Int) {
         let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
@@ -244,7 +244,7 @@ extension StorageManager: DBIngredientsManagement {
         viewContext.delete(object)
         saveContext()
     }
-    
+
     func updateIngredient(id: Int, toUse: Bool) {
         let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
@@ -252,11 +252,11 @@ extension StorageManager: DBIngredientsManagement {
                                     NSNumber(value: true))
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
-        
+
         object.setValue(toUse, forKey: "toUse")
         saveContext()
     }
-    
+
     /// Создает модель CDIngredient для ингредиентов в холодильнике
     private func createCDIngredient(ingredient: IngredientProtocol) {
         let cdIngredient = CDIngredient(context: viewContext)

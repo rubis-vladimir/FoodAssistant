@@ -14,7 +14,7 @@ final class MainSectionConfigurator {
         static let firstImage = Icons.split2x2.image
         static let secondImage = Icons.split1x2.image
     }
-    
+
     /// Вью модели рецептов
     private let models: [RecipeViewModel]
     /// Название заголовка
@@ -23,9 +23,9 @@ final class MainSectionConfigurator {
     private let height: CGFloat
     /// Действие при нажатии на кнопку в заголовке
     private let action: ((Int) -> Void)?
-    
+
     private weak var delegate: RecipeListPresentation?
-    
+
     init(models: [RecipeViewModel],
          titleHeader: String,
          height: CGFloat,
@@ -38,10 +38,10 @@ final class MainSectionConfigurator {
         self.delegate = delegate
     }
 }
-    
+
 // MARK: - CVSectionConfiguration
 extension MainSectionConfigurator: CVSectionConfiguration {
-    
+
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Модель заголовка
         let headerModel = HeaderSectionModel(title: titleHeader,
@@ -51,13 +51,13 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))
         headerBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = MainItemBuilder(models: models,
                                           height: height,
                                           delegate: delegate)
         itemBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем секцию
         let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                                itemBuilder: itemBuilder)

@@ -9,16 +9,16 @@ import Foundation
 
 /// #Слой бизнес логики модуля RecipeList
 final class RecipeListInteractor {
-    
+
     private var models: [RecipeProtocol] = []
     private var favoriteArrayId: [Int] = []
-    
+
     private let dataFetcher: DataFetcherProtocol
     private let imageDownloader: ImageDownloadProtocol
     private let translateService: Translatable
-    
+
     private let storage: DBRecipeManagement & DBIngredientsManagement
-    
+
     init(dataFetcher: DataFetcherProtocol,
          imageDownloader: ImageDownloadProtocol,
          translateService: Translatable,
@@ -32,17 +32,17 @@ final class RecipeListInteractor {
 
 // MARK: - RecipeListBusinessLogic
 extension RecipeListInteractor: RecipeListBusinessLogic {
-    
+
     func fetchRecipe(with parameters: RecipeFilterParameters,
                      number: Int,
                      query: String?,
                      completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
-        
+
         RecipeRequest
             .complex(parameters, number, query)
             .downloadRecipes(with: dataFetcher) { [weak self] result in
                 guard let self = self else { return }
-                
+
                 switch result {
                 case .success(let responce): // Успех
                     guard let recipes = responce.results,
@@ -50,13 +50,13 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                         completion(.failure(.noResults))
                         return }
                     self.convert(recipes: recipes, completion: completion)
-                    
+
                 case .failure(let error): // Ошибка
                     completion(.failure(error))
                 }
             }
     }
-    
+
     func fetchRecommended(number: Int,
                           completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         /// Получаем названия имеющихся ингредиентов
@@ -64,17 +64,17 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         storage.fetchIngredients(toUse: false) { ingredients in
             ingredientTitles = ingredients.map { $0.name }
         }
-        
+
         /// Дефолтные параметры
         var parameters = RecipeFilterParameters()
         parameters.type = ["dessert"]
-        
+
         guard !ingredientTitles.isEmpty else {
             /// Загрузка рекомендаций по дефолту, если холодильник пуст
             fetchRecipe(with: parameters, number: number, query: nil, completion: completion)
             return
         }
-        
+
         if currentAppleLanguage() != "en" {
             translateService.translate(with: ingredientTitles,
                                        source: currentAppleLanguage(),
@@ -82,9 +82,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 switch result {
                 case .success(let responce):
                     /// При успешном переводе
-                    let titles = responce.translations.map{ $0.text }
+                    let titles = responce.translations.map { $0.text }
                     self?.fetchRecipe(ingredientTitles: titles, number: number, completion: completion)
-                    
+
                 case .failure(let error):
                     /// При ошибке
                     completion(.failure(error))
@@ -96,35 +96,35 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
             fetchRecipe(ingredientTitles: ingredientTitles, number: number, completion: completion)
         }
     }
-    
+
     func saveRecipe(id: Int,
                     for target: TargetOfSave) {
         guard let model = models.first(where: { $0.id == id }) else { return }
         favoriteArrayId.append(id)
         storage.save(recipe: model, for: target)
     }
-    
+
     func updateFavoriteId() {
         storage.fetchFavoriteId { [weak self] arrayId in
             self?.favoriteArrayId = arrayId
         }
     }
-    
+
     func checkFavorite(id: Int) -> Bool {
         favoriteArrayId.contains(id) ? true : false
     }
-    
+
     // RecipeReceived
     func getRecipe(id: Int,
                    completion: @escaping (RecipeProtocol) -> Void) {
         guard var recipe = models.first(where: { $0.id == id }) as? Recipe else { return }
-        
+
         if favoriteArrayId.contains(id) {
             recipe.isFavorite = true
         }
         completion(recipe)
     }
-    
+
     // ImageBusinessLogic
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
@@ -133,7 +133,7 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
             .recipe(imageName: imageName)
             .download(with: imageDownloader, completion: completion)
     }
-    
+
     // RecipeRemovable
     func removeRecipe(id: Int) {
         if let index = favoriteArrayId.firstIndex(where: {$0 == id}) {
@@ -155,7 +155,7 @@ extension RecipeListInteractor {
             switch result {
             case .success(let recipes):
                 self?.convert(recipes: recipes, completion: completion)
-                
+
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -172,12 +172,12 @@ extension RecipeListInteractor {
         RecipeRequest
             .byIngredients(ingredientTitles, number)
             .downloadIds(with: self.dataFetcher) { [weak self] result in
-                
+
                 switch result {
                 case .success(let responce):
                     let ids = responce.map { $0.id }
                     self?.fetchRecipes(by: ids, completion: completion)
-                    
+
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -190,14 +190,12 @@ extension RecipeListInteractor {
     private func convert(recipes: [Recipe],
                          completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         var recipes = recipes
-        
+
         /// Изменяем флаг isFavorite, если рецепт записан в избранные
-        for index in 0..<recipes.count {
-            if favoriteArrayId.contains(recipes[index].id) {
-                recipes[index].isFavorite = true
-            }
+        for index in 0..<recipes.count where favoriteArrayId.contains(recipes[index].id) {
+            recipes[index].isFavorite = true
         }
-        
+
         /// Если установленный язык не базовый пробуем выполнить перевод
         if currentAppleLanguage() != "en" {
             translateService.fetchTranslate(recipes: recipes,
@@ -206,7 +204,7 @@ extension RecipeListInteractor {
                 switch result {
                 case .success(let newRecipes):
                     self?.addModels(recipes: newRecipes, completion: completion)
-                    
+
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -216,18 +214,18 @@ extension RecipeListInteractor {
             self.addModels(recipes: recipes, completion: completion)
         }
     }
-    
+
     /// Добавляет и захватывает рецепты
     private func addModels(recipes: [Recipe],
                            completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
         models.append(contentsOf: recipes)
-        
+
         let viewModels = recipes.map {
             RecipeViewModel(with: $0)
         }
         completion(.success(viewModels))
     }
-    
+
     /// Проверяет установленный на устройстве язык
     private func currentAppleLanguage() -> String {
         let appleLanguageKey = "AppleLanguages"

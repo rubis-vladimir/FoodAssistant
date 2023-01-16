@@ -34,23 +34,23 @@ extension LanguageRequest: RequestBuilding {
     var baseUrl: String {
         "translate.api.cloud.yandex.net"
     }
-    
+
     var path: String {
         switch self {
         case .translate:
             return "/translate/v2/translate"
         }
     }
-    
+
     var method: HTTPMethod { .post }
-    
+
     var headers: HTTPHeaders? {
         return [
             "Authorization": "Api-Key \(APIKeys.translateAPIKey.rawValue)",
             "Content-Type": "text/plain"
         ]
     }
-    
+
     var parameters: Parameters? {
         switch self {
         case let .translate(parameters):

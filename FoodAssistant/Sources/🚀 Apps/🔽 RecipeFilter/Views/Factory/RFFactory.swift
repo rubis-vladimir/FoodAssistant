@@ -22,13 +22,13 @@ enum RFSectionType {
 
 /// #Фабрика настройки коллекции модуля RecipeFilter
 final class RFFactory {
-    
+
     private let collectionView: UICollectionView
     private let dictModels: [FilterParameters: [TagModel]]
     private var cvAdapter: CVAdapter
-    
+
     private weak var delegate: RecipeFilterPresentation?
-    
+
     /// Инициализатор
     ///  - Parameters:
     ///    - collectionView: настраиваемая коллекция
@@ -40,22 +40,22 @@ final class RFFactory {
         self.collectionView = collectionView
         self.dictModels = dictModels
         self.delegate = delegate
-        
+
         /// Определяет адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
-        
+
         setupCollectionView()
     }
-    
+
     /// Настраивает коллекцию
     func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
-        
+
         /// Обновление данных в коллекции
         cvAdapter.configure(with: builders)
     }
-    
+
     /// Создает строителя ячеек
     ///  - Parameters:
     ///     - tagModels: модели тэгов
@@ -72,9 +72,9 @@ final class RFFactory {
     }
 }
 
-//MARK: - TVFactoryProtocol
+// MARK: - TVFactoryProtocol
 extension RFFactory: CVFactoryProtocol {
-    
+
     var builders: [CVSectionProtocol] {
         /// Устанавливаем действие
         let action: ((Int) -> Void)? = { [weak self] section in
@@ -82,7 +82,7 @@ extension RFFactory: CVFactoryProtocol {
         }
         /// Определяем параметры по порядку
         let parameters = FilterParameters.allCases.sorted {$0.rawValue < $1.rawValue}
-        
+
         /// Создаем билдеры в зависимаости от варианта параметров
         let builders = parameters.compactMap {
             if let models = dictModels[$0] {
@@ -92,7 +92,7 @@ extension RFFactory: CVFactoryProtocol {
                                                          firstImage: Icons.plusFill.image,
                                                          action: action)
                     return createBuilder(tagModels: models, type: .tag(.withButton(headerModel: headerModel)))
-                    
+
                 default:
                     return createBuilder(tagModels: models, type: .tag(.base(title: $0.title)))
                 }
@@ -103,6 +103,3 @@ extension RFFactory: CVFactoryProtocol {
         return builders
     }
 }
-
-
-

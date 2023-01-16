@@ -15,11 +15,11 @@ final class CVAdapter: NSObject {
             collectionView.reloadData()
         }
     }
-    
+
     init(collectionView: UICollectionView) {
         self.collectionView = collectionView
     }
-    
+
     func configure(with builders: [CVSectionProtocol]) {
         self.builders = builders
     }
@@ -30,21 +30,21 @@ extension CVAdapter: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         builders.count
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         numberOfItemsInSection section: Int) -> Int {
         builders[section]
             .itemBuilder
             .itemCount()
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         builders[indexPath.section]
             .itemBuilder
             .cellAt(indexPath: indexPath, collectionView: collectionView)
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         viewForSupplementaryElementOfKind kind: String,
                         at indexPath: IndexPath) -> UICollectionReusableView {
@@ -65,7 +65,7 @@ extension CVAdapter: UICollectionViewDelegateFlowLayout {
             itemBuilder.didSelectItem(indexPath: indexPath)
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -82,7 +82,7 @@ extension CVAdapter: UICollectionViewDelegateFlowLayout {
             .headerBuilder?
             .headerSize(collectionView: collectionView) ?? CGSize.zero
     }
-    
+
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         insetForSectionAt section: Int) -> UIEdgeInsets {

@@ -14,7 +14,7 @@ extension UICollectionView {
         register(classType,
                  forCellWithReuseIdentifier: string)
     }
-    
+
     /// Регистрирует вью коллекции
     func register<T: UICollectionReusableView>(_ classType: T.Type,
                                                kind: String) {
@@ -23,7 +23,7 @@ extension UICollectionView {
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: string)
     }
-    
+
     /// Переиспользование ячейки коллекции
     func dequeueReusableCell<T: UICollectionViewCell>(_ classType: T.Type,
                                                       indexPath: IndexPath) -> T {
@@ -32,7 +32,7 @@ extension UICollectionView {
                                              for: indexPath) as? T else { fatalError() }
         return cell
     }
-    
+
     /// Переиспользование вью коллекции
     func dequeueReusableView<T: UICollectionReusableView>(_ classType: T.Type,
                                                           kind: String,

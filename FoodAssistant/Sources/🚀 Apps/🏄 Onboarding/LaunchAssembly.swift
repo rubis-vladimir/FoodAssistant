@@ -12,14 +12,14 @@ final class LaunchAssembly { }
 
 // MARK: - Assemblying
 extension LaunchAssembly: Assemblying {
-    
+
     func assembly() -> UIViewController {
         let router = LaunchRouter()
         let presenter = LaunchPresenter(router: router)
         let viewController = LaunchPageViewController(presenter: presenter)
-        
+
         presenter.view = viewController
-    
+
         return viewController
     }
 }

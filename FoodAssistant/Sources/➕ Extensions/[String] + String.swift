@@ -8,7 +8,7 @@
 import Foundation
 
 extension Array where Element == String {
-    
+
     /// Преобразует массив строк в одну строку
     func convertStringArrayToString() -> String {
         let array = self

@@ -11,7 +11,7 @@ import Foundation
 final class CVSectionBuilder: CVSectionProtocol {
     var headerBuilder: CVHeaderBuilderProtocol?
     var itemBuilder: CVItemBuilderProtocol
-    
+
     init(headerBuilder: CVHeaderBuilderProtocol?,
          itemBuilder: CVItemBuilderProtocol) {
         self.headerBuilder = headerBuilder

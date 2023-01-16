@@ -30,7 +30,7 @@ class CVIngredientCell: UICollectionViewCell {
     // MARK: - Properties
     weak var checkDelegate: CheckChangable?
     weak var deleteDelegate: DeleteTapable?
-    
+
     var isEditing: Bool = false {
         didSet {
             changeActionButtonImage()
@@ -40,16 +40,16 @@ class CVIngredientCell: UICollectionViewCell {
     private var isCheck: Bool = false {
         didSet {
             guard !isEditing else { return }
-            
+
             changeActionButtonImage()
-            
+
             guard let id = id else { return }
             checkDelegate?.didTapCheckButton(id: id, flag: isCheck)
         }
     }
-    
+
     private var id: Int?
-    
+
     private lazy var ingredientView = IngredientView()
 
     /// Кнопка действия
@@ -59,7 +59,7 @@ class CVIngredientCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     /// Общий контейнер
     private lazy var container: UIStackView = {
         let stack = UIStackView()
@@ -69,39 +69,40 @@ class CVIngredientCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupCell()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Functions
     func setupCell() {
         actionButton.addTarget(self,
                               action: #selector(didTapActionButton),
                               for: .touchUpInside)
-        
         setupConstraints()
     }
-    
+
     func configure(with ingredient: IngredientViewModel,
-                   flag: Bool) {
+                   flag: Bool,
+                   editing: Bool) {
         id = ingredient.id
         ingredientView.configure(with: ingredient)
         isCheck = flag
+        isEditing = editing
         changeActionButtonImage()
     }
-    
+
     func updateImage(with imageData: Data) {
         ingredientView.updateImage(with: imageData)
     }
-    
+
     private func setupConstraints() {
         [ingredientView, actionButton].forEach {
             container.addArrangedSubview($0)
@@ -113,11 +114,11 @@ class CVIngredientCell: UICollectionViewCell {
             container.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5),
             container.trailingAnchor.constraint(equalTo: trailingAnchor),
             container.bottomAnchor.constraint(equalTo: bottomAnchor),
-        
+
             actionButton.widthAnchor.constraint(equalTo: container.heightAnchor)
         ])
     }
-    
+
     /// Изменяет изображение кнопки
     private func changeActionButtonImage() {
         if isEditing {
@@ -128,7 +129,7 @@ class CVIngredientCell: UICollectionViewCell {
             actionButton.setImage(image, for: .normal)
         }
     }
-    
+
     @objc private func didTapActionButton() {
         if isEditing {
             guard let id = id else { return }

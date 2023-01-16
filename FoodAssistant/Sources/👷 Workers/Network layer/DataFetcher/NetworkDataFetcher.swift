@@ -9,7 +9,7 @@ import Foundation
 
 /// #Протокол получения и декодирования данных из сети
 protocol DataFetcherProtocol {
-    
+
     /// Создает и направляет запрос в сеть для получения данных
     ///  - Parameters:
     ///     - requestBuilder: конструктор запроса
@@ -20,11 +20,11 @@ protocol DataFetcherProtocol {
 
 /// #Сервис работы с сетью
 final class NetworkDataFetcher {
-    
+
     static let shared = NetworkDataFetcher()
-    
+
     private init() { }
-    
+
     /// Запрос данных из сети
     ///  - Parameters:
     ///   - request: http-запрос
@@ -32,14 +32,14 @@ final class NetworkDataFetcher {
     private func fetchData(request: URLRequest,
                            completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         URLSession.shared.dataTask(with: request) { (data, responce, error) in
-            
+
             if let httpResponse = responce as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
                     completion(.failure(.invalidResponceCode))
                     return
                 }
             }
-            
+
             guard let data = data,
                   error == nil  else {
                 completion(.failure(.dataLoadingError))
@@ -48,7 +48,7 @@ final class NetworkDataFetcher {
             completion(.success(data))
         }.resume()
     }
-    
+
     /// Декодирует данные в модель типа `T`
     ///  - Parameters:
     ///   - data: json-данные

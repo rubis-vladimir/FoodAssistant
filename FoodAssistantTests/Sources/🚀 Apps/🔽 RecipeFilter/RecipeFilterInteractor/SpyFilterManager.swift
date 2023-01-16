@@ -9,17 +9,17 @@ import Foundation
 @testable import FoodAssistant
 
 class SpyFilterManager: FilterManagement {
-    
-    var parameters: [FilterParameters : [String]]
-    
-    init(parameters: [FilterParameters : [String]]) {
+
+    var parameters: [FilterParameters: [String]]
+
+    init(parameters: [FilterParameters: [String]]) {
         self.parameters = parameters
     }
-    
-    func getRecipeParameters() -> [FilterParameters : [String]] {
+
+    func getRecipeParameters() -> [FilterParameters: [String]] {
         parameters
     }
-    
+
     func overWrite(parameter: FilterParameters, value: [String]) {
         parameters[parameter] = value
     }

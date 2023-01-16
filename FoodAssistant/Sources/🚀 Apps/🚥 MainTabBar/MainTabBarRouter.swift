@@ -16,7 +16,7 @@ protocol MainTabBarRoutable {
 /// #Слой навигации модуля MainTabBar
 final class MainTabBarRouter {
     private weak var navigationController: UINavigationController?
-    
+
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
@@ -24,13 +24,13 @@ final class MainTabBarRouter {
 
 // MARK: - MainTabBarRoutable
 extension MainTabBarRouter: MainTabBarRoutable {
-    
+
     func routeToBasket() {
         guard let navigationController = navigationController else {return}
-        let vc = BasketAssembly(navigationController: navigationController).assembly()
-        
+        let viewController = BasketAssembly(navigationController: navigationController).assembly()
+
         /// Добавляем кастомный переход
         navigationController.createCustomTransition(with: .moveIn)
-        navigationController.pushViewController(vc, animated: false)
+        navigationController.pushViewController(viewController, animated: false)
     }
 }

@@ -19,7 +19,7 @@ extension UIViewController {
         let alert = UIAlertController(title: title,
                                       message: text,
                                       preferredStyle: .alert)
-        
+
         if let action = action {
             let cancelAction = UIAlertAction(title: "Cancel".localize(), style: .cancel)
             let okAction = UIAlertAction(title: "OK", style: .default) { _ in
@@ -31,7 +31,7 @@ extension UIViewController {
             let okAction = UIAlertAction(title: "OK", style: .cancel)
             alert.addAction(okAction)
         }
-        
+
         present(alert, animated: true)
     }
 }

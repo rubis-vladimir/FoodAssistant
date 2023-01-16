@@ -15,9 +15,9 @@ protocol MainTabBarPresentation {
 
 /// #Слой презентации модуля MainTabBar
 final class MainTabBarPresenter {
-    
+
     private let router: MainTabBarRouter
-    
+
     init(router: MainTabBarRouter) {
         self.router = router
     }

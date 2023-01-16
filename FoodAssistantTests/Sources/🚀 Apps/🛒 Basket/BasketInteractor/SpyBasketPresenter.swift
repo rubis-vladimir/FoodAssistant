@@ -9,9 +9,9 @@ import Foundation
 @testable import FoodAssistant
 
 class SpyBasketPresenter: BasketBusinessLogicDelegate {
-    
+
     var count: Int = 0
-    
+
     func handOver(ingredients: [IngredientViewModel]) {
         count += 1
     }

@@ -19,9 +19,9 @@ protocol ShopListCalculatable {
 
 /// #Менеджер для рассчета ингредиентов
 final class IngredientCalculateManager {
-    
+
     private let storage: DBIngredientsManagement
-    
+
     init(storage: DBIngredientsManagement) {
         self.storage = storage
     }
@@ -29,37 +29,37 @@ final class IngredientCalculateManager {
 
 // MARK: - IngredientCalculatable
 extension IngredientCalculateManager: ShopListCalculatable {
-    
+
     func getShopList(ingredients: [IngredientProtocol],
                      complection: @escaping ([IngredientViewModel]) -> Void) {
-        
+
         storage.fetchIngredients(toUse: true) { [weak self] available in
             guard let self = self else { return }
             let result = self.calculateIngredients(necessary: ingredients, available: available)
             complection(result)
         }
     }
-    
+
     /// Объединяет одинаковые ингредиенты
     ///  - Parameter array:массив ингредиентов
     ///  - Returns: объединенный массив ингредиентов
     private func unitIngredients(_ array: [IngredientViewModel]) -> [IngredientViewModel] {
-        
+
         var finalArray: [IngredientViewModel] = []
         /// Получаем все идентификаторы ингредиентов и которые дублируются
-        let arrayId = array.map{ $0.id }
+        let arrayId = array.map { $0.id }
         let arrayIdDuplicates = arrayId.duplicate()
-        
+
         /// Для неповторяющихся ингредиентов - добавляем сразу в результирующий массив
         array.forEach {
             if !arrayIdDuplicates.contains($0.id) {
                 finalArray.append($0)
             }
         }
-        
+
         /// Для повторяющихся - сперва складываем количество
         arrayIdDuplicates.forEach { id in
-            let dublicate = array.filter{ $0.id == id }
+            let dublicate = array.filter { $0.id == id }
             let amount = dublicate.map { $0.amount }.reduce(0, +)
             let ingredient = IngredientViewModel(id: dublicate[0].id,
                                                  image: dublicate[0].image,
@@ -70,7 +70,7 @@ extension IngredientCalculateManager: ShopListCalculatable {
         }
         return finalArray
     }
-    
+
     /// Рассчитывает необходимые ингредиенты с учетом имеющихся
     ///  - Parameters:
     ///   - necessary:массив необходимых ингредиентов
@@ -85,21 +85,21 @@ extension IngredientCalculateManager: ShopListCalculatable {
         let unitNessesary = unitIngredients(necessary)
         /// Создаем результирующий массив и добавляем в него ингредиенты с учетом имеющихся
         var ingredients: [IngredientViewModel] = []
-        
+
         unitNessesary.forEach { ingredient in
             /// Количество
             var amount: Float = 0.0
             /// Ищем нужные ингредиенты
             let availableIngredients = available.filter({ $0 == ingredient })
-            
+
             if !availableIngredients.isEmpty {
                 /// Если нашли - в зависимости от единиц измерения указываем количество
                 if IngredientUnit.contains(ingredient.unit) {
                     /// для штук и граммов
                     amount = ingredient.amount - availableIngredients.map {$0.amount}.reduce(0, +)
-                    
+
                 } else if !IngredientVolume.contains(ingredient.unit) {
-                    
+
                     /// для всего, кроме единиц объема
                     amount = ingredient.amount
                     availableIngredients.forEach {
@@ -112,7 +112,7 @@ extension IngredientCalculateManager: ShopListCalculatable {
                 /// Если не нашли
                 amount = ingredient.amount
             }
-            
+
             guard amount > 0 else { return }
             ingredients.append(
                 IngredientViewModel(id: ingredient.id,

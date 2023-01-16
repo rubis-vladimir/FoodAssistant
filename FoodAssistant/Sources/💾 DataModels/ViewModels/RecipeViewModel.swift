@@ -21,7 +21,7 @@ struct RecipeViewModel {
     var isFavorite: Bool
     /// Время приготовления в минутах
     var cookingTime: String
-    
+
     init(with recipe: RecipeProtocol) {
         self.id = recipe.id
         self.title = recipe.title

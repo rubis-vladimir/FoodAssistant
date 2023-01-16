@@ -17,14 +17,14 @@ enum BasketSectionType {
 
 /// #Фабрика настройки коллекции модуля Basket
 final class BasketFactory {
-    
+
     private let collectionView: UICollectionView
     private let recipes: [RecipeViewModel]
     private let ingredients: [IngredientViewModel]
     private let cvAdapter: CVAdapter
-    
+
     private weak var delegate: BasketPresentation?
-    
+
     /// Инициализатор
     ///  - Parameters:
     ///    - collectionView: настраиваемая коллекция
@@ -39,23 +39,23 @@ final class BasketFactory {
         self.recipes = recipes
         self.ingredients = ingredients
         self.delegate = delegate
-        
+
         /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
-        
+
         setupCollectionView()
     }
-    
+
     /// Настраивает коллекцию
     private func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
-        
+
         cvAdapter.configure(with: builders)
     }
-    
+
     /// Создает строителя ячеек
     ///  - Parameter type: тип секции
     ///  - Returns: объект протокола строителя
@@ -68,7 +68,7 @@ final class BasketFactory {
                                                  configurators: [configurator],
                                                  height: Constants.heightSingleCell).configure(for: collectionView)
         case .shopList:
-            
+
             return ShopListConfigurator(models: ingredients,
                                         title: Constants.titleHeaderShopList,
                                         heightCell: Constants.heightShopListCell,
@@ -81,10 +81,10 @@ final class BasketFactory {
 extension BasketFactory: CVFactoryProtocol {
     var builders: [CVSectionProtocol] {
         var builders: [CVSectionProtocol] = []
-        
+
         builders.append(createBuilder(type: .addedRecipe))
         builders.append(createBuilder(type: .shopList))
-        
+
         return builders
     }
 }
@@ -94,7 +94,7 @@ extension BasketFactory {
     private struct Constants {
         static let titleHeaderAddedRecipe = "Added recipes".localize()
         static let heightSingleCell: CGFloat = 200
-        
+
         static let titleHeaderShopList = "Shop-list".localize()
         static let heightShopListCell: CGFloat = 55
     }

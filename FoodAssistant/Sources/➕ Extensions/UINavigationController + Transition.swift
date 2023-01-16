@@ -15,7 +15,7 @@ extension UINavigationController {
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         transition.type = transitionType
         transition.subtype = CATransitionSubtype.fromTop
-        
+
         self.view.layer.add(transition, forKey: nil)
     }
 }
