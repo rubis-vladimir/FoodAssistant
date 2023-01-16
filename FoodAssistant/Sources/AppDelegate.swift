@@ -13,14 +13,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+    func application(_ application: UIApplication,
+                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+
         window = UIWindow()
-        let ud = UserDefaultsManager.shared
+        let userDefaults = UserDefaultsManager.shared
 
         ApplicationCoordinator(window: window,
-                               userDefaults: ud).start()
+                               userDefaults: userDefaults).start()
         return true
     }
 }
-

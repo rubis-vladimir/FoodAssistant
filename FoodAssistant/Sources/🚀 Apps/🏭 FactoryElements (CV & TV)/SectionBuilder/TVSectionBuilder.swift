@@ -11,7 +11,7 @@ import Foundation
 final class TVSectionBuilder: TVSectionProtocol {
     var titleHeader: String?
     var cellBuilder: TVCellBuilderProtocol
-    
+
     init(titleHeader: String?,
          cellBuilder: TVCellBuilderProtocol) {
         self.titleHeader = titleHeader

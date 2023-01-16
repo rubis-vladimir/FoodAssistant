@@ -13,9 +13,9 @@ final class FavoriteItemBuilder {
     private let height: CGFloat
     /// Вью модели рецептов
     private let models: [RecipeViewModel]
-    
+
     weak var delegate: UserProfilePresentation?
-    
+
     init(models: [RecipeViewModel],
          height: CGFloat,
          delegate: UserProfilePresentation?) {
@@ -31,29 +31,29 @@ extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
     func register(collectionView: UICollectionView) {
         collectionView.register(SecondRecipeCell.self)
     }
-    
+
     func itemCount() -> Int { models.count }
-    
+
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
                                                       itemPerRow: 1,
                                                       padding: AppConstants.padding),
                height: height)
     }
-    
+
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
-        
+
         /// Получаем модель для ячейки
         let model = models[indexPath.item]
-        
+
         /// Создаем и настраиваем ячейку
         let cell = collectionView.dequeueReusableCell(SecondRecipeCell.self,
                                                       indexPath: indexPath)
         cell.deleteDelegate = delegate
         cell.basketDelegate = delegate
         cell.configure(with: model, type: .delete)
-        
+
         if let imageName = model.imageName {
             /// Загрузка изображения
             delegate?.fetchImage(imageName,
@@ -65,7 +65,7 @@ extension FavoriteItemBuilder: CVSelectableItemBuilderProtocol {
         }
         return cell
     }
-    
+
     func didSelectItem(indexPath: IndexPath) {
         let model = models[indexPath.item]
         delegate?.didSelectItem(id: model.id)

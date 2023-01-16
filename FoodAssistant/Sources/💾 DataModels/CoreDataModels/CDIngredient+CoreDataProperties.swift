@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension CDIngredient: IngredientProtocol {
     var id: Int { Int(cdId) }
 

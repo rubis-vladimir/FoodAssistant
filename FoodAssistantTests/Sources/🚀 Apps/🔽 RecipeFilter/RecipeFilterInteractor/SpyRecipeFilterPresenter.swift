@@ -9,9 +9,9 @@ import Foundation
 @testable import FoodAssistant
 
 class SpyRecipeFilterPresenter: RecipeFilterBusinessLogicDelegate {
-    
+
     var updateCount = 0
-    
+
     func update(section: Int) {
         updateCount += 1
     }

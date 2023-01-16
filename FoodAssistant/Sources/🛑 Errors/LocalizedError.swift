@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Протокол описания ошибки
-protocol LocalizedError : Error {
+protocol LocalizedError: Error {
     /// Заголовок ошибки
     var errorTitle: String? { get }
     /// Причина ошибки

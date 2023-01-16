@@ -11,9 +11,9 @@ import UIKit
 final class BasicInfoCellBuilder {
     /// Рецепт
     private let model: RecipeProtocol
-    
+
     weak var delegate: DetailInfoPresentation?
-    
+
     init(model: RecipeProtocol,
          delegate: DetailInfoPresentation?) {
         self.model = model
@@ -26,16 +26,16 @@ extension BasicInfoCellBuilder: TVCellBuilderProtocol {
     func register(tableView: UITableView) {
         tableView.register(BasicInfoCell.self)
     }
-    
+
     func cellHeight() -> CGFloat { UITableView.automaticDimension }
-    
+
     func cellCount() -> Int { 1 }
-    
+
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(BasicInfoCell.self,
                                                  indexPath: indexPath)
         cell.configure(with: model)
-        
+
         if let imageName = model.imageName {
             delegate?.fetchImage(imageName, type: .recipe) { imageData in
                 DispatchQueue.main.async {
@@ -46,4 +46,3 @@ extension BasicInfoCellBuilder: TVCellBuilderProtocol {
         return cell
     }
 }
-

@@ -13,9 +13,9 @@ final class IngredientsCellBuilder {
     private let height: CGFloat
     /// Ингредиенты
     private let ingredients: [IngredientViewModel]
-    
+
     weak var delegate: DetailInfoPresentation?
-    
+
     init(ingredients: [IngredientViewModel],
          height: CGFloat,
          delegate: DetailInfoPresentation?) {
@@ -30,17 +30,17 @@ extension IngredientsCellBuilder: TVCellBuilderProtocol {
     func register(tableView: UITableView) {
         tableView.register(TVIngredientCell.self)
     }
-    
+
     func cellHeight() -> CGFloat { height }
-    
+
     func cellCount() -> Int { ingredients.count }
-    
+
     func cellAt(indexPath: IndexPath, tableView: UITableView) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(TVIngredientCell.self,
                                                  indexPath: indexPath)
         let ingredient = ingredients[indexPath.row]
         cell.configure(with: ingredient, flag: ingredient.isCheck)
-        
+
         if let imageName = ingredient.image {
             delegate?.fetchImage(imageName,
                                  type: .ingredient) { imageData in

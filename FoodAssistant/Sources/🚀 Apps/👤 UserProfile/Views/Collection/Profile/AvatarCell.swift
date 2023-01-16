@@ -9,9 +9,9 @@ import UIKit
 
 /// #Ячейка аватара пользователя (В РАБОТЕ)
 final class AvatarCell: UICollectionViewCell {
-    
+
     weak var delegate: UserProfilePresentation?
-    
+
     lazy var userContainer: UIView = {
         var view = UIView()
         view.backgroundColor = Palette.bgColor.color
@@ -20,10 +20,10 @@ final class AvatarCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     let stack = UIStackView()
     let parametersStack = UIStackView()
-    
+
     lazy var fullnameLabel: UILabel = {
         var label = UILabel()
         label.text = "Рубис Владимир"
@@ -32,14 +32,14 @@ final class AvatarCell: UICollectionViewCell {
         label.textAlignment = .center
         return label
     }()
-    
+
     lazy var detailButton: UIButton = {
         var button = UIButton()
         button.setTitle("Подробнее", for: .normal)
         button.setTitleColor(.white, for: .normal)
         return button
     }()
-    
+
     lazy var avatarView: UIImageView = {
         var view = UIImageView()
         view.layer.add(shadow: AppConstants.Shadow.defaultOne)
@@ -50,68 +50,69 @@ final class AvatarCell: UICollectionViewCell {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupCell()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     func setupCell() {
         let valueLabels = ["30", "172", "75"]
-        
+
         for index in 0..<Constants.parameterLabels.count {
             let stack = UIStackView()
             stack.axis = .vertical
             stack.spacing = 5
             stack.alignment = .center
-            
+
             let valueLabel = UILabel()
             valueLabel.text = valueLabels[index]
             valueLabel.font = valueLabel.font.withSize(30)
-            
+
             let parameterLabel = UILabel()
             parameterLabel.text = Constants.parameterLabels[index]
-            
+
             stack.addArrangedSubview(valueLabel)
             stack.addArrangedSubview(parameterLabel)
             parametersStack.addArrangedSubview(stack)
         }
-        
+
         setupConstraints()
     }
-    
+
     func setupConstraints() {
-        
+
         stack.translatesAutoresizingMaskIntoConstraints = false
         stack.spacing = 20
         stack.addArrangedSubview(avatarView)
         stack.addArrangedSubview(fullnameLabel)
-        
+
         parametersStack.spacing = 20
         parametersStack.distribution = .fillEqually
         parametersStack.translatesAutoresizingMaskIntoConstraints = false
-        
+
         avatarView.layer.cornerRadius = 50
-        
+
         userContainer.addSubview(parametersStack)
         userContainer.addSubview(stack)
         addSubview(userContainer)
-        
+
         let padding: CGFloat = 20
 
         parametersStack.bottomAnchor.constraint(equalTo: userContainer.bottomAnchor, constant: -padding).isActive = true
         parametersStack.centerXAnchor.constraint(equalTo: userContainer.centerXAnchor).isActive = true
-        parametersStack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: padding).isActive = true
-        
+        parametersStack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor,
+                                                 constant: padding).isActive = true
+
         stack.topAnchor.constraint(equalTo: userContainer.topAnchor, constant: padding).isActive = true
         stack.leadingAnchor.constraint(equalTo: userContainer.leadingAnchor, constant: padding).isActive = true
         stack.centerXAnchor.constraint(equalTo: userContainer.centerXAnchor).isActive = true
-        
+
         avatarView.widthAnchor.constraint(equalToConstant: 130).isActive = true
         avatarView.heightAnchor.constraint(equalToConstant: 130).isActive = true
 

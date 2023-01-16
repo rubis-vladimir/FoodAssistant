@@ -9,9 +9,9 @@ import Foundation
 @testable import FoodAssistant
 
 class StubIngredientManager: ShopListCalculatable {
-    
+
     func getShopList(ingredients: [IngredientProtocol],
                      complection: @escaping ([IngredientViewModel]) -> Void) {
-        complection( ingredients.map{ IngredientViewModel(ingredient: $0) } )
+        complection(ingredients.map { IngredientViewModel(ingredient: $0) })
     }
 }

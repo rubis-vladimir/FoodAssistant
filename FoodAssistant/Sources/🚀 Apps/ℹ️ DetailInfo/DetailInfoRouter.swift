@@ -10,7 +10,7 @@ import UIKit
 /// #Слой навигации модуля DetailInfo
 final class DetailInfoRouter {
     private let navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }

@@ -13,9 +13,9 @@ final class FridgeItemBuilder {
     private let height: CGFloat
     /// Вью модели ингредиентов
     private let models: [IngredientViewModel]
-    
+
     weak var delegate: UserProfilePresentation?
-    
+
     init(models: [IngredientViewModel],
          height: CGFloat,
          delegate: UserProfilePresentation?) {
@@ -27,32 +27,35 @@ final class FridgeItemBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension FridgeItemBuilder: CVItemBuilderProtocol {
-    
+
     func register(collectionView: UICollectionView) {
         collectionView.register(CVIngredientCell.self)
     }
-    
+
     func itemCount() -> Int { models.count }
-    
+
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
                                                       itemPerRow: 1,
                                                       padding: AppConstants.padding),
                height: height)
     }
-    
+
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(CVIngredientCell.self,
                                                       indexPath: indexPath)
         let model = models[indexPath.item]
         let flag = model.toUse
-        
+
+        let editing = collectionView.allowsMultipleSelection
+
         cell.configure(with: model,
-                       flag: flag)
+                       flag: flag,
+                       editing: editing)
         cell.checkDelegate = delegate
         cell.deleteDelegate = delegate
-        
+
         if let imageName = model.image {
             delegate?.fetchImage(imageName,
                                  type: .ingredient) { imageData in
@@ -64,4 +67,3 @@ extension FridgeItemBuilder: CVItemBuilderProtocol {
         return cell
     }
 }
-

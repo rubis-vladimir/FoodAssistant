@@ -9,7 +9,6 @@ import UIKit
 
 /// #Ячейка с информацией о питательных веществах
 final class NutrientsCell: TVBaseCell {
-    
     // MARK: - Properties
     private let container: UIStackView = {
        let stack = UIStackView()
@@ -18,7 +17,7 @@ final class NutrientsCell: TVBaseCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     // MARK: - Init
     convenience init(nutrients: [NutrientProtocol]) {
         self.init()
@@ -27,10 +26,10 @@ final class NutrientsCell: TVBaseCell {
         container.layer.add(shadow: AppConstants.Shadow.defaultOne)
         container.layer.cornerRadius = AppConstants.cornerRadius
     }
-    
+
     // MARK: - Function
     func configure(with nutrients: [NutrientProtocol]) {
-        
+
         if let calories = nutrients.first(where: {$0.name == Nutrients.calories.rawValue}) {
             let stack = createStack(title: Nutrients.calories.rawValue.localize(),
                                     number: "\(calories.amount)")
@@ -51,18 +50,17 @@ final class NutrientsCell: TVBaseCell {
                                     number: "\(carbohydrates.amount)")
             container.addArrangedSubview(stack)
         }
-        
     }
-    
+
     override func setupCell() {
         setupConstraints()
     }
-    
+
     func setupConstraints() {
         addSubview(container)
-        
+
         let padding = AppConstants.padding
-        
+
         NSLayoutConstraint.activate([
             container.topAnchor.constraint(equalTo: topAnchor, constant: padding / 2),
             container.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding / 2),
@@ -70,7 +68,7 @@ final class NutrientsCell: TVBaseCell {
             container.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding)
         ])
     }
-    
+
     /// Создает стэк из лейблов
     ///  - Parameters:
     ///   - title: название питательного вещества
@@ -81,15 +79,15 @@ final class NutrientsCell: TVBaseCell {
         let stack = UIStackView()
         stack.axis = .vertical
         stack.spacing = 8
-        
+
         let titleLabel = UILabel()
         let numberLabel = UILabel()
-        
+
         titleLabel.text = title
         numberLabel.text = number
         titleLabel.font = Fonts.main
         numberLabel.font = Fonts.selected
-        
+
         [titleLabel, numberLabel].forEach {
             $0.textAlignment = .center
             $0.minimumScaleFactor = 0.5
@@ -108,4 +106,3 @@ extension NutrientsCell {
         case carbohydrates = "Carbohydrates"
     }
 }
-

@@ -22,17 +22,17 @@ final class ImageCacheService {
         cache.totalCostLimit = config.memoryLimit
         return cache
     }()
-    
+
     private let config: Config
-    
+
     struct Config {
         let countLimit: Int
         let memoryLimit: Int
-        
+
         static let defaultConfig = Config(countLimit: 100,
                                           memoryLimit: 1024 * 1024 * 100)
     }
-    
+
     init(config: Config = Config.defaultConfig) {
         self.config = config
     }
@@ -40,7 +40,7 @@ final class ImageCacheService {
 
 // MARK: - ImageCacheProtocol
 extension ImageCacheService: ImageCacheProtocol {
-    
+
     subscript(_ key: URL) -> Data? {
         get {
             cache.value(forKey: key)

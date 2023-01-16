@@ -21,7 +21,6 @@ protocol ImageBusinessLogic {
 
 /// #Протокол получения рецепта
 protocol RecipeReceived {
-    
     /// Получить рецепт по идентификатору
     ///  - Parameters:
     ///   - id: идентификатор

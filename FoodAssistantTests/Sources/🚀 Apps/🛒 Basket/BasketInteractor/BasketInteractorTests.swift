@@ -15,12 +15,12 @@ final class BasketInteractorTests: XCTestCase {
     var storage: SpyStorageManager!
     var presenter: SpyBasketPresenter!
     var sut: BasketInteractor!
-    
+
     override func setUp() {
         super.setUp()
         assembly()
     }
-    
+
     override func tearDown() {
         ingredientManager = nil
         imageDownloader = nil
@@ -29,7 +29,7 @@ final class BasketInteractorTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     func assembly() {
         let mockIngredients: [Ingredient] = [Ingredient(id: 357,
                                                         name: "Cheese Bar",
@@ -37,7 +37,7 @@ final class BasketInteractorTests: XCTestCase {
                                              Ingredient(id: 246,
                                                         name: "Sausage Baz",
                                                         dtoAmount: 300)]
-        
+
         let mockArrayRecipes: [RecipeProtocol] = [Recipe(id: 5678,
                                                          title: "Pizza Baz",
                                                          readyInMinutes: 20,
@@ -47,7 +47,7 @@ final class BasketInteractorTests: XCTestCase {
                                                          title: "Borsch Foo",
                                                          readyInMinutes: 60,
                                                          servings: 3)]
-        
+
         ingredientManager = StubIngredientManager()
         imageDownloader = StubImageDownloader(error: .dataLoadingError)
         storage = SpyStorageManager(arrayRecipes: mockArrayRecipes,
@@ -63,48 +63,48 @@ final class BasketInteractorTests: XCTestCase {
         sut.fetchRecipeFromBasket { _ in }
         sut.fetchIngredients { _ in }
     }
-    
+
     func testAddIngredientsInFridge() {
-        //arange
+        // arange
         getModels()
-        
-        //act
+
+        // act
         sut.changeIsCheck(id: 357, flag: true)
         sut.changeIsCheck(id: 124, flag: false)
         let count = presenter.count
-        
-        //assert
+
+        // assert
         XCTAssertEqual(1, count)
-        
-        //act
+
+        // act
         sut.addIngredientsInFridge()
         let save = storage.arrayIds.last
-        
-        //assert
+
+        // assert
         XCTAssertEqual(357, save)
     }
-    
+
     func testRemoveRecipe() {
-        //arange
+        // arange
         let id = 1234
         getModels()
-        
-        //act
+
+        // act
         sut.removeRecipe(id: id)
         let count = storage.arrayIds.count
-        
-        //assert
+
+        // assert
         XCTAssertEqual(0, count)
     }
-    
+
     func testFetchImage() {
-        //act
+        // act
         sut.fetchImage("",
                        type: .recipe) { result in
-            //assert
+            // assert
             switch result {
-            case .success(_):
-                XCTFail()
+            case .success:
+                XCTFail("Must be error")
             case .failure(let error):
                 XCTAssertEqual(DataFetcherError.dataLoadingError, error)
             }

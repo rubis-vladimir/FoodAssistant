@@ -11,28 +11,28 @@ import XCTest
 class FilterManagerTests: XCTestCase {
 
     var sut: FilterManager!
-    
+
     override func setUp() {
         super.setUp()
         sut = FilterManager()
     }
-    
+
     override func tearDown() {
         sut = nil
         super.tearDown()
     }
-    
+
     func testOverWrite() {
-        //arange
+        // arange
         let parameter: FilterParameters = .excludeIngredients
         let value: [String] = ["Orange Baz", "Banana Bar"]
-        
-        //act
+
+        // act
         sut.overWrite(parameter: parameter,
                       value: value)
         let parameters = sut.getRecipeParameters()
-        
-        //assert
+
+        // assert
         XCTAssertEqual("Under 5 min",
                        parameters[.time]?[0])
         XCTAssertEqual("Banana Bar",

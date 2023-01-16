@@ -13,18 +13,18 @@ public enum TestCase {
 }
 
 final class RecipeListInteractorTests: XCTestCase {
-    
+
     var dataFetcher: StubDataFetcher!
     var imageDownloader: StubImageDownloader!
     var translateService: StubTranslateService!
     var storage: SpyStorageManager!
     var sut: RecipeListInteractor!
-    
+
     override func setUp() {
         super.setUp()
         imageDownloader = StubImageDownloader()
     }
-    
+
     override func tearDown() {
         dataFetcher = nil
         imageDownloader = nil
@@ -33,11 +33,11 @@ final class RecipeListInteractorTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     /// Конфигурация для успешных и неуспешных кейсов
     func assembly(caseDF: TestCase,
                   caseTS: TestCase) {
-        
+
         let mockEnRecipes: [Recipe] = [Recipe(id: 5678,
                                               title: "Pizza Baz",
                                               readyInMinutes: 20,
@@ -54,9 +54,9 @@ final class RecipeListInteractorTests: XCTestCase {
                                               title: "Борщ Бар",
                                               readyInMinutes: 60,
                                               servings: 3)]
-        
+
         storage = SpyStorageManager(arrayId: [5678])
-        
+
         switch caseDF {
         case .success:
             dataFetcher = StubDataFetcher(error: nil,
@@ -65,7 +65,7 @@ final class RecipeListInteractorTests: XCTestCase {
             dataFetcher = StubDataFetcher(error: .dataLoadingError,
                                           models: [])
         }
-        
+
         switch caseTS {
         case .success:
             translateService = StubTranslateService(ruRecipe: mockRuRecipes,
@@ -73,13 +73,13 @@ final class RecipeListInteractorTests: XCTestCase {
         case .failure:
             translateService = StubTranslateService(error: .translateError)
         }
-        
+
         sut = RecipeListInteractor(dataFetcher: dataFetcher,
                                    imageDownloader: imageDownloader,
                                    translateService: translateService,
                                    storage: storage)
     }
-    
+
     func currentAppleLanguage() -> String {
         let appleLanguageKey = "AppleLanguages"
         let userdef = UserDefaults.standard
@@ -89,103 +89,102 @@ final class RecipeListInteractorTests: XCTestCase {
                 if let range = current.range(of: "-") {
                     current = String(current[..<range.lowerBound])
                 }
-                
+
                 currentWithoutLocale = current
             }
         }
         return currentWithoutLocale
     }
-    
-    
+
     func testFetchRecommendedDFFailure() {
-        //arange
+        // arange
         assembly(caseDF: .failure,
                  caseTS: .success)
-        
-        //act
+
+        // act
         sut.fetchRecommended(number: 5) { result in
             switch result {
             case .success:
-                //assert
-                XCTFail()
-                
+                // assert
+                XCTFail("Must be error")
+
             case .failure(let error):
-                //assert
+                // assert
                 XCTAssertEqual(DataFetcherError.dataLoadingError, error)
             }
         }
     }
-    
+
     func testFetchRecommendedDFSuccessTSFailore() {
-        //arange
+        // arange
         assembly(caseDF: .success,
                  caseTS: .failure)
-        
-        //act
+
+        // act
         sut.fetchRecommended(number: 5) { result in
             switch result {
             case .success(let recipes): /// Непереведенные рецепты
                 let recipeCount = recipes.count
                 let recipeName = recipes.first?.title
-                
-                //assert
+
+                // assert
                 XCTAssertEqual(2, recipeCount)
                 XCTAssertEqual("Pizza Baz", recipeName)
-                
+
             case .failure(let error):
-                //assert
+                // assert
                 XCTAssertEqual(DataFetcherError.translateError, error)
             }
         }
     }
-    
+
     func testFetchRecommendedDFSuccessTSSuccess() {
-        //arange
+        // arange
         assembly(caseDF: .success,
                  caseTS: .success)
-        
-        //act
+
+        // act
         sut.fetchRecommended(number: 5) { [weak self] result in
             switch result {
             case .success(let recipes): /// Переведенные рецепты
                 let recipeCount = recipes.count
                 let recipeFirst = recipes.first
-                
-                //assert
+
+                // assert
                 XCTAssertEqual(2, recipeCount)
-                
+
                 if self?.currentAppleLanguage() == "ru" {
                     XCTAssertEqual("Пицца Баз", recipeFirst?.title)
                 }
-                
+
             case .failure:
-                //assert
-                XCTFail()
+                // assert
+                XCTFail("No data")
             }
         }
     }
-    
+
     func testSaveRecipe() {
-        //arange
+        // arange
         assembly(caseDF: .success,
                  caseTS: .success)
-        
-        //act
+
+        // act
         sut.fetchRecommended(number: 5) { _ in } /// Загружаем рецепты
         sut.saveRecipe(id: 1234,
                        for: .isFavorite) /// Сохраняем в избранное
         sut.updateFavoriteId() /// Обновляем список изранных Id
         let check = sut.checkFavorite(id: 1234) /// Чек флага
         var count = storage.arrayIds.count
-        
-        //assert
+
+        // assert
         XCTAssertEqual(true, check)
         XCTAssertEqual(2, count)
-        
-        //act
+
+        // act
         sut.removeRecipe(id: 5678)
         count = storage.arrayIds.count
-        //assert
+        // assert
         XCTAssertEqual(1, count)
     }
 }

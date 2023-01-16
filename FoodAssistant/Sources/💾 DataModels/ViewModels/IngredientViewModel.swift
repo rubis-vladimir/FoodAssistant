@@ -23,7 +23,7 @@ struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
     var toUse: Bool
     /// Для Шоп-листа
     var isCheck: Bool = false
-    
+
     init(ingredient: IngredientProtocol) {
         self.id = ingredient.id
         self.image = ingredient.image
@@ -32,7 +32,7 @@ struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
         self.unit = ingredient.unit
         self.toUse = ingredient.toUse
     }
-    
+
     init(id: Int,
          image: String?,
          name: String,
@@ -45,8 +45,8 @@ struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
         self.unit = unit
         self.toUse = true
     }
-    
-    static func ==(lhs: IngredientViewModel, rhs: IngredientViewModel) -> Bool {
+
+    static func == (lhs: IngredientViewModel, rhs: IngredientViewModel) -> Bool {
         return lhs.id == rhs.id || lhs.name == rhs.name
     }
 }

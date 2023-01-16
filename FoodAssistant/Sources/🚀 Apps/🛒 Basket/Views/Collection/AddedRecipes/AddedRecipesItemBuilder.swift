@@ -11,9 +11,9 @@ import UIKit
 final class AddedRecipesItemBuilder {
     /// Вью модели рецептов
     private let recipes: [RecipeViewModel]
-    
+
     weak var delegate: BasketPresentation?
-    
+
     init(recipes: [RecipeViewModel],
          delegate: BasketPresentation?) {
         self.recipes = recipes
@@ -23,19 +23,19 @@ final class AddedRecipesItemBuilder {
 
 // MARK: - RecommendedItemBuilder
 extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
-    
+
     func register(collectionView: UICollectionView) {
         collectionView.register(FirstRecipeCell.self)
     }
-    
+
     func itemCount() -> Int { recipes.count }
-    
+
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
-        
+
         CGSize(width: collectionView.bounds.height * 0.75,
                height: collectionView.bounds.height)
     }
-    
+
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(FirstRecipeCell.self,
@@ -43,7 +43,7 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
         let recipe = recipes[indexPath.item]
         cell.deleteDelegate = delegate
         cell.configure(with: recipe, type: .delete)
-        
+
         if let imageName = recipe.imageName {
             delegate?.fetchImage(imageName,
                                  type: .recipe) { imageData in
@@ -54,7 +54,7 @@ extension AddedRecipesItemBuilder: CVSelectableItemBuilderProtocol {
         }
         return cell
     }
-    
+
     func didSelectItem(indexPath: IndexPath) {
         let id = recipes[indexPath.row].id
         delegate?.didSelectItem(id: id)

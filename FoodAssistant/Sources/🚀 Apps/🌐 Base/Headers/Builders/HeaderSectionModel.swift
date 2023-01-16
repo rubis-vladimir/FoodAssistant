@@ -12,9 +12,9 @@ struct HeaderSectionModel {
     /// Название секции
     var title: String
     /// Первое изображение кнопки
-    var firstImage: UIImage? = nil
+    var firstImage: UIImage?
     /// Второе изображение кнопки
-    var secondImage: UIImage? = nil
+    var secondImage: UIImage?
     /// Действие
-    var action: ((Int) -> Void)? = nil
+    var action: ((Int) -> Void)?
 }

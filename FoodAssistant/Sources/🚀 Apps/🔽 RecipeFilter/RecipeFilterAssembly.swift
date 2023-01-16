@@ -10,9 +10,10 @@ import UIKit
 /// #Компоновщик модуля RecipeFilter
 final class RecipeFilterAssembly {
     private let navigationController: UINavigationController
+    /// Текст из поискового бара
     private let text: String
     private weak var searchDelegate: SeachRecipesRequested?
-    
+
     init(navigationController: UINavigationController,
          text: String,
          searchDelegate: SeachRecipesRequested?) {
@@ -25,9 +26,9 @@ final class RecipeFilterAssembly {
 // MARK: - Assemblying
 extension RecipeFilterAssembly: Assemblying {
     func assembly() -> UIViewController {
-        
+
         let filterManager = FilterManager()
-        
+
         let router = RecipeFilterRouter(navigationController: navigationController)
         let interactor = RecipeFilterInteractor(filterManager: filterManager)
         let presenter = RecipeFilterPresenter(interactor: interactor,
@@ -36,9 +37,8 @@ extension RecipeFilterAssembly: Assemblying {
         presenter.view = viewController
         presenter.rootPresenter = searchDelegate
         interactor.presenter = presenter
-        
+
         presenter.getStartData(text: text)
         return viewController
     }
 }
-

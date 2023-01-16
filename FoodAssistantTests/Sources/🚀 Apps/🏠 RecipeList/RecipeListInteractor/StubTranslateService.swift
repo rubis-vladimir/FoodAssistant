@@ -9,13 +9,13 @@ import Foundation
 @testable import FoodAssistant
 
 class StubTranslateService: Translatable {
-    
+
     var ruRecipe: [Recipe]
     var ruText: TranslateResponce?
     var enText: TranslateResponce?
     var error: DataFetcherError?
     var target: String?
-    
+
     init(ruRecipe: [Recipe] = [],
          ruText: TranslateResponce? = nil,
          enText: TranslateResponce? = nil,
@@ -27,7 +27,7 @@ class StubTranslateService: Translatable {
         self.error = error
         self.target = target
     }
-    
+
     func fetchTranslate(recipes: [Recipe],
                         sourse: String,
                         target: String,
@@ -38,7 +38,7 @@ class StubTranslateService: Translatable {
             completion(.success(ruRecipe))
         }
     }
-    
+
     func translate(with texts: [String],
                    source: String,
                    target: String,

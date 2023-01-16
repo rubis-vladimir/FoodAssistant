@@ -35,12 +35,12 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
 /// #Слой презентации модуля DetailInfo
 final class DetailInfoPresenter {
     private(set) var recipe: RecipeProtocol
-    
+
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
-    
+
     weak var view: DetailInfoViewable?
-    
+
     init(interactor: DetailInfoBusinessLogic,
          router: DetailInfoRouting,
          recipe: RecipeProtocol) {
@@ -52,15 +52,15 @@ final class DetailInfoPresenter {
 
 // MARK: - DetailInfoPresentation
 extension DetailInfoPresenter: DetailInfoPresentation {
-        
+
     func didTapChangeFavoriteButton(_ flag: Bool) {
         interactor.updateFavotite(flag, recipe: recipe)
     }
-    
+
     func checkFor(ingredient: IngredientViewModel) -> Bool {
         interactor.checkFor(ingredient: ingredient)
     }
-    
+
     // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
@@ -75,12 +75,12 @@ extension DetailInfoPresenter: DetailInfoPresentation {
             }
         }
     }
-    
+
     // BackTappable
     func didTapBackButton() {
         router.routeToBack()
     }
-    
+
     // TimerTapable
     func didTapTimerButton(step: Int) {
         view?.showTimer()

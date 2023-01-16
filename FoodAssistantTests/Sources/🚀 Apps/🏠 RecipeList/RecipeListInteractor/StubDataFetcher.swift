@@ -9,16 +9,16 @@ import Foundation
 @testable import FoodAssistant
 
 class StubDataFetcher: DataFetcherProtocol {
-    
+
     var error: DataFetcherError?
     var models: [Recipe]
-    
+
     init(error: DataFetcherError? = nil,
          models: [Recipe] = []) {
         self.error = error
         self.models = models
     }
-    
+
     func fetchObject<T>(urlRequest: URLRequest,
                         completion: @escaping (Result<T, DataFetcherError>) -> Void) where T: Decodable {
         if let error = error {

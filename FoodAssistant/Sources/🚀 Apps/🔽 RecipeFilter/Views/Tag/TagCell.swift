@@ -19,13 +19,12 @@ protocol CellTapable: AnyObject {
 
 /// #Ячейка с тэгом
 class TagCell: UICollectionViewCell {
-    
     // MARK: - Properties
     weak var delegate: CellTapable?
-    
+
     private let singleTapGestureRecognizer = UITapGestureRecognizer()
     private var indexPath: IndexPath?
-    
+
     var isTap: Bool = false {
         didSet {
             if isTap {
@@ -37,7 +36,7 @@ class TagCell: UICollectionViewCell {
             }
         }
     }
-    
+
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = Fonts.selected
@@ -46,7 +45,7 @@ class TagCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     // MARK: - Init & Override
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -54,17 +53,17 @@ class TagCell: UICollectionViewCell {
         setupGestureRecognizers()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
-        
+
         layer.cornerRadius = frame.height / 2
     }
-    
+
     // MARK: - Function
     /// Конфигурирует ячейку
     /// - Parameters:
@@ -76,27 +75,27 @@ class TagCell: UICollectionViewCell {
                    indexPath: IndexPath) {
         titleLabel.text = title
         self.indexPath = indexPath
-        
+
         isTap = flag
     }
-    
+
     private func setupCell() {
         singleTapGestureRecognizer.delegate = self
         layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 0.5
     }
-    
+
     /// Настройка отработки касаний экрана
     private func setupGestureRecognizers() {
         singleTapGestureRecognizer.addTarget(self, action: #selector(handleSingleTapGesture(_:)))
         singleTapGestureRecognizer.numberOfTapsRequired = 1
-        
+
         self.addGestureRecognizer(singleTapGestureRecognizer)
     }
-    
+
     private func setupConstraints() {
         addSubview(titleLabel)
-        
+
         NSLayoutConstraint.activate([
             titleLabel.topAnchor.constraint(equalTo: topAnchor),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor),
@@ -104,7 +103,7 @@ class TagCell: UICollectionViewCell {
             titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor)
         ])
     }
-    
+
     /// Обработка одного касания
     @objc private func handleSingleTapGesture(_ gestureRecognizer: UITapGestureRecognizer) {
         isTap.toggle()

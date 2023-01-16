@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIViewController {
-    
     /// Создает кастомную кнопку
     ///  - Parameters:
     ///   - icon: изображение

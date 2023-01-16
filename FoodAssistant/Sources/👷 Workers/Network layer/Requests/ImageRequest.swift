@@ -12,7 +12,6 @@ enum ImageRequest {
     /// Запрос изображения рецепта
     ///  - Parameter imageName: название изображения
     case recipe(imageName: String)
-    
     /// Запрос изображения ингредиента
     ///  - Parameters:
     ///   - imageName: название изображения
@@ -40,7 +39,7 @@ extension ImageRequest {
 extension ImageRequest: RequestBuilding {
 
     var baseUrl: String { "spoonacular.com" }
-    
+
     var path: String {
         switch self {
         case let .recipe(imageName):
@@ -49,9 +48,7 @@ extension ImageRequest: RequestBuilding {
             return "/cdn/ingredients_\(size.rawValue)/\(imageName)"
         }
     }
-    
+
     var method: HTTPMethod { .get }
     var headers: HTTPHeaders? { ["Content-Type": "text/plain"] }
 }
-
-

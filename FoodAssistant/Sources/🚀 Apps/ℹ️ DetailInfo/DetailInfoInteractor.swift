@@ -11,18 +11,19 @@ import Foundation
 final class DetailInfoInteractor {
     /// Вью модели ингредиентов из холодильника
     private var ingredientsFromFridge: [IngredientViewModel] = []
-    
+
     private let imageDownloader: ImageDownloadProtocol
     private let storage: DBIngredientsManagement & DBRecipeManagement
-    
+
     init(imageDownloader: ImageDownloadProtocol,
          storage: DBIngredientsManagement & DBRecipeManagement) {
         self.imageDownloader = imageDownloader
         self.storage = storage
-        
+
         fetchFromFridge()
     }
-    
+
+    /// Загрузить ингредиенты из холодильника
     private func fetchFromFridge() {
         storage.fetchIngredients(toUse: false) { [weak self] ingredients in
             let models = ingredients.map { IngredientViewModel(ingredient: $0) }
@@ -33,8 +34,9 @@ final class DetailInfoInteractor {
 
 // MARK: - DetailInfoBusinessLogic
 extension DetailInfoInteractor: DetailInfoBusinessLogic {
-    
-    func fetchImage(_ imageName: String, type: TypeOfImage, completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
+    func fetchImage(_ imageName: String,
+                    type: TypeOfImage,
+                    completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
         switch type {
         case .recipe:
             ImageRequest
@@ -49,7 +51,7 @@ extension DetailInfoInteractor: DetailInfoBusinessLogic {
                           completion: completion)
         }
     }
-    
+
     func updateFavotite(_ flag: Bool, recipe: RecipeProtocol) {
         if flag {
             storage.save(recipe: recipe, for: .isFavorite)
@@ -57,7 +59,7 @@ extension DetailInfoInteractor: DetailInfoBusinessLogic {
             storage.remove(id: recipe.id, for: .isFavorite)
         }
     }
-    
+
     func checkFor(ingredient: IngredientViewModel) -> Bool {
         guard let ingredientInFridge = ingredientsFromFridge.first(where: {$0 == ingredient}),
               ingredientInFridge.amount >= ingredient.amount else { return false }

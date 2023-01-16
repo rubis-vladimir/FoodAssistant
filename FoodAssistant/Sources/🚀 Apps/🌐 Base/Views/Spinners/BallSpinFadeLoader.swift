@@ -4,7 +4,6 @@
 
 //  Copyright (c) 2016 Vinh Nguyen
 
-
 import UIKit
 
 /// #Кастомный индикатор загрузки - Вращение мяча с затуханием
@@ -13,7 +12,7 @@ class BallSpinFadeLoader: UIView {
     /// Флаг работы анимации
     private var isAnimating: Bool = false
     var color: UIColor = Palette.darkColor.color
-    
+
     override var bounds: CGRect {
         didSet {
             /// Настраиваем анимацию при изменении `bounds`
@@ -22,7 +21,7 @@ class BallSpinFadeLoader: UIView {
             }
         }
     }
-    
+
     /// Запускает анимацию загрузки
     func startAnimating() {
         guard !isAnimating else {
@@ -43,7 +42,7 @@ class BallSpinFadeLoader: UIView {
         isAnimating = false
         layer.sublayers?.removeAll()
     }
-    
+
     /// Настраивает активити индикатор для `ImageView`
     func setupSpinner(loadingImageView: UIImageView) {
         let spinner = self
@@ -54,29 +53,29 @@ class BallSpinFadeLoader: UIView {
         spinner.heightAnchor.constraint(equalToConstant: 50).isActive = true
         spinner.widthAnchor.constraint(equalToConstant: 50).isActive = true
     }
-    
+
     /// Настраивает анимацию загрузки
     private func setupAnimation() {
         var animationRect = frame
         let minEdge = min(animationRect.width, animationRect.height)
-        
+
         layer.sublayers = nil
         animationRect.size = CGSize(width: minEdge, height: minEdge)
         setupAnimationView(in: layer, size: animationRect.size, color: color)
     }
-    
+
     /// Настройка анимационной вью
     ///  - Parameters:
     ///   - layer: слой
     ///   - size: размер
     ///   - color: цвет
     private func setupAnimationView(in layer: CALayer,
-                            size: CGSize,
-                            color: UIColor) {
+                                    size: CGSize,
+                                    color: UIColor) {
         let circleSpacing: CGFloat = -2
         let circleSize = (size.width - 4 * circleSpacing) / 5
-        let x = (layer.bounds.size.width - size.width) / 2
-        let y = (layer.bounds.size.height - size.height) / 2
+        let xPoint = (layer.bounds.size.width - size.width) / 2
+        let yPoint = (layer.bounds.size.height - size.height) / 2
         let duration: CFTimeInterval = 1
         let beginTime = CACurrentMediaTime()
         let beginTimes: [CFTimeInterval] = [0, 0.12, 0.24, 0.36, 0.48, 0.6, 0.72, 0.84]
@@ -105,14 +104,14 @@ class BallSpinFadeLoader: UIView {
         animation.isRemovedOnCompletion = false
 
         /// Рисуем круги и добавляем к ним анимацию
-        for i in 0 ..< 8 {
-            let circle = circleAt(angle: CGFloat(Double.pi / 4) * CGFloat(i),
+        for index in 0 ..< 8 {
+            let circle = circleAt(angle: CGFloat(Double.pi / 4) * CGFloat(index),
                                   size: circleSize,
-                                  origin: CGPoint(x: x, y: y),
+                                  origin: CGPoint(x: xPoint, y: yPoint),
                                   containerSize: size,
                                   color: color)
 
-            animation.beginTime = beginTime + beginTimes[i]
+            animation.beginTime = beginTime + beginTimes[index]
             circle.add(animation, forKey: "animation")
             layer.addSublayer(circle)
         }
@@ -127,10 +126,10 @@ class BallSpinFadeLoader: UIView {
     ///  - color: цвет
     /// - Returns: объект CA
     private func circleAt(angle: CGFloat,
-                  size: CGFloat,
-                  origin: CGPoint,
-                  containerSize: CGSize,
-                  color: UIColor) -> CALayer {
+                          size: CGFloat,
+                          origin: CGPoint,
+                          containerSize: CGSize,
+                          color: UIColor) -> CALayer {
         let radius = containerSize.width / 2 - size / 2
         let circle = circleLayerWith(size: CGSize(width: size, height: size),
                                      color: color)
@@ -143,17 +142,17 @@ class BallSpinFadeLoader: UIView {
         circle.frame = frame
         return circle
     }
-    
+
     /// Получает круг
     ///  - Parameters:
     ///   - size: размер
     ///   - color: цвет
     ///  - Returns: объект CA
     private func circleLayerWith(size: CGSize,
-                         color: UIColor) -> CALayer {
+                                 color: UIColor) -> CALayer {
         let layer: CAShapeLayer = CAShapeLayer()
         let path: UIBezierPath = UIBezierPath()
-        
+
         path.addArc(withCenter: CGPoint(x: size.width / 2, y: size.height / 2),
                     radius: size.width / 2,
                     startAngle: 0,

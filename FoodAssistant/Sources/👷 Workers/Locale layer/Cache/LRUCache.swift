@@ -223,8 +223,7 @@ private extension LRUCache {
         lock.lock()
         defer { lock.unlock() }
         while totalCost > totalCostLimit || count > countLimit,
-              let container = head
-        {
+              let container = head {
             remove(container)
             values.removeValue(forKey: container.key)
             totalCost -= container.cost

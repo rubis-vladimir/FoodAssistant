@@ -8,7 +8,6 @@
 import UIKit
 
 extension UINavigationController {
-    
     /// Добавляет кастомную анимацию перехода снизу
     func createCustomTransition(with transitionType: CATransitionType) {
         let transition = CATransition()
@@ -16,7 +15,7 @@ extension UINavigationController {
         transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         transition.type = transitionType
         transition.subtype = CATransitionSubtype.fromTop
-        
+
         self.view.layer.add(transition, forKey: nil)
     }
 }
