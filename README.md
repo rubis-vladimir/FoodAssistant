@@ -29,10 +29,11 @@
   + Паттерны `Factory Method` `Proxy` `Adapter` и другие
   ____
  <img src="https://user-images.githubusercontent.com/84345727/211849052-e861f185-5d4f-4921-a342-330b2461f03e.png" align="left" width="250px" height="510px">
- <img src="https://user-images.githubusercontent.com/84345727/211849488-633f3ca8-7532-46bf-9ecf-992e87d55e50.png" align="left" width="250px" height="510px">
+ <img src="https://user-images.githubusercontent.com/84345727/212685354-370c102e-123a-49fa-a291-280b9c9fcacb.png" align="left" width="250px" height="510px">
  <img src="https://user-images.githubusercontent.com/84345727/211852651-91d658b2-ec10-4ff9-9180-eecae8872f47.png" height="510px" width="250px">
  
  ____
+
   ### Дополнительная информация:
   Ограниченное количество запросов к API (https://spoonacular.com/food-api/). Если рецепты не грузятся - попробуйте завтра =)
  ____
