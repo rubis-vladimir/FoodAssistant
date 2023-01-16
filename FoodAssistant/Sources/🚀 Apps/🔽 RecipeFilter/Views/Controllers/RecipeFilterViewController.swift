@@ -33,14 +33,13 @@ final class RecipeFilterViewController: UIViewController {
     private lazy var collectionView: UICollectionView = UICollectionView(frame: CGRect.zero,
                                                                          collectionViewLayout: getFlowLayout())
     
-    
     func getFlowLayout() -> UICollectionViewFlowLayout {
         let layout = AlignedCollectionViewFlowLayout(horizontalAlignment: .leading)
         layout.sectionInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
         return layout
     }
     
-    private var factory: RFFactory?
+    private var factory: CVFactoryProtocol?
     
     /// Кнопка показать результаты
     private lazy var showResultsButton = BaseRedButton(title: Constants.showResultsButtonTitle,
@@ -108,12 +107,10 @@ final class RecipeFilterViewController: UIViewController {
 extension RecipeFilterViewController: UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.endEditing(true)
         presenter.didTapShowResultButton()
     }
 }
-
 
 // MARK: - RecipreFilterViewable
 extension RecipeFilterViewController: RecipeFilterViewable {
@@ -129,7 +126,7 @@ extension RecipeFilterViewController: RecipeFilterViewable {
         collectionView.reloadSections(IndexSet(integer: section))
     }
     
-    func updateCV(dictModels: [FilterParameters : [TagModel]]) {
+    func updateCV(dictModels: [FilterParameters: [TagModel]]) {
         DispatchQueue.main.async {
             self.factory = RFFactory(collectionView: self.collectionView,
                                      dictModels: dictModels,

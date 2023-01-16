@@ -46,7 +46,7 @@ struct IngredientViewModel: IngredientProtocol, Equatable, Hashable {
         self.toUse = true
     }
     
-    static func ==(lhs: IngredientViewModel, rhs: IngredientViewModel) -> Bool {
+    static func == (lhs: IngredientViewModel, rhs: IngredientViewModel) -> Bool {
         return lhs.id == rhs.id || lhs.name == rhs.name
     }
 }

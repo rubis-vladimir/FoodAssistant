@@ -9,7 +9,6 @@ import UIKit
 
 /// #Адаптер для CollectionView
 final class CVAdapter: NSObject {
-    
     private let collectionView: UICollectionView
     private var builders: [CVSectionProtocol] = [] {
         didSet {
@@ -28,7 +27,6 @@ final class CVAdapter: NSObject {
 
 // MARK: - UICollectionViewDataSource
 extension CVAdapter: UICollectionViewDataSource {
-    
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         builders.count
     }
@@ -58,13 +56,10 @@ extension CVAdapter: UICollectionViewDataSource {
     }
 }
 
-
 // MARK: - UICollectionViewDelegate
 extension CVAdapter: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView,
                         didSelectItemAt indexPath: IndexPath) {
-        
         /// Для ячеек с расширенной функциональностью
         if let itemBuilder = builders[indexPath.section].itemBuilder as? CVSelectableItemBuilderProtocol {
             itemBuilder.didSelectItem(indexPath: indexPath)

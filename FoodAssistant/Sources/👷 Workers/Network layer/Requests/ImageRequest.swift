@@ -12,7 +12,6 @@ enum ImageRequest {
     /// Запрос изображения рецепта
     ///  - Parameter imageName: название изображения
     case recipe(imageName: String)
-    
     /// Запрос изображения ингредиента
     ///  - Parameters:
     ///   - imageName: название изображения
@@ -53,5 +52,3 @@ extension ImageRequest: RequestBuilding {
     var method: HTTPMethod { .get }
     var headers: HTTPHeaders? { ["Content-Type": "text/plain"] }
 }
-
-

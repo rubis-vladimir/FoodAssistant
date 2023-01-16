@@ -16,10 +16,8 @@ protocol LaunchViewDelegate: AnyObject {
 
 /// #Вью для онбординга
 class LaunchView: UIView {
-    
     // MARK: - Properties
     weak var delegate: LaunchViewDelegate?
-    
     /// Вариант страницы
     private var page: LaunchPage?
     

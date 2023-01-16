@@ -9,7 +9,6 @@ import UIKit
 
 /// #Кастомный хедер для коллекции с кнопкой
 final class CVSectionHeaderWithButton: CVBaseSectionHeader {
-    
     // MARK: - Properties
     /// Действие
     private var action: ((Int) -> Void)?

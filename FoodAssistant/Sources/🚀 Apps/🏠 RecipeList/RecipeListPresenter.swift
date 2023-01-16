@@ -113,7 +113,7 @@ final class RecipeListPresenter {
     func getStartData() {
         filterParameters.includeIngredients = ["onion", "chiken"]
 
-        // Загрузка данных для секции Recommended
+        /// Загрузка данных для секции Recommended
         interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
             guard let self = self else { return }
 
@@ -129,7 +129,6 @@ final class RecipeListPresenter {
                                        action: action)
             }
         }
-        
         /// Загрузка данных для секции Main
         fetchRecipe(with: filterParameters,
                     number: AppConstants.minRequestAmount,
@@ -144,9 +143,9 @@ final class RecipeListPresenter {
     ///   - query: название рецепта
     ///   - type: тип секции
     private func fetchRecipe(with parameters: RecipeFilterParameters,
-                     number: Int,
-                     query: String?,
-                     type: RLSectionType) {
+                             number: Int,
+                             query: String?,
+                             type: RLSectionType) {
         interactor.fetchRecipe(with: parameters,
                                number: number,
                                query: query) { [weak self] result in
@@ -162,7 +161,6 @@ final class RecipeListPresenter {
                                      number: number,
                                      query: query,
                                      type: .main)
-                    
                 }
                 self.showRecoveryError(from: error,
                                        action: action)
@@ -197,7 +195,6 @@ final class RecipeListPresenter {
         if viewModelsDictionary[.recommended] == nil {
             buildType = .search
         }
-        
         fetchRecipe(with: filterParameters,
                     number: AppConstants.minRequestAmount,
                     query: text,
@@ -209,7 +206,7 @@ final class RecipeListPresenter {
     ///  - error: ошибка
     ///  - action: действи при восстановлении
     private func showRecoveryError(from error: DataFetcherError,
-                                   action: @escaping () -> ()) {
+                                   action: @escaping () -> Void) {
         var actions: [RecoveryOptions] = [.cancel]
         
         switch error {
@@ -281,7 +278,6 @@ extension RecipeListPresenter: RecipeListPresentation {
     
     // LayoutChangable
     func didTapChangeLayoutButton(section: Int) {
-        
         guard let count = viewModelsDictionary[.main]?.count else { return }
         /// Вызываем уведомление изменения layout
         NotificationCenter.default
@@ -305,7 +301,6 @@ extension RecipeListPresenter: SeachRecipesRequested {
     func search(with parameters: RecipeFilterParameters,
                 text: String) {
         filterParameters = parameters
-        
         search(text: text)
     }
 }

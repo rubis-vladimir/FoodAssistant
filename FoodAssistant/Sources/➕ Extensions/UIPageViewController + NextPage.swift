@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIPageViewController {
-    
     /// Переход на следующую страницу
     func goToNextPage() {
        guard let currentViewController = self.viewControllers?.first else { return }

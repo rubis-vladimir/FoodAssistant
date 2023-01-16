@@ -27,7 +27,6 @@ protocol CheckChangable: AnyObject {
 
 /// #Ячейка отображения ингредиента с чек-кнопкой
 class CVIngredientCell: UICollectionViewCell {
-    
     // MARK: - Properties
     weak var checkDelegate: CheckChangable?
     weak var deleteDelegate: DeleteTapable?

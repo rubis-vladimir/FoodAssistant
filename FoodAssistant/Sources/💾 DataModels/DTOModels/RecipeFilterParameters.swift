@@ -9,7 +9,6 @@ import Foundation
 
 /// #Параметры для запроса рецептов
 struct RecipeFilterParameters {
-    
     /// Время
     var time: Int?
     /// Вид кухни
@@ -31,7 +30,16 @@ struct RecipeFilterParameters {
     /// Сортировка
     var sort: String?
     
-    init(time: Int?, cuisine: [String], diet: String?, type: [String], intolerances: [String], includeIngredients: [String], excludeIngredients: [String], minCalories: Int?, maxCalories: Int?, sort: String?) {
+    init(time: Int?,
+         cuisine: [String],
+         diet: String?,
+         type: [String],
+         intolerances: [String],
+         includeIngredients: [String],
+         excludeIngredients: [String],
+         minCalories: Int?,
+         maxCalories: Int?,
+         sort: String?) {
         self.time = time
         self.cuisine = cuisine
         self.diet = diet

@@ -26,7 +26,7 @@ final class BasketViewController: UIViewController {
     
     // MARK: - Properties
     private let presenter: BasketPresentation
-    private var factory: BasketFactory?
+    private var factory: CVFactoryProtocol?
     
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
                                                        collectionViewLayout: AppConstants.getFlowLayout())
@@ -37,9 +37,9 @@ final class BasketViewController: UIViewController {
     }
     
     private lazy var orderDeliveryButton = BaseRedButton(title: " " + Constracts.orderButtonTitle,
-                                                       image: Constracts.orderButtonImage) { [weak self] in
+                                                         image: Constracts.orderButtonImage) { [weak self] in
         self?.showInformationAlert(title: "Order".localize(),
-                                  text: "Go to checkout screen".localize())
+                                   text: "Go to checkout screen".localize())
     }
     
     let stack: UIStackView = {
@@ -70,7 +70,6 @@ final class BasketViewController: UIViewController {
     
     // MARK: - Private func
     private func setupElements() {
-        
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .clear
         
@@ -125,8 +124,8 @@ extension BasketViewController: BasketViewable {
         } else {
             DispatchQueue.main.async {
                 self.factory = BasketFactory(collectionView: self.collectionView,
-                                        recipes: recipes,
-                                        ingredients: ingredients,
+                                             recipes: recipes,
+                                             ingredients: ingredients,
                                              delegate: self.presenter)
             }
         }

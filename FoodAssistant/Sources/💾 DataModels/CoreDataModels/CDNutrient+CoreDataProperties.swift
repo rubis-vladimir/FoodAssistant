@@ -9,7 +9,6 @@
 import Foundation
 import CoreData
 
-
 extension CDNutrient: NutrientProtocol {
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDNutrient> {

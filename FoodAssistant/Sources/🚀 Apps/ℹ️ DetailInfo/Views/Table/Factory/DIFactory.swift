@@ -21,7 +21,6 @@ enum DISectionType {
 
 /// #Фабрика для настройки представления коллекции модуля DetailInfo
 final class DIFactory {
-    
     // MARK: - Properties
     private let tableView: UITableView
     private let recipe: RecipeProtocol
@@ -105,7 +104,7 @@ final class DIFactory {
 }
 
 // MARK: - TVFactoryProtocol
-extension DIFactory: TVCFactoryProtocol {
+extension DIFactory: TVFactoryProtocol {
     
     var builders: [TVSectionProtocol] {
         var builders: [TVSectionProtocol] = []
@@ -149,5 +148,3 @@ extension DIFactory {
         static let heightIngredients: CGFloat = 66
     }
 }
-
-

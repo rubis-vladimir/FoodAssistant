@@ -10,7 +10,7 @@ import UIKit
 /// #Базовая красная кнопка =D
 class BaseRedButton: UIButton {
     /// Действие
-    private var action: (() -> ())?
+    private var action: (() -> Void)?
     
     /// Доп инициализатор
     /// - Parameters:
@@ -19,9 +19,8 @@ class BaseRedButton: UIButton {
     ///  - action: действие
     convenience init(title: String?,
                      image: UIImage?,
-                     action: (() -> ())?) {
+                     action: (() -> Void)?) {
         self.init()
-        
         self.action = action
         setupButton(title: title,
                     image: image)
@@ -48,8 +47,6 @@ class BaseRedButton: UIButton {
         backgroundColor = Palette.darkColor.color
         layer.add(shadow: AppConstants.Shadow.defaultOne)
         translatesAutoresizingMaskIntoConstraints = false
-        
-        
     }
     
     @objc private func didTapButton() {

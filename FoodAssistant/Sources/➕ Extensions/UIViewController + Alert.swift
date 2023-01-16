@@ -87,7 +87,6 @@ extension UIViewController {
         alert.view.backgroundColor = Palette.bgColor.color
         alert.view.layer.cornerRadius = 10
         
-        
         let titles = ["Name".localize(),
                       "Amount".localize(),
                       "Unit".localize()]

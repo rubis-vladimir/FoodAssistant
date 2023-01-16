@@ -48,7 +48,6 @@ final class BasketInteractor {
     }
 }
 
-
 // MARK: - BasketBusinessLogic
 extension BasketInteractor: BasketBusinessLogic {
     
@@ -69,7 +68,7 @@ extension BasketInteractor: BasketBusinessLogic {
     }
    
     func changeIsCheck(id: Int, flag: Bool) {
-        guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { return }
+        guard let index = ingredients.firstIndex(where: {$0.id == id}) else { return }
         ingredients[index].isCheck = flag
         presenter?.handOver(ingredients: ingredients)
     }
@@ -88,7 +87,7 @@ extension BasketInteractor: BasketBusinessLogic {
     
     // RecipeRemovable
     func removeRecipe(id: Int) {
-        guard let index = models.firstIndex(where: {$0.id == id} ) else { return }
+        guard let index = models.firstIndex(where: {$0.id == id}) else { return }
         models.remove(at: index)
         storage.remove(id: id, for: .inBasket)
     }

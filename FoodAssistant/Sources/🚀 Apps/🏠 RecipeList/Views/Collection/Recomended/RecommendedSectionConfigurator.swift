@@ -20,7 +20,7 @@ final class RecommendedSectionConfigurator {
         self.delegate = delegate
     }
 }
-    
+
 // MARK: - CVSectionConfiguration
 extension RecommendedSectionConfigurator: CVSectionConfiguration {
     

@@ -26,7 +26,6 @@ protocol CVSectionProtocol {
     var headerBuilder: CVHeaderBuilderProtocol? { get }
     /// Строитель ячеек
     var itemBuilder: CVItemBuilderProtocol { get }
-    
     /// Инициализатор
     init(headerBuilder: CVHeaderBuilderProtocol?,
          itemBuilder: CVItemBuilderProtocol)
@@ -69,5 +68,3 @@ protocol CVHeaderBuilderProtocol {
                                   kind: String,
                                   indexPath: IndexPath) -> UICollectionReusableView
 }
-
-

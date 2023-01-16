@@ -23,4 +23,3 @@ extension LaunchAssembly: Assemblying {
         return viewController
     }
 }
-

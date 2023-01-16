@@ -1476,6 +1476,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7D2F771B291A94D6009D3444 /* Build configuration list for PBXNativeTarget "FoodAssistant" */;
 			buildPhases = (
+				7D3404052975AAF400094B00 /* ShellScript */,
 				7D2F76EA291A94D4009D3444 /* Sources */,
 				7D2F76EB291A94D4009D3444 /* Frameworks */,
 				7D2F76EC291A94D4009D3444 /* Resources */,
@@ -1566,6 +1567,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7D3404052975AAF400094B00 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\nif which swiftlint > /dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		7D2F76EA291A94D4009D3444 /* Sources */ = {

@@ -14,7 +14,8 @@ final class FileManagerService {
     
     private init() {}
     
-    private var path = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+    private var path = FileManager.default.urls(for: .documentDirectory,
+                                                in: .userDomainMask)[0]
     
     /// Получаем файл из директории
     ///  - Parameter urlString: url строка

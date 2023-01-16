@@ -124,7 +124,7 @@ final class UserProfilePresenter {
     ///  - error: ошибка
     ///  - action: действи при восстановлении
     private func showRecoveryError(from error: DataFetcherError,
-                                   action: @escaping () -> ()) {
+                                   action: @escaping () -> Void) {
         var actions: [RecoveryOptions] = [.cancel]
         
         switch error {
@@ -163,7 +163,6 @@ final class UserProfilePresenter {
         currentSegmentIndex = index
     }
 }
-
 
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
@@ -256,13 +255,13 @@ extension UserProfilePresenter: UserProfilePresentation {
         case 1:
             interactor.deleteIngredient(id: id)
             
-            guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { break }
+            guard let index = ingredients.firstIndex(where: {$0.id == id}) else { break }
             ingredients.remove(at: index)
             
         case 2:
             interactor.removeRecipe(id: id)
             
-            guard let index = recipes.firstIndex(where: {$0.id == id} ) else { break }
+            guard let index = recipes.firstIndex(where: {$0.id == id}) else { break }
             recipes.remove(at: index)
         default: break
         }

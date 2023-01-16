@@ -12,7 +12,6 @@ extension Array where Element == String {
     /// Преобразует массив строк в одну строку
     func convertStringArrayToString() -> String {
         let array = self
-        
         var finalString: String = ""
         for string in array {
             if string != array.last {

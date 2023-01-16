@@ -40,12 +40,10 @@ extension CDRecipe: RecipeProtocol {
     @NSManaged public var cdIngredients: [CDIngredient]?
     @NSManaged public var cdInstructionSteps: [CDInstrutionStep]?
     @NSManaged public var cdNutrients: [CDNutrient]?
-    
 }
 
 // MARK: Generated accessors for cdIngredients
 extension CDRecipe {
-    
     @objc(insertObject:inCdIngredientsAtIndex:)
     @NSManaged public func insertIntoCdIngredients(_ value: CDIngredient, at idx: Int)
     
@@ -75,12 +73,10 @@ extension CDRecipe {
     
     @objc(removeCdIngredients:)
     @NSManaged public func removeFromCdIngredients(_ values: NSOrderedSet)
-    
 }
 
 // MARK: Generated accessors for cdInstructionSteps
 extension CDRecipe {
-    
     @objc(insertObject:inCdInstructionStepsAtIndex:)
     @NSManaged public func insertIntoCdInstructionSteps(_ value: CDInstrutionStep, at idx: Int)
     
@@ -110,12 +106,10 @@ extension CDRecipe {
     
     @objc(removeCdInstructionSteps:)
     @NSManaged public func removeFromCdInstructionSteps(_ values: NSOrderedSet)
-    
 }
 
 // MARK: Generated accessors for cdNutrients
 extension CDRecipe {
-    
     @objc(insertObject:inCdNutrientsAtIndex:)
     @NSManaged public func insertIntoCdNutrients(_ value: CDNutrient, at idx: Int)
     
@@ -145,5 +139,4 @@ extension CDRecipe {
     
     @objc(removeCdNutrients:)
     @NSManaged public func removeFromCdNutrients(_ values: NSOrderedSet)
-    
 }

@@ -5,7 +5,7 @@
 //  Created by Владимир Рубис on 17.08.2022.
 //
 
-import UIKit	
+import UIKit
 
 /// #Протокол управления слоя навигации модуля MainTabBar
 protocol MainTabBarRoutable {

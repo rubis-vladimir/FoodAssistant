@@ -9,7 +9,7 @@ import Foundation
 
 extension Float {
     /// Функция преобразует число с плавающей точкой в кортеж (делимое, делитель)
-    func rationalApproximationOf(withPrecision eps : Float = 1.0E-4) -> (Int, Int) {
+    func rationalApproximationOf(withPrecision eps: Float = 1.0E-4) -> (Int, Int) {
         var x = self
         var a = floor(x)
         var (h1, k1, h, k) = (1, 0, Int(a), 1)

@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIViewController {
-    
     /// Показывает пользователю информацию об ошибке
     func showAlertError(_ rError: RecoverableError) {
         guard let error = rError.error as? DataFetcherError else { return }

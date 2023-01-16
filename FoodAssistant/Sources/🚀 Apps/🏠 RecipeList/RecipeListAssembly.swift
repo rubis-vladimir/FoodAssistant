@@ -50,4 +50,3 @@ extension RecipeListAssembly: Assemblying {
         return viewController
     }
 }
-

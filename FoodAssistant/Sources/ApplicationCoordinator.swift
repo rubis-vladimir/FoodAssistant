@@ -38,7 +38,8 @@ final class ApplicationCoordinator: Coordinator {
             /// Устанавливаем зависимости и настраиваем TabBarController
             let navigationVC = UINavigationController()
             let tabBarConfigurator = TabBarConfigurator(navigationController: navigationVC)
-            let tabBarController = MainTabBarAssembly(navigationController: navigationVC, tabBarConfigurator: tabBarConfigurator).assembly()
+            let tabBarController = MainTabBarAssembly(navigationController: navigationVC,
+                                                      tabBarConfigurator: tabBarConfigurator).assembly()
             navigationVC.viewControllers = [tabBarController]
             rootViewController = navigationVC
         } else {

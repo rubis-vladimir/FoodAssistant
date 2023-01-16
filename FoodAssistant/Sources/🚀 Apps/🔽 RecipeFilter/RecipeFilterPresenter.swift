@@ -68,7 +68,7 @@ protocol RecipeFilterBusinessLogic {
     ///  - completion: захватывает параметр с данными
     func update(parameter: FilterParameters,
                 text: String,
-                completion: @escaping ([FilterParameters : [TagModel]]) -> Void)
+                completion: @escaping ([FilterParameters: [TagModel]]) -> Void)
     
     /// Проверка флага выбора тэга
     func checkFlag(indexPath: IndexPath) -> Bool
@@ -84,7 +84,6 @@ protocol RecipeFilterBusinessLogic {
 // MARK: - Presenter
 /// #Слой презентации модуля RecipeFilter
 final class RecipeFilterPresenter {
-    
     weak var view: RecipeFilterViewable?
     weak var rootPresenter: SeachRecipesRequested?
     
@@ -109,9 +108,8 @@ final class RecipeFilterPresenter {
 
 // MARK: - RecipeFilterPresentation
 extension RecipeFilterPresenter: RecipeFilterPresentation {
-    
     func didTapChange(parameter: FilterParameters,
-                text: String) {
+                      text: String) {
         interactor.update(parameter: parameter,
                           text: text) { [weak self] parameters in
             self?.view?.updateCV(dictModels: parameters)

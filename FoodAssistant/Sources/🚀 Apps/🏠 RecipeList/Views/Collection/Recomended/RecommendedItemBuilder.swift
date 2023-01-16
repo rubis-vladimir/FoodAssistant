@@ -23,7 +23,6 @@ final class RecommendedItemBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension RecommendedItemBuilder: CVSelectableItemBuilderProtocol {
-    
     func register(collectionView: UICollectionView) {
         collectionView.register(ThirdRecipeCell.self)
     }

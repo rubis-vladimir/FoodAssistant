@@ -8,7 +8,7 @@
 import UIKit
 
 /// #Протокол управления UI-ивентами сегмент-вью
-protocol SegmentedViewDelegate {
+protocol SegmentedViewDelegate: AnyObject {
     /// Ивент при выборе элемента
     ///  - Parameter index: индекс элемента
     func didSelectSegment(index: Int)
@@ -16,9 +16,8 @@ protocol SegmentedViewDelegate {
 
 /// #Кастомный сегмент-вью
 class CustomSegmentedControl: UIView {
-    
     // MARK: - Properties
-    var delegate: SegmentedViewDelegate?
+    weak var delegate: SegmentedViewDelegate?
     /// Массив кнопок
     private var buttons = [UIButton]()
     /// Контейнер для кнопок
@@ -181,5 +180,3 @@ extension CustomSegmentedControl {
                                              "Recipes".localize()]
     }
 }
-
-

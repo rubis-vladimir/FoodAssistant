@@ -27,7 +27,6 @@
 
 import UIKit
 
-
 // MARK: - 🦆 Type definitions
 
 /// An abstract protocol that defines an alignment.
@@ -487,5 +486,4 @@ fileprivate extension UICollectionViewLayoutAttributes {
         let alignmentAxis = collectionViewLayout.verticalAlignmentAxis(for: self)
         align(toAlignmentAxis: alignmentAxis)
     }
-    
 }

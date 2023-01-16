@@ -9,7 +9,6 @@ import UIKit
 
 /// #Контроллер панели вкладок
 final class MainTabBarController: UITabBarController {
-    
     // MARK: - Properties
     /// Слой для `TabBar`
     private var layer = CAShapeLayer()
@@ -75,7 +74,6 @@ final class MainTabBarController: UITabBarController {
     
     /// Добавляем Среднюю кнопку и настраиваем ее
     private func addMiddleButton() {
-        
         let constant: CGFloat = layerHeight / 2 - AppConstants.padding
         
         /// Отключаем элемент TabBar за пользовательской кнопкой middleButton
@@ -114,7 +112,6 @@ final class MainTabBarController: UITabBarController {
 
 // MARK: - Константы
 extension MainTabBarController {
-    
     private struct Constant {
         /// Размер кнопки
         static let middleButtonSize: CGFloat = 50

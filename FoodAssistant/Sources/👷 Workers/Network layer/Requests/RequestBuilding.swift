@@ -30,30 +30,30 @@ protocol RequestBuilding {
     var headers: HTTPHeaders? { get }
     /// Параметры запроса
     var parameters: Parameters? { get }
-    
+
     /// Создает запрос (может выбросить ошибку)
     func asURLRequest() throws -> URLRequest
 }
 
 // Дефолтная реализация
 extension RequestBuilding {
-    
+
     var parameters: Parameters? { return nil }
-    
+
     var queryItems: [URLQueryItem]? { return nil }
 
     func asURLRequest() throws -> URLRequest {
         guard let url = url else { throw DataFetcherError.invalidUrl }
-        
-        var request = URLRequest (url: url)
+
+        var request = URLRequest(url: url)
         request.httpMethod = method.rawValue
-        
+
         if let headers = headers {
             headers.forEach {
                 request.setValue($1, forHTTPHeaderField: $0)
             }
         }
-        
+
         if let parameters = parameters {
             do {
                 request.httpBody = try JSONEncoder().encode(parameters)
@@ -63,7 +63,7 @@ extension RequestBuilding {
         }
         return request
     }
-    
+
     /// Составление url по компонентам
     var url: URL? {
         var components = URLComponents()

@@ -79,7 +79,6 @@ final class BasketFactory {
 
 // MARK: - TVFactoryProtocol
 extension BasketFactory: CVFactoryProtocol {
-    
     var builders: [CVSectionProtocol] {
         var builders: [CVSectionProtocol] = []
         
@@ -100,5 +99,3 @@ extension BasketFactory {
         static let heightShopListCell: CGFloat = 55
     }
 }
-
-

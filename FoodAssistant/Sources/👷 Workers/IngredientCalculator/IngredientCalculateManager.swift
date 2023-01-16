@@ -34,7 +34,6 @@ extension IngredientCalculateManager: ShopListCalculatable {
                      complection: @escaping ([IngredientViewModel]) -> Void) {
         
         storage.fetchIngredients(toUse: true) { [weak self] available in
-            
             guard let self = self else { return }
             let result = self.calculateIngredients(necessary: ingredients, available: available)
             complection(result)
@@ -48,7 +47,7 @@ extension IngredientCalculateManager: ShopListCalculatable {
         
         var finalArray: [IngredientViewModel] = []
         /// Получаем все идентификаторы ингредиентов и которые дублируются
-        let arrayId = array.map{$0.id}
+        let arrayId = array.map{ $0.id }
         let arrayIdDuplicates = arrayId.duplicate()
         
         /// Для неповторяющихся ингредиентов - добавляем сразу в результирующий массив
@@ -72,15 +71,13 @@ extension IngredientCalculateManager: ShopListCalculatable {
         return finalArray
     }
     
-    
     /// Рассчитывает необходимые ингредиенты с учетом имеющихся
     ///  - Parameters:
     ///   - necessary:массив необходимых ингредиентов
     ///   - available: массив имеющихся ингредиентов
     ///  - Returns: результирующий массив вью моделей
     private func calculateIngredients(necessary: [IngredientProtocol],
-                              available: [IngredientProtocol]) -> [IngredientViewModel] {
-        
+                                      available: [IngredientProtocol]) -> [IngredientViewModel] {
         /// Преобразуем массивы ингредиентов в массивы вью моделей
         let necessary = necessary.map { IngredientViewModel(ingredient: $0) }
         let available = available.map { IngredientViewModel(ingredient: $0) }
@@ -97,10 +94,10 @@ extension IngredientCalculateManager: ShopListCalculatable {
             
             if !availableIngredients.isEmpty {
                 /// Если нашли - в зависимости от единиц измерения указываем количество
-                if IngredientUnit.contains(ingredient.unit){
+                if IngredientUnit.contains(ingredient.unit) {
                     /// для штук и граммов
-                   
-                    amount = ingredient.amount - availableIngredients.map{$0.amount}.reduce(0, +)
+                    amount = ingredient.amount - availableIngredients.map {$0.amount}.reduce(0, +)
+                    
                 } else if !IngredientVolume.contains(ingredient.unit) {
                     
                     /// для всего, кроме единиц объема
@@ -132,7 +129,7 @@ extension IngredientCalculateManager: ShopListCalculatable {
 /// #Рассчитываемые единицы измерения
 enum IngredientUnit: String, CaseIterable {
     /// Грамм
-    case g = "g"
+    case gramm = "g"
     /// Штук
     case item = ""
 }
@@ -146,15 +143,15 @@ extension IngredientUnit {
 /// #Объемные единицы измерения
 enum IngredientVolume: String, CaseIterable {
     /// Миллилитр
-    case ml = "ml"
+    case ml
     /// Чайная ложка
-    case tsp = "tsp"
+    case tsp
     /// Столовая ложка
-    case tbsp = "tbsp"
+    case tbsp
     /// Чашка
-    case cup = "cup"
+    case cup
     /// Горсть
-    case handful = "handful"
+    case handful
 }
 
 extension IngredientVolume {

@@ -15,7 +15,6 @@ protocol SearchBarFilterDelegate: AnyObject {
 
 /// #Кастомный поисковой бар для рецептов
 class RecipesSearchBar: UISearchBar {
-    
     // MARK: - Properties
     weak var filterDelegate: SearchBarFilterDelegate?
     
@@ -61,7 +60,6 @@ class RecipesSearchBar: UISearchBar {
     
     // MARK: - Functions
     private func setViews() {
-        
         if isFilter {
             changeFilterButtonAppearance(with: .white, and: Palette.darkColor.color)
         } else {
@@ -69,7 +67,6 @@ class RecipesSearchBar: UISearchBar {
         }
         
         backgroundImage = UIImage()
-        
         placeholder = "Search recipes here...".localize()
         
         guard let textField = textField else { return }
@@ -129,7 +126,6 @@ private extension RecipesSearchBar {
 
 // MARK: - Константы
 extension RecipesSearchBar {
-    
     private struct Constants {
         /// Тень
         enum Shadow: ShadowProtocol {

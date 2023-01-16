@@ -96,7 +96,6 @@ final class RecipeListInteractorTests: XCTestCase {
         return currentWithoutLocale
     }
     
-    
     func testFetchRecommendedDFFailure() {
         //arange
         assembly(caseDF: .failure,

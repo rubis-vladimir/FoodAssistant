@@ -43,7 +43,6 @@ struct Recipe: RecipeProtocol, Codable, Equatable, Hashable {
 }
 
 extension Recipe {
-    
     var imageName: String? {
         /// Определяем название изображения
         guard let image = image else { return nil }
@@ -99,7 +98,6 @@ extension Recipe {
                                         dtoUnit: dublicate[0].unit)
             finalArray.append(ingredient)
         }
-    
         return finalArray
     }
 }
@@ -139,7 +137,6 @@ extension Ingredient {
     
     /// Получает обновленное количество
     func getAmount() -> Float {
-        
         switch dtoUnit {
         case "ounce", "ounces", "oz":
             // Переводим в граммы из тройской унции
@@ -169,7 +166,7 @@ extension Ingredient {
             return "ml" // Миллилитр
         case "serving", "servings", "dash", "dashes":
             return "serv" // Порция
-        case "small", "large", "medium", "container", "head", "jar", "inch", "stalk", "stalks" :
+        case "small", "large", "medium", "container", "head", "jar", "inch", "stalk", "stalks":
             return "" // Штук
         case "handfuls", "handful", "small handful":
             return "handful" // Горсть

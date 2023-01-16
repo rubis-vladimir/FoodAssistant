@@ -26,10 +26,8 @@ protocol UserProfilePresentation: DeleteTapable,
     func checkFlag(id: Int) -> Bool
 }
 
-
 /// #Контроллер представления профиля пользователя
 final class UserProfileViewController: UIViewController {
-    
     // MARK: - Properties
     /// Презентер
     private let presenter: UserProfilePresentation
@@ -109,13 +107,13 @@ final class UserProfileViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             segmentView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
-            segmentView.topAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.topAnchor, constant: 5),
+            segmentView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 5),
             segmentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: AppConstants.padding),
             segmentView.heightAnchor.constraint(equalToConstant: 42),
             
             collectionView.topAnchor.constraint(equalTo: segmentView.bottomAnchor, constant: 5),
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            collectionView.centerXAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.centerXAnchor),
+            collectionView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
         ])
     }

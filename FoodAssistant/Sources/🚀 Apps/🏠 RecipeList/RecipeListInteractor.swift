@@ -5,7 +5,6 @@
 //  Created by Владимир Рубис on 30.10.2022.
 //
 
-
 import Foundation
 
 /// #Слой бизнес логики модуля RecipeList
@@ -77,12 +76,13 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         }
         
         if currentAppleLanguage() != "en" {
-            translateService.translate(with: ingredientTitles, source: currentAppleLanguage(), target: "en") { [weak self] result in
+            translateService.translate(with: ingredientTitles,
+                                       source: currentAppleLanguage(),
+                                       target: "en") { [weak self] result in
                 switch result {
-                    
                 case .success(let responce):
                     /// При успешном переводе
-                    let titles = responce.translations.map{$0.text}
+                    let titles = responce.translations.map{ $0.text }
                     self?.fetchRecipe(ingredientTitles: titles, number: number, completion: completion)
                     
                 case .failure(let error):
@@ -122,7 +122,6 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
         if favoriteArrayId.contains(id) {
             recipe.isFavorite = true
         }
-        
         completion(recipe)
     }
     
@@ -137,11 +136,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
     
     // RecipeRemovable
     func removeRecipe(id: Int) {
-        
-        if let index = favoriteArrayId.firstIndex(where: {$0 == id}){
+        if let index = favoriteArrayId.firstIndex(where: {$0 == id}) {
             favoriteArrayId.remove(at: index)
         }
-        
         storage.remove(id: id, for: .isFavorite)
     }
 }
@@ -164,7 +161,6 @@ extension RecipeListInteractor {
             }
         }
     }
-    
     /// Получает рецепты по информации о ингредиентах
     /// - Parameters:
     ///  - ingredientTitles: названия ингредиентов
@@ -187,7 +183,6 @@ extension RecipeListInteractor {
                 }
             }
     }
-    
     /// Преобразует dto-рецепты во вью-модели
     /// - Parameters:
     ///  - recipes: dto-рецепты
@@ -197,18 +192,20 @@ extension RecipeListInteractor {
         var recipes = recipes
         
         /// Изменяем флаг isFavorite, если рецепт записан в избранные
-        for i in 0..<recipes.count {
-            if self.favoriteArrayId.contains(recipes[i].id) {
-                recipes[i].isFavorite = true
+        for index in 0..<recipes.count {
+            if favoriteArrayId.contains(recipes[index].id) {
+                recipes[index].isFavorite = true
             }
         }
         
         /// Если установленный язык не базовый пробуем выполнить перевод
-        if self.currentAppleLanguage() != "en" {
-            self.translateService.fetchTranslate(recipes: recipes, sourse: "en", target: "\(self.currentAppleLanguage())") { result in
+        if currentAppleLanguage() != "en" {
+            translateService.fetchTranslate(recipes: recipes,
+                                            sourse: "en",
+                                            target: "\(currentAppleLanguage())") { [weak self] result in
                 switch result {
                 case .success(let newRecipes):
-                    self.addModels(recipes: newRecipes, completion: completion)
+                    self?.addModels(recipes: newRecipes, completion: completion)
                     
                 case .failure(let error):
                     completion(.failure(error))
@@ -223,7 +220,7 @@ extension RecipeListInteractor {
     /// Добавляет и захватывает рецепты
     private func addModels(recipes: [Recipe],
                            completion: @escaping (Result<[RecipeViewModel], DataFetcherError>) -> Void) {
-        self.models.append(contentsOf: recipes)
+        models.append(contentsOf: recipes)
         
         let viewModels = recipes.map {
             RecipeViewModel(with: $0)
@@ -241,11 +238,9 @@ extension RecipeListInteractor {
                 if let range = current.range(of: "-") {
                     current = String(current[..<range.lowerBound])
                 }
-                
                 currentWithoutLocale = current
             }
         }
         return currentWithoutLocale
     }
 }
-

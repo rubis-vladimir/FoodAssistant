@@ -39,7 +39,7 @@ protocol BasketViewable: AnyObject {
 /// #Протокол управления бизнес логикой модуля Basket
 protocol BasketBusinessLogic: RecipeReceived,
                               RecipeRemovable,
-                              ImageBusinessLogic{
+                              ImageBusinessLogic {
     /// Получит рецепты, добавленные в корзину
     ///  - Parameter completion: захватывает массив рецептов
     func fetchRecipeFromBasket(completion: @escaping ([RecipeViewModel]) -> Void)
@@ -102,15 +102,13 @@ final class BasketPresenter {
 // MARK: - BasketPresentation
 extension BasketPresenter: BasketPresentation {
     
-    
-    
     func didTapAddFridgeButton() {
         interactor.addIngredientsInFridge()
         updateShopList()
     }
     
     func checkFlag(id: Int) -> Bool {
-        guard let ingredient = ingredients.first(where: {$0.id == id} ) else { return false }
+        guard let ingredient = ingredients.first(where: {$0.id == id}) else { return false }
         return ingredient.isCheck
     }
     
@@ -121,7 +119,7 @@ extension BasketPresenter: BasketPresentation {
     
     // RecipeRemovable
     func didTapDeleteButton(id: Int) {
-        guard let index = recipes.firstIndex(where: {$0.id == id} ) else { return }
+        guard let index = recipes.firstIndex(where: {$0.id == id}) else { return }
         recipes.remove(at: index)
         interactor.removeRecipe(id: id)
         updateShopList()

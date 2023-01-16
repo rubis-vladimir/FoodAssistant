@@ -105,7 +105,6 @@ final class DetailTitleView: UIView {
         stack.spacing = 8
         let iv = UIImageView()
         iv.image = image
-        
         stack.addArrangedSubview(iv)
         stack.addArrangedSubview(label)
         return stack

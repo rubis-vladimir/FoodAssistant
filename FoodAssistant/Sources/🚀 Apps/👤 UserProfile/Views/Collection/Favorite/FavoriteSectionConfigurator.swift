@@ -28,7 +28,7 @@ final class FavoriteSectionConfigurator {
         self.delegate = delegate
     }
 }
-    
+
 // MARK: - CVSectionConfiguration
 extension FavoriteSectionConfigurator: CVSectionConfiguration {
     

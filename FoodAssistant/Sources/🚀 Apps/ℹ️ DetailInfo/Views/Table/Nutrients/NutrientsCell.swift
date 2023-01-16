@@ -9,7 +9,6 @@ import UIKit
 
 /// #Ячейка с информацией о питательных веществах
 final class NutrientsCell: TVBaseCell {
-    
     // MARK: - Properties
     private let container: UIStackView = {
        let stack = UIStackView()
@@ -51,7 +50,6 @@ final class NutrientsCell: TVBaseCell {
                                     number: "\(carbohydrates.amount)")
             container.addArrangedSubview(stack)
         }
-        
     }
     
     override func setupCell() {
@@ -108,4 +106,3 @@ extension NutrientsCell {
         case carbohydrates = "Carbohydrates"
     }
 }
-

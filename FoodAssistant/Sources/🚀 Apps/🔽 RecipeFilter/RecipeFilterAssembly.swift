@@ -10,6 +10,7 @@ import UIKit
 /// #Компоновщик модуля RecipeFilter
 final class RecipeFilterAssembly {
     private let navigationController: UINavigationController
+    /// Текст из поискового бара
     private let text: String
     private weak var searchDelegate: SeachRecipesRequested?
     
@@ -41,4 +42,3 @@ extension RecipeFilterAssembly: Assemblying {
         return viewController
     }
 }
-

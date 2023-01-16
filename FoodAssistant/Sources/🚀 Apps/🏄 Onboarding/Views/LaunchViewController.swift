@@ -38,16 +38,14 @@ extension LaunchPage {
 
 /// #Контроллер представления для PageVC модуля Launch
 final class LaunchViewController: UIViewController {
-    
     // MARK: - Properties
     private lazy var customView: LaunchView = {
         let view = LaunchView()
         view.updateView(page: page)
         return view
     }()
-    
-    weak var delegate: LaunchViewDelegate?
     private var page: LaunchPage?
+    weak var delegate: LaunchViewDelegate?
     
     // MARK: - Init & Override
     init(page: LaunchPage?,
@@ -70,5 +68,3 @@ final class LaunchViewController: UIViewController {
         customView.delegate = delegate
     }
 }
-
-

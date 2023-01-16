@@ -47,7 +47,7 @@ extension MainSectionConfigurator: CVSectionConfiguration {
         let headerModel = HeaderSectionModel(title: titleHeader,
                                              firstImage: Constants.firstImage,
                                              secondImage: Constants.secondImage,
-                                             action: action )
+                                             action: action)
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .withButton(headerModel: headerModel))
         headerBuilder.register(collectionView: collectionView)

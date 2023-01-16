@@ -18,15 +18,19 @@ enum RecipeRequest {
                  _ number: Int,
                  _ query: String?)
     
+    /// Запрос рецептов по ингредиентам
+    ///  - Parameters:
+    ///   - titles: массив названий ингредиентов
+    ///   - number: количество рецептов
     case byIngredients(_ titles: [String],
                        _ number: Int)
     
+    /// Запрос рецептов по идентификаторам
+    ///  - Parameter ids: идентификаторы рецептов
     case byId(_ ids: [Int])
     
     /// Запрос рецепта по ингредиентам
-    ///  - Parameters:
-    ///   - ingridients: массив ингредиентов
-    ///   - number: количество рецептов
+    ///  - Parameter query: название ингредиента
     case findIngredient(_ query: String?)
 }
 
@@ -91,7 +95,6 @@ extension RecipeRequest: RequestBuilding {
     var queryItems: [URLQueryItem]? {
         switch self {
         case let .complex(parameters, number, query):
-            
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
                 URLQueryItem(name: "addRecipeNutrition", value: "true"),

@@ -9,7 +9,6 @@ import UIKit
 
 /// #Ячейка основной информации Рецепта
 final class BasicInfoCell: TVBaseCell {
-    
     // MARK: - Properties
     let servingsText = "Servings".localize()
     

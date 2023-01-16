@@ -28,13 +28,12 @@ protocol RecipeListPresentation: LayoutChangable,
 
 /// #Контроллер представления списка рецептов
 final class RecipeListViewController: UIViewController {
-    
     // MARK: - Properties
     private lazy var collectionView = UICollectionView(frame: CGRect.zero,
                                                        collectionViewLayout: AppConstants.getFlowLayout())
     
     private var timer: Timer?
-    private var factory: RLFactory?
+    private var factory: CVFactoryProtocol?
     
     private let presenter: RecipeListPresentation
     private let searchBar = RecipesSearchBar(isFilter: false)
@@ -95,7 +94,7 @@ final class RecipeListViewController: UIViewController {
             
             collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            collectionView.bottomAnchor.constraint(equalTo:  view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
+            collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 12)
         ])
     }
 }
@@ -136,7 +135,6 @@ extension RecipeListViewController: SearchBarFilterDelegate {
 extension RecipeListViewController: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
         searchBar.endEditing(true)
         presenter.didTapSearch(searchBar.text ?? "")
     }

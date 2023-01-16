@@ -18,5 +18,3 @@ final class CVSectionBuilder: CVSectionProtocol {
         self.itemBuilder = itemBuilder
     }
 }
-
-

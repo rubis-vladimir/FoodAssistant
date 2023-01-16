@@ -21,7 +21,6 @@ final class ProfileItemBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension ProfileItemBuilder: CVItemBuilderProtocol {
-    
     func register(collectionView: UICollectionView) {
         collectionView.register(AvatarCell.self)
     }
@@ -37,9 +36,7 @@ extension ProfileItemBuilder: CVItemBuilderProtocol {
     
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(AvatarCell.self,
-                                                      indexPath: indexPath)
-        
-        return cell
+        return collectionView.dequeueReusableCell(AvatarCell.self,
+                                                  indexPath: indexPath)
     }
 }

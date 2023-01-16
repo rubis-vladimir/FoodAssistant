@@ -29,7 +29,7 @@ final class DetailInfoViewController: UIViewController {
     private let tableView = UITableView(frame: CGRect.zero,
                                         style: .grouped)
     private let presenter: DetailInfoPresentation
-    private var factory: DIFactory?
+    private var factory: TVFactoryProtocol?
     
     private var isFavorite: Bool = false {
         didSet {

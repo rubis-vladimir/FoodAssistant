@@ -52,7 +52,7 @@ final class MainItemBuilder {
     private func signInNotification() {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(changeLayoutType),
-                                               name: NSNotification.Name ("changeLayoutType"),
+                                               name: NSNotification.Name("changeLayoutType"),
                                                object: nil)
     }
     

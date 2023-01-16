@@ -76,7 +76,8 @@ final class RLFactory {
             }
             
             return MainSectionConfigurator(models: models,
-                                           titleHeader: Constants.mainTitle, height: Constants.heightMainCell,
+                                           titleHeader: Constants.mainTitle,
+                                           height: Constants.heightMainCell,
                                            action: action,
                                            delegate: delegate).configure(for: collectionView)
         }

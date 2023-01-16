@@ -67,7 +67,6 @@ final class InstructionCell: TVBaseCell {
                               for: .touchUpInside)
         
         stack.addArrangedSubview(stepNumberLabel)
-        
         stack.addArrangedSubview(timerButton)
         [stack, cookingInstructionsLabel].forEach {
             container.addArrangedSubview($0)
@@ -109,4 +108,3 @@ final class InstructionCell: TVBaseCell {
         delegate?.didTapTimerButton(step: step)
     }
 }
-

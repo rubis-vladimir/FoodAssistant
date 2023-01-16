@@ -17,7 +17,6 @@ enum TypeOfActionButton {
 
 /// #Базовая ячейка рецепта
 class CVBaseRecipeCell: UICollectionViewCell {
-    
     // MARK: - Properties
     weak var favoriteDelegate: FavoriteChangable?
     weak var deleteDelegate: DeleteTapable?
@@ -170,7 +169,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         recipeImageView.reloadInputViews()
         
         UIView.animate(withDuration: 0.55) {
-            if let image = UIImage(data: data){
+            if let image = UIImage(data: data) {
                 self.recipeImageView.image = image
             } else {
                 self.recipeImageView.image = UIImage(named: "defaultDish")
@@ -189,7 +188,6 @@ class CVBaseRecipeCell: UICollectionViewCell {
     
     /// Функция для настройки констрейнтов
     func setupConstraints() {
-        
         containerTopLabel.addArrangedSubview(titleRecipeLabel)
         substrateAction.addSubview(actionButton)
         
@@ -221,4 +219,3 @@ class CVBaseRecipeCell: UICollectionViewCell {
         basketDelegate?.didTapAddInBasketButton(id: id)
     }
 }
-

@@ -81,7 +81,6 @@ final class RecipeFilterInteractorTests: XCTestCase {
     
     func testUpdateParameters() {
         //arange
-        
         let text = "Meat Foo, Carrot Foo,Foo"
         var ingredient: String?
         

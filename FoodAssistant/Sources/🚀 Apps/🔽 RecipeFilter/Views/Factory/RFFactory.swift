@@ -17,7 +17,7 @@ protocol SelectedIngredientsChangable {
 /// #Варианты секции фильтра
 enum RFSectionType {
     /// Секция с тэг-вью (тип заголовка)
-    case tag(_ HeaderType: HeaderType)
+    case tag(_ headerType: HeaderType)
 }
 
 /// #Фабрика настройки коллекции модуля RecipeFilter

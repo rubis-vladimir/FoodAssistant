@@ -9,7 +9,6 @@ import UIKit
 
 /// #Кастомный хедер для коллекции с кнопкой
 class CVBaseSectionHeader: UICollectionReusableView {
-    
     /// Название секции
     let titleLabel: UILabel = {
         let label = UILabel()
@@ -22,7 +21,7 @@ class CVBaseSectionHeader: UICollectionReusableView {
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupConstraints()
     }
     

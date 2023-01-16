@@ -18,7 +18,7 @@ struct AppConstants {
     /// Расстояния от краев для секции
     static let edgeInsertForSection = UIEdgeInsets(top: 0, left: padding, bottom: 0, right: padding)
     /// Минимальное количество рецептов в запросе
-    static let minRequestAmount = 8
+    static let minRequestAmount = 2
     /// Высота заголовка по дефолту
     static let heightHeader: CGFloat = 45
     
@@ -49,9 +49,7 @@ struct AppConstants {
     static func calculateItemWidth(width: CGFloat,
                                    itemPerRow: CGFloat,
                                    padding: CGFloat) -> CGFloat {
-        
         let paddingWidht = padding * (itemPerRow + 1)
         return (width - paddingWidht) / itemPerRow
-        
     }
 }

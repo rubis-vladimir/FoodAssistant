@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// #Протокол управления слоем навигации модуля Launch
 protocol LaunchRouting {
     /// Перейти к основному экрану приложения

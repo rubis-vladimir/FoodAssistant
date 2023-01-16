@@ -12,7 +12,6 @@ protocol FilterManagement {
     /// Получить параметры фильтра рецепта
     /// - Returns: параметры
     func getRecipeParameters() -> [FilterParameters: [String]]
-    
     /// Переписывает параметр
     /// - Parameters:
     ///  - parameter: параметр
@@ -23,7 +22,6 @@ protocol FilterManagement {
 
 /// #Менеджер работы с фильтром
 final class FilterManager {
-    
     /// Параметры по умолчанию
     private struct RecipeFilterTagTitles {
         static let time = ["Under 5 min", "Under 15 min", "Under 30 min"]
@@ -55,7 +53,6 @@ extension FilterManager: FilterManagement {
             dict[.includeIngredients] = RecipeFilterTagTitles.includeIngredients
             UserDefaults.standard.set(RecipeFilterTagTitles.includeIngredients, forKey: key1)
         }
-        
         
         let key2 = FilterParameters.excludeIngredients.title
         if let titles = UserDefaults.standard.value(forKey: key2) as? [String] {

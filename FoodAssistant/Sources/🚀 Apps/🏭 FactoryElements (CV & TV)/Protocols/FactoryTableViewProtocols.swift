@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - Фабрика для TableView
 /// #Протокол фабрики для TableView
-protocol TVCFactoryProtocol {
+protocol TVFactoryProtocol {
     /// Строители секций
     var builders: [TVSectionProtocol] { get }
 }

@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIViewController {
-    
     /// Показывает информационный алерт (заглушка)
     /// - Parameters:
     ///  - title: заголовок
