@@ -879,6 +879,7 @@
 		7D4365CB296F40A6007684DE /* UserDefaultsManager */ = {
 			isa = PBXGroup;
 			children = (
+				7DC5509929510344001539C5 /* Constants */,
 				7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */,
 			);
 			path = UserDefaultsManager;
@@ -996,7 +997,6 @@
 			isa = PBXGroup;
 			children = (
 				7D4365CB296F40A6007684DE /* UserDefaultsManager */,
-				7DC5509929510344001539C5 /* Constants */,
 				7D40B307294CBFAA00D832A0 /* StorageManager */,
 				7DC1610F292E48830026A072 /* Cache */,
 			);

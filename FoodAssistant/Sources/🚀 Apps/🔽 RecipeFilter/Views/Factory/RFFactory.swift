@@ -16,7 +16,7 @@ protocol SelectedIngredientsChangable {
 
 /// #Варианты секции фильтра
 enum RFSectionType {
-    /// Секция с тэг-вью
+    /// Секция с тэг-вью (тип заголовка)
     case tag(_ HeaderType: HeaderType)
 }
 

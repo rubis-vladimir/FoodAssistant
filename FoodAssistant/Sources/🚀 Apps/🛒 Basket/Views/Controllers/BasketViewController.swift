@@ -37,7 +37,7 @@ final class BasketViewController: UIViewController {
     }
     
     private lazy var orderDeliveryButton = BaseRedButton(title: " " + Constracts.orderButtonTitle,
-                                                       image: Constracts.orderBurronImage) { [weak self] in
+                                                       image: Constracts.orderButtonImage) { [weak self] in
         self?.showInformationAlert(title: "Order".localize(),
                                   text: "Go to checkout screen".localize())
     }
@@ -124,14 +124,11 @@ extension BasketViewController: BasketViewable {
             collectionView.reloadData()
         } else {
             DispatchQueue.main.async {
-                
                 self.factory = BasketFactory(collectionView: self.collectionView,
                                         recipes: recipes,
                                         ingredients: ingredients,
                                              delegate: self.presenter)
-                self.factory?.setupCollectionView()
             }
-            
         }
     }
     
@@ -144,9 +141,8 @@ extension BasketViewController: BasketViewable {
 extension BasketViewController {
     private struct Constracts {
         static let orderButtonTitle = "Order".localize()
-        static let orderBurronImage = Icons.fridge.image
+        static let orderButtonImage = Icons.cart.image
         static let addFridgeTitle = "Add".localize()
-        static let addFridgeImage = Icons.cart.image
-        
+        static let addFridgeImage = Icons.fridge.image
     }
 }

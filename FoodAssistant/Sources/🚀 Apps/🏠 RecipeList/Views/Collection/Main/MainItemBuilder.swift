@@ -74,11 +74,6 @@ extension MainItemBuilder: CVSelectableItemBuilderProtocol {
     
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         calculateItemSize(width: collectionView.bounds.width)
-//        CGSize(width: AppConstants.calculateItemWidth(width: collectionView.bounds.width,
-//                                                      itemPerRow: 2,
-//                                                      padding: AppConstants.padding),
-//               height: <#T##CGFloat#>)
-        
     }
     
     func cellAt(indexPath: IndexPath,

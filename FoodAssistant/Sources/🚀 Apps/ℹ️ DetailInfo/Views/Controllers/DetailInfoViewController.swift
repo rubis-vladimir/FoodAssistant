@@ -15,8 +15,10 @@ protocol DetailInfoPresentation: ImagePresentation,
     /// Модель рецепта
     var recipe: RecipeProtocol { get }
     /// Нажата кнопка изменения флага избранного рецепта
+    /// - Parameter flag: флаг
     func didTapChangeFavoriteButton(_ flag: Bool)
-    /// Проверить ингредиент
+    /// Проверить достаточность ингредиента
+    /// - Parameter ingredient: вью-модель ингредиента
     func checkFor(ingredient: IngredientViewModel) -> Bool
 }
 
@@ -116,8 +118,10 @@ final class DetailInfoViewController: UIViewController {
 // MARK: - DetailInfoViewable
 extension DetailInfoViewController: DetailInfoViewable {
 
-    func showTimer() { 
-        showInformationAlert(title: "Таймер", text: "Установка таймера обратного отсчета")
+    func showTimer() {
+        /// Загрушка, `Таймер` в разработке ( \tasks\timer )
+        showInformationAlert(title: "Таймер",
+                             text: "Установка таймера обратного отсчета")
     }
 }
 

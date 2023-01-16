@@ -78,10 +78,12 @@ final class IngredientView: UIView {
         
         var amountString = ""
         if ingredient.amount < 1 {
+            /// Преобразует и показывает в виде дроби
             let amountFraction = ingredient.amount.rationalApproximationOf()
             amountString = "\(amountFraction.0)/\(amountFraction.1)"
-        } else if ingredient.amount > 40 {
             
+        } else if ingredient.amount > 40 {
+            /// Округление количества
             var amount = Int(ingredient.amount)
             let endingBy10 = amount % 10
             

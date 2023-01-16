@@ -19,6 +19,7 @@ protocol UserProfilePresentation: DeleteTapable,
     /// Была нажата кнопка добавления ингредиента
     func didTapAddIngredientButton()
     /// Ивент после ввода текста в поисковой бар
+    /// - Parameter text: введенный текст
     func textEntered(_ text: String)
     /// Проверить флаг ингредиента
     /// - Parameter id: идентификатор

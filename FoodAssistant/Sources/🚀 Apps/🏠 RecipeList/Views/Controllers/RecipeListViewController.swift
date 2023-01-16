@@ -15,11 +15,14 @@ protocol RecipeListPresentation: LayoutChangable,
                                  ImagePresentation,
                                  ViewAppearable,
                                  AnyObject {
-    /// Ивент нажатия на кнопку фильтр
+    /// Ивент нажатия на кнопку фильтра
+    /// - Parameter searchText: введенный текст
     func didTapFilterButton(searchText: String)
-    /// Проверить избранный ли рецепт по id
+    /// Проверить избранный ли рецепт
+    /// - Parameter id: идентификатор
     func checkFavorite(id: Int) -> Bool
     /// Ивент нажатия на кнопку поиска в клавиатуре
+    /// - Parameter text: введенный текст
     func didTapSearch(_ text: String)
 }
 

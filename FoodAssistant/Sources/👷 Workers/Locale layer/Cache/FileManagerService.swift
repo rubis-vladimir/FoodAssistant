@@ -7,9 +7,9 @@
 
 import Foundation
 
-/// #Менеджер сохранения файлов
+/// #Менеджер сохранения файлов (Не используется / Как альтернатива ImageCache)
 final class FileManagerService {
-    /// Синглтон
+    
     static let shared = FileManagerService()
     
     private init() {}
