@@ -11,8 +11,11 @@ import UIKit
 final class CVSectionHeaderWithButton: CVBaseSectionHeader {
     
     // MARK: - Properties
+    /// Действие
     private var action: ((Int) -> Void)?
+    /// Первый вариант изображения
     private var firstImage: UIImage?
+    /// Второй вариант изображения
     private var secondImage: UIImage?
     /// Номер секции
     private var section: Int?
@@ -47,7 +50,6 @@ final class CVSectionHeaderWithButton: CVBaseSectionHeader {
     }()
     
     // MARK: - Functions
-    
     override func setupConstraints() {
         addSubview(container)
         container.addArrangedSubview(titleLabel)

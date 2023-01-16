@@ -43,11 +43,11 @@ final class BasketFactory {
         /// Определяем адаптер для коллекции
         cvAdapter = CVAdapter(collectionView: collectionView)
         
-        
+        setupCollectionView()
     }
     
     /// Настраивает коллекцию
-    func setupCollectionView() {
+    private func setupCollectionView() {
         collectionView.dataSource = cvAdapter
         collectionView.delegate = cvAdapter
         collectionView.showsHorizontalScrollIndicator = false

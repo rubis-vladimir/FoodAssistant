@@ -15,14 +15,12 @@ protocol DetailInfoRouting {
 
 /// #Протокол управления View-слоем модуля DetailInfo
 protocol DetailInfoViewable: AnyObject {
-    
     /// Показать таймер
     func showTimer()
 }
 
 /// #Протокол управления бизнес логикой модуля DetailInfo
 protocol DetailInfoBusinessLogic: ImageBusinessLogic {
-    
     /// Обновить флаг избранного рецепта
     /// - Parameters:
     ///  - flag: флаг

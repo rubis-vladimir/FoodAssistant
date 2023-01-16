@@ -9,7 +9,7 @@ import Foundation
 
 /// #Слой бизнес логики модуля DetailInfo
 final class DetailInfoInteractor {
-    
+    /// Вью модели ингредиентов из холодильника
     private var ingredientsFromFridge: [IngredientViewModel] = []
     
     private let imageDownloader: ImageDownloadProtocol

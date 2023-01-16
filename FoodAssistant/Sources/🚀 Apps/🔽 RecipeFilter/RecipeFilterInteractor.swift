@@ -16,11 +16,11 @@ protocol RecipeFilterBusinessLogicDelegate: AnyObject {
 
 /// #Слой бизнес логики модуля RecipeFilter
 final class RecipeFilterInteractor {
-    
-    weak var presenter: RecipeFilterBusinessLogicDelegate?
-    
+
+    /// Словарь с данными по параметрами
     private var dict: [FilterParameters : [TagModel]] = [:]
     
+    weak var presenter: RecipeFilterBusinessLogicDelegate?
     private let filterManager: FilterManagement
     
     init(filterManager: FilterManagement) {
