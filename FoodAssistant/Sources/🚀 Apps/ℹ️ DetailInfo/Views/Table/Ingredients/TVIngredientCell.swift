@@ -13,6 +13,7 @@ final class TVIngredientCell: TVBaseCell {
     private lazy var ingredientView = IngredientView()
 
     override func setupCell() {
+        backgroundColor = .clear
         setupConstraints()
     }
 
@@ -22,7 +23,8 @@ final class TVIngredientCell: TVBaseCell {
         ingredientView.layer.cornerRadius = ingredientView.frame.height / 2
     }
 
-    func configure(with ingredient: IngredientViewModel, flag: Bool) {
+    func configure(with ingredient: IngredientViewModel,
+                   flag: Bool) {
         ingredientView.configure(with: ingredient)
 
         if flag {

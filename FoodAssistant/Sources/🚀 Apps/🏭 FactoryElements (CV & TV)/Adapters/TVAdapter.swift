@@ -67,6 +67,7 @@ extension TVAdapter: UITableViewDelegate {
             headerView.textLabel?.text = builders[section].titleHeader
             headerView.textLabel?.font = Fonts.subtitle
             headerView.contentView.backgroundColor = .clear
+            headerView.contentView.tintColor = .black.withAlphaComponent(0.7)
         }
     }
 

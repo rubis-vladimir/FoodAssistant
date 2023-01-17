@@ -53,6 +53,7 @@ final class NutrientsCell: TVBaseCell {
     }
 
     override func setupCell() {
+        backgroundColor = .clear
         setupConstraints()
     }
 

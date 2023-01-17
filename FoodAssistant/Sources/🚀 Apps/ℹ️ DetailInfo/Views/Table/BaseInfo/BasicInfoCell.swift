@@ -30,6 +30,7 @@ final class BasicInfoCell: TVBaseCell {
 
     // MARK: - Function
     override func setupCell() {
+        backgroundColor = .clear
         setupConstraints()
     }
 

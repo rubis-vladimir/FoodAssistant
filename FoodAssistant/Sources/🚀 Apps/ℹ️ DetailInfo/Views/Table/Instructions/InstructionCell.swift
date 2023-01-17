@@ -62,6 +62,8 @@ final class InstructionCell: TVBaseCell {
     }()
 
     override func setupCell() {
+        backgroundColor = .clear
+
         timerButton.addTarget(self,
                               action: #selector(didTapTimerButton),
                               for: .touchUpInside)
