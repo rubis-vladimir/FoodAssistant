@@ -17,7 +17,7 @@ protocol UserProfileBusinessLogicDelegate: AnyObject {
 final class UserProfileInteractor {
 
     weak var presenter: UserProfileBusinessLogicDelegate?
-    
+
     /// Массив моделей рецептов
     private var models: [RecipeProtocol] = []
     /// Массив вью-моделей ингредиентов

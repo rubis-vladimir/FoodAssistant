@@ -101,14 +101,14 @@ extension UPFactory {
     private struct Constants {
         static let titleHeaderProfile = "My data".localize()
         static let heightProfileCell: CGFloat = 270
-        
+
         static let titleHeaderFridge = "In my fridge".localize()
         static let imageHeaderButton = Icons.plusFill.image
         static let heightFridgeCell: CGFloat = 55
 
         static let titleHeaderFavorite = "Favorite Dishes".localize()
         static let heightFavoriteCell: CGFloat = 125
-        
+
         static let titleHeaderTimers = "Timers".localize()
         static let heightTimerCell: CGFloat = 100
     }

@@ -29,11 +29,11 @@ protocol UserProfileViewable: ErrorShowable,
     /// Обновить `Nav Bar`
     /// - Parameter index: выбранный индекс сегмента
     func updateNavBar(index: Int)
-    
+
     /// Обновить секцию с таймерами
     /// - Parameter timers: таймеры
     func updateTimerSection(with timers: [RecipeTimer])
-    
+
     /// Показать алерт добавления ингредиента
     /// - Parameter completion: захватывает модель ингредиента/ ошибку
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
@@ -100,7 +100,7 @@ final class UserProfilePresenter {
         }
     }
     private var timers: [RecipeTimer]?
-    
+
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
 
@@ -147,7 +147,7 @@ final class UserProfilePresenter {
         /// вкладка профиля
         case 0:
             guard index != currentSegmentIndex else { return }
-            
+
             if let timers = timers {
                 view?.updateCV(orderSection: [.profile,
                                               .timers(timers)])
@@ -302,7 +302,7 @@ extension UserProfilePresenter: UserProfilePresentation {
 extension UserProfilePresenter: UserProfileBusinessLogicDelegate {
     func updateTimers(timers: [RecipeTimer]) {
         self.timers = timers
-        
+
         view?.updateCV(orderSection: [
             .profile,
             .timers(timers)

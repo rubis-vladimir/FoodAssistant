@@ -111,29 +111,29 @@ final class RecipeListPresenter {
 
     /// Загрузка данных при начальной загрузке приложения
     func getStartData() {
-        filterParameters.includeIngredients = ["onion", "chiken"]
-        
-        /// Загрузка данных для секции Recommended
-        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
-            guard let self = self else { return }
-
-            switch result {
-            case .success(let recipeModels): // Успех
-                self.viewModelsDictionary[.recommended] = recipeModels
-
-            case .failure(let error): // Ошибка
-                /// Действие, если ошибка восстанавливаемая
-                let action = { self.getStartData() }
-                ///
-                self.showRecoveryError(from: error,
-                                       action: action)
-            }
-        }
-        /// Загрузка данных для секции Main
-        fetchRecipe(with: filterParameters,
-                    number: AppConstants.minRequestAmount,
-                    query: nil,
-                    type: .main)
+//        filterParameters.includeIngredients = ["onion", "chiken"]
+//
+//        /// Загрузка данных для секции Recommended
+//        interactor.fetchRecommended(number: AppConstants.minRequestAmount) { [weak self] result in
+//            guard let self = self else { return }
+//
+//            switch result {
+//            case .success(let recipeModels): // Успех
+//                self.viewModelsDictionary[.recommended] = recipeModels
+//
+//            case .failure(let error): // Ошибка
+//                /// Действие, если ошибка восстанавливаемая
+//                let action = { self.getStartData() }
+//                ///
+//                self.showRecoveryError(from: error,
+//                                       action: action)
+//            }
+//        }
+//        /// Загрузка данных для секции Main
+//        fetchRecipe(with: filterParameters,
+//                    number: AppConstants.minRequestAmount,
+//                    query: nil,
+//                    type: .main)
     }
 
     /// Получает рецепты

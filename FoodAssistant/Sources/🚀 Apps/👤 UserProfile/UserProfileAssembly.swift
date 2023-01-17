@@ -28,7 +28,7 @@ extension UserProfileAssembly: Assemblying {
         let storage = StorageManager.shared
         let translateService = TranslateService(dataFetcher: dataFetcher)
         let timerManager = TimerManager.shared
-        
+
         let router = UserProfileRouter(navigationController: navigationController)
         let interactor = UserProfileInteractor(imageDownloader: imageDownloaderProxy,
                                                dataFetcher: dataFetcher,
@@ -38,10 +38,10 @@ extension UserProfileAssembly: Assemblying {
         let presenter = UserProfilePresenter(interactor: interactor,
                                   router: router)
         let viewController = UserProfileViewController(presenter: presenter)
-        
+
         timerManager.delegate = interactor
         interactor.presenter = presenter
-        
+
         presenter.view = viewController
         presenter.getStartData()
         return viewController

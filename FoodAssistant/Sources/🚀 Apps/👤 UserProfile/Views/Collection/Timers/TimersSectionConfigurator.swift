@@ -15,7 +15,7 @@ final class TimersSectionConfigurator {
     private let height: CGFloat
     /// Таймеры
     private let timers: [RecipeTimer]
-    
+
     init(title: String,
          timers: [RecipeTimer],
          height: CGFloat) {
@@ -27,17 +27,17 @@ final class TimersSectionConfigurator {
 
 // MARK: - CVSectionConfiguration
 extension TimersSectionConfigurator: CVSectionConfiguration {
-    
+
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .base(title: title))
         headerBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = TimersItemBuilder(height: height,
                                             timers: timers)
         itemBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем секцию
         let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                              itemBuilder: itemBuilder)

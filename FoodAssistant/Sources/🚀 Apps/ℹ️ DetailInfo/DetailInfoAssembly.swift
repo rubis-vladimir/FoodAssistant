@@ -29,7 +29,7 @@ extension DetailInfoAssembly: Assemblying {
                                                         imageCache: imageCache)
         let storage = StorageManager.shared
         let timerManager = TimerManager.shared
-        
+
         let router = DetailInfoRouter(navigationController: navigationController)
         let interactor = DetailInfoInteractor(imageDownloader: imageDownloaderProxy,
                                               storage: storage,

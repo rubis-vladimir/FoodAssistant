@@ -15,7 +15,7 @@ protocol DetailInfoRouting {
 
 /// #Протокол управления View-слоем модуля DetailInfo
 protocol DetailInfoViewable: AnyObject {
-    
+
     /// Показать таймер
     /// - Parameter step: шаг инструкции
     func showTimer(step: Int)
@@ -23,7 +23,7 @@ protocol DetailInfoViewable: AnyObject {
 
 /// #Протокол управления бизнес логикой модуля DetailInfo
 protocol DetailInfoBusinessLogic: ImageBusinessLogic {
-    
+
     /// Обновить флаг избранного рецепта
     /// - Parameters:
     ///  - flag: флаг
@@ -32,7 +32,7 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
                         recipe: RecipeProtocol)
     /// Проверить ингредиент
     func checkFor(ingredient: IngredientViewModel) -> Bool
-    
+
     /// Установить таймер
     /// - Parameters:
     ///  - recipe: рецепт
@@ -47,12 +47,12 @@ protocol DetailInfoBusinessLogic: ImageBusinessLogic {
 /// #Слой презентации модуля DetailInfo
 final class DetailInfoPresenter {
     private(set) var recipe: RecipeProtocol
-    
+
     private let interactor: DetailInfoBusinessLogic
     private let router: DetailInfoRouting
-    
+
     weak var view: DetailInfoViewable?
-    
+
     init(interactor: DetailInfoBusinessLogic,
          router: DetailInfoRouting,
          recipe: RecipeProtocol) {
@@ -74,11 +74,11 @@ extension DetailInfoPresenter: DetailInfoPresentation {
     func didTapChangeFavoriteButton(_ flag: Bool) {
         interactor.updateFavotite(flag, recipe: recipe)
     }
-    
+
     func checkFor(ingredient: IngredientViewModel) -> Bool {
         interactor.checkFor(ingredient: ingredient)
     }
-    
+
     // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
@@ -93,12 +93,12 @@ extension DetailInfoPresenter: DetailInfoPresentation {
             }
         }
     }
-    
+
     // BackTappable
     func didTapBackButton() {
         router.routeToBack()
     }
-    
+
     // TimerTapable
     func didTapTimerButton(step: Int) {
         view?.showTimer(step: step)
