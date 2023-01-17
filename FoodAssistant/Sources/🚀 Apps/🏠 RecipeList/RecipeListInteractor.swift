@@ -44,8 +44,8 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                 guard let self = self else { return }
 
                 switch result {
-                case .success(let responce): // Успех
-                    guard let recipes = responce.results,
+                case .success(let response): // Успех
+                    guard let recipes = response.results,
                           !recipes.isEmpty else {
                         completion(.failure(.noResults))
                         return }
@@ -80,9 +80,9 @@ extension RecipeListInteractor: RecipeListBusinessLogic {
                                        source: currentAppleLanguage(),
                                        target: "en") { [weak self] result in
                 switch result {
-                case .success(let responce):
+                case .success(let response):
                     /// При успешном переводе
-                    let titles = responce.translations.map { $0.text }
+                    let titles = response.translations.map { $0.text }
                     self?.fetchRecipe(ingredientTitles: titles, number: number, completion: completion)
 
                 case .failure(let error):
@@ -174,8 +174,8 @@ extension RecipeListInteractor {
             .downloadIds(with: self.dataFetcher) { [weak self] result in
 
                 switch result {
-                case .success(let responce):
-                    let ids = responce.map { $0.id }
+                case .success(let response):
+                    let ids = response.map { $0.id }
                     self?.fetchRecipes(by: ids, completion: completion)
 
                 case .failure(let error):

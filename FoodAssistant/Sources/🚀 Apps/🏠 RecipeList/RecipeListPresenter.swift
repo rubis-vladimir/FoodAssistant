@@ -210,7 +210,7 @@ final class RecipeListPresenter {
         var actions: [RecoveryOptions] = [.cancel]
 
         switch error {
-        case .invalidResponceCode, .dataLoadingError:
+        case .invalidResponseCode, .dataLoadingError:
             let tryAgainAction = RecoveryOptions.tryAgain(action: action)
             actions.append(tryAgainAction)
         default: break
