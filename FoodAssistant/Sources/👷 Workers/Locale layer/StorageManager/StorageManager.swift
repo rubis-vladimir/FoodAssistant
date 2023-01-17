@@ -61,7 +61,7 @@ extension StorageManager {
 
         do {
             /// Persistent Store Coordinator возвращает в context массив Managed Object
-            let objects = try viewContext.fetch(fetchRequest) as! [T]
+            guard let objects = try viewContext.fetch(fetchRequest) as? [T] else { return [] }
             /// при удаче возвращаем массив рецептов
             return objects
         } catch {
