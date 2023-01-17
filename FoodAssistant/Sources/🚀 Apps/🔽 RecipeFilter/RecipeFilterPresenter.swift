@@ -26,15 +26,15 @@ protocol RecipeFilterViewable: AnyObject {
     /// Обновление `Collection View`
     /// - Parameter dictModels: словарь параметров с данными
     func updateCV(dictModels: [FilterParameters: [TagModel]])
-    
+
     /// Обновить секцию
     /// - Parameter section: номер секции
     func update(section: Int)
-    
+
     /// Обновляет текст в searchBar
     /// - Parameter text: текст
     func updateSearch(text: String)
-    
+
     /// Получить текст из поиска
     func getSearchText() -> String?
 
@@ -50,17 +50,17 @@ protocol RecipeFilterViewable: AnyObject {
 protocol RecipeFilterBusinessLogic {
     /// Получить параметры для запроса
     func getParameters(completion: @escaping (RecipeFilterParameters) -> Void)
-    
+
     /// Получить параметры для конфигурации UI
     func fetchFilterParameters(completion: @escaping ([FilterParameters: [TagModel]]) -> Void)
-    
+
     /// Получить текст из данных параметра
     /// - Parameters:
     ///  - parameter: параметр
     ///  - completion: захватывает текст
     func fetchText(with parameter: FilterParameters,
                    completion: @escaping (String) -> Void)
-    
+
     /// Обновить данные параметра
     /// - Parameters:
     ///  - parameter: параметр
@@ -68,11 +68,11 @@ protocol RecipeFilterBusinessLogic {
     ///  - completion: захватывает параметр с данными
     func update(parameter: FilterParameters,
                 text: String,
-                completion: @escaping ([FilterParameters : [TagModel]]) -> Void)
-    
+                completion: @escaping ([FilterParameters: [TagModel]]) -> Void)
+
     /// Проверка флага выбора тэга
     func checkFlag(indexPath: IndexPath) -> Bool
-    
+
     /// Изменить флаг для конкретного тэга
     /// - Parameters:
     ///  - flag: флаг
@@ -84,23 +84,22 @@ protocol RecipeFilterBusinessLogic {
 // MARK: - Presenter
 /// #Слой презентации модуля RecipeFilter
 final class RecipeFilterPresenter {
-    
     weak var view: RecipeFilterViewable?
     weak var rootPresenter: SeachRecipesRequested?
-    
+
     private let interactor: RecipeFilterBusinessLogic
     private let router: RecipeFilterRouting
-    
+
     init(interactor: RecipeFilterBusinessLogic,
          router: RecipeFilterRouting) {
         self.interactor = interactor
         self.router = router
     }
-    
+
     /// Стартовая подгрузка параметров
     func getStartData(text: String) {
         view?.updateSearch(text: text)
-        
+
         interactor.fetchFilterParameters { [weak self] parameters in
             self?.view?.updateCV(dictModels: parameters)
         }
@@ -109,45 +108,44 @@ final class RecipeFilterPresenter {
 
 // MARK: - RecipeFilterPresentation
 extension RecipeFilterPresenter: RecipeFilterPresentation {
-    
     func didTapChange(parameter: FilterParameters,
-                text: String) {
+                      text: String) {
         interactor.update(parameter: parameter,
                           text: text) { [weak self] parameters in
             self?.view?.updateCV(dictModels: parameters)
         }
     }
-    
+
     func didTapShowResultButton() {
         let text = view?.getSearchText()
-        
+
         interactor.getParameters { [weak self] parameters in
             self?.rootPresenter?.search(with: parameters,
                                         text: text ?? "")
             self?.router.routeToBack()
         }
     }
-    
+
     func checkFlag(indexPath: IndexPath) -> Bool {
         interactor.checkFlag(indexPath: indexPath)
     }
-    
+
     // SelectedIngredientsChangable
     func changeSelectedIngredients(section: Int) {
         guard let parameter = FilterParameters.allCases.first(where: { $0.rawValue == section }) else { return }
-        
+
         interactor.fetchText(with: parameter) { [weak self] text in
             self?.view?.showTFAlert(parameter: parameter, text: text)
         }
     }
-    
+
     // CellTapable
     func didTapElementCell(_ flag: Bool,
                            indexPath: IndexPath) {
         interactor.changeFlag(flag,
                               indexPath: indexPath)
     }
-    
+
     // SearchBarFilterDelegate
     func didTapFilterButton() {
         self.router.routeToBack()

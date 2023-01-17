@@ -19,9 +19,9 @@ protocol ImageDownloadProtocol {
 
 /// #Сервис загрузки изображений
 final class ImageDownloader {
-    
+
     static let shared = ImageDownloader()
-    
+
     private init() {}
 }
 
@@ -29,16 +29,16 @@ final class ImageDownloader {
 extension ImageDownloader: ImageDownloadProtocol {
     func fetchImage(url: URL,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        
+
         URLSession.shared.dataTask(with: url) { (data, responce, error) in
-            
+
             if let httpResponse = responce as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
                     completion(.failure(.invalidResponceCode))
                     return
                 }
             }
-            
+
             guard let data = data,
                   error == nil else {
                 completion(.failure(.dataLoadingError))

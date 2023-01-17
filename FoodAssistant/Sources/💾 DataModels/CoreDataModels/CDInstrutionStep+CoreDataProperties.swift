@@ -11,7 +11,7 @@ import CoreData
 
 extension CDInstrutionStep: InstructionStepProtocol {
     var number: Int { Int(cdNumber) }
-    
+
     @nonobjc public class func fetchRequest() -> NSFetchRequest<CDInstrutionStep> {
         return NSFetchRequest<CDInstrutionStep>(entityName: "CDInstrutionStep")
     }

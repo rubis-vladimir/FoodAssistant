@@ -10,7 +10,7 @@ import UIKit
 /// #Слой навигации модуля Basket
 final class BasketRouter {
     private let navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -18,19 +18,19 @@ final class BasketRouter {
 
 // MARK: - BasketBasketRouting
 extension BasketRouter: BasketRouting {
-    func route(to: BasketTarget) {
-        switch to {
+    func route(to target: BasketTarget) {
+        switch target {
         case .back:
             navigationController.createCustomTransition(with: .fade)
             navigationController.navigationBar.isHidden = true
             navigationController.popViewController(animated: false)
-            
+
         case .detailInfo(let recipe):
-            let vc = DetailInfoAssembly(navigationController: navigationController,
-                                        recipe: recipe).assembly()
-            vc.hidesBottomBarWhenPushed = true
+            let viewController = DetailInfoAssembly(navigationController: navigationController,
+                                                    recipe: recipe).assembly()
+            viewController.hidesBottomBarWhenPushed = true
             navigationController.navigationBar.isTranslucent = true
-            navigationController.pushViewController(vc, animated: true)
+            navigationController.pushViewController(viewController, animated: true)
         }
     }
 }

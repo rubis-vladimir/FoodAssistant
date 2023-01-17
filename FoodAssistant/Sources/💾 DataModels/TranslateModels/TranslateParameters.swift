@@ -17,7 +17,7 @@ struct TranslateParameters: Codable {
     var sourceLanguageCode: String
     /// В какой язык
     var targetLanguageCode: String
-    
+
     enum CodingKeys: String, CodingKey {
         case folderId = "folder id"
         case texts, sourceLanguageCode, targetLanguageCode

@@ -17,16 +17,20 @@ enum RecipeRequest {
     case complex(_ parameters: RecipeFilterParameters,
                  _ number: Int,
                  _ query: String?)
-    
+
+    /// Запрос рецептов по ингредиентам
+    ///  - Parameters:
+    ///   - titles: массив названий ингредиентов
+    ///   - number: количество рецептов
     case byIngredients(_ titles: [String],
                        _ number: Int)
-    
+
+    /// Запрос рецептов по идентификаторам
+    ///  - Parameter ids: идентификаторы рецептов
     case byId(_ ids: [Int])
-    
+
     /// Запрос рецепта по ингредиентам
-    ///  - Parameters:
-    ///   - ingridients: массив ингредиентов
-    ///   - number: количество рецептов
+    ///  - Parameter query: название ингредиента
     case findIngredient(_ query: String?)
 }
 
@@ -36,25 +40,25 @@ extension RecipeRequest {
                          completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
-    
+
     /// Для запроса `byIngredients`
     func downloadIds(with service: DataFetcherProtocol,
                      completion: @escaping (Result<[DTORecipeId], DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
-    
+
     /// Для запроса `byId`
     func downloadById(with service: DataFetcherProtocol,
                       completion: @escaping (Result<[Recipe], DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
-    
+
     /// Для запроса `findIngredient`
     func findIngredient(with service: DataFetcherProtocol,
                         completion: @escaping (Result<DTOIngredientResponce, DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
-    
+
     /// Создает запрос и обращается к сервису для загрузки данных
     ///  - Parameters:
     ///   - service: используемый сервис для загрузки данных
@@ -72,9 +76,9 @@ extension RecipeRequest {
 
 // MARK: - RequestBuilding
 extension RecipeRequest: RequestBuilding {
-    
+
     var baseUrl: String { "api.spoonacular.com" }
-    
+
     var path: String {
         switch self {
         case .complex:
@@ -87,11 +91,10 @@ extension RecipeRequest: RequestBuilding {
             return "/food/ingredients/search"
         }
     }
-    
+
     var queryItems: [URLQueryItem]? {
         switch self {
         case let .complex(parameters, number, query):
-            
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
                 URLQueryItem(name: "addRecipeNutrition", value: "true"),
@@ -109,21 +112,21 @@ extension RecipeRequest: RequestBuilding {
                 URLQueryItem(name: "maxCalories", value: String(parameters.maxCalories ?? 10000)),
                 URLQueryItem(name: "sort", value: parameters.sort)
             ]
-            
+
         case let .byIngredients(ingredientTitles, number):
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
                 URLQueryItem(name: "ingredients", value: ingredientTitles.convertStringArrayToString()),
-                URLQueryItem(name: "number", value: String(number)),
+                URLQueryItem(name: "number", value: String(number))
             ]
-            
+
         case let .byId(ids):
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
                 URLQueryItem(name: "includeNutrition", value: "true"),
                 URLQueryItem(name: "ids", value: ids.map(String.init).convertStringArrayToString())
             ]
-            
+
         case let .findIngredient(query):
             return [
                 URLQueryItem(name: "apiKey", value: APIKeys.spoonacular.rawValue),
@@ -132,7 +135,7 @@ extension RecipeRequest: RequestBuilding {
             ]
         }
     }
-    
+
     var method: HTTPMethod { .get }
     var headers: HTTPHeaders? { ["Content-Type": "application/json"] }
 }

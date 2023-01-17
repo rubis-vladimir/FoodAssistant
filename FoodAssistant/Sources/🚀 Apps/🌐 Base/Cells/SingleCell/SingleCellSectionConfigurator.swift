@@ -9,11 +9,11 @@ import UIKit
 
 /// #Конфигуратор секции единичной ячейки с коллекцией
 final class SingleCellSectionConfigurator {
-    
+
     private let title: String?
     private let configurators: [CVSectionConfiguration]
     private let height: CGFloat
-    
+
     init(title: String?,
          configurators: [CVSectionConfiguration],
          height: CGFloat) {
@@ -22,10 +22,10 @@ final class SingleCellSectionConfigurator {
         self.height = height
     }
 }
-    
+
 // MARK: - CVSectionConfiguration
 extension SingleCellSectionConfigurator: CVSectionConfiguration {
-    
+
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем стандартный заголовок секции
         var headerBuilder: HeaderBuilder?
@@ -33,12 +33,12 @@ extension SingleCellSectionConfigurator: CVSectionConfiguration {
             headerBuilder = HeaderBuilder(type: .base(title: title))
             headerBuilder?.register(collectionView: collectionView)
         }
-        
+
         /// Конфигурируем билдер и регистрируем ячейку
         let itemBuilder = SingleCellBuilder(height: height,
                                             configurators: configurators)
         itemBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем секцию
         let secionBuilder = CVSectionBuilder(headerBuilder: headerBuilder,
                                              itemBuilder: itemBuilder)

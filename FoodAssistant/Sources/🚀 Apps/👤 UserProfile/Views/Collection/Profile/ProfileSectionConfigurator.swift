@@ -13,7 +13,7 @@ final class ProfileSectionConfigurator {
     private let title: String
     /// Высота ячейки
     private let height: CGFloat
-    
+
     init(title: String,
          height: CGFloat) {
         self.title = title
@@ -23,16 +23,16 @@ final class ProfileSectionConfigurator {
 
 // MARK: - CVSectionConfiguration
 extension ProfileSectionConfigurator: CVSectionConfiguration {
-    
+
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
         /// Конфигурируем билдер и регистрируем заголовок
         let headerBuilder = HeaderBuilder(type: .base(title: title))
         headerBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем билдер и регистрируем ячейки
         let itemBuilder = ProfileItemBuilder(height: height)
         itemBuilder.register(collectionView: collectionView)
-        
+
         /// Конфигурируем секцию
         let secionBuilder = CVSectionBuilder(headerBuilder: nil,
                                                  itemBuilder: itemBuilder)

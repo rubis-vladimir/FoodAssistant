@@ -10,7 +10,7 @@ import UIKit
 /// #Слой навигации модуля RecipeList
 final class RecipeListRouter {
     private weak var navigationController: UINavigationController?
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -18,11 +18,11 @@ final class RecipeListRouter {
 
 // MARK: - RecipeListRouting
 extension RecipeListRouter: RecipeListRouting {
-    
+
     func routeToFilter(text: String,
                        searchDelegate: SeachRecipesRequested) {
         guard let navigationController = navigationController else { return }
-        
+
         let filterVC = RecipeFilterAssembly(navigationController: navigationController,
                                             text: text,
                                             searchDelegate: searchDelegate).assembly()
@@ -30,7 +30,7 @@ extension RecipeListRouter: RecipeListRouting {
         navigationController.createCustomTransition(with: .fade)
         navigationController.pushViewController(filterVC, animated: false)
     }
-    
+
     func routeToDetail(model: RecipeProtocol) {
         guard let navigationController = navigationController else { return }
         let detailInfoVC = DetailInfoAssembly(navigationController: navigationController,

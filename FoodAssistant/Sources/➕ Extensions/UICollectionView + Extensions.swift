@@ -8,14 +8,13 @@
 import UIKit
 
 extension UICollectionView {
-    
     /// Регистрирует ячейку коллекции
     func register<T: UICollectionViewCell>(_ classType: T.Type) {
         let string = String(describing: classType)
         register(classType,
                  forCellWithReuseIdentifier: string)
     }
-    
+
     /// Регистрирует вью коллекции
     func register<T: UICollectionReusableView>(_ classType: T.Type,
                                                kind: String) {
@@ -24,22 +23,24 @@ extension UICollectionView {
                  forSupplementaryViewOfKind: kind,
                  withReuseIdentifier: string)
     }
-    
+
     /// Переиспользование ячейки коллекции
     func dequeueReusableCell<T: UICollectionViewCell>(_ classType: T.Type,
                                                       indexPath: IndexPath) -> T {
         let string = String(describing: classType)
-        return dequeueReusableCell(withReuseIdentifier: string,
-                                   for: indexPath) as! T
+        guard let cell = dequeueReusableCell(withReuseIdentifier: string,
+                                             for: indexPath) as? T else { fatalError() }
+        return cell
     }
-    
+
     /// Переиспользование вью коллекции
     func dequeueReusableView<T: UICollectionReusableView>(_ classType: T.Type,
                                                           kind: String,
-                                                      indexPath: IndexPath) -> T {
+                                                          indexPath: IndexPath) -> T {
         let string = String(describing: classType)
-        return dequeueReusableSupplementaryView(ofKind: kind,
-                                                withReuseIdentifier: string,
-                                                for: indexPath) as! T
+        guard let view = dequeueReusableSupplementaryView(ofKind: kind,
+                                                          withReuseIdentifier: string,
+                                                          for: indexPath) as? T else { fatalError() }
+        return view
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 /// #Слой навигации модуля UserProfile
 final class UserProfileRouter {
     private weak var navigationController: UINavigationController?
-    
+
     init(navigationController: UINavigationController?) {
         self.navigationController = navigationController
     }
@@ -18,15 +18,15 @@ final class UserProfileRouter {
 
 // MARK: - UserProfileRouting
 extension UserProfileRouter: UserProfileRouting {
-    func route(to: UserProfileTarget) {
-        switch to {
+    func route(to target: UserProfileTarget) {
+        switch target {
         case .detailInfo(let recipe):
             guard let navigationController = navigationController else { return }
-            let vc = DetailInfoAssembly(navigationController: navigationController,
+            let viewController = DetailInfoAssembly(navigationController: navigationController,
                                         recipe: recipe).assembly()
-            vc.hidesBottomBarWhenPushed = true
+            viewController.hidesBottomBarWhenPushed = true
             navigationController.navigationBar.isTranslucent = true
-            navigationController.pushViewController(vc, animated: true)
+            navigationController.pushViewController(viewController, animated: true)
         }
     }
 }

@@ -17,12 +17,11 @@ enum TypeOfActionButton {
 
 /// #Базовая ячейка рецепта
 class CVBaseRecipeCell: UICollectionViewCell {
-    
     // MARK: - Properties
     weak var favoriteDelegate: FavoriteChangable?
     weak var deleteDelegate: DeleteTapable?
     weak var basketDelegate: InBasketTapable?
-    
+
     /// Идентификатор рецепта
     var id: Int?
     /// Флаг избранного рецепта
@@ -35,22 +34,22 @@ class CVBaseRecipeCell: UICollectionViewCell {
             }
         }
     }
-    
+
     /// Индикатор загрузки
     let spinner: BallSpinFadeLoader = BallSpinFadeLoader()
-    
+
     /// Вью для изображения рецепта
     let recipeImageView: UIImageView = {
-        var iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
-        iv.backgroundColor = .clear
-        iv.tintColor = .white
-        iv.clipsToBounds = true
-        iv.isUserInteractionEnabled = true
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+        var imv = UIImageView()
+        imv.contentMode = .scaleAspectFill
+        imv.backgroundColor = .clear
+        imv.tintColor = .white
+        imv.clipsToBounds = true
+        imv.isUserInteractionEnabled = true
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
     }()
-    
+
     /// Кнопка действия добавление в избранные/удаление
     let actionButton: UIButton = {
         var button = UIButton()
@@ -58,7 +57,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     /// Кнопка добавления корзину
     let addToBasketButton: UIButton = {
         var button = UIButton()
@@ -72,7 +71,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+
     /// Лейбл с названием рецепта
     let titleRecipeLabel: UILabel = {
         var label = UILabel()
@@ -81,7 +80,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     /// Лейбл с временем приготовления
     let cookingTimeLabel: UILabel = {
         var label = UILabel()
@@ -90,17 +89,17 @@ class CVBaseRecipeCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
-    
+
     /// Подложка для кнопки действия (отображается при типе Favorite)
     let substrateAction: UIImageView = {
-        let iv = UIImageView()
-        iv.isUserInteractionEnabled = true
-        iv.tintColor = .white
-        iv.backgroundColor = .clear
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
+        let imv = UIImageView()
+        imv.isUserInteractionEnabled = true
+        imv.tintColor = .white
+        imv.backgroundColor = .clear
+        imv.translatesAutoresizingMaskIntoConstraints = false
+        return imv
     }()
-    
+
     /// Подложка для лейбла времени
     let substrateTime: UIStackView = {
         let stack = UIStackView()
@@ -111,7 +110,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     /// Контейнер лейбла для центровки сверху
     let containerTopLabel: UIStackView = {
         let stack = UIStackView()
@@ -119,18 +118,18 @@ class CVBaseRecipeCell: UICollectionViewCell {
         stack.translatesAutoresizingMaskIntoConstraints = false
         return stack
     }()
-    
+
     // MARK: - Init
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         setupCell()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Functions
     /// Конфигурирует ячейку по модели рецептов
     ///  - Parameters:
@@ -141,12 +140,12 @@ class CVBaseRecipeCell: UICollectionViewCell {
         titleRecipeLabel.text = model.title
         cookingTimeLabel.text = " " + model.cookingTime + " "
         id = model.id
-        
+
         if model.imageName != nil {
             addSubview(spinner)
             spinner.setupSpinner(loadingImageView: recipeImageView)
         }
-        
+
         switch type {
         case .favorite(let flag):
             isFavorite = flag
@@ -161,16 +160,16 @@ class CVBaseRecipeCell: UICollectionViewCell {
                                      for: .touchUpInside)
         }
     }
-    
+
     /// Обновляет изображение рецепта
     ///  - Parameter data: данные изображения
     func updateImage(data: Data) {
         spinner.removeFromSuperview()
         recipeImageView.alpha = 0.5
         recipeImageView.reloadInputViews()
-        
+
         UIView.animate(withDuration: 0.55) {
-            if let image = UIImage(data: data){
+            if let image = UIImage(data: data) {
                 self.recipeImageView.image = image
             } else {
                 self.recipeImageView.image = UIImage(named: "defaultDish")
@@ -186,13 +185,12 @@ class CVBaseRecipeCell: UICollectionViewCell {
                                     for: .touchUpInside)
         setupConstraints()
     }
-    
+
     /// Функция для настройки констрейнтов
     func setupConstraints() {
-        
         containerTopLabel.addArrangedSubview(titleRecipeLabel)
         substrateAction.addSubview(actionButton)
-        
+
         NSLayoutConstraint.activate([
             actionButton.topAnchor.constraint(equalTo: substrateAction.topAnchor),
             actionButton.leadingAnchor.constraint(equalTo: substrateAction.leadingAnchor),
@@ -200,7 +198,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
             actionButton.trailingAnchor.constraint(equalTo: substrateAction.trailingAnchor)
         ])
     }
-    
+
     /// Нажата кнопка удаления рецепта
     @objc func didDeleteButtonTapped() {
         guard let id = id else { return }
@@ -210,15 +208,14 @@ class CVBaseRecipeCell: UICollectionViewCell {
     /// Нажата кнопка изменения флага любимого рецепта
     @objc func didFavoriteButtonTapped() {
         isFavorite.toggle()
-        
+
         guard let id = id else { return }
         favoriteDelegate?.didTapFavoriteButton(isFavorite, id: id)
     }
-    
+
     /// Нажата кнопка добавления в корзину ингредиентов рецепта
     @objc func addToBasketButtonTapped() {
         guard let id = id else { return }
         basketDelegate?.didTapAddInBasketButton(id: id)
     }
 }
-

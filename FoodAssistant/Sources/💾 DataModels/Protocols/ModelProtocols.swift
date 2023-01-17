@@ -29,7 +29,6 @@ protocol RecipeProtocol {
     var isFavorite: Bool { get }
 }
 
-
 /// #Протокол описывающий ингредиент
 protocol IngredientProtocol {
     /// Идентификатор ингредиента

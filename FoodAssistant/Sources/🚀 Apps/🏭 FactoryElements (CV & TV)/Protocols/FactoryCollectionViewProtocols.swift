@@ -26,9 +26,9 @@ protocol CVSectionProtocol {
     var headerBuilder: CVHeaderBuilderProtocol? { get }
     /// Строитель ячеек
     var itemBuilder: CVItemBuilderProtocol { get }
-    
     /// Инициализатор
-    init(headerBuilder: CVHeaderBuilderProtocol?, itemBuilder: CVItemBuilderProtocol)
+    init(headerBuilder: CVHeaderBuilderProtocol?,
+         itemBuilder: CVItemBuilderProtocol)
 }
 
 /// #Протокол строителя ячеек коллекции
@@ -63,10 +63,8 @@ protocol CVHeaderBuilderProtocol {
     func register(collectionView: UICollectionView)
     /// Возвращает размеры заголовка
     func headerSize(collectionView: UICollectionView) -> CGSize
-    /// Просматривает доп. элементы коллекции и возвращает их (заголовок)
+    /// Находит доп. элементы коллекции (заголовок), настраивает и возвращает
     func viewSupplementaryElement(collectionView: UICollectionView,
                                   kind: String,
                                   indexPath: IndexPath) -> UICollectionReusableView
 }
-
-

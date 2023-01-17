@@ -16,8 +16,8 @@ enum UserProfileTarget {
 /// #Протокол управления слоем навигации модуля UserProfile
 protocol UserProfileRouting {
     /// Перейти к следующему экрану
-    ///  - Parameter to: вариант перехода
-    func route(to: UserProfileTarget)
+    ///  - Parameter target: вариант перехода
+    func route(to target: UserProfileTarget)
 }
 
 /// #Протокол управления View-слоем модуля UserProfile
@@ -37,14 +37,14 @@ protocol UserProfileViewable: ErrorShowable,
     /// Показать алерт добавления ингредиента
     /// - Parameter completion: захватывает модель ингредиента/ ошибку
     func showAlert(completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
-    
+
     /// Показать алерт с запросом на удаление
     /// - Parameters:
     ///  - text: название удаляемого
     ///  - action: действие удаления
     func showDelete(text: String,
                     action: @escaping (() -> Void))
-    
+
     /// Перезагрузить элементы
     /// - Parameter items: перезагружаемые элементы
     func reload(items: [IndexPath])
@@ -62,29 +62,28 @@ protocol UserProfileBusinessLogic: RecipeReceived,
     ///  - completion: захватывает вьюмодели рецептов
     func fetchFavoriteRecipe(text: String?,
                              completion: @escaping ([RecipeViewModel]) -> Void)
-    
+
     /// Найти ингредиент (для определения идентификатора)
     /// - Parameters:
     ///  - ingredient: вью-модель ингредиента
     ///  - flag: флаг использования
     func find(ingredient: IngredientViewModel,
               completion: @escaping (Result<IngredientViewModel, DataFetcherError>) -> Void)
-    
+
     /// Изменить флаг использования ингредиента
     /// - Parameters:
     ///  - id: идентификатор ингредиента
     ///  - flag: флаг использования
     func changeToUse(id: Int, flag: Bool)
-    
+
     /// Сохранить ингредиент
     /// - Parameter ingredient: ингредиент
     func save(ingredient: IngredientProtocol)
-    
+
     /// Удалить ингредиент
     /// - Parameter id: идентификатор ингредиента
     func deleteIngredient(id: Int)
 }
-
 
 // MARK: - Presenter
 /// #Слой презентации модуля UserProfile
@@ -100,56 +99,53 @@ final class UserProfilePresenter {
             view?.updateCV(orderSection: [.favorite(recipes)])
         }
     }
-    
     private var timers: [RecipeTimer]?
     
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
-    
+
     weak var view: UserProfileViewable?
     private let interactor: UserProfileBusinessLogic
     private let router: UserProfileRouting
-    
+
     init(interactor: UserProfileBusinessLogic,
          router: UserProfileRouting) {
         self.interactor = interactor
         self.router = router
     }
-    
-    
-    func getStart() {
+
+    func getStartData() {
         interactor.fetchIngredients { ingredients in
             self.ingredients = ingredients
         }
-        
+
         view?.updateNavBar(index: currentSegmentIndex)
         view?.updateCV(orderSection: [.fridge(ingredients)])
     }
-    
+
     /// Конфигурирует и показывает восстанавливаемую ошибку
     /// - Parameters:
     ///  - error: ошибка
     ///  - action: действи при восстановлении
     private func showRecoveryError(from error: DataFetcherError,
-                                   action: @escaping () -> ()) {
+                                   action: @escaping () -> Void) {
         var actions: [RecoveryOptions] = [.cancel]
-        
+
         switch error {
         case .invalidNumber, .notDataProvided:
             let tryAgainAction = RecoveryOptions.tryAgain(action: action)
             actions.append(tryAgainAction)
         default: break
         }
-        
+
         view?.show(rError: RecoverableError(error: error,
                                             recoveryOptions: actions))
     }
-    
+
     private func updateSelectedSegment(index: Int) {
         switch index {
         /// вкладка профиля
         case 0:
-            
             guard index != currentSegmentIndex else { return }
             
             if let timers = timers {
@@ -158,14 +154,14 @@ final class UserProfilePresenter {
             } else {
                 view?.updateCV(orderSection: [.profile])
             }
-            
+
         /// вкладка холодильника
         case 1:
             interactor.fetchIngredients { ingredients in
                 self.ingredients = ingredients
             }
             view?.updateCV(orderSection: [.fridge(ingredients)])
-        
+
         /// вкладка избранных рецептов
         default:
             interactor.fetchFavoriteRecipe(text: lastText) { [weak self] viewModels in
@@ -174,34 +170,33 @@ final class UserProfilePresenter {
             view?.updateCV(orderSection: [.favorite(recipes)])
         }
         view?.updateNavBar(index: index)
-        
+
         currentSegmentIndex = index
     }
 }
 
-
 // MARK: - UserProfilePresentation
 extension UserProfilePresenter: UserProfilePresentation {
-    
+
     func didTapAddIngredientButton() {
         view?.showAlert(completion: { [weak self] result in
             guard let self = self else { return }
-            
+
             switch result {
             case .success(let ingredient):
                 self.interactor.find(ingredient: ingredient) { result in
-                    
+
                     switch result {
                     case .success(let newViewModel):
                         self.ingredients.append(newViewModel)
                         self.view?.updateCV(orderSection: [.fridge(self.ingredients)])
-                        
+
                     case .failure(let error):
                         /// Пока не обрабатывается
                         print(error.localizedDescription)
                     }
                 }
-                
+
             case .failure(let error):
                 switch error {
                 case .invalidNumber, .notDataProvided:
@@ -214,32 +209,32 @@ extension UserProfilePresenter: UserProfilePresentation {
             }
         })
     }
-    
+
     func textEntered(_ text: String) {
         lastText = text
-        
+
         interactor.fetchFavoriteRecipe(text: text) {[weak self] models in
             self?.recipes = models
         }
     }
-    
+
     func checkFlag(id: Int) -> Bool {
         guard let index = ingredients.firstIndex(where: { $0.id == id }) else { return false }
         return ingredients[index].toUse
     }
-    
+
     // ViewAppearable
     func viewAppeared() {
         updateSelectedSegment(index: currentSegmentIndex)
     }
-    
+
     // SegmentedViewDelegate
     func didSelectSegment(index: Int) {
-        
+
         guard index != currentSegmentIndex else { return }
         updateSelectedSegment(index: index)
     }
-    
+
     // ImagePresentation
     func fetchImage(_ imageName: String,
                     type: TypeOfImage,
@@ -254,49 +249,49 @@ extension UserProfilePresenter: UserProfilePresentation {
             }
         }
     }
-    
+
     // RecipeRemovable
     func didTapDeleteButton(id: Int) {
-        
+
         let text = currentSegmentIndex == 1 ? "product" : "recipe"
-        
+
         view?.showDelete(text: text,
                          action: { [weak self] in
             self?.delete(id: id)
         })
     }
-    
+
     private func delete(id: Int) {
         switch currentSegmentIndex {
         case 1:
             interactor.deleteIngredient(id: id)
-            
-            guard let index = ingredients.firstIndex(where: {$0.id == id} ) else { break }
+
+            guard let index = ingredients.firstIndex(where: {$0.id == id}) else { break }
             ingredients.remove(at: index)
-            
+
         case 2:
             interactor.removeRecipe(id: id)
-            
-            guard let index = recipes.firstIndex(where: {$0.id == id} ) else { break }
+
+            guard let index = recipes.firstIndex(where: {$0.id == id}) else { break }
             recipes.remove(at: index)
         default: break
         }
-        
+
         updateSelectedSegment(index: currentSegmentIndex)
     }
-    
+
     // InBasketAdded
     func didTapAddInBasketButton(id: Int) {
         interactor.addToBasket(id: id)
     }
-    
+
     // SelectedCellDelegate
     func didSelectItem(id: Int) {
         interactor.getRecipe(id: id) { [weak self] recipe in
             self?.router.route(to: .detailInfo(recipe))
         }
     }
-    
+
     // CheckChangable
     func didTapCheckButton(id: Int, flag: Bool) {
         interactor.changeToUse(id: id, flag: flag)

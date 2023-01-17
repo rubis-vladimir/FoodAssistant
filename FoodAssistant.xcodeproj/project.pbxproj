@@ -898,6 +898,7 @@
 		7D4365CB296F40A6007684DE /* UserDefaultsManager */ = {
 			isa = PBXGroup;
 			children = (
+				7DC5509929510344001539C5 /* Constants */,
 				7D4365CC296F40C2007684DE /* UserDefaultsManager.swift */,
 			);
 			path = UserDefaultsManager;
@@ -1015,7 +1016,6 @@
 			isa = PBXGroup;
 			children = (
 				7D4365CB296F40A6007684DE /* UserDefaultsManager */,
-				7DC5509929510344001539C5 /* Constants */,
 				7D40B307294CBFAA00D832A0 /* StorageManager */,
 				7DC1610F292E48830026A072 /* Cache */,
 			);
@@ -1961,7 +1961,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WJM24K3YHR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodAssistant/Resources/Info.plist;
@@ -1990,7 +1990,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = WJM24K3YHR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = FoodAssistant/Resources/Info.plist;

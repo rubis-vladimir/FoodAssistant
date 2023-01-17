@@ -7,7 +7,6 @@
 
 import Foundation
 
-
 /// #Протокол управления слоем навигации модуля Launch
 protocol LaunchRouting {
     /// Перейти к основному экрану приложения
@@ -25,7 +24,7 @@ protocol LaunchViewable: AnyObject {
 final class LaunchPresenter {
     weak var view: LaunchViewable?
     private let router: LaunchRouting
-    
+
     init(router: LaunchRouting) {
         self.router = router
     }

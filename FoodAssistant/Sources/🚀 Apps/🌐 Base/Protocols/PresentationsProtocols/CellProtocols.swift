@@ -10,9 +10,7 @@ import Foundation
 /// #Протокол передачи UI-ивента при нажатии на ячейку
 protocol CellSelectable: AnyObject {
     /// Ивент нажатия ячейку коллекции
-    ///  - Parameters:
-    ///   - type: тип модели
-    ///   - id: идентификатор рецепта
+    ///  - Parameter id: идентификатор рецепта
     func didSelectItem(id: Int)
 }
 
@@ -26,8 +24,7 @@ protocol InBasketTapable: AnyObject {
 /// #Протокол передачи UI-ивента при нажатии на кнопку удаления
 protocol DeleteTapable: AnyObject {
     /// Ивент нажатия на кнопку удаления рецепта
-    ///  - Parameters:
-    ///   - id: идентификатор рецепта
+    ///  - Parameter id: идентификатор рецепта
     func didTapDeleteButton(id: Int)
 }
 

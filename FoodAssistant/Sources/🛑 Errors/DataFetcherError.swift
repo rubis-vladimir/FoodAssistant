@@ -43,7 +43,7 @@ extension DataFetcherError: LocalizedError {
             return "Error".localize()
         }
     }
-    
+
     var failureReason: String? {
         switch self {
         case .invalidResponceCode:
@@ -58,7 +58,7 @@ extension DataFetcherError: LocalizedError {
             return "Something went wrong".localize()
         }
     }
-    
+
     var recoverySuggestion: String? {
         switch self {
         case .invalidResponceCode:
@@ -74,5 +74,3 @@ extension DataFetcherError: LocalizedError {
         }
     }
 }
-
-

@@ -15,7 +15,7 @@ final class SingleCellBuilder {
     private let height: CGFloat
     /// Конфигураторы секций коллекции внутри ячейки
     private let configurators: [CVSectionConfiguration]
-    
+
     init(height: CGFloat,
          configurators: [CVSectionConfiguration]) {
         self.height = height
@@ -25,18 +25,18 @@ final class SingleCellBuilder {
 
 // MARK: - CVItemBuilderProtocol
 extension SingleCellBuilder: CVSectionInsetProtocol {
-        
+
     func register(collectionView: UICollectionView) {
         collectionView.register(SingleCell.self)
     }
-    
+
     func itemCount() -> Int { count }
-    
+
     func itemSize(indexPath: IndexPath, collectionView: UICollectionView) -> CGSize {
         CGSize(width: collectionView.bounds.width,
                height: height)
     }
-    
+
     func cellAt(indexPath: IndexPath,
                 collectionView: UICollectionView) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(SingleCell.self,
@@ -44,7 +44,7 @@ extension SingleCellBuilder: CVSectionInsetProtocol {
         cell.configure(with: configurators)
         return cell
     }
-    
+
     func insetForSection() -> UIEdgeInsets {
         .zero
     }

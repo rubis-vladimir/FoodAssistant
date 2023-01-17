@@ -9,10 +9,10 @@ import Foundation
 @testable import FoodAssistant
 
 class SpyRecipeFilterRootPresenter: SeachRecipesRequested {
-    
+
     var text: String?
     var parameters: RecipeFilterParameters?
-    
+
     func search(with parameters: RecipeFilterParameters,
                 text: String) {
         self.text = text

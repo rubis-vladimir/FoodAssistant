@@ -9,14 +9,14 @@ import CoreData
 
 /// #Менеджер сохранения и загрузки данных из БД
 class StorageManager {
-    
+
     static let shared = StorageManager()
-    
+
     // MARK: - Core Data stack
     ///   Обращаемся к своему NSPersistentContainer который является оберткой для NSPersistentStoreCoordinator
     private let persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "FoodAssistant")
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+        container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
                 fatalError("Unresolved error \(error), \(error.userInfo)")
             }
@@ -24,16 +24,15 @@ class StorageManager {
         return container
     }()
     private let viewContext: NSManagedObjectContext
-    
+
     private init() {
         /// Обращаемся к NSManagedObjectContext через наш PersistentContainer
         viewContext = persistentContainer.viewContext
-        /// viewContext - база данных восстановленная из памяти / контекст главной очереди
     }
 }
 
 // MARK: - Core Data Saving support
-extension StorageManager{
+extension StorageManager {
     /// Сохранение контекста если он изменился
     private func saveContext () {
         if viewContext.hasChanges {
@@ -45,23 +44,24 @@ extension StorageManager{
             }
         }
     }
-    
+
     /// Получение моделей типа `T` из БД
     /// - Parameters:
     ///  - model: тип модели
     ///  - predicate: логическое условие для фильтрации
     /// - Returns: массив моделей
     private func read<T: NSManagedObject>(model: T.Type, predicate: NSPredicate?) -> [T] {
-        /// создаем запрос к базе данных "fetchRequest" - выбрать из базы ВСЕ объекты с типом CDRecipe
+        /// создаем запрос к базе данных "fetchRequest" - выбрать из базы объекты
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "\(T.self)")
-        
+
         if let predicate = predicate {
+            /// Добавляем предикат
             fetchRequest.predicate = predicate
         }
-        
+
         do {
-            ///Persistent Store Coordinator возвращает в context массив Managed Object `[CDRecipe]`
-            let objects = try viewContext.fetch(fetchRequest) as! [T]
+            /// Persistent Store Coordinator возвращает в context массив Managed Object
+            guard let objects = try viewContext.fetch(fetchRequest) as? [T] else { return [] }
             /// при удаче возвращаем массив рецептов
             return objects
         } catch {
@@ -73,10 +73,9 @@ extension StorageManager{
     }
 }
 
-
 // MARK: - DBRecipeManagement
 extension StorageManager: DBRecipeManagement {
-    
+
     func fetchRecipes(for target: TargetOfSave,
                       completion: @escaping ([RecipeProtocol]) -> Void) {
         let predicate = NSPredicate(format: "\(target.rawValue) == %@",
@@ -84,7 +83,7 @@ extension StorageManager: DBRecipeManagement {
         let objects = read(model: CDRecipe.self, predicate: predicate)
         completion(objects)
     }
-    
+
     func save(recipe: RecipeProtocol,
               for target: TargetOfSave) {
         let predicate = NSPredicate(format: "cdId == %@",
@@ -96,13 +95,13 @@ extension StorageManager: DBRecipeManagement {
         }
         saveContext()
     }
-    
+
     func remove(id: Int,
                 for target: TargetOfSave) {
         let predicate = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
         guard let object = read(model: CDRecipe.self, predicate: predicate).first else { return }
-        
+
         switch target {
         case .isFavorite:
             if object.inBasket {
@@ -110,7 +109,7 @@ extension StorageManager: DBRecipeManagement {
             } else {
                 viewContext.delete(object)
             }
-            
+
         case .inBasket:
             if object.isFavorite {
                 object.setValue(false, forKey: target.rawValue)
@@ -120,7 +119,7 @@ extension StorageManager: DBRecipeManagement {
         }
         saveContext()
     }
-    
+
     func fetchFavoriteId(completion: @escaping ([Int]) -> Void) {
         let predicate = NSPredicate(format: "isFavorite == %@",
                                     NSNumber(value: true))
@@ -128,21 +127,13 @@ extension StorageManager: DBRecipeManagement {
         let arrayId = objects.map { $0.id }
         completion(arrayId)
     }
-    
-    func checkRecipes(id: [Int]) -> [Int] {
-        let predicate = NSPredicate(format: "isFavorite == %@",
-                                    NSNumber(value: true))
-        let objects = read(model: CDRecipe.self, predicate: predicate)
-        let cdId = objects.map { $0.id }
-        return id.filter { cdId.contains($0) }
-    }
-    
+
     func check(id: Int) -> Bool {
         guard read(model: CDRecipe.self,
                    predicate: nil).first(where: {$0.id == id && $0.isFavorite == true }) != nil else { return false }
         return true
     }
-    
+
     /// #Вспомогательный приватные функции
     /// Создает и добавляет в контекст модель данных CDRecipe
     ///  - Parameters:
@@ -157,7 +148,7 @@ extension StorageManager: DBRecipeManagement {
         cdRecipe.imageName = recipe.imageName
         cdRecipe.cookingTime = recipe.cookingTime
         cdRecipe.cdServings = Int16(recipe.servings)
-        
+
         switch target {
         case .isFavorite:
             cdRecipe.isFavorite = true
@@ -166,7 +157,7 @@ extension StorageManager: DBRecipeManagement {
             cdRecipe.isFavorite = false
             cdRecipe.inBasket = true
         }
-        
+
         /// Создаем модели CDIngredient и добавляем их в рецепт
         if let ingredients = recipe.ingredients {
             ingredients.forEach {
@@ -180,7 +171,7 @@ extension StorageManager: DBRecipeManagement {
                 cdRecipe.addToCdIngredients(cdIngredient)
             }
         }
-        
+
         /// Создаем модели CDNutrient и добавляем их в рецепт
         if let nutrients = recipe.nutrients {
             nutrients.forEach {
@@ -191,7 +182,7 @@ extension StorageManager: DBRecipeManagement {
                 cdRecipe.addToCdNutrients(cdNutrient)
             }
         }
-        
+
         /// Создаем модели CDInstrutionStep и добавляем их в рецепт
         if let instructionSteps = recipe.instructions {
             instructionSteps.forEach {
@@ -211,36 +202,30 @@ extension StorageManager: DBIngredientsManagement {
                                     NSNumber(value: true))
         let predicate2 = NSPredicate(format: "toUse == %@",
                                     NSNumber(value: true))
-        let predicate = toUse ? NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] ) : predicate1
-        
+        let predicate = toUse ?
+        NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+        : predicate1
+
         let objects = read(model: CDIngredient.self, predicate: predicate)
         completion(objects)
     }
-    
-    func fetchIngredients(completion: @escaping ([IngredientProtocol]) -> Void) {
-        
-        let predicate = NSPredicate(format: "inFridge == %@",
-                                    NSNumber(value: true))
-        let objects = read(model: CDIngredient.self, predicate: predicate)
-        completion(objects)
-    }
-    
+
     func save(ingredients: [IngredientProtocol]) {
-        
+
         ingredients.forEach {
             let predicate1 = NSPredicate(format: "cdId == %@",
                                          NSNumber(value: $0.id))
             let predicate2 = NSPredicate(format: "inFridge == %@",
                                         NSNumber(value: true))
-            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
-            
+            let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2])
+
             /// Обновляем количество если ингредиент уже добавлен
             if let object = read(model: CDIngredient.self,
                                  predicate: predicate).first {
                 let amount = object.amount + $0.amount
                 object.setValue($0.toUse, forKey: "toUse")
                 object.setValue(amount, forKey: "amount")
-                
+
             } else {
                 /// Создаем и добавляем новый ингредиент
                 createCDIngredient(ingredient: $0)
@@ -248,7 +233,7 @@ extension StorageManager: DBIngredientsManagement {
         }
         saveContext()
     }
-    
+
     func removeIngredient(id: Int) {
         let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
@@ -259,7 +244,7 @@ extension StorageManager: DBIngredientsManagement {
         viewContext.delete(object)
         saveContext()
     }
-    
+
     func updateIngredient(id: Int, toUse: Bool) {
         let predicate1 = NSPredicate(format: "cdId == %@",
                                     NSNumber(value: id))
@@ -267,11 +252,11 @@ extension StorageManager: DBIngredientsManagement {
                                     NSNumber(value: true))
         let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [predicate1, predicate2] )
         guard let object = read(model: CDIngredient.self, predicate: predicate).first else { return }
-        
+
         object.setValue(toUse, forKey: "toUse")
         saveContext()
     }
-    
+
     /// Создает модель CDIngredient для ингредиентов в холодильнике
     private func createCDIngredient(ingredient: IngredientProtocol) {
         let cdIngredient = CDIngredient(context: viewContext)
@@ -284,4 +269,3 @@ extension StorageManager: DBIngredientsManagement {
         cdIngredient.inFridge = true
     }
 }
-

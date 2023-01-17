@@ -10,7 +10,7 @@ import UIKit
 /// #Слой навигации модуля RecipeFilter
 final class RecipeFilterRouter {
     private let navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }

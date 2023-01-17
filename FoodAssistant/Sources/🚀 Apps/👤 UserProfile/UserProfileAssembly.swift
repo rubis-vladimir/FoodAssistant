@@ -10,7 +10,7 @@ import UIKit
 /// #Компоновщик модуля UserProfile
 final class UserProfileAssembly {
     private let navigationController: UINavigationController
-    
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
@@ -19,7 +19,7 @@ final class UserProfileAssembly {
 // MARK: - Assemblying
 extension UserProfileAssembly: Assemblying {
     func assembly() -> UIViewController {
-        
+
         let imageDownloader = ImageDownloader.shared
         let imageCacheService = ImageCacheService()
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
@@ -41,9 +41,9 @@ extension UserProfileAssembly: Assemblying {
         
         timerManager.delegate = interactor
         interactor.presenter = presenter
+        
         presenter.view = viewController
-        presenter.getStart()
+        presenter.getStartData()
         return viewController
     }
 }
-

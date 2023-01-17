@@ -23,13 +23,13 @@ final class RecipeListPresenterTests: XCTestCase {
                                                      title: "Borsch Foo",
                                                      readyInMinutes: 60,
                                                      servings: 3)]
-    
+
     override func setUp() {
         super.setUp()
         view = SpyRecipeListView(text: "Введенный текст")
         router = SpyRecipeListRouter()
     }
-    
+
     override func tearDown() {
         view = nil
         router = nil
@@ -37,7 +37,7 @@ final class RecipeListPresenterTests: XCTestCase {
         sut = nil
         super.tearDown()
     }
-    
+
     /// Конфигурация для успешных и неуспешных кейсов
     func assembly(testCase: TestCase) {
         switch testCase {
@@ -46,82 +46,82 @@ final class RecipeListPresenterTests: XCTestCase {
         case .failure:
             interactor = SpyRecipeListInteractor(error: .dataLoadingError)
         }
-        
+
         sut = RecipeListPresenter(interactor: interactor,
                                   router: router)
         sut.view = view
     }
 
     func testRoute() {
-        //arange
+        // arange
         assembly(testCase: .success)
         let recipeId = 1234
-        
-        //act
+
+        // act
         sut.didTapFilterButton(searchText: "")
         sut.didSelectItem(id: recipeId)
         let id = router.id
         let count = router.count
-        
-        //assert
+
+        // assert
         XCTAssertEqual(recipeId, id)
         XCTAssertEqual(2, count)
     }
 
     func testDidTapFavoriteButton() {
-        //arange
+        // arange
         assembly(testCase: .success)
         let testId = 1234
-        
-        //act
+
+        // act
         var check = sut.checkFavorite(id: testId)
-        //assert
+        // assert
         XCTAssertEqual(true, check)
-        
-        //act
+
+        // act
         sut.didTapFavoriteButton(false, id: testId)
         check = sut.checkFavorite(id: testId)
-        //assert
+        // assert
         XCTAssertEqual(false, check)
     }
-    
+
     func testDidTapAddInBasketButton() {
-        //arange
+        // arange
         assembly(testCase: .success)
         let testId = 2222
-        
-        //act
+
+        // act
         sut.didTapAddInBasketButton(id: testId)
         let id = interactor.arrayIds.last
-        
-        //assert
+
+        // assert
         XCTAssertEqual(testId, id)
     }
-    
+
     func testGetStartDataSuccess() {
-        
-        //arange
+
+        // arange
         assembly(testCase: .success)
-        
-        //act
+
+        // act
         sut.getStartData()
         sut.didTapChangeLayoutButton(section: 0)
         let countUpdate = view.countUpdate
-        
-        //assert
+
+        // assert
         XCTAssertEqual(2, countUpdate)
     }
-    
+
     func testGetStartDataFailure() {
-        //arange
+        // arange
         assembly(testCase: .failure)
-        
-        //act
+
+        // act
         sut.getStartData()
         let error = view.error?.error as? DataFetcherError
         let optionsCount = view.error?.recoveryOptions.count
-        
-        //assert
+
+        // assert
         XCTAssertEqual(DataFetcherError.dataLoadingError, error)
         XCTAssertEqual(2, optionsCount)
     }

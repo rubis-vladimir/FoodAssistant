@@ -11,7 +11,7 @@ import UIKit
 final class DetailInfoAssembly {
     private let navigationController: UINavigationController
     private let recipe: RecipeProtocol
-    
+
     init(navigationController: UINavigationController,
          recipe: RecipeProtocol) {
         self.navigationController = navigationController
@@ -22,7 +22,7 @@ final class DetailInfoAssembly {
 // MARK: - Assemblying
 extension DetailInfoAssembly: Assemblying {
     func assembly() -> UIViewController {
-        
+
         let imageCache = ImageCacheService()
         let imageDownloader = ImageDownloader.shared
         let imageDownloaderProxy = ImageDownloaderProxy(imageDownloader: imageDownloader,
@@ -38,9 +38,8 @@ extension DetailInfoAssembly: Assemblying {
                                             router: router,
                                             recipe: recipe)
         let viewController = DetailInfoViewController(presenter: presenter)
-        
+
         presenter.view = viewController
         return viewController
     }
 }
-
