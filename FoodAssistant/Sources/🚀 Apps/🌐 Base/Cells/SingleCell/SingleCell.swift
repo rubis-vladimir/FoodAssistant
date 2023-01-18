@@ -48,6 +48,7 @@ final class SingleCell: UICollectionViewCell {
 
         /// Передаем в адаптер для обновления коллекции
         recipeListAdapter?.configure(with: builders)
+        collectionView.reloadData()
     }
 
     /// Настройка констрейнтов

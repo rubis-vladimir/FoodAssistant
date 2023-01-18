@@ -7,7 +7,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "E1D570EB-EACA-429E-B0F9-C2BBD2A305D6"
+            uuid = "A10D49B0-31F2-44EC-8758-7744B0B87411"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -23,81 +23,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "94DAB0DF-D415-4DA1-8FC2-C22863E10E98"
+            uuid = "5C9C53BC-1E8F-4983-B5EF-0E45ACB8630F"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/BasketPresenter.swift"
+            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/Views/Controllers/BasketViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "123"
-            endingLineNumber = "123"
-            landmarkName = "didTapDeleteButton(id:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "94DAB0DF-D415-4DA1-8FC2-C22863E10E98 - 405bf6de5c231a3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "FoodAssistant.BasketPresenter.didTapDeleteButton(id: Swift.Int) -&gt; ()"
-                  moduleName = "FoodAssistant"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rubisvladimir/Documents/1.%20Swift/12.%20Pet%20Projects/FoodAssistant/FoodAssistant/Sources/%F0%9F%9A%80%20Apps/%F0%9F%9B%92%20Basket/BasketPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
-                  offsetFromSymbolStart = "60">
-               </Location>
-               <Location
-                  uuid = "94DAB0DF-D415-4DA1-8FC2-C22863E10E98 - 2d916fe26b5fbd18"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (FoodAssistant.RecipeViewModel) -&gt; Swift.Bool in FoodAssistant.BasketPresenter.didTapDeleteButton(id: Swift.Int) -&gt; ()"
-                  moduleName = "FoodAssistant"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/rubisvladimir/Documents/1.%20Swift/12.%20Pet%20Projects/FoodAssistant/FoodAssistant/Sources/%F0%9F%9A%80%20Apps/%F0%9F%9B%92%20Basket/BasketPresenter.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "123"
-                  endingLineNumber = "123"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CF47944B-93E2-4DF6-ACA2-3E122A30FFCB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/BasketPresenter.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "97"
-            endingLineNumber = "97"
-            landmarkName = "updateShopList()"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "updateCV(recipes:ingredients:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "4A4D9566-29F5-43A7-A223-AE9E886CC9EC"
+            uuid = "15C5B6EB-D614-4500-8336-F9F0BC13E338"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/BasketPresenter.swift"
+            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/Views/Controllers/BasketViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
-            landmarkName = "didTapDeleteButton(id:)"
+            startingLineNumber = "127"
+            endingLineNumber = "127"
+            landmarkName = "updateCV(recipes:ingredients:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "137D3541-3DE6-41CA-A1E9-CBA30559D202"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/Views/Collection/Factory/BasketFactory.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "createBuilder(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "5D765556-E89E-4585-9118-C5402FCB5F27"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "FoodAssistant/Sources/&#x1f680; Apps/&#x1f6d2; Basket/Views/Collection/Factory/BasketFactory.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "85"
+            endingLineNumber = "85"
+            landmarkName = "builders"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
