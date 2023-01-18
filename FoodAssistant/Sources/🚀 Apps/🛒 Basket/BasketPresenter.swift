@@ -62,17 +62,16 @@ protocol BasketBusinessLogic: RecipeReceived,
 // MARK: - Presenter
 /// #Слой презентации модуля Basket
 final class BasketPresenter {
-    
+
     weak var view: BasketViewable?
     private let interactor: BasketBusinessLogic
     private let router: BasketRouting
-    
+
     /// Вью-модели рецептов
     private var recipes: [RecipeViewModel] = []
-    
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
-    
+
     init(interactor: BasketBusinessLogic,
          router: BasketRouting) {
         self.interactor = interactor
