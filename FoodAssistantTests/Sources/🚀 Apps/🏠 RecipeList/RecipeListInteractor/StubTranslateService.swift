@@ -11,14 +11,14 @@ import Foundation
 class StubTranslateService: Translatable {
 
     var ruRecipe: [Recipe]
-    var ruText: TranslateResponce?
-    var enText: TranslateResponce?
+    var ruText: TranslateResponse?
+    var enText: TranslateResponse?
     var error: DataFetcherError?
     var target: String?
 
     init(ruRecipe: [Recipe] = [],
-         ruText: TranslateResponce? = nil,
-         enText: TranslateResponce? = nil,
+         ruText: TranslateResponse? = nil,
+         enText: TranslateResponse? = nil,
          error: DataFetcherError? = nil,
          target: String? = nil) {
         self.ruRecipe = ruRecipe
@@ -42,7 +42,7 @@ class StubTranslateService: Translatable {
     func translate(with texts: [String],
                    source: String,
                    target: String,
-                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
+                   completion: @escaping (Result<TranslateResponse, DataFetcherError>) -> Void) {
         if let error = error {
             completion(.failure(error))
         } else if let ruText = ruText,

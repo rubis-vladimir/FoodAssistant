@@ -37,7 +37,7 @@ enum RecipeRequest {
 extension RecipeRequest {
     /// Для запроса `complex`
     func downloadRecipes(with service: DataFetcherProtocol,
-                         completion: @escaping (Result<RecipeResponce, DataFetcherError>) -> Void) {
+                         completion: @escaping (Result<RecipeResponse, DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
 
@@ -55,7 +55,7 @@ extension RecipeRequest {
 
     /// Для запроса `findIngredient`
     func findIngredient(with service: DataFetcherProtocol,
-                        completion: @escaping (Result<DTOIngredientResponce, DataFetcherError>) -> Void) {
+                        completion: @escaping (Result<DTOIngredientResponse, DataFetcherError>) -> Void) {
         fetchObject(with: service, completion: completion)
     }
 

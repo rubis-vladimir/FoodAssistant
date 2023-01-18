@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Модель ответа по запросу рецептов
-struct RecipeResponce: Codable, Hashable {
+struct RecipeResponse: Codable, Hashable {
     var recipes: [Recipe]?
     var results: [Recipe]?
 }

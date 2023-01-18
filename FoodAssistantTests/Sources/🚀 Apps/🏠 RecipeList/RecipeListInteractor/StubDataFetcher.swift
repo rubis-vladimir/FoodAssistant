@@ -23,10 +23,10 @@ class StubDataFetcher: DataFetcherProtocol {
                         completion: @escaping (Result<T, DataFetcherError>) -> Void) where T: Decodable {
         if let error = error {
             completion(.failure(error))
-        } else if let responce = RecipeResponce(results: models) as? T {
-            completion(.success(responce))
-        } else if let responce = TranslateResponce(translations: []) as? T {
-            completion(.success(responce))
+        } else if let response = RecipeResponse(results: models) as? T {
+            completion(.success(response))
+        } else if let response = TranslateResponse(translations: []) as? T {
+            completion(.success(response))
         } else {
             completion(.failure(.decodingError))
         }

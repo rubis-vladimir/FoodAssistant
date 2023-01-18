@@ -193,7 +193,7 @@
 		7DFEB5E2291C32F0008C28FC /* RecipeModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */; };
 		7DFEB5E6291C3CA4008C28FC /* TranslateParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */; };
 		7DFEB5E8291C3CB5008C28FC /* LanguageRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E7291C3CB5008C28FC /* LanguageRequest.swift */; };
-		7DFEB5EA291C3D36008C28FC /* TranslateResponce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E9291C3D36008C28FC /* TranslateResponce.swift */; };
+		7DFEB5EA291C3D36008C28FC /* TranslateResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DFEB5E9291C3D36008C28FC /* TranslateResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -396,7 +396,7 @@
 		7DFEB5E1291C32F0008C28FC /* RecipeModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeModels.swift; sourceTree = "<group>"; };
 		7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateParameters.swift; sourceTree = "<group>"; };
 		7DFEB5E7291C3CB5008C28FC /* LanguageRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageRequest.swift; sourceTree = "<group>"; };
-		7DFEB5E9291C3D36008C28FC /* TranslateResponce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateResponce.swift; sourceTree = "<group>"; };
+		7DFEB5E9291C3D36008C28FC /* TranslateResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslateResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1452,7 +1452,7 @@
 		7DFEB5EB291C3D85008C28FC /* TranslateModels */ = {
 			isa = PBXGroup;
 			children = (
-				7DFEB5E9291C3D36008C28FC /* TranslateResponce.swift */,
+				7DFEB5E9291C3D36008C28FC /* TranslateResponse.swift */,
 				7DFEB5E5291C3CA4008C28FC /* TranslateParameters.swift */,
 			);
 			path = TranslateModels;
@@ -1623,7 +1623,7 @@
 				7D3D198F294290D3005E3840 /* ModelProtocols.swift in Sources */,
 				7D875DCF292BEBB60033A4C0 /* ThirdRecipeCell.swift in Sources */,
 				7DF53EFB2956DC8900C4BA66 /* RecipeFilterPresenter.swift in Sources */,
-				7DFEB5EA291C3D36008C28FC /* TranslateResponce.swift in Sources */,
+				7DFEB5EA291C3D36008C28FC /* TranslateResponse.swift in Sources */,
 				7D2F7732291A9717009D3444 /* Assemblying.swift in Sources */,
 				7DC5508A294F8780001539C5 /* IngredientViewModel.swift in Sources */,
 				7D875DD5292D2A1B0033A4C0 /* ImageDownloaderProxy.swift in Sources */,

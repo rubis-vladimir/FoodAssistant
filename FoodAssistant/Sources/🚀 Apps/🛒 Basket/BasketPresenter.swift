@@ -68,11 +68,7 @@ final class BasketPresenter {
     private let router: BasketRouting
 
     /// Вью-модели рецептов
-    private var recipes: [RecipeViewModel] = [] {
-        didSet {
-            updateShopList()
-        }
-    }
+    private var recipes: [RecipeViewModel] = []
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
 
@@ -85,7 +81,9 @@ final class BasketPresenter {
     /// Стартовая функция для подгрузки рецептов
     func getStartData() {
         interactor.fetchRecipeFromBasket { [weak self] recipes in
-            self?.recipes = recipes
+            guard let self = self else { return }
+            self.recipes = recipes
+            self.updateShopList()
         }
     }
 

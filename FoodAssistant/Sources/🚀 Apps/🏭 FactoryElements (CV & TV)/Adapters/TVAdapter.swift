@@ -16,19 +16,11 @@ protocol ScrollDelegate: AnyObject {
 
 /// #Адаптер для TableView
 final class TVAdapter: NSObject {
+    private var builders: [TVSectionProtocol] = []
 
-    private let tableView: UITableView
     private weak var scrollDelegate: ScrollDelegate?
 
-    private var builders: [TVSectionProtocol] = [] {
-        didSet {
-            tableView.reloadData()
-        }
-    }
-
-    init(tableView: UITableView,
-         scrollDelegate: ScrollDelegate?) {
-        self.tableView = tableView
+    init(scrollDelegate: ScrollDelegate?) {
         self.scrollDelegate = scrollDelegate
     }
 

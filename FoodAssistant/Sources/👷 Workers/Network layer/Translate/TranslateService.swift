@@ -29,7 +29,7 @@ protocol Translatable {
     func translate(with texts: [String],
                    source: String,
                    target: String,
-                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void)
+                   completion: @escaping (Result<TranslateResponse, DataFetcherError>) -> Void)
 }
 
 /// #Сервис перевода
@@ -68,9 +68,9 @@ extension TranslateService: Translatable {
                 guard let self = self else { return }
 
                 switch result {
-                case .success(let responce):
+                case .success(let response):
                     /// Если перевод выполнен
-                    let texts = responce.translations.map { $0.text }
+                    let texts = response.translations.map { $0.text }
                     let newRecipe = self.changeModels(recipe,
                                                       with: texts)
                     newRecipes.append(newRecipe)
@@ -100,7 +100,7 @@ extension TranslateService: Translatable {
     func translate(with texts: [String],
                    source: String,
                    target: String,
-                   completion: @escaping (Result<TranslateResponce, DataFetcherError>) -> Void) {
+                   completion: @escaping (Result<TranslateResponse, DataFetcherError>) -> Void) {
         let parameters = TranslateParameters(folderId: APIKeys.serviceId.rawValue,
                                              texts: texts,
                                              sourceLanguageCode: source,

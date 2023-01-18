@@ -43,7 +43,7 @@ final class DIFactory {
         self.recipe = recipe
 
         /// Определяем адаптер для tableView
-        tvAdapter = TVAdapter(tableView: tableView,
+        tvAdapter = TVAdapter(
                               scrollDelegate: scrollDelegate)
         setupTableView()
     }

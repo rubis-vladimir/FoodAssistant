@@ -17,7 +17,7 @@ enum LayoutType {
 
 /// #Строитель ячеек секции Main
 final class MainItemBuilder {
-    ///
+    /// Вариант Layout
     private var layoutType: LayoutType = .split2xN
     /// Вью модели рецептов
     private let models: [RecipeViewModel]

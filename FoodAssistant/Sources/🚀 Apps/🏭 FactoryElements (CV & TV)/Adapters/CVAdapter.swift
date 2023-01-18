@@ -9,16 +9,7 @@ import UIKit
 
 /// #Адаптер для CollectionView
 final class CVAdapter: NSObject {
-    private let collectionView: UICollectionView
-    private var builders: [CVSectionProtocol] = [] {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
-
-    init(collectionView: UICollectionView) {
-        self.collectionView = collectionView
-    }
+    private var builders: [CVSectionProtocol] = []
 
     func configure(with builders: [CVSectionProtocol]) {
         self.builders = builders

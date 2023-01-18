@@ -13,7 +13,7 @@ protocol DataFetcherProtocol {
     /// Создает и направляет запрос в сеть для получения данных
     ///  - Parameters:
     ///     - requestBuilder: конструктор запроса
-    ///     - responce: замыкание для захвата данных/ошибки
+    ///     - response: замыкание для захвата данных/ошибки
     func fetchObject<T: Decodable>(urlRequest: URLRequest,
                                    completion: @escaping (Result<T, DataFetcherError>) -> Void)
 }
@@ -31,11 +31,11 @@ final class NetworkDataFetcher {
     ///   - response: ответ, захватывает данные/ошибку
     private func fetchData(request: URLRequest,
                            completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
-        URLSession.shared.dataTask(with: request) { (data, responce, error) in
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
 
-            if let httpResponse = responce as? HTTPURLResponse {
+            if let httpResponse = response as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
-                    completion(.failure(.invalidResponceCode))
+                    completion(.failure(.invalidResponseCode))
                     return
                 }
             }
