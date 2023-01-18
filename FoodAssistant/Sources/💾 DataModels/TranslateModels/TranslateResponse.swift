@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Модель ответа с переведенным текстом
-struct TranslateResponce: Codable {
+struct TranslateResponse: Codable {
     var translations: [Text]
 
     struct Text: Codable {

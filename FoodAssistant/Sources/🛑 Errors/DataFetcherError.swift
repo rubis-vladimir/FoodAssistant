@@ -12,7 +12,7 @@ enum DataFetcherError: Error {
     /// Некорректный URL
     case invalidUrl
     /// Некорректный статус-код
-    case invalidResponceCode
+    case invalidResponseCode
     /// Ошибка кодирования
     case encodingError
     /// Ошибка декодирования
@@ -35,7 +35,7 @@ enum DataFetcherError: Error {
 extension DataFetcherError: LocalizedError {
     var errorTitle: String? {
         switch self {
-        case .invalidResponceCode:
+        case .invalidResponseCode:
             return "No Internet Connection".localize()
         case .noResults:
             return "No Results".localize()
@@ -46,7 +46,7 @@ extension DataFetcherError: LocalizedError {
 
     var failureReason: String? {
         switch self {
-        case .invalidResponceCode:
+        case .invalidResponseCode:
             return nil
         case .translateError:
             return "Unfortunately, it was not possible to localize (translate) the data".localize()
@@ -61,7 +61,7 @@ extension DataFetcherError: LocalizedError {
 
     var recoverySuggestion: String? {
         switch self {
-        case .invalidResponceCode:
+        case .invalidResponseCode:
             return "Please check your internet connection and try again".localize()
         case .invalidNumber:
             return "Please, enter again".localize()

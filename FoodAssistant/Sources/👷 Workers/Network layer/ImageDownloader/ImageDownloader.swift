@@ -30,11 +30,11 @@ extension ImageDownloader: ImageDownloadProtocol {
     func fetchImage(url: URL,
                     completion: @escaping (Result<Data, DataFetcherError>) -> Void) {
 
-        URLSession.shared.dataTask(with: url) { (data, responce, error) in
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
 
-            if let httpResponse = responce as? HTTPURLResponse {
+            if let httpResponse = response as? HTTPURLResponse {
                 guard (200..<300) ~= httpResponse.statusCode else {
-                    completion(.failure(.invalidResponceCode))
+                    completion(.failure(.invalidResponseCode))
                     return
                 }
             }

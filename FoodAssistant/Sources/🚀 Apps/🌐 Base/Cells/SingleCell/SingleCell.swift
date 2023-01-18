@@ -25,7 +25,8 @@ final class SingleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        recipeListAdapter = CVAdapter(collectionView: collectionView)
+        recipeListAdapter = CVAdapter()
+
         collectionView.dataSource = recipeListAdapter
         collectionView.delegate = recipeListAdapter
 
@@ -47,6 +48,7 @@ final class SingleCell: UICollectionViewCell {
 
         /// Передаем в адаптер для обновления коллекции
         recipeListAdapter?.configure(with: builders)
+        collectionView.reloadData()
     }
 
     /// Настройка констрейнтов

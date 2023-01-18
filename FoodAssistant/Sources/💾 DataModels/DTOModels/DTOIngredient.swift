@@ -8,7 +8,7 @@
 import Foundation
 
 /// #Модель ответа по запросу ингредиентов
-struct DTOIngredientResponce: Codable, Hashable {
+struct DTOIngredientResponse: Codable, Hashable {
     var results: [DTOIngredient]
 }
 

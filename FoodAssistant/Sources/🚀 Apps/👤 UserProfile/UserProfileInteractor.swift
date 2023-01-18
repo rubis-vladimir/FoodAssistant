@@ -79,8 +79,8 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
         translateService.translate(with: [ingredient.name], source: "ru", target: "en") { [weak self] result in
             switch result {
 
-            case .success(let responce):
-                guard let text = responce.translations.first?.text else { return }
+            case .success(let response):
+                guard let text = response.translations.first?.text else { return }
                 self?.sendRequest(ingredient: ingredient, text: text, completion: completion)
 
             case .failure(let error):
@@ -98,8 +98,8 @@ extension UserProfileInteractor: UserProfileBusinessLogic {
             .findIngredient(with: dataFetcher) { [weak self] result in
                 switch result {
 
-                case .success(let responce):
-                    guard let dtoIngredient = responce.results.first else {
+                case .success(let response):
+                    guard let dtoIngredient = response.results.first else {
                         completion(.failure(.noResults))
                         return }
 

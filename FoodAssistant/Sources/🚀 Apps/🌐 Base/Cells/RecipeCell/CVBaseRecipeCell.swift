@@ -36,7 +36,7 @@ class CVBaseRecipeCell: UICollectionViewCell {
     }
 
     /// Индикатор загрузки
-    let spinner: BallSpinFadeLoader = BallSpinFadeLoader()
+    var spinner: BallSpinFadeLoader?
 
     /// Вью для изображения рецепта
     let recipeImageView: UIImageView = {
@@ -142,6 +142,10 @@ class CVBaseRecipeCell: UICollectionViewCell {
         id = model.id
 
         if model.imageName != nil {
+            spinner = BallSpinFadeLoader()
+            guard let spinner = spinner else {
+                return
+            }
             addSubview(spinner)
             spinner.setupSpinner(loadingImageView: recipeImageView)
         }
@@ -164,7 +168,8 @@ class CVBaseRecipeCell: UICollectionViewCell {
     /// Обновляет изображение рецепта
     ///  - Parameter data: данные изображения
     func updateImage(data: Data) {
-        spinner.removeFromSuperview()
+        spinner?.removeFromSuperview()
+        spinner = nil
         recipeImageView.alpha = 0.5
         recipeImageView.reloadInputViews()
 

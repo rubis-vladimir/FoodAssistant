@@ -17,6 +17,8 @@ final class FridgeSectionConfigurator {
     private let height: CGFloat
     /// Изображение кнопки
     private let image: UIImage?
+    /// Действие
+    private let action: ((Int) -> Void)?
 
     private weak var delegate: UserProfilePresentation?
 
@@ -24,11 +26,13 @@ final class FridgeSectionConfigurator {
          title: String,
          height: CGFloat,
          image: UIImage?,
+         action: ((Int) -> Void)?,
          delegate: UserProfilePresentation?) {
         self.models = models
         self.title = title
         self.image = image
         self.height = height
+        self.action = action
         self.delegate = delegate
     }
 }
@@ -38,10 +42,6 @@ extension FridgeSectionConfigurator: CVSectionConfiguration {
 
     func configure(for collectionView: UICollectionView) -> CVSectionProtocol {
 
-        /// Создаем действие по добавлению ингредиента
-        let action: ((Int) -> Void)? = { _ in
-            self.delegate?.didTapAddIngredientButton()
-        }
         /// Модель заголовка
         let headerModel = HeaderSectionModel(title: title,
                                              firstImage: image,
