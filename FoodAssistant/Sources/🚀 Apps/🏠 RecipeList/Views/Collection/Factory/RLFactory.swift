@@ -37,7 +37,7 @@ final class RLFactory {
         self.delegate = delegate
 
         /// Определяем адаптер для коллекции
-        cvAdapter = CVAdapter(collectionView: collectionView)
+        cvAdapter = CVAdapter()
 
         setupCollectionView()
     }

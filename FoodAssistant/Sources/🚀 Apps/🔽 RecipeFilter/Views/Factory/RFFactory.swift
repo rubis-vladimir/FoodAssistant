@@ -42,7 +42,7 @@ final class RFFactory {
         self.delegate = delegate
 
         /// Определяет адаптер для коллекции
-        cvAdapter = CVAdapter(collectionView: collectionView)
+        cvAdapter = CVAdapter()
 
         setupCollectionView()
     }

@@ -62,20 +62,21 @@ protocol BasketBusinessLogic: RecipeReceived,
 // MARK: - Presenter
 /// #Слой презентации модуля Basket
 final class BasketPresenter {
-
+    
     weak var view: BasketViewable?
     private let interactor: BasketBusinessLogic
     private let router: BasketRouting
-
+    
     /// Вью-модели рецептов
     private var recipes: [RecipeViewModel] = [] {
         didSet {
             updateShopList()
         }
     }
+    
     /// Вью-модели ингредиентов
     private var ingredients: [IngredientViewModel] = []
-
+    
     init(interactor: BasketBusinessLogic,
          router: BasketRouting) {
         self.interactor = interactor
@@ -122,7 +123,7 @@ extension BasketPresenter: BasketPresentation {
         guard let index = recipes.firstIndex(where: {$0.id == id}) else { return }
         recipes.remove(at: index)
         interactor.removeRecipe(id: id)
-        updateShopList()
+//        updateShopList()
     }
 
     // SelectedCellDelegate

@@ -25,7 +25,8 @@ final class SingleCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        recipeListAdapter = CVAdapter(collectionView: collectionView)
+        recipeListAdapter = CVAdapter()
+
         collectionView.dataSource = recipeListAdapter
         collectionView.delegate = recipeListAdapter
 

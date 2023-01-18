@@ -40,7 +40,7 @@ final class UPFactory {
         self.orderSections = orderSections
 
         /// Определяем адаптер для коллекции
-        cvAdapter = CVAdapter(collectionView: collectionView)
+        cvAdapter = CVAdapter()
 
         setupCollectionView()
     }
@@ -67,10 +67,16 @@ final class UPFactory {
                                               height: Constants.heightProfileCell).configure(for: collectionView)
 
         case .fridge(let ingredients):
+            /// Создаем действие по добавлению ингредиента
+            let action: ((Int) -> Void)? = { [weak self] _ in
+                self?.delegate?.didTapAddIngredientButton()
+            }
+
             return FridgeSectionConfigurator(models: ingredients,
                                              title: Constants.titleHeaderFridge,
                                              height: Constants.heightFridgeCell,
                                              image: Constants.imageHeaderButton,
+                                             action: action,
                                              delegate: delegate).configure(for: collectionView)
         case .favorite(let models):
             return FavoriteSectionConfigurator(models: models,
